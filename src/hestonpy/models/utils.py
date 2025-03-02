@@ -2,7 +2,6 @@ import numpy as np
 from hestonpy.models.blackScholes import BlackScholes
 from typing import Literal
 
-
 def volatility_dichotomie(
         market_price,
         price_function,
