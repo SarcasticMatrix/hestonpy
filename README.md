@@ -1,6 +1,6 @@
 # hestonpy
 
-This Python package implements the Heston and Black-Scholes models for option pricing and portfolio management. The package also includes functionality for optimal portfolio allocation using stochastic control techniques.
+The `hestonpy` Python package implements the Heston and Black-Scholes models for option pricing and portfolio management. The package also includes functionality for optimal portfolio allocation using stochastic control techniques.
 
 Covered topics by the `hestonpy` package:
 1. path simulations
