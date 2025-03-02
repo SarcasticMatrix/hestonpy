@@ -9,9 +9,9 @@ Covered topics by the `hestonpy` package:
 4. [TO DO] model calibration (smile, term structure) from yahoo finance and personnal data
 
 ## Installation
-
+`hestonpy` is now avalaible on PyPi !
 ```bash
-pip install --index-url https://test.pypi.org/simple/ --no-deps hestonpy
+pip install hestonpy
 ```
 
 ## Contributing
