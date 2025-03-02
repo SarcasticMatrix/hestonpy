@@ -41,7 +41,7 @@ jobs:
 
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/hestonpy
+      url: https://test.pypi.org/project/hestonpy/
 
     permissions:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
