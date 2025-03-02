@@ -436,7 +436,7 @@ class Heston:
 
         S, V, _ = self.simulate(n=n, scheme=scheme, N=1)
 
-        fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
+        fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True, figsize=(15,8))
 
         ax1.plot(
             np.linspace(0, 1, n + 1), S, label="Risky asset", color="blue", linewidth=1
