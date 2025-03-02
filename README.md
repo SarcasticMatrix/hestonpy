@@ -11,12 +11,8 @@ Covered topics by the `hestonpy` package:
 ## Installation
 
 ```bash
-$ pip install hestonpy
+$ pip install --index-url https://test.pypi.org/simple/ --no-deps hestonpy
 ```
-
-## Usage
-
-- TODO
 
 ## Contributing
 
