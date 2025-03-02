@@ -1,0 +1,1 @@
+This Python package implements the Heston and Black-Scholes models for option pricing and portfolio management. The package also includes functionality for optimal portfolio allocation using stochastic control techniques.
