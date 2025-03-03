@@ -1,8 +1,7 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import norm
 from typing import Literal
-import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import norm
 
 
 class BlackScholes:
@@ -18,7 +17,7 @@ class BlackScholes:
 
     def simulate(
         self,
-        T: float = 1,
+        time_to_maturity: float = 1,
         scheme: str = Literal["euler", "milstein"],
         nbr_points: int = 100,
         nbr_simulations: int = 1000,
@@ -26,15 +25,14 @@ class BlackScholes:
 
         np.random.seed(self.seed)
 
-        dt = T / nbr_points
+        dt = time_to_maturity / nbr_points
         S = np.zeros((nbr_simulations, nbr_points + 1))
         S[:, 0] = self.spot
 
         for i in range(1, nbr_points + 1):
 
             # Brownian motion
-            N1 = np.random.normal(loc=0, scale=1, size=nbr_simulations)
-            Z = N1 * np.sqrt(dt)
+            Z = np.sqrt(dt) * np.random.normal(loc=0, scale=1, size=nbr_simulations)
 
             # Update the processes
             S[:, i] = (
@@ -53,15 +51,15 @@ class BlackScholes:
 
     def plot_simulation(
         self,
-        scheme: str = "euler",
+        scheme: str = Literal["euler", "milstein"],
         nbr_points: int = 1000,
-        T: float = 1,
+        time_to_maturity: float = 1,
     ) -> np.array:
         
         S = self.simulate(nbr_points=nbr_points, scheme=scheme, nbr_simulations=1)
 
         plt.figure(figsize=(10, 6))
-        plt.plot(np.linspace(0, T, nbr_points + 1), S[0], label="Risky asset", color="blue", linewidth=1)
+        plt.plot(np.linspace(0, time_to_maturity, nbr_points + 1), S[0], label="Risky asset", color="blue", linewidth=1)
         plt.xlabel("Time to expiration", fontsize=12)
         plt.ylabel("Value [$]", fontsize=12)
         plt.legend(loc="upper left")
@@ -75,7 +73,7 @@ class BlackScholes:
     def call_price(
         self,
         strike: float,
-        T: float = 1,
+        time_to_maturity: float = 1,
         spot: float = None,
         r: float = None,
         volatility: float = None,
@@ -88,22 +86,22 @@ class BlackScholes:
         if volatility is None:
             volatility = self.volatility
         
-        if T != 0: 
-            d1 = (np.log(spot / strike) + (r + 0.5 * volatility**2) * T) / (
-                volatility * np.sqrt(T)
+        if time_to_maturity != 0: 
+            d1 = (np.log(spot / strike) + (r + 0.5 * volatility**2) * time_to_maturity) / (
+                volatility * np.sqrt(time_to_maturity)
             )
-            d2 = d1 - volatility * np.sqrt(T)
-            return spot * norm.cdf(d1) - strike * np.exp(-r * T) * norm.cdf(d2)
+            d2 = d1 - volatility * np.sqrt(time_to_maturity)
+            return spot * norm.cdf(d1) - strike * np.exp(-r * time_to_maturity) * norm.cdf(d2)
         else:
             return np.maximum(0, spot-strike)
 
     def put_price(
         self,
         strike: float,
+        time_to_maturity: float,
         spot: float = None,
         r: float = None,
         volatility: float = None,
-        T: float = 1,
     ):
         if spot is None:
             spot = self.spot
@@ -112,18 +110,18 @@ class BlackScholes:
         if volatility is None:
             volatility = self.volatility
 
-        call_price = self.call_price(spot, r, volatility, T, strike)
-        put_price = call_price - spot + strike * np.exp(-r * T)
+        call_price = self.call_price(spot, r, volatility, time_to_maturity, strike)
+        put_price = call_price - spot + strike * np.exp(-r * time_to_maturity)
         return put_price
 
     def delta(
         self,
         strike: float,
+        time_to_maturity: float,
         flag_option: Literal["call", "put"],
         spot: float = None,
         r: float = None,
         volatility: float = None,
-        T: float = 1,
     ):
         if spot is None:
             spot = self.spot
@@ -131,11 +129,9 @@ class BlackScholes:
             r = self.r
         if volatility is None:
             volatility = self.volatility
-        if strike is None:
-            raise ValueError("Please provide a strike price.")
 
         d1 = (
-            np.log(spot / strike) + (r + 0.5 * volatility**2) * T) / (volatility * np.sqrt(T)
+            np.log(spot / strike) + (r + 0.5 * volatility**2) * time_to_maturity) / (volatility * np.sqrt(time_to_maturity)
         )
 
         if flag_option == "call":
@@ -155,7 +151,7 @@ class BlackScholes:
 
         for i, K in enumerate(Ks):
             for j, T in enumerate(Ts):
-                deltas[i, j] = self.delta(strike=K, T=T, flag_option=flag_option)
+                deltas[i, j] = self.delta(strike=K, time_to_maturity=T, flag_option=flag_option)
         K_grid, T_grid = np.meshgrid(Ks, Ts)
 
         fig = plt.figure()
@@ -171,7 +167,7 @@ class BlackScholes:
     def gamma(
         self,
         strike: float,
-        T: float = None,
+        time_to_maturity: float,
         spot: float = None,
         r: float = None,
         volatility: float = None,
@@ -182,16 +178,11 @@ class BlackScholes:
             r = self.r
         if volatility is None:
             volatility = self.volatility
-        if T is None:
-            T = T
 
-        if strike is None:
-            raise ValueError("Please provide a strike price.")
-
-        d1 = (np.log(spot / strike) + (r + 0.5 * volatility**2) * T) / (
-            volatility * np.sqrt(T)
+        d1 = (np.log(spot / strike) + (r + 0.5 * volatility**2) * time_to_maturity) / (
+            volatility * np.sqrt(time_to_maturity)
         )
-        gamma = norm.pdf(d1) / (spot * volatility * np.sqrt(T))
+        gamma = norm.pdf(d1) / (spot * volatility * np.sqrt(time_to_maturity))
         return gamma
 
     def gamma_surface(self):
@@ -205,7 +196,7 @@ class BlackScholes:
 
         for i, K in enumerate(Ks):
             for j, T in enumerate(Ts):
-                gammas[i, j] = self.gamma(strike=K, T=T)
+                gammas[i, j] = self.gamma(strike=K, time_to_maturity=T)
         K_grid, T_grid = np.meshgrid(Ks, Ts)
 
         fig = plt.figure()
@@ -220,9 +211,9 @@ class BlackScholes:
 
     def delta_hedging(
         self,
-        flag_option: Literal["call", "put"],
-        T: float,
         strike: float,
+        time_to_maturity: float,
+        flag_option: Literal["call", "put"],
         hedging_volatility: float,
         pricing_volatility: float = None,
         nbr_hedges: float = 252,
@@ -251,24 +242,24 @@ class BlackScholes:
         if pricing_volatility is None:
             pricing_volatility = hedging_volatility
 
-        time = np.linspace(start=0, stop=T, num=nbr_hedges + 1)
-        dt = T / nbr_hedges
+        time = np.linspace(start=0, stop=time_to_maturity, num=nbr_hedges + 1)
+        dt = time_to_maturity / nbr_hedges
 
         S = self.simulate(scheme="milstein", nbr_points=nbr_hedges, nbr_simulations=nbr_simulations)
         portfolio = np.zeros_like(S)
 
         if flag_option == "call":
             portfolio[:, 0] = self.call_price(
-                strike=strike, spot=S[:, 0], volatility=pricing_volatility
+                strike=strike, time_to_maturity=time_to_maturity, spot=S[:, 0], volatility=pricing_volatility
             )
         else:
             portfolio[:, 0] = self.put_price(
-                strike=strike, spot=S[:, 0], volatility=pricing_volatility
+                strike=strike, time_to_maturity=time_to_maturity, spot=S[:, 0], volatility=pricing_volatility
             )
 
         stocks = self.delta(
             spot=S[:, 0],
-            T=T,
+            time_to_maturity=time_to_maturity,
             volatility=hedging_volatility,
             strike=strike,
             flag_option=flag_option,
@@ -282,7 +273,7 @@ class BlackScholes:
 
             stocks = self.delta(
                 spot=S[:, t],
-                T=T - time[t],
+                time_to_maturity=time_to_maturity - time[t],
                 volatility=hedging_volatility,
                 strike=strike,
                 flag_option=flag_option,
@@ -295,9 +286,9 @@ class BlackScholes:
 
     def volatility_arbitrage(
         self,
-        flag_option: Literal["call"],
-        T: float,
         strike: float,
+        time_to_maturity: float,
+        flag_option: Literal["call"],
         hedging_volatility: float,
         pricing_volatility: float = None,
         nbr_hedges: float = 1000,
@@ -350,20 +341,20 @@ class BlackScholes:
         if pricing_volatility is None:
             pricing_volatility = hedging_volatility
 
-        time = np.linspace(start=0, stop=T, num=nbr_hedges + 1)
-        dt = T / nbr_hedges
+        time = np.linspace(start=0, stop=time_to_maturity, num=nbr_hedges + 1)
+        dt = time_to_maturity / nbr_hedges
 
         S = self.simulate(scheme="milstein", n=nbr_hedges, N=nbr_simulations)
         portfolio = np.zeros_like(S)
         portfolio[:, 0] = 0  # Arbitrage
 
         C = lambda t, spot: self.call_price(
-            volatility=pricing_volatility, spot=spot, T=T - t, strike=strike
+            volatility=pricing_volatility, spot=spot, time_to_maturity=time_to_maturity - t, strike=strike
         )
         delta = lambda t, spot: self.delta(
             volatility=hedging_volatility,
             spot=spot,
-            T=T - t,
+            time_to_maturity=time_to_maturity - t,
             flag_option="call",
             strike=strike,
         )
@@ -373,19 +364,14 @@ class BlackScholes:
 
         for t in range(1, nbr_hedges):
 
-            # Mise à jour de la banque
             bank = bank * np.exp(dt * self.r)
 
-            # Mise à jour du portefeuille : valeur totale = - option + actions + banque
             portfolio[:, t] = C(time[t], S[:, t]) - stocks * S[:, t] + bank
 
-            # Calcul de la nouvelle couverture delta
             stocks = delta(time[t], S[:, t])
 
-            # Mise à jour de la banque après réajustement de la couverture
             bank = portfolio[:, t] + stocks * S[:, t] - C(time[t], S[:, t])
 
-        # Liquidation
         portfolio[:, -1] = (
             np.maximum(S[:, -1] - strike, 0)
             - stocks * S[:, -1]
