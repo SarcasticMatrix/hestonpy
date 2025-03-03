@@ -344,7 +344,7 @@ class BlackScholes:
         time = np.linspace(start=0, stop=time_to_maturity, num=nbr_hedges + 1)
         dt = time_to_maturity / nbr_hedges
 
-        S = self.simulate(scheme="milstein", n=nbr_hedges, N=nbr_simulations)
+        S = self.simulate(scheme="milstein", nbr_points=nbr_hedges, nbr_simulations=nbr_simulations)
         portfolio = np.zeros_like(S)
         portfolio[:, 0] = 0  # Arbitrage
 
@@ -381,107 +381,107 @@ class BlackScholes:
         return portfolio, S
 
 
-def dichotomie(price: np.array, bs:BlackScholes, error: float = 10**-6):
+# def dichotomie(price: np.array, bs:BlackScholes, error: float = 10**-6):
 
-    index_sup = 1
-    index_inf = 0 
-    volatilities = np.arange(start=0, stop=1, step=error)
-    index = len(volatilities) // 2
-    price_index = bs.call_price(volatilities[index])
+#     index_sup = 1
+#     index_inf = 0 
+#     volatilities = np.arange(start=0, stop=1, step=error)
+#     index = len(volatilities) // 2
+#     price_index = bs.call_price(volatilities[index])
 
-    while volatilities[index_sup] - volatilities[index_inf] > error:
+#     while volatilities[index_sup] - volatilities[index_inf] > error:
 
-        price_index = bs.call_price(volatilities[index])
-        if price_index > price:
+#         price_index = bs.call_price(volatilities[index])
+#         if price_index > price:
 
-            index_sup = index
-        else:
-            index_inf = index
-        index = index // 2
+#             index_sup = index
+#         else:
+#             index_inf = index
+#         index = index // 2
 
-    return volatilities[index]
-
-
+#     return volatilities[index]
 
 
-from scipy.optimize import minimize
-from hestonpy.option.data import get_options_data
-from typing import Literal
 
 
-def impliedVolatility(
-    flag_option: Literal["call", "put"],
-    symbol: str = "MSFT",
-    r: float = None,
-    exponent: int = 1,
-):
-    """
-    Estimate the implied volatility of options using the Black-Scholes model.
+# from scipy.optimize import minimize
+# from hestonpy.option.data import get_options_data
+# from typing import Literal
 
-    Parameters:
-    - flag_option (Literal['call', 'put']): Type of option (call or put).
-    - symbol (str): The underlying asset's symbol; defaults to 'MSFT' (Microsoft Corporation).
-    - r (float): The risk-free interest rate; can be estimated if None.
-    - exponent (int): The exponent used in the objective function.
-                      If 2, it uses squared error; if 1, it uses absolute error.
 
-    Returns:
-    - vol: The estimated implied volatility (and possibly the risk-free rate if estimated).
-    """
-    # to do : implement for put options - pas super stable pour le moment
+# def impliedVolatility(
+#     flag_option: Literal["call", "put"],
+#     symbol: str = "MSFT",
+#     r: float = None,
+#     exponent: int = 1,
+# ):
+#     """
+#     Estimate the implied volatility of options using the Black-Scholes model.
 
-    options_data, spot = get_options_data(symbol=symbol, flag_option=flag_option)
+#     Parameters:
+#     - flag_option (Literal['call', 'put']): Type of option (call or put).
+#     - symbol (str): The underlying asset's symbol; defaults to 'MSFT' (Microsoft Corporation).
+#     - r (float): The risk-free interest rate; can be estimated if None.
+#     - exponent (int): The exponent used in the objective function.
+#                       If 2, it uses squared error; if 1, it uses absolute error.
 
-    blackScholes = BlackScholes(spot=spot, r=0.03, mu=0.03, volatility=0.03)
+#     Returns:
+#     - vol: The estimated implied volatility (and possibly the risk-free rate if estimated).
+#     """
+#     # to do : implement for put options - pas super stable pour le moment
 
-    mask = options_data["Volume"] > 0.1 * len(options_data)
-    options_data = options_data.loc[mask]
+#     options_data, spot = get_options_data(symbol=symbol, flag_option=flag_option)
 
-    volumes = options_data["Volume"].values
-    strikes = options_data["Strike"].values
-    prices = options_data[f"{flag_option.capitalize()} Price"].values
-    maturities = options_data["Time to Maturity"].values
+#     blackScholes = BlackScholes(spot=spot, r=0.03, mu=0.03, volatility=0.03)
 
-    if r is None:
-        x0 = [blackScholes.volatility, blackScholes.r]
-    else:
-        # r is not estimated
-        x0 = [
-            blackScholes.volatility,
-        ]
-        blackScholes.r = r
+#     mask = options_data["Volume"] > 0.1 * len(options_data)
+#     options_data = options_data.loc[mask]
 
-    def objective_function(x):
-        blackScholes.volatility = x[0]
-        if r is None:
-            # r is also estimated
-            blackScholes.r = x[1]
+#     volumes = options_data["Volume"].values
+#     strikes = options_data["Strike"].values
+#     prices = options_data[f"{flag_option.capitalize()} Price"].values
+#     maturities = options_data["Time to Maturity"].values
 
-        model_prices = []
-        for i in range(len(options_data)):
-            blackScholes.K = strikes[i]
-            blackScholes.T = maturities[i]
+#     if r is None:
+#         x0 = [blackScholes.volatility, blackScholes.r]
+#     else:
+#         # r is not estimated
+#         x0 = [
+#             blackScholes.volatility,
+#         ]
+#         blackScholes.r = r
 
-            if flag_option == "call":
-                model_price = blackScholes.call_price(
-                    strike=strikes[i], T=maturities[i]
-                )
-            else:
-                model_price = blackScholes.put_price(strike=strikes[i], T=maturities[i])
-            model_prices.append(model_price)
+#     def objective_function(x):
+#         blackScholes.volatility = x[0]
+#         if r is None:
+#             # r is also estimated
+#             blackScholes.r = x[1]
 
-        model_prices = np.array(model_prices)
-        weights = volumes / np.sum(volumes)
+#         model_prices = []
+#         for i in range(len(options_data)):
+#             blackScholes.K = strikes[i]
+#             blackScholes.T = maturities[i]
 
-        result = np.sum(weights * np.abs(prices - model_prices) ** exponent)
+#             if flag_option == "call":
+#                 model_price = blackScholes.call_price(
+#                     strike=strikes[i], T=maturities[i]
+#                 )
+#             else:
+#                 model_price = blackScholes.put_price(strike=strikes[i], T=maturities[i])
+#             model_prices.append(model_price)
 
-        return result
+#         model_prices = np.array(model_prices)
+#         weights = volumes / np.sum(volumes)
 
-    print("Callibration is running...")
-    res = minimize(fun=objective_function, x0=x0, method="Nelder-Mead")
+#         result = np.sum(weights * np.abs(prices - model_prices) ** exponent)
 
-    if res.success:
-        return res.x
+#         return result
+
+#     print("Callibration is running...")
+#     res = minimize(fun=objective_function, x0=x0, method="Nelder-Mead")
+
+#     if res.success:
+#         return res.x
 
 
 # import numpy as np
