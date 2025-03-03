@@ -6,110 +6,10 @@ import pandas as pd
 
 
 class BlackScholes:
-    """
-    Class representing a Black-Scholes model.
-
-    Parameters:
-    - spot (float): The current price of the underlying asset.
-    - r (float): The risk-free interest rate, used as the drift coefficient in the model.
-    - mu (float): The drift rate of the underlying asset.
-    - volatility (float): The volatility of the underlying asset.
-    - seed (int): A seed for the random number generator for reproducibility.
-
-    Methods:
-    - simulate(scheme='euler', n=100, N=1000):
-      Simulates and returns several paths for the stock price according to the Black-Scholes model.
-    - plot_simulation(scheme='euler', n=1000):
-      Plots a single simulated path of the Black-Scholes model.
-    - call_price(strike, spot=None, r=None, volatility=None, T=1):
-      Computes the price of a European call option using the Black-Scholes formula.
-    - put_price(strike, spot=None, r=None, volatility=None, T=1):
-      Computes the price of a European put option using the Black-Scholes formula and put-call parity.
-    - delta(strike, flag_option='call', spot=None, r=None, volatility=None, T=1):
-      Computes the delta of a European option based on the Black-Scholes model.
-    - delta_surface(flag_option='call'):
-      Plots the delta of the option as a function of the strike price and time to maturity.
-    - gamma(strike, T=None, spot=None, r=None, volatility=None):
-      Computes the gamma of a European option based on the Black-Scholes model.
-    - gamma_surface():
-      Plots the gamma as a function of the strike price and time to maturity.
-    - delta_hedging(flag_option='call', strike, hedging_volatility, n=1000, N=100):
-      Implements a delta hedging strategy for a European option.
-
-    Example:
-        # Parameters for the Black-Scholes model
-        spot = 100.0          # Current spot price of the underlying asset
-        r = 0.05              # Risk-free interest rate
-        mu = 2 * r            # Expected return (often set to 2*r for analysis)
-        volatility = 0.06     # Volatility of the underlying asset
-        T = 1.0               # Time to maturity in years
-
-        # Create a BlackScholes instance
-        blackscholes = BlackScholes(spot=spot, r=r, volatility=volatility, mu=mu, T=T)
-
-        # Plot simulation of the Black-Scholes model
-        blackscholes.plot_simulation()
-
-        # Generate spot prices for delta calculations
-        spots = np.arange(start=25, stop=175, step=1)
-
-        # Calculate delta for call and put options
-        deltas_call = blackscholes.delta(flag_option='call', strike=100, spot=spots, T=1)
-        deltas_put = blackscholes.delta(flag_option='put', strike=100, spot=spots, T=1)
-
-        # Plotting delta values
-        plt.figure()
-        plt.plot(spots, deltas_call, label='Call Option Delta')
-        plt.plot(spots, deltas_put, label='Put Option Delta')
-        plt.xlabel('Spot Price', fontsize=12)
-        plt.ylabel('Delta', fontsize=12)
-        plt.legend(loc='upper left')
-        plt.xlim((0, 200))
-        plt.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8)
-        plt.minorticks_on()
-        plt.grid(which="minor", visible=False)
-        plt.title("Delta for European Call and Put Options")
-        plt.show()
-
-        # Generate delta surfaces for call and put options
-        blackscholes.delta_surface('call')
-        blackscholes.delta_surface('put')
-
-        # Generate gamma surface
-        blackscholes.gamma_surface()
-
-        # Calculate volatility surface for call option
-        volatility_surface(flag_option='call')
-
-        # Implied volatility calculation
-        spot = 100.0          # Current spot price of the underlying asset
-        r = 0.05              # Risk-free interest rate
-        mu = 1.0              # Expected return of the underlying asset
-        volatility = 0.5      # Volatility
-
-        # Calculate implied volatility for a call option
-        res = impliedVolatility(flag_option='call')
-        print("Implied Volatility (Call):", res)
-
-        # Calculate implied volatility with updated risk-free rate
-        res = impliedVolatility(flag_option='call', r=res[1])
-        print("Updated Implied Volatility (Call):", res)
-    """
 
     def __init__(
         self, spot: float, r: float, mu: float, volatility: float, seed: int = 42
     ):
-        """
-        Initializes a Black-Scholes model object.
-        Parameters:
-            - spot (float): spot value of the process
-            - r (float): interest rate (drift coefficient) of the process
-            - mu (float): drift
-            - volatility (float): volatility coefficient of the process
-            - seed (int): seed for random number generation
-        """
-
-        # Black-Scholes parameters
         self.spot = spot
         self.r = r
         self.mu = mu
@@ -119,30 +19,21 @@ class BlackScholes:
     def simulate(
         self,
         T: float = 1,
-        scheme: str = "euler",
-        n: int = 100,
-        N: int = 1000,
+        scheme: str = Literal["euler", "milstein"],
+        nbr_points: int = 100,
+        nbr_simulations: int = 1000,
     ) -> np.array:
-        """
-        Simulates and returns several simulated paths following the Black-Scholes model.
-        Parameters:
-            - T (float): Time to maturity in years
-            - scheme (str): the discretization scheme used ('euler' or 'milstein')
-            - n (int): number of time steps in a path
-            - N (int): number of simulated paths
-        Returns:
-            - S (np.array): simulated stock paths
-        """
+
         np.random.seed(self.seed)
 
-        dt = T / n
-        S = np.zeros((N, n + 1))
+        dt = T / nbr_points
+        S = np.zeros((nbr_simulations, nbr_points + 1))
         S[:, 0] = self.spot
 
-        for i in range(1, n + 1):
+        for i in range(1, nbr_points + 1):
 
             # Brownian motion
-            N1 = np.random.normal(loc=0, scale=1, size=N)
+            N1 = np.random.normal(loc=0, scale=1, size=nbr_simulations)
             Z = N1 * np.sqrt(dt)
 
             # Update the processes
@@ -154,49 +45,28 @@ class BlackScholes:
 
             if scheme == "milstein":
                 S[:, i] += 1 / 2 * self.volatility * S[:, i - 1] * (Z**2 - dt)
-            elif scheme != "euler":
-                print("Choose a scheme between: 'euler' or 'milstein'")
+
+        if nbr_simulations == 1:
+            S = S.flatten()
 
         return S
 
     def plot_simulation(
         self,
         scheme: str = "euler",
-        n: int = 1000,
+        nbr_points: int = 1000,
         T: float = 1,
     ) -> np.array:
-        """
-        Plots the simulation of a Black-Scholes trajectory.
-        Parameters:
-            - scheme (str): the discretization scheme used ('euler' or 'milstein')
-            - n (int): number of time steps in a path
-        """
-        S = self.simulate(n=n, scheme=scheme, N=1)
+        
+        S = self.simulate(nbr_points=nbr_points, scheme=scheme, nbr_simulations=1)
 
         plt.figure(figsize=(10, 6))
-
-        # Plot for the stock path
-        plt.plot(
-            np.linspace(0, T, n + 1),
-            S[0],
-            label="Risky asset",
-            color="blue",
-            linewidth=1,
-        )
+        plt.plot(np.linspace(0, T, nbr_points + 1), S[0], label="Risky asset", color="blue", linewidth=1)
         plt.xlabel("Time to expiration", fontsize=12)
         plt.ylabel("Value [$]", fontsize=12)
         plt.legend(loc="upper left")
-        plt.grid(
-            visible=True,
-            which="major",
-            linestyle="--",
-            dashes=(5, 10),
-            color="gray",
-            linewidth=0.5,
-            alpha=0.8,
-        )
+        plt.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8,)
         plt.minorticks_on()
-        plt.grid(which="minor", visible=False)
         plt.title(f"Black-Scholes Model Simulation with {scheme} scheme", fontsize=16)
         plt.show()
 
@@ -210,17 +80,7 @@ class BlackScholes:
         r: float = None,
         volatility: float = None,
     ):
-        """
-        Calculates the price of a European call option using the Black-Scholes formula.
-        Parameters:
-            - spot (float): spot value of the underlying asset
-            - r (float): risk-free interest rate
-            - volatility (float): volatility of the underlying asset
-            - T (float): time to expiration (in years)
-            - strike (float): strike price of the option
-        Returns:
-            - call_price (float): price of the European call option
-        """
+
         if spot is None:
             spot = self.spot
         if r is None:
@@ -235,8 +95,7 @@ class BlackScholes:
             d2 = d1 - volatility * np.sqrt(T)
             return spot * norm.cdf(d1) - strike * np.exp(-r * T) * norm.cdf(d2)
         else:
-            
-            return np.maximum(0,spot-strike)
+            return np.maximum(0, spot-strike)
 
     def put_price(
         self,
@@ -246,17 +105,6 @@ class BlackScholes:
         volatility: float = None,
         T: float = 1,
     ):
-        """
-        Calculates the price of a European put option using the Black-Scholes formula and call-put parity.
-        Parameters:
-            - spot (float): spot value of the underlying asset. If None, defaults to model parameter.
-            - r (float): risk-free interest rate. If None, defaults to model parameter.
-            - volatility (float): volatility of the underlying asset. If None, defaults to model parameter.
-            - T (float): time to expiration (in years). Defaults to 1.
-            - strike (float): strike price of the option. If None, defaults to model parameter.
-        Returns:
-            - put_price (float): price of the European put option
-        """
         if spot is None:
             spot = self.spot
         if r is None:
@@ -277,19 +125,6 @@ class BlackScholes:
         volatility: float = None,
         T: float = 1,
     ):
-        """
-        Calculates the delta of a European option using the Black-Scholes formula.
-        Parameters:
-            - strike (float): strike price of the option.
-            - flag_option (str): type of option, either 'call' or 'put'.
-        Optional parameters:
-            - T (float): time to expiration (in years). Defaults to 1.
-            - spot (float): spot value of the underlying asset. If None, defaults to model parameter.
-            - r (float): risk-free interest rate. If None, defaults to model parameter.
-            - volatility (float): volatility of the underlying asset. If None, defaults to model parameter.
-        Returns:
-            - delta (float): delta of the European option
-        """
         if spot is None:
             spot = self.spot
         if r is None:
@@ -299,23 +134,19 @@ class BlackScholes:
         if strike is None:
             raise ValueError("Please provide a strike price.")
 
-        d1 = (np.log(spot / strike) + (r + 0.5 * volatility**2) * T) / (
-            volatility * np.sqrt(T)
+        d1 = (
+            np.log(spot / strike) + (r + 0.5 * volatility**2) * T) / (volatility * np.sqrt(T)
         )
 
         if flag_option == "call":
-            delta = norm.cdf(d1)
-        elif flag_option == "put":
-            delta = norm.cdf(d1) - 1
+            return norm.cdf(d1)
         else:
-            raise ValueError("Option type must be either 'call' or 'put'.")
+            return norm.cdf(d1) - 1
 
-        return delta
 
     def delta_surface(self, flag_option: Literal["call", "put"]):
-        """ "
+        """
         Plot the delta of the option as a function of strike and time to maturity
-            - flag_option (str): 'call' of 'put', type of option
         """
 
         Ks = np.arange(start=20, stop=200, step=0.5)
@@ -329,25 +160,8 @@ class BlackScholes:
 
         fig = plt.figure()
         ax = fig.add_subplot(111, projection="3d")
-        ax.plot_surface(
-            K_grid,
-            T_grid,
-            deltas.T,
-            edgecolor="royalblue",
-            lw=0.5,
-            rstride=8,
-            cstride=8,
-            alpha=0.3,
-        )
-        ax.grid(
-            visible=True,
-            which="major",
-            linestyle="--",
-            dashes=(5, 10),
-            color="gray",
-            linewidth=0.5,
-            alpha=0.8,
-        )
+        ax.plot_surface(K_grid, T_grid, deltas.T, edgecolor="royalblue", lw=0.5, rstride=8, cstride=8, alpha=0.3)
+        ax.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8)
         ax.set_xlabel("Strike")
         ax.set_ylabel("Time to Maturity")
         ax.set_zlabel("Delta")
@@ -362,17 +176,6 @@ class BlackScholes:
         r: float = None,
         volatility: float = None,
     ):
-        """
-        Calculates the gamma of a European option using the Black-Scholes formula.
-        Parameters:
-            - strike (float): strike price of the option.
-            - spot (float): spot value of the underlying asset. If None, defaults to model parameter.
-            - r (float): risk-free interest rate. If None, defaults to model parameter.
-            - volatility (float): volatility of the underlying asset. If None, defaults to model parameter.
-            - T (float): time to expiration (in years). If None, defaults to model parameter.
-        Returns:
-            - gamma (float): gamma of the European option
-        """
         if spot is None:
             spot = self.spot
         if r is None:
@@ -389,7 +192,6 @@ class BlackScholes:
             volatility * np.sqrt(T)
         )
         gamma = norm.pdf(d1) / (spot * volatility * np.sqrt(T))
-
         return gamma
 
     def gamma_surface(self):
@@ -408,25 +210,8 @@ class BlackScholes:
 
         fig = plt.figure()
         ax = fig.add_subplot(111, projection="3d")
-        ax.plot_surface(
-            K_grid,
-            T_grid,
-            gammas.T,
-            edgecolor="royalblue",
-            lw=0.5,
-            rstride=8,
-            cstride=8,
-            alpha=0.3,
-        )
-        ax.grid(
-            visible=True,
-            which="major",
-            linestyle="--",
-            dashes=(5, 10),
-            color="gray",
-            linewidth=0.5,
-            alpha=0.8,
-        )
+        ax.plot_surface(K_grid, T_grid, gammas.T, edgecolor="royalblue", lw=0.5, rstride=8, cstride=8, alpha=0.3)
+        ax.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8)
         ax.set_xlabel("Strike")
         ax.set_ylabel("Time to Maturity")
         ax.set_zlabel("Gamma")
@@ -440,8 +225,8 @@ class BlackScholes:
         strike: float,
         hedging_volatility: float,
         pricing_volatility: float = None,
-        nHedges: float = 252,
-        nPaths: float = 100,
+        nbr_hedges: float = 252,
+        nbr_simulations: float = 100,
     ):
         """
         Implement a delta hedging strategy using both a risky asset (underlying asset)
@@ -453,11 +238,11 @@ class BlackScholes:
                 The strike price of the option.
             - hedging_volatility (float):
                 The volatility used for hedging purposes.
-            - nHedges (float, optional):
+            - nbr_hedges (float, optional):
                 The number of simulation steps or trading intervals over the life
                 of the option. Defaults to 1000. This parameter controls how often
                 the portfolio is rebalanced to maintain a delta-neutral position.
-            - nPaths (float, optional):
+            - nbr_simulations (float, optional):
                 The number of simulations.
         Returns:
             - portfolio (np.array): allocation,
@@ -466,10 +251,10 @@ class BlackScholes:
         if pricing_volatility is None:
             pricing_volatility = hedging_volatility
 
-        time = np.linspace(start=0, stop=T, num=nHedges + 1)
-        dt = T / nHedges
+        time = np.linspace(start=0, stop=T, num=nbr_hedges + 1)
+        dt = T / nbr_hedges
 
-        S = self.simulate(scheme="milstein", n=nHedges, N=nPaths)
+        S = self.simulate(scheme="milstein", nbr_points=nbr_hedges, nbr_simulations=nbr_simulations)
         portfolio = np.zeros_like(S)
 
         if flag_option == "call":
@@ -490,15 +275,11 @@ class BlackScholes:
         )
         bank = portfolio[:, 0] - stocks * S[:, 0]
 
-        for t in range(1, nHedges):
+        for t in range(1, nbr_hedges):
 
-            # Mise à jour de la banque
             bank = bank * np.exp(dt * self.r)
-
-            # Mise à jour du portefeuille : valeur totale = actions + banque
             portfolio[:, t] = stocks * S[:, t] + bank
 
-            # Calcul de la nouvelle couverture delta
             stocks = self.delta(
                 spot=S[:, t],
                 T=T - time[t],
@@ -507,10 +288,8 @@ class BlackScholes:
                 flag_option=flag_option,
             )
 
-            # Mise à jour de la banque après réajustement de la couverture
             bank = portfolio[:, t] - stocks * S[:, t]
 
-        # Liquidation
         portfolio[:, -1] = stocks * S[:, -1] + bank * np.exp(dt * self.r)
         return portfolio, S
 
@@ -521,8 +300,8 @@ class BlackScholes:
         strike: float,
         hedging_volatility: float,
         pricing_volatility: float = None,
-        nHedges: float = 1000,
-        nPaths: float = 100,
+        nbr_hedges: float = 1000,
+        nbr_simulations: float = 100,
     ):
         """
         Implement a volatility arbitrage strategy by buying an underpriced option
@@ -542,11 +321,11 @@ class BlackScholes:
             - pricing_volatility (float, optional):
                 The implied volatility used to calculate the option price. If not
                 provided, defaults to the value of `hedging_volatility`.
-            - nHedges (float, optional):
+            - nbr_hedges (float, optional):
                 The number of trading intervals over the life of the option. This
                 parameter controls how frequently the portfolio is rebalanced to
                 maintain the hedge. Defaults to 1000.
-            - nPaths (float, optional):
+            - nbr_simulations (float, optional):
                 The number of Monte Carlo simulations for the stock price path.
                 Defaults to 100.
 
@@ -571,10 +350,10 @@ class BlackScholes:
         if pricing_volatility is None:
             pricing_volatility = hedging_volatility
 
-        time = np.linspace(start=0, stop=T, num=nHedges + 1)
-        dt = T / nHedges
+        time = np.linspace(start=0, stop=T, num=nbr_hedges + 1)
+        dt = T / nbr_hedges
 
-        S = self.simulate(scheme="milstein", n=nHedges, N=nPaths)
+        S = self.simulate(scheme="milstein", n=nbr_hedges, N=nbr_simulations)
         portfolio = np.zeros_like(S)
         portfolio[:, 0] = 0  # Arbitrage
 
@@ -592,7 +371,7 @@ class BlackScholes:
         stocks = delta(0, S[:, 0])
         bank = stocks * S[:, 0] - C(0, S[:, 0])
 
-        for t in range(1, nHedges):
+        for t in range(1, nbr_hedges):
 
             # Mise à jour de la banque
             bank = bank * np.exp(dt * self.r)
