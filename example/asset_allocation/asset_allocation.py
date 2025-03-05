@@ -1,6 +1,6 @@
-from hestonModel.models.heston import Heston
-from hestonModel.portfolio.Portfolio import Portfolio
-from hestonModel.portfolio.strategies import naive_strategy, optimal_allocate_strategy, run_strategies
+from hestonpy.models.heston import Heston
+from hestonpy.portfolio.Portfolio import Portfolio
+from hestonpy.portfolio.strategies import naive_strategy, optimal_allocate_strategy, run_strategies
 
 import matplotlib.pyplot as plt 
 import numpy as np
