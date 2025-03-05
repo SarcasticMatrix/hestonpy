@@ -197,7 +197,7 @@ class Heston:
         else:
             print("Argument j (int) must be 1 or 2")
             return 0
-        a = self.kappa * self.theta
+        a = self.kappa * self.theta / self.sigma**2
 
         dj = lambda u: np.sqrt(
             (self.rho * self.sigma * u * 1j - bj) ** 2
@@ -207,7 +207,7 @@ class Heston:
             self.rho * self.sigma * u * 1j - bj + dj(u)
         )
 
-        Cj = lambda tau, u: self.r * u * tau * 1j + a / self.sigma**2 * (
+        Cj = lambda tau, u: self.r * u * tau * 1j + a * (
             (bj - self.rho * self.sigma * u * 1j + dj(u)) * tau
             - 2 * np.log((1 - gj(u) * np.exp(dj(u) * tau)) / (1 - gj(u)))
         )
@@ -235,24 +235,24 @@ class Heston:
         x = np.log(s)
         if v is None:
             v = self.vol_initial
-
+        
         psi1 = self.characteristic(j=1)
         integrand1 = lambda u: np.real(
             (np.exp(-u * np.log(strike) * 1j) * psi1(x, v, time_to_maturity, u)) / (u * 1j)
         )
-        Q1 = 1 / 2 + 1 / np.pi * quad_vec(f=integrand1, a=0, b=100)[0]
+        Q1 = 1 / 2 + 1 / np.pi * quad_vec(f=integrand1, a=0, b=1000)[0]
         if error_boolean:
-            error1 = 1 / np.pi * quad_vec(f=integrand1, a=0, b=100)[1]
+            error1 = 1 / np.pi * quad_vec(f=integrand1, a=0, b=1000)[1]
 
         psi2 = self.characteristic(j=2)
         integrand2 = lambda u: np.real(
             (np.exp(-u * np.log(strike) * 1j) * psi2(x, v, time_to_maturity, u)) / (u * 1j)
         )
-        Q2 = 1 / 2 + 1 / np.pi * quad_vec(f=integrand2, a=0, b=100)[0]
+        Q2 = 1 / 2 + 1 / np.pi * quad_vec(f=integrand2, a=0, b=1000)[0]
         if error_boolean:
-            error2 = 1 / np.pi * quad_vec(f=integrand2, a=0, b=100)[1]
+            error2 = 1 / np.pi * quad_vec(f=integrand2, a=0, b=1000)[1]
 
-        price = self.spot * Q1 - strike * np.exp(-self.r * time_to_maturity) * Q2
+        price = s * Q1 - strike * np.exp(-self.r * time_to_maturity) * Q2
     
         if error_boolean:
             error = self.spot * error1 + strike * np.exp(-self.r * time_to_maturity) * error2
@@ -297,11 +297,8 @@ class Heston:
             v=v,
             strike=strike, 
             time_to_maturity=time_to_maturity
-        )
+        ) 
 
-        price_function = self.call_price()
-        delta_function = lambda strike, time_to_maturity, s, v: (
-            price_function(s=s*1.01, v=v,strike=strike, time_to_maturity=time_to_maturity) - price_function(s=s*0.99, v=v,strike=strike, time_to_maturity=time_to_maturity)) / (s * 2/100)
         return delta_function
 
    
@@ -319,19 +316,51 @@ class Heston:
             if v is None:
                 v = self.vol_initial
 
+            u1 = 1 / 2
+            b1 = self.kappa + self.drift_emm - self.rho * self.sigma
+            u2 = -1 / 2
+            b2 = self.kappa + self.drift_emm
+
+            d1 = lambda u: np.sqrt(
+                (self.rho * self.sigma * u * 1j - b1) ** 2
+                - self.sigma**2 * (2 * u1 * u * 1j - u**2)
+            )
+            d2 = lambda u: np.sqrt(
+                (self.rho * self.sigma * u * 1j - b2) ** 2
+                - self.sigma**2 * (2 * u2 * u * 1j - u**2)
+            )
+            g1 = lambda u: (self.rho * self.sigma * u * 1j - b1 - d1(u)) / (
+                self.rho * self.sigma * u * 1j - b1 + d1(u)
+            )
+            g2 = lambda u: (self.rho * self.sigma * u * 1j - b2 - d2(u)) / (
+                self.rho * self.sigma * u * 1j - b2 + d2(u)
+            )
+            D1 = (
+                lambda tau, u: (b1 - self.rho * self.sigma * u * 1j + d1(u))
+                / self.sigma**2
+                * (1 - np.exp(d1(u) * tau))
+                / (1 - g1(u) * np.exp(d1(u) * tau))
+            )
+            D2 = (
+                lambda tau, u: (b2 - self.rho * self.sigma * u * 1j + d2(u))
+                / self.sigma**2
+                * (1 - np.exp(d2(u) * tau))
+                / (1 - g2(u) * np.exp(d2(u) * tau))
+            )
+
             psi1 = self.characteristic(j=1)
             integrand1 = lambda u: np.real(
-                (np.exp(-u * np.log(strike) * 1j) * psi1(x, v, time_to_maturity, u)) / (u * 1j)
+                (np.exp(-u * np.log(strike) * 1j) * psi1(x, v, time_to_maturity, u) * D1(time_to_maturity, u)) / (u * 1j)
             )
-            Q1 = 1 / 2 + 1 / np.pi * quad_vec(f=integrand1, a=0, b=1000)[0]
+            integral1 = 1 / np.pi * quad_vec(f=integrand1, a=0, b=1000)[0]
 
             psi2 = self.characteristic(j=2)
             integrand2 = lambda u: np.real(
-                (np.exp(-u * np.log(strike) * 1j) * psi2(x, v, time_to_maturity, u)) / (u * 1j)
+                (np.exp(-u * np.log(strike) * 1j) * psi2(x, v, time_to_maturity, u) * D2(time_to_maturity, u)) / (u * 1j)
             )
-            Q2 = 1 / 2 + 1 / np.pi * quad_vec(f=integrand2, a=0, b=1000)[0]
+            integral2 = 1 / np.pi * quad_vec(f=integrand2, a=0, b=1000)[0]
 
-            return s * Q1 - strike * np.exp(-self.r * time_to_maturity) * Q2
+            return s * integral1 - strike * np.exp(-self.r * time_to_maturity) * integral2
 
         vega_function = lambda strike, time_to_maturity, s, v: vega(
             s=s, 
@@ -339,9 +368,6 @@ class Heston:
             strike=strike, 
             time_to_maturity=time_to_maturity
         )
-        price_function = self.call_price()
-        vega_function = lambda strike, time_to_maturity, s, v: (
-            price_function(s=s, v=v+(1/100)**2+2*1/100*v,strike=strike, time_to_maturity=time_to_maturity) - price_function(s=s, v=v,strike=strike, time_to_maturity=time_to_maturity))
         return vega_function
     
 
@@ -458,7 +484,6 @@ def delta_vega_hedging(
     call_price = lambda strike, time_to_maturity, s, v: full_call_price(strike=strike, time_to_maturity=time_to_maturity, s=s, v=v)
     C = call_price(strike, time_to_maturities, S, V)
     C_hedging = call_price(strike_hedging, time_to_maturities_hedging, S, V)
-    print(C.shape)
 
     # Vegas Calculation
     print("Computing vegas ...")
@@ -479,9 +504,7 @@ def delta_vega_hedging(
     derivatives = np.zeros(nbr_simulations)
     bank = np.zeros(nbr_simulations)
 
-    # Hedging and Rebalancing
     portfolio[:, 0] = C[:, 0]
-
     derivatives = vega[:, 0] / vega_hedging[:, 0]
     stocks = delta[:, 0] - derivatives * delta_hedging[:, 0]
     bank = portfolio[:, 0] - stocks * S[:, 0] - derivatives * C_hedging[:, 0]
@@ -494,9 +517,12 @@ def delta_vega_hedging(
         # Mise à jour du portefeuille : valeur totale = banque + actions + dérivés
         portfolio[:, t] = bank + stocks * S[:, t] + derivatives * C_hedging[:, t]
 
-        # Calcul de la nouvelle couverture delta
+        # Nouvelle couverture
         derivatives = vega[:, t] / vega_hedging[:, t]
         stocks = delta[:, t] - derivatives * delta_hedging[:, t]
+
+        if t == nbr_points-1:
+            print(f"Stocks: {np.round(stocks,1)} et derivatives: {np.round(derivatives)}")
 
         bank = portfolio[:, t] - stocks * S[:, t] - derivatives * C_hedging[:, t]
 
