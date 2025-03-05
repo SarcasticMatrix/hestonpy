@@ -1,5 +1,5 @@
 import numpy as np
-from hestonModel.models.heston import Heston
+from hestonpy.models.heston import Heston
 
 def naive_strategy(
         percentage_in_bank_account: float,
@@ -70,7 +70,7 @@ def optimal_allocate_strategy(
     return allocation
 
 
-from hestonModel.portfolio.Portfolio import Portfolio
+from hestonpy.portfolio.Portfolio import Portfolio
 from tqdm import tqdm
 
 import numpy as np
