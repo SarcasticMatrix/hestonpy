@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "hestonpy"
-version = "0.1.6"
-description = "Heston models ready for prod"
+version = "0.1.7"
+description = "Heston models: pricing, calibration, hedging."
 authors = ["SarcasticMatrix"]
 license = "MIT"
 readme = "README.md"
