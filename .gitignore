@@ -1,6 +1,7 @@
 # Mine
 bazars/
 example/
+.vscode
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
