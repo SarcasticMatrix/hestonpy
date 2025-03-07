@@ -124,8 +124,6 @@ class Heston:
         ax1.set_ylabel("Value [$]", fontsize=12)
         ax1.legend(loc="upper left")
         ax1.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8,)
-        ax1.minorticks_on()
-        ax1.grid(which="minor", visible=False)
 
         ax2.plot(np.linspace(0, 1, nbr_points + 1),np.sqrt(V),label="Volatility",color="orange",linewidth=1,)
         ax2.axhline(y=np.sqrt(self.theta),label=r"$\sqrt{\theta}$",linestyle="--",color="black",)
@@ -133,8 +131,6 @@ class Heston:
         ax2.set_ylabel("Instantaneous volatility [%]", fontsize=12)
         ax2.legend(loc="upper left")
         ax2.grid(visible=True,which="major",linestyle="--",dashes=(5, 10),color="gray",linewidth=0.5,alpha=0.8,)
-        ax2.minorticks_on()
-        ax2.grid(which="minor", visible=False)
 
         fig.suptitle(f"Heston Model Simulation with {scheme} scheme", fontsize=16)
         plt.tight_layout()
@@ -175,7 +171,7 @@ class Heston:
             price, standard_deviation, infimum, supremum
         )
 
-    def characteristic(self, j: int) -> float:
+    def characteristic(self, j: int, **kwargs) -> float:
         """
         Creates the characteristic function Psi_j(x, v, t; u) for a given (x, v, t).
 
@@ -188,32 +184,41 @@ class Heston:
         - callable: The characteristic function.
         """
 
+        vol_initial = kwargs.get("vol_initial", self.vol_initial)  # Initial variance
+
+        # Model parameters
+        kappa = kwargs.get("kappa", self.kappa)
+        theta = kwargs.get("theta", self.theta)
+        sigma = kwargs.get("sigma", self.sigma)
+        rho = kwargs.get("rho", self.rho)
+        drift_emm = kwargs.get("drift_emm", self.drift_emm)
+
         if j == 1:
             uj = 1 / 2
-            bj = self.kappa + self.drift_emm - self.rho * self.sigma
+            bj = kappa + drift_emm - rho * sigma
         elif j == 2:
             uj = -1 / 2
-            bj = self.kappa + self.drift_emm
+            bj = kappa + drift_emm
         else:
             print("Argument j (int) must be 1 or 2")
             return 0
-        a = self.kappa * self.theta / self.sigma**2
+        a = kappa * theta / sigma**2
 
         dj = lambda u: np.sqrt(
-            (self.rho * self.sigma * u * 1j - bj) ** 2
-            - self.sigma**2 * (2 * uj * u * 1j - u**2)
+            (rho * sigma * u * 1j - bj) ** 2
+            - sigma**2 * (2 * uj * u * 1j - u**2)
         )
-        gj = lambda u: (self.rho * self.sigma * u * 1j - bj - dj(u)) / (
-            self.rho * self.sigma * u * 1j - bj + dj(u)
+        gj = lambda u: (rho * sigma * u * 1j - bj - dj(u)) / (
+            rho * sigma * u * 1j - bj + dj(u)
         )
 
         Cj = lambda tau, u: self.r * u * tau * 1j + a * (
-            (bj - self.rho * self.sigma * u * 1j + dj(u)) * tau
+            (bj - rho * sigma * u * 1j + dj(u)) * tau
             - 2 * np.log((1 - gj(u) * np.exp(dj(u) * tau)) / (1 - gj(u)))
         )
         Dj = (
-            lambda tau, u: (bj - self.rho * self.sigma * u * 1j + dj(u))
-            / self.sigma**2
+            lambda tau, u: (bj - rho * sigma * u * 1j + dj(u))
+            / sigma**2
             * (1 - np.exp(dj(u) * tau))
             / (1 - gj(u) * np.exp(dj(u) * tau))
         )
@@ -228,15 +233,17 @@ class Heston:
             time_to_maturity: np.array,
             s: np.array = None,
             v: np.array = None,
-            error_boolean: bool = False
+            error_boolean: bool = False,
+            **kwargs
         ):
+
         if s is None:
             s = self.spot
         x = np.log(s)
         if v is None:
-            v = self.vol_initial
+            v = kwargs.get("vol_initial", self.vol_initial)  # Initial variance
         
-        psi1 = self.characteristic(j=1)
+        psi1 = self.characteristic(j=1, **kwargs)
         integrand1 = lambda u: np.real(
             (np.exp(-u * np.log(strike) * 1j) * psi1(x, v, time_to_maturity, u)) / (u * 1j)
         )
@@ -244,7 +251,7 @@ class Heston:
         if error_boolean:
             error1 = 1 / np.pi * quad_vec(f=integrand1, a=0, b=1000)[1]
 
-        psi2 = self.characteristic(j=2)
+        psi2 = self.characteristic(j=2, **kwargs)
         integrand2 = lambda u: np.real(
             (np.exp(-u * np.log(strike) * 1j) * psi2(x, v, time_to_maturity, u)) / (u * 1j)
         )
@@ -260,115 +267,108 @@ class Heston:
         else: 
             return price
         
-    def call_price(self):
+    def call_price(
+            self, 
+            strike: np.array, 
+            time_to_maturity: np.array,
+            s: np.array = None,
+            v: np.array = None,
+            **kwargs
+        ):
         
-        price_function = lambda strike, time_to_maturity, s, v: self.fourier_transform_price(
+        price = self.fourier_transform_price(
             s=s, 
             v=v,
             strike=strike, 
-            time_to_maturity=time_to_maturity
+            time_to_maturity=time_to_maturity,
+            **kwargs
         )
-        return price_function
+        return price
     
     
-    def call_delta(self):
-
-        def delta(
+    def call_delta(
+            self,
             strike: np.array, 
             time_to_maturity: np.array,
             s: np.array = None,
             v: np.array = None,
         ):
-            if s is None:
-                s = self.spot
-            x = np.log(s)
-            if v is None:
-                v = self.vol_initial
+            
+        if s is None:
+            s = self.spot
+        x = np.log(s)
+        if v is None:
+            v = self.vol_initial
 
-            psi1 = self.characteristic(j=1)
-            integrand = lambda u: np.real(
-                (np.exp(-u * np.log(strike) * 1j) * psi1(x, v, time_to_maturity, u)) / (u * 1j)
-            )
-            Q1 = 1 / 2 + 1 / np.pi * quad_vec(f=integrand, a=0, b=1000)[0]
-            return Q1
+        psi1 = self.characteristic(j=1)
+        integrand = lambda u: np.real(
+            (np.exp(-u * np.log(strike) * 1j) * psi1(x, v, time_to_maturity, u)) / (u * 1j)
+        )
+        Q1 = 1 / 2 + 1 / np.pi * quad_vec(f=integrand, a=0, b=1000)[0]
 
-        delta_function = lambda strike, time_to_maturity, s, v: delta(
-            s=s, 
-            v=v,
-            strike=strike, 
-            time_to_maturity=time_to_maturity
-        ) 
-
-        return delta_function
+        return Q1
 
    
-    def call_vega(self):
+    def call_vega(
+            self,
+            strike: np.array, 
+            time_to_maturity: np.array,
+            s: np.array = None,
+            v: np.array = None,
+        ):
 
-        def vega(
-                strike: np.array, 
-                time_to_maturity: np.array,
-                s: np.array = None,
-                v: np.array = None,
-            ):
-            if s is None:   
-                s = self.spot
-            x = np.log(s)
-            if v is None:
-                v = self.vol_initial
+        if s is None:   
+            s = self.spot
+        x = np.log(s)
+        if v is None:
+            v = self.vol_initial
 
-            u1 = 1 / 2
-            b1 = self.kappa + self.drift_emm - self.rho * self.sigma
-            u2 = -1 / 2
-            b2 = self.kappa + self.drift_emm
+        u1 = 1 / 2
+        b1 = self.kappa + self.drift_emm - self.rho * self.sigma
+        u2 = -1 / 2
+        b2 = self.kappa + self.drift_emm
 
-            d1 = lambda u: np.sqrt(
-                (self.rho * self.sigma * u * 1j - b1) ** 2
-                - self.sigma**2 * (2 * u1 * u * 1j - u**2)
-            )
-            d2 = lambda u: np.sqrt(
-                (self.rho * self.sigma * u * 1j - b2) ** 2
-                - self.sigma**2 * (2 * u2 * u * 1j - u**2)
-            )
-            g1 = lambda u: (self.rho * self.sigma * u * 1j - b1 - d1(u)) / (
-                self.rho * self.sigma * u * 1j - b1 + d1(u)
-            )
-            g2 = lambda u: (self.rho * self.sigma * u * 1j - b2 - d2(u)) / (
-                self.rho * self.sigma * u * 1j - b2 + d2(u)
-            )
-            D1 = (
-                lambda tau, u: (b1 - self.rho * self.sigma * u * 1j + d1(u))
-                / self.sigma**2
-                * (1 - np.exp(d1(u) * tau))
-                / (1 - g1(u) * np.exp(d1(u) * tau))
-            )
-            D2 = (
-                lambda tau, u: (b2 - self.rho * self.sigma * u * 1j + d2(u))
-                / self.sigma**2
-                * (1 - np.exp(d2(u) * tau))
-                / (1 - g2(u) * np.exp(d2(u) * tau))
-            )
-
-            psi1 = self.characteristic(j=1)
-            integrand1 = lambda u: np.real(
-                (np.exp(-u * np.log(strike) * 1j) * psi1(x, v, time_to_maturity, u) * D1(time_to_maturity, u)) / (u * 1j)
-            )
-            integral1 = 1 / np.pi * quad_vec(f=integrand1, a=0, b=1000)[0]
-
-            psi2 = self.characteristic(j=2)
-            integrand2 = lambda u: np.real(
-                (np.exp(-u * np.log(strike) * 1j) * psi2(x, v, time_to_maturity, u) * D2(time_to_maturity, u)) / (u * 1j)
-            )
-            integral2 = 1 / np.pi * quad_vec(f=integrand2, a=0, b=1000)[0]
-
-            return s * integral1 - strike * np.exp(-self.r * time_to_maturity) * integral2
-
-        vega_function = lambda strike, time_to_maturity, s, v: vega(
-            s=s, 
-            v=v,
-            strike=strike, 
-            time_to_maturity=time_to_maturity
+        d1 = lambda u: np.sqrt(
+            (self.rho * self.sigma * u * 1j - b1) ** 2
+            - self.sigma**2 * (2 * u1 * u * 1j - u**2)
         )
-        return vega_function
+        d2 = lambda u: np.sqrt(
+            (self.rho * self.sigma * u * 1j - b2) ** 2
+            - self.sigma**2 * (2 * u2 * u * 1j - u**2)
+        )
+        g1 = lambda u: (self.rho * self.sigma * u * 1j - b1 - d1(u)) / (
+            self.rho * self.sigma * u * 1j - b1 + d1(u)
+        )
+        g2 = lambda u: (self.rho * self.sigma * u * 1j - b2 - d2(u)) / (
+            self.rho * self.sigma * u * 1j - b2 + d2(u)
+        )
+        D1 = (
+            lambda tau, u: (b1 - self.rho * self.sigma * u * 1j + d1(u))
+            / self.sigma**2
+            * (1 - np.exp(d1(u) * tau))
+            / (1 - g1(u) * np.exp(d1(u) * tau))
+        )
+        D2 = (
+            lambda tau, u: (b2 - self.rho * self.sigma * u * 1j + d2(u))
+            / self.sigma**2
+            * (1 - np.exp(d2(u) * tau))
+            / (1 - g2(u) * np.exp(d2(u) * tau))
+        )
+
+        psi1 = self.characteristic(j=1)
+        integrand1 = lambda u: np.real(
+            (np.exp(-u * np.log(strike) * 1j) * psi1(x, v, time_to_maturity, u) * D1(time_to_maturity, u)) / (u * 1j)
+        )
+        integral1 = 1 / np.pi * quad_vec(f=integrand1, a=0, b=1000)[0]
+
+        psi2 = self.characteristic(j=2)
+        integrand2 = lambda u: np.real(
+            (np.exp(-u * np.log(strike) * 1j) * psi2(x, v, time_to_maturity, u) * D2(time_to_maturity, u)) / (u * 1j)
+        )
+        integral2 = 1 / np.pi * quad_vec(f=integrand2, a=0, b=1000)[0]
+
+        return s * integral1 - strike * np.exp(-self.r * time_to_maturity) * integral2
+
     
 
     def carr_madan_price(self, strike:float, time_to_maturity:float, error_boolean: bool = False):
@@ -480,24 +480,18 @@ def delta_vega_hedging(
 
     # Prices Calculation
     print("Computing option prices ...")
-    full_call_price = heston.call_price()
-    call_price = lambda strike, time_to_maturity, s, v: full_call_price(strike=strike, time_to_maturity=time_to_maturity, s=s, v=v)
-    C = call_price(strike, time_to_maturities, S, V)
-    C_hedging = call_price(strike_hedging, time_to_maturities_hedging, S, V)
+    C = heston.call_price(strike=strike, time_to_maturity=time_to_maturities, s=S, v=V)
+    C_hedging = heston.call_price(strike=strike_hedging, time_to_maturity=time_to_maturities_hedging, s=S, v=V)
 
     # Vegas Calculation
     print("Computing vegas ...")
-    full_call_vega = heston.call_vega()
-    call_vega = lambda strike, time_to_maturity, s, v: full_call_vega(strike=strike, time_to_maturity=time_to_maturity, s=s, v=v)
-    vega = call_vega(strike, time_to_maturities, S, V)
-    vega_hedging = call_vega(strike_hedging, time_to_maturities_hedging, S, V)
+    vega = heston.call_vega(strike=strike, time_to_maturity=time_to_maturities, s=S, v=V)
+    vega_hedging = heston.call_vega(strike=strike_hedging, time_to_maturity=time_to_maturities_hedging, s=S, v=V)
 
     # Deltas Calculation
     print("Computing deltas ...")
-    full_call_delta = heston.call_delta()
-    call_delta = lambda strike, time_to_maturity, s, v: full_call_delta(strike=strike, time_to_maturity=time_to_maturity, s=s, v=v)
-    delta = call_delta(strike, time_to_maturities, S, V)
-    delta_hedging = call_delta(strike_hedging, time_to_maturities_hedging, S, V)
+    delta = heston.call_delta(strike=strike, time_to_maturity=time_to_maturities, s=S, v=V)
+    delta_hedging = heston.call_delta(strike=strike_hedging, time_to_maturity=time_to_maturities_hedging, s=S, v=V)
     
     # Delta-vega hedging
     stocks = np.zeros(nbr_simulations)
@@ -520,9 +514,6 @@ def delta_vega_hedging(
         # Nouvelle couverture
         derivatives = vega[:, t] / vega_hedging[:, t]
         stocks = delta[:, t] - derivatives * delta_hedging[:, t]
-
-        if t == nbr_points-1:
-            print(f"Stocks: {np.round(stocks,1)} et derivatives: {np.round(derivatives)}")
 
         bank = portfolio[:, t] - stocks * S[:, t] - derivatives * C_hedging[:, t]
 
