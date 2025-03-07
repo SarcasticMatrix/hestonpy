@@ -413,12 +413,11 @@ class Heston:
         Ts = np.linspace(start=0.1, stop=2, num=200)
         K_mesh, T_mesh = np.meshgrid(Ks, Ts)
 
-        full_call_price = self.call_price()
-        call_prices = lambda strike, time_to_maturity: full_call_price(strike=strike, time_to_maturity=time_to_maturity, s=self.spot, v=self.vol_initial)
+        call_prices = self.call_price(strike=K_mesh, time_to_maturity=T_mesh, s=self.spot, v=self.vol_initial)
 
         fig = plt.figure()
         ax = fig.add_subplot(111, projection="3d")
-        ax.plot_surface(K_mesh, T_mesh, call_prices(K_mesh, T_mesh).T, edgecolor="royalblue", lw=0.5, rstride=8, cstride=8, alpha=0.3)
+        ax.plot_surface(K_mesh, T_mesh, call_prices.T, edgecolor="royalblue", lw=0.5, rstride=8, cstride=8, alpha=0.3)
         ax.set_title("Call price as a function of strike and time to maturity")
         ax.set_xlabel(r"Strike ($K$)")
         ax.set_ylabel(r"Time to maturity ($T$)")
@@ -426,101 +425,101 @@ class Heston:
         ax.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8)
         plt.show()
 
-def delta_vega_hedging(
-    heston: Heston, 
-    strike: float,
-    strike_hedging: float,
-    maturity: float,
-    maturity_hedging: float,
-    nbr_points: float = 252, 
-    nbr_simulations: float = 100
-):
-    """
-    Implement a delta-vega hedging strategy for a European option using the Heston model.
+    def delta_vega_hedging(
+        self, 
+        strike: float,
+        strike_hedging: float,
+        maturity: float,
+        maturity_hedging: float,
+        nbr_points: float = 252, 
+        nbr_simulations: float = 100
+    ):
+        """
+        Implement a delta-vega hedging strategy for a European option using the Heston model.
 
-    This function simulates the hedging process over the lifetime of the option by dynamically rebalancing a portfolio
-    consisting of a risky asset (underlying stock), an option (for vega hedging), and a non-risky asset (bank account).
-    The function assumes that both the pricing and hedging models are based on the Heston stochastic volatility model,
-    but they may use different volatilities for hedging and pricing.
+        This function simulates the hedging process over the lifetime of the option by dynamically rebalancing a portfolio
+        consisting of a risky asset (underlying stock), an option (for vega hedging), and a non-risky asset (bank account).
+        The function assumes that both the pricing and hedging models are based on the Heston stochastic volatility model,
+        but they may use different volatilities for hedging and pricing.
 
-    Parameters:
+        Parameters:
 
-    Returns:
+        Returns:
 
-    Methodology:
-        1. Simulation
-           - Simulates paths for the underlying asset prices (`S`) and volatilities (`V`) using the Heston model.
-        2. Greeks Calculation
-           - Calculates vega and delta for both the pricing and hedging models at each time step.
-        3. Hedging
-           - Implements a delta-vega hedging strategy:
-               * `stocks` holds the number of units of the underlying asset.
-               * `derivatives` holds the number of options used for vega hedging.
-               * `bank` holds the amount of cash in a non-risky asset.
-        4. Rebalancing
-           - Rebalances the portfolio at each hedging interval to maintain the desired delta and vega neutrality.
-        ```
-    """
+        Methodology:
+            1. Simulation
+            - Simulates paths for the underlying asset prices (`S`) and volatilities (`V`) using the Heston model.
+            2. Greeks Calculation
+            - Calculates vega and delta for both the pricing and hedging models at each time step.
+            3. Hedging
+            - Implements a delta-vega hedging strategy:
+                * `stocks` holds the number of units of the underlying asset.
+                * `derivatives` holds the number of options used for vega hedging.
+                * `bank` holds the amount of cash in a non-risky asset.
+            4. Rebalancing
+            - Rebalances the portfolio at each hedging interval to maintain the desired delta and vega neutrality.
+            ```
+        """
 
-    # Simulation
-    time = np.linspace(start=0, stop=maturity, num=nbr_points + 1)
-    time_to_maturities = np.tile(maturity - time, (nbr_simulations, 1))
-    time_hedging = np.linspace(start=0, stop=maturity, num=nbr_points + 1)
-    time_to_maturities_hedging = np.tile(maturity_hedging - time_hedging, (nbr_simulations, 1))
-    dt = maturity / nbr_points
-    r = heston.r
+        # Simulation
+        time = np.linspace(start=0, stop=maturity, num=nbr_points + 1)
+        time_to_maturities = np.tile(maturity - time, (nbr_simulations, 1))
+        time_hedging = np.linspace(start=0, stop=maturity, num=nbr_points + 1)
+        time_to_maturities_hedging = np.tile(maturity_hedging - time_hedging, (nbr_simulations, 1))
+        dt = maturity / nbr_points
+        r = self.r
 
-    S, V, _ = heston.simulate(
-        time_to_maturity=maturity, 
-        nbr_points=nbr_points, 
-        nbr_simulations=nbr_simulations, 
-        scheme='milstein'
-    )
-    portfolio = np.zeros_like(S)
+        S, V, _ = self.simulate(
+            time_to_maturity=maturity, 
+            nbr_points=nbr_points, 
+            nbr_simulations=nbr_simulations, 
+            scheme='milstein'
+        )
+        portfolio = np.zeros_like(S)
 
-    # Prices Calculation
-    print("Computing option prices ...")
-    C = heston.call_price(strike=strike, time_to_maturity=time_to_maturities, s=S, v=V)
-    C_hedging = heston.call_price(strike=strike_hedging, time_to_maturity=time_to_maturities_hedging, s=S, v=V)
+        # Prices Calculation
+        print("Computing option prices ...")
+        C = self.call_price(strike=strike, time_to_maturity=time_to_maturities, s=S, v=V)
+        C_hedging = self.call_price(strike=strike_hedging, time_to_maturity=time_to_maturities_hedging, s=S, v=V)
 
-    # Vegas Calculation
-    print("Computing vegas ...")
-    vega = heston.call_vega(strike=strike, time_to_maturity=time_to_maturities, s=S, v=V)
-    vega_hedging = heston.call_vega(strike=strike_hedging, time_to_maturity=time_to_maturities_hedging, s=S, v=V)
+        # Vegas Calculation
+        print("Computing vegas ...")
+        vega = self.call_vega(strike=strike, time_to_maturity=time_to_maturities, s=S, v=V)
+        vega_hedging = self.call_vega(strike=strike_hedging, time_to_maturity=time_to_maturities_hedging, s=S, v=V)
 
-    # Deltas Calculation
-    print("Computing deltas ...")
-    delta = heston.call_delta(strike=strike, time_to_maturity=time_to_maturities, s=S, v=V)
-    delta_hedging = heston.call_delta(strike=strike_hedging, time_to_maturity=time_to_maturities_hedging, s=S, v=V)
-    
-    # Delta-vega hedging
-    stocks = np.zeros(nbr_simulations)
-    derivatives = np.zeros(nbr_simulations)
-    bank = np.zeros(nbr_simulations)
+        # Deltas Calculation
+        print("Computing deltas ...")
+        delta = self.call_delta(strike=strike, time_to_maturity=time_to_maturities, s=S, v=V)
+        delta_hedging = self.call_delta(strike=strike_hedging, time_to_maturity=time_to_maturities_hedging, s=S, v=V)
+        
+        # Delta-vega hedging
+        stocks = np.zeros(nbr_simulations)
+        derivatives = np.zeros(nbr_simulations)
+        bank = np.zeros(nbr_simulations)
 
-    portfolio[:, 0] = C[:, 0]
-    derivatives = vega[:, 0] / vega_hedging[:, 0]
-    stocks = delta[:, 0] - derivatives * delta_hedging[:, 0]
-    bank = portfolio[:, 0] - stocks * S[:, 0] - derivatives * C_hedging[:, 0]
+        portfolio[:, 0] = C[:, 0]
+        derivatives = vega[:, 0] / vega_hedging[:, 0]
+        stocks = delta[:, 0] - derivatives * delta_hedging[:, 0]
+        bank = portfolio[:, 0] - stocks * S[:, 0] - derivatives * C_hedging[:, 0]
 
-    for t in tqdm(range(1, nbr_points)):
+        for t in tqdm(range(1, nbr_points)):
 
-        # Mise à jour de la banque
-        bank = bank * np.exp(dt * r)
+            # Mise à jour de la banque
+            bank = bank * np.exp(dt * r)
 
-        # Mise à jour du portefeuille : valeur totale = banque + actions + dérivés
-        portfolio[:, t] = bank + stocks * S[:, t] + derivatives * C_hedging[:, t]
+            # Mise à jour du portefeuille : valeur totale = banque + actions + dérivés
+            portfolio[:, t] = bank + stocks * S[:, t] + derivatives * C_hedging[:, t]
 
-        # Nouvelle couverture
-        derivatives = vega[:, t] / vega_hedging[:, t]
-        stocks = delta[:, t] - derivatives * delta_hedging[:, t]
+            # Nouvelle couverture
+            derivatives = vega[:, t] / vega_hedging[:, t]
+            stocks = delta[:, t] - derivatives * delta_hedging[:, t]
 
-        bank = portfolio[:, t] - stocks * S[:, t] - derivatives * C_hedging[:, t]
+            bank = portfolio[:, t] - stocks * S[:, t] - derivatives * C_hedging[:, t]
 
-    portfolio[:, -1] = (
-        bank * np.exp(dt * r) + stocks * S[:, -1] + derivatives * C_hedging[:, -1]
-    )
-    return portfolio, S, V, C
+        portfolio[:, -1] = (
+            bank * np.exp(dt * r) + stocks * S[:, -1] + derivatives * C_hedging[:, -1]
+        )
+        return portfolio, S, V, C
 
 
 from datetime import datetime
