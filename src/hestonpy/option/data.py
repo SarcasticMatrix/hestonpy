@@ -5,8 +5,8 @@ from typing import Literal
 from typing import Tuple, Literal, Optional
 
 def get_options_data(
-        symbol: str,
-        flag_option: Literal['call', 'put'],
+        symbol: str = 'AAPL',
+        flag_option: Literal['call', 'put'] = 'call',
     ) -> Tuple[Optional[pd.DataFrame], Optional[float]]:
     """
     Retrieve option data for a given stock symbol.
@@ -23,7 +23,6 @@ def get_options_data(
         - time to maturity (Time to Maturity) in financial years.
     - spot (float): The spot price of the underlying asset.
     """
-    # to do: implémenter les put 
 
     ticker = yf.Ticker(symbol)
     expiration_dates = ticker.options
@@ -36,10 +35,8 @@ def get_options_data(
 
             if flag_option == "call":
                 options = opt_chain.calls
-            elif flag_option == 'put':
+            if flag_option == 'put':
                 options = opt_chain.puts
-            else: 
-                print("flag_option should be 'call' or 'put'")
 
             expiration = datetime.strptime(exp_date, '%Y-%m-%d').date()
             time_to_maturity = (expiration - today).days / 252
