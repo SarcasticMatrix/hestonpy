@@ -4,6 +4,7 @@ from scipy.optimize import minimize, basinhopping
 from typing import Literal
 import matplotlib.pyplot as plt
 import numpy as np
+import warnings
 
 class VolatilitySmile:
     """
@@ -154,7 +155,9 @@ class VolatilitySmile:
 
         # Fast calibration scheme
         if speed == 'local':
-            result = minimize(cost_function, initial_guess, method=method, bounds=bounds)
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", category=RuntimeWarning)
+                result = minimize(cost_function, initial_guess, method=method, bounds=bounds)
 
         # Second calibration scheme
         elif speed == 'global':
@@ -165,16 +168,17 @@ class VolatilitySmile:
             def callback(x, f, accepted):
                 print("at minimum %.6f accepted %d" % (f, accepted))
                 print(f"Parameters: kappa={x[0]} | theta={x[1]} | sigma={x[2]} | rho={x[3]}\n")
-
-            result = basinhopping(
-                cost_function, 
-                x0=initial_guess,
-                niter=10,
-                stepsize=0.3,
-                niter_success=4,
-                minimizer_kwargs=minimizer_kwargs,
-                callback=callback
-            )
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", category=RuntimeWarning)
+                result = basinhopping(
+                    cost_function, 
+                    x0=initial_guess,
+                    niter=10,
+                    stepsize=0.3,
+                    niter_success=4,
+                    minimizer_kwargs=minimizer_kwargs,
+                    callback=callback
+                )
 
         calibrated_params = {
             "vol_initial": vol_initial, 
