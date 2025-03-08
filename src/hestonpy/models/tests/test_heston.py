@@ -40,12 +40,12 @@ class TestHestonSmoke(unittest.TestCase):
     
     def test_call_delta(self):
         """Vérifie que le calcul du delta fonctionne sans erreur."""
-        delta = self.model.call_delta()(strike=100, time_to_maturity=1, s=100, v=0.04)
+        delta = self.model.call_delta(strike=100, time_to_maturity=1, s=100, v=0.04)
         self.assertIsInstance(delta, float)
     
     def test_call_vega(self):
         """Vérifie que le calcul du vega fonctionne sans erreur."""
-        vega = self.model.call_vega()(strike=100, time_to_maturity=1, s=100, v=0.04)
+        vega = self.model.call_vega(strike=100, time_to_maturity=1, s=100, v=0.04)
         self.assertIsInstance(vega, float)
     
 if __name__ == "__main__":
