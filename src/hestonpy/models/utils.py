@@ -1,11 +1,15 @@
-import numpy as np
+"""
+All the functions related to implied volatility surface
+"""
+
 from hestonpy.models.blackScholes import BlackScholes
 from typing import Literal
+import numpy as np
 
-def volatility_dichotomie(
+def dichotomie(
         market_price,
         price_function,
-        error: float = 10**(-3),
+        error: float = 10**(-5),
     ):
     """
     price_function should be only a function of the volatility
@@ -30,18 +34,37 @@ def volatility_dichotomie(
 
     return (interval[index_inf] + interval[index_sup]) / 2
 
-
-
 def reverse_blackScholes(
         price: float,
         strike: float,
-        T: float,
+        time_to_maturity: float,
         bs: BlackScholes,
-        flag_option: Literal['call','put']
+        flag_option: Literal['call','put'] = 'call',
+        method: Literal['dichotomie'] = 'dichtomie'
 ):
     """
     Reverse the blackScholes formula, compute the implied volatility from market price.
     bs should be already with the right stirke and maturity
     """
 
-    bs_price = lambda volatility: bs.call_price(K=strike, T=T, volatility=volatility)
+    bs_price = lambda volatility: bs.call_price(strike=strike, time_to_maturity=time_to_maturity, volatility=volatility)
+
+    if method == 'dichotomie':
+        iv = dichotomie(market_price=price, price_function=bs_price)
+        return iv
+
+def compute_smile(
+        prices: float,
+        strikes: float,
+        time_to_maturity: float,
+        bs: BlackScholes,
+        flag_option: Literal['call','put'],
+        method: Literal['dichotomie']
+    ):
+
+    ivs = []
+    for (price, strike) in zip(prices, strikes):
+        iv = reverse_blackScholes(price=price, strike=strike, bs=bs, time_to_maturity=time_to_maturity, flag_option='call', method=method)
+        ivs.append(iv)
+
+    return np.array(ivs)
