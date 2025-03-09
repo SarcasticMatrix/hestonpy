@@ -9,7 +9,7 @@ import numpy as np
 def dichotomie(
         market_price,
         price_function,
-        error: float = 10**(-5),
+        error: float = 10**(-6),
     ):
     """
     price_function should be only a function of the volatility
