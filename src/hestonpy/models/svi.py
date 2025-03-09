@@ -53,7 +53,7 @@ class StochasticVolatilityInspired:
             market_ivs: np.array,
             forward: float,
             x0: list = [0.5, 0.5, 0.5, 0.5, 0.5],
-            method: str = Literal['SLSQP']
+            method: str = 'SLSQP'
             ):
         """
         Calibre le modèle SVI aux volatilités implicites de marché en minimisant l'erreur quadratique
