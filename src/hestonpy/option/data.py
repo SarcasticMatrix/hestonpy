@@ -1,13 +1,12 @@
-import pandas as pd
 import yfinance as yf
+import pandas as pd
 from datetime import datetime
-from typing import Literal
-from typing import Tuple, Literal, Optional
+from typing import Tuple, Optional, Literal
 
 def get_options_data(
         symbol: str = 'AAPL',
         flag_option: Literal['call', 'put'] = 'call',
-    ) -> Tuple[Optional[pd.DataFrame], Optional[float]]:
+    ):
     """
     Retrieve option data for a given stock symbol.
 
@@ -16,42 +15,72 @@ def get_options_data(
     - flag_option (Literal['call', 'put']): Type of options to retrieve; either 'call' or 'put'.
 
     Returns:
-    - pd.DataFrame: A DataFrame containing:
+    - dict (key are maturities) of pd.DataFrame containing:
         - option prices (Call Price or Put Price),
         - strike prices (Strike),
+        - bid
+        - ask
+        - implied vol 
         - volumes (Volume), and
-        - time to maturity (Time to Maturity) in financial years.
+        - time to maturity (Time to Maturity) in financial years
+        - maturity
     - spot (float): The spot price of the underlying asset.
     """
 
-    ticker = yf.Ticker(symbol)
-    expiration_dates = ticker.options
-    today = datetime.today().date()
-    data = []
-    
-    if expiration_dates != []:
-        for exp_date in expiration_dates:
+    try:
+        ticker = yf.Ticker(symbol)
+        maturities = ticker.options
+        today = datetime.today().date()
+
+        if not maturities:
+            print(f"No options traded for {symbol}")
+            return None, None, None
+        
+        options_data = []
+
+        for exp_date in maturities:
             opt_chain = ticker.option_chain(exp_date)
+            options = opt_chain.calls if flag_option == "call" else opt_chain.puts
 
-            if flag_option == "call":
-                options = opt_chain.calls
-            if flag_option == 'put':
-                options = opt_chain.puts
+            maturity = datetime.strptime(exp_date, '%Y-%m-%d').date()
+            time_to_maturity = (maturity - today).days / 252
 
-            expiration = datetime.strptime(exp_date, '%Y-%m-%d').date()
-            time_to_maturity = (expiration - today).days / 252
+            if not options.empty:
+                options['Time to Maturity'] = time_to_maturity
+                options['Maturity'] = maturity
+                options_data.append(
+                    options[['lastPrice', 'bid', 'ask', 'impliedVolatility', 'strike', 'volume', 'Time to Maturity', 'Maturity']]
+                )
 
-            for _, row in options.iterrows():
-                data.append([row['lastPrice'], row['strike'], row['volume'], time_to_maturity, expiration])
+        if not options_data:
+            return None, None, None
 
-        df = pd.DataFrame(data, columns=[f'{flag_option.capitalize()} Price', 'Strike', 'Volume', 'Time to Maturity', "Expiration Date"])
-        df = df.dropna()
-        mask = df['Time to Maturity'] != 0.0
-        df = df.loc[mask]
+        data = pd.concat(options_data, ignore_index=True).dropna()
+        data.columns = [
+            f'{flag_option.capitalize()} Price', 'Bid', 'Ask', 'Implied Volatility', 
+            'Strike', 'Volume', 'Time to Maturity', 'Maturity'
+        ]
+        data = data[data['Time to Maturity'] > 0]  # Exclure les options expirées
 
+        # Récupération du prix spot
         history = ticker.history(period="1d")
-        spot = history['Close'].iloc[-1]
+        spot = history['Close'].iloc[-1] if not history.empty else None
 
-        return df, spot
-    else:
-        print(f"No options traded for {symbol}")
+        return data, spot, maturities
+
+    except Exception as e:
+        print(f"Error retrieving data for {symbol}: {e}")
+        return None, None, None
+
+
+def filter_data_for_maturity(data: pd.DataFrame, date: str):
+    """
+    date must be in the form '%Y-%m-%d'
+    """
+        
+    grouped_dict = {
+        maturity.strftime('%Y-%m-%d'): df.reset_index(drop=True)
+        for maturity, df in data.groupby("Maturity")
+    }
+
+    return grouped_dict[date]
