@@ -261,31 +261,6 @@ class VolatilitySmile:
         plt.show()
  
 
-def generate_smile(
-        iv_atm: float = 0.2, 
-        curvature: float = 0.0005, 
-        skew: float = -0.002,
-        strikes: np.array = None,
-        atm: float = None,
-        alea: bool = True
-    ):
-    """
-    - sigma_atm: Volatilité implicite à la monnaie
-    - curvature: Contrôle l’intensité du smile
-    - skew: Contrôle l’inclinaison
-    """
-    
-    if strikes is None:
-        strikes = np.arange(start=80, stop=120, step=5)
-    if atm is None:
-        atm = 100
-
-    market_ivs = iv_atm + skew * (strikes - atm) + curvature * (strikes - atm) ** 2
-    if alea:
-        market_ivs = (1 + np.random.normal(scale=0.01, size=len(market_ivs))) * market_ivs
-
-    return market_ivs
-
 if __name__ == "__main__":
 
     # Paramètres du marché synthétique
