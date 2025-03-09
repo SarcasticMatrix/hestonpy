@@ -1,5 +1,8 @@
 from hestonpy.models.utils import compute_smile
 from hestonpy.models.blackScholes import BlackScholes
+from hestonpy.models.svi import StochasticVolatilityInspired as SVI
+fontdict = {'fontsize': 15, 'fontweight': 'bold'}
+
 from scipy.optimize import minimize, basinhopping
 from typing import Literal
 import matplotlib.pyplot as plt
@@ -16,7 +19,7 @@ class VolatilitySmile:
     def __init__(
             self,
             strikes: np.array, 
-            maturity: np.array,
+            time_to_maturity: np.array,
             atm: float,
             market_prices: np.array = None,
             market_ivs: np.array = None,
@@ -32,7 +35,7 @@ class VolatilitySmile:
             self.market_prices = market_prices
             self.market_ivs = market_ivs
             self.atm = atm
-            self.maturity = maturity
+            self.time_to_maturity = time_to_maturity
 
             # Model variables
             self.r = r
@@ -57,7 +60,7 @@ class VolatilitySmile:
             ivs = self.market_ivs
         
         bs = BlackScholes(spot=self.atm, r=self.r, mu=self.r, volatility=0.02)
-        return bs.call_price(strike=self.strikes, volatility=ivs, time_to_maturity=self.maturity)
+        return bs.call_price(strike=self.strikes, volatility=ivs, time_to_maturity=self.time_to_maturity)
     
     def compute_smile(self, prices:np.array=None):
         """
@@ -76,12 +79,24 @@ class VolatilitySmile:
         smile = compute_smile(
             prices=prices, 
             strikes=self.strikes, 
-            time_to_maturity=self.maturity,
+            time_to_maturity=self.time_to_maturity,
             bs=bs,
             flag_option='call',
             method='dichotomie'
         )
         return smile
+    
+    def svi_smooth(self):
+        """
+        Smooth via a raw SVI
+        """
+
+        raw_svi = SVI(time_to_maturity=self.time_to_maturity)
+        forward = self.atm * np.exp(self.time_to_maturity * self.r)
+        calibrated_params, calibrated_ivs = raw_svi.calibration(
+            strikes=self.strikes, market_ivs=self.market_ivs, forward=forward
+        )
+        return calibrated_params, calibrated_ivs
     
    
     def calibration(
@@ -118,7 +133,6 @@ class VolatilitySmile:
         - dict: Calibrated Heston parameters.
         """
 
-
         index_atm = np.argmin(np.abs(self.strikes - self.atm))
         vol_initial = self.market_ivs[index_atm]**2
 
@@ -134,7 +148,7 @@ class VolatilitySmile:
             }
             
             model_prices = price_function(
-                    **function_params, v=vol_initial, strike=self.strikes, time_to_maturity=self.maturity, s=self.atm
+                    **function_params, v=vol_initial, strike=self.strikes, time_to_maturity=self.time_to_maturity, s=self.atm
                 )
             return np.sum((model_prices - self.market_prices) ** 2)
         
@@ -153,21 +167,22 @@ class VolatilitySmile:
         elif guess_correlation_sign == 'unknown':
             bounds.append((-1.0,1.0))
 
-        # Fast calibration scheme
+        # Fast/local calibration scheme
         if speed == 'local':
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore", category=RuntimeWarning)
                 result = minimize(cost_function, initial_guess, method=method, bounds=bounds)
 
-        # Second calibration scheme
+        # Global calibration scheme
         elif speed == 'global':
             minimizer_kwargs = {
                 "method": method,
                 "bounds": bounds
             }
             def callback(x, f, accepted):
-                print("at minimum %.6f accepted %d" % (f, accepted))
-                print(f"Parameters: kappa={x[0]} | theta={x[1]} | sigma={x[2]} | rho={x[3]}\n")
+                if accepted:
+                    print("at minimum %.6f accepted %d" % (f, accepted))
+                    print(f"Parameters: kappa={x[0]} | theta={x[1]} | sigma={x[2]} | rho={x[3]}\n")
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore", category=RuntimeWarning)
                 result = basinhopping(
@@ -179,6 +194,7 @@ class VolatilitySmile:
                     minimizer_kwargs=minimizer_kwargs,
                     callback=callback
                 )
+                print(result.message, result.success, )
 
         calibrated_params = {
             "vol_initial": vol_initial, 
@@ -196,6 +212,10 @@ class VolatilitySmile:
             self, 
             calibrated_ivs: np.array= None,
             calibrated_prices: np.array=None,
+            bid_prices: np.array=None,
+            bid_ivs: np.array=None,
+            ask_prices: np.array=None,
+            ask_ivs: np.array=None,            
         ):
         """
         Plots the volatility smile.
@@ -214,20 +234,28 @@ class VolatilitySmile:
         
         if (calibrated_ivs is None) and (calibrated_prices is not None):
             calibrated_ivs = self.compute_smile(prices=calibrated_prices)
+        if (bid_ivs is None) and (bid_prices is not None):
+            bid_ivs = self.compute_smile(prices=bid_prices)
+        if (ask_ivs is None) and (ask_prices is not None):
+            ask_ivs = self.compute_smile(prices=ask_prices)
 
-        forward = self.atm * np.exp(self.r * self.maturity)
+        forward = self.atm * np.exp(self.r * self.time_to_maturity)
 
         plt.figure(figsize=(8, 5))
 
-        plt.scatter(self.strikes/forward, self.market_ivs, label="syntetic data", marker='o', color='red', s=25)
+        plt.scatter(self.strikes/forward, self.market_ivs, label="data", marker='o', color='red', s=25)
         plt.axvline(1, linestyle="--", color="gray", label="ATM Strike")
 
         if calibrated_ivs is not None:
-            plt.plot(self.strikes/forward, calibrated_ivs, label="calibred", marker='+', color='blue', markersize=4)
+            plt.plot(self.strikes/forward, calibrated_ivs, label="calibred", marker='+', color='blue', linestyle="dotted", markersize=4)
+        if bid_ivs is not None:
+            plt.scatter(self.strikes/forward, bid_ivs, label="bid", marker=7, color='black', s=20)
+        if ask_ivs is not None:
+            plt.scatter(self.strikes/forward, bid_ivs, label="ask", marker=6, color='gray', s=20)
 
-        plt.xlabel("Moneyness [%]")
-        plt.ylabel("Implied Volatility [%]")
-        plt.title("Volatility smile with syntetic data")
+        plt.xlabel("Moneyness [%]", fontdict=fontdict)
+        plt.ylabel("Implied Volatility [%]", fontdict=fontdict)
+        plt.title("Volatility smile", fontdict=fontdict)
         plt.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8)
         plt.legend()
         plt.show()
