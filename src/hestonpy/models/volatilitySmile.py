@@ -1,7 +1,7 @@
 from hestonpy.models.utils import compute_smile
 from hestonpy.models.blackScholes import BlackScholes
 from hestonpy.models.svi import StochasticVolatilityInspired as SVI
-fontdict = {'fontsize': 15, 'fontweight': 'bold'}
+fontdict = {'fontsize': 10, 'fontweight': 'bold'}
 
 from scipy.optimize import minimize, basinhopping
 from typing import Literal
