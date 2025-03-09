@@ -260,26 +260,3 @@ class VolatilitySmile:
         plt.legend()
         plt.show()
  
-
-if __name__ == "__main__":
-
-    # Paramètres du marché synthétique
-    atm = 100 
-    r = 0.02
-    strikes = np.arange(start=80, stop=120, step=5)
-    iv_atm = 0.2
-    curvature = 0.0005 
-    skew = -0.002 
-
-    markets_ivs = generate_smile(
-        iv_atm, curvature, skew, strikes, atm
-    )
-     
-    volSmile = VolatilitySmile(
-        strikes=strikes,
-        maturity=1,
-        market_ivs=markets_ivs,
-        atm=atm,
-    )
-
-    volSmile.plot()
