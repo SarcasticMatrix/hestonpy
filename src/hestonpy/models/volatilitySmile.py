@@ -85,6 +85,30 @@ class VolatilitySmile:
             method='dichotomie'
         )
         return smile
+
+    def compute_mid_iv(
+            self, 
+            bid_prices: np.array, 
+            ask_prices: np.array,
+            bid_ivs: np.array = None,
+            ask_ivs: np.array = None,
+            select_mid_ivs: bool = True,
+        ):
+        """
+        Compute the mid implied volatilities: (sigma_bid + sigma_ask) / 2
+        You can specify if these implied volatilities are now your self.market_ivs
+        """
+
+        if bid_ivs is None:
+            bid_ivs = self.compute_smile(bid_prices)
+
+        if ask_ivs is None:
+            ask_ivs = self.compute_smile(ask_prices)
+
+        mid_ivs = (ask_ivs + bid_ivs) / 2
+        if select_mid_ivs:
+            self.market_ivs = mid_ivs
+        return mid_ivs
     
     def svi_smooth(self):
         """
