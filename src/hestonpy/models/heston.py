@@ -276,7 +276,7 @@ class Heston:
             **kwargs
         ):
         
-        price = self.fourier_transform_price(
+        price = self.carr_madan_price(
             s=s, 
             v=v,
             strike=strike, 
@@ -370,8 +370,15 @@ class Heston:
         return s * integral1 - strike * np.exp(-self.r * time_to_maturity) * integral2
 
     
-
-    def carr_madan_price(self, strike:float, time_to_maturity:float, error_boolean: bool = False):
+    def carr_madan_price(
+            self, 
+            strike: np.array, 
+            time_to_maturity: np.array,
+            s: np.array = None,
+            v: np.array = None,
+            error_boolean: bool = False,
+            **kwargs
+        ):
         """
         Computes the price of a European call option using the Carr-Madan Fourier pricing method.
 
@@ -383,25 +390,28 @@ class Heston:
         - error (float): The error associated with the option price calculation.
         """
 
-        x = np.log(self.spot)
-        v = self.vol_initial
+        if s is None:
+            s = self.spot
+        x = np.log(s)
+        if v is None:
+            v = kwargs.get("vol_initial", self.vol_initial)  # Initial variance
         alpha = 0.3
 
         price_hat = (
             lambda u: np.exp(-self.r * time_to_maturity)
             / (alpha**2 + alpha - u**2 + u * (2 * alpha + 1) * 1j)
-            * self.characteristic(j=2)(x, v, time_to_maturity, u - (alpha + 1) * 1j)
+            * self.characteristic(j=2, **kwargs)(x, v, time_to_maturity, u - (alpha + 1) * 1j)
         )
 
         integrand = lambda u: np.exp(-u * np.log(strike) * 1j) * price_hat(u)
 
-        price = (
-            np.exp(-alpha * np.log(strike)) / np.pi * quad(func=integrand, a=0, b=50)[0]
+        price = np.real(
+            np.exp(-alpha * np.log(strike)) / np.pi * quad_vec(f=integrand, a=0, b=50)[0]
         )
 
         if error_boolean:
             error = (
-                np.exp(-alpha * np.log(strike)) / np.pi * quad(func=integrand, a=0, b=50)[1]
+                np.exp(-alpha * np.log(strike)) / np.pi * quad_vec(f=integrand, a=0, b=50)[1]
             )
             return price, error
         else: 
@@ -520,77 +530,3 @@ class Heston:
             bank * np.exp(dt * r) + stocks * S[:, -1] + derivatives * C_hedging[:, -1]
         )
         return portfolio, S, V, C
-
-
-from datetime import datetime
-from scipy.optimize import minimize
-from hestonpy.option.data import get_options_data
-
-
-def calibrate(
-    flag_option: str,
-    heston: Heston,
-    symbol: str = "MSFT",
-):
-    """
-    Calibrates the Heston model using options data for various expiration dates and associated strikes.
-
-    Parameters:
-    - flag_option (str): Specifies the type of option (e.g., call or put).
-    - heston (Heston): An instance of the Heston model to calibrate.
-    - symbol (str): The stock symbol for which to gather options data; defaults to 'MSFT' for Microsoft Corporation.
-
-    Returns:
-    - res: The result of the optimization process, containing the optimized parameters for the Heston model.
-    """
-    # to do : implement for put options
-
-    start_date = datetime.now()
-
-    options_data, spot = get_options_data(symbol=symbol, flag_option=flag_option)
-    heston.spot = spot
-
-    # TEST
-    mask = options_data["Volume"] > 0.1 * len(options_data)
-    options_data = options_data.loc[mask]
-
-    volumes = options_data["Volume"].values
-    strikes = options_data["Strike"].values
-    prices = options_data["Call Price"].values
-    maturities = options_data["Time to Maturity"].values
-
-    x0 = [
-        heston.kappa,
-        heston.theta,
-        heston.sigma,
-        heston.rho,
-        heston.drift_emm,
-        heston.vol_initial,
-    ]
-
-    def objective_function(x):
-        heston.kappa = x[0]
-        heston.theta = x[1]
-        heston.sigma = x[2]
-        heston.rho = x[3]
-        heston.drift_emm = x[4]
-        heston.vol_initial = x[5]
-
-        model_prices = []
-        for i in range(len(options_data)):
-            heston.K = strikes[i]
-            heston.T = maturities[i]
-            model_price, _ = heston.fourier_transform_price()
-            model_prices.append(model_price)
-
-        model_prices = np.array(model_prices)
-        weights = volumes / np.sum(volumes)
-
-        result = np.sum(weights * (prices - model_prices) ** 2)
-
-        return result
-
-    print("Callibration is running...")
-    res = minimize(fun=objective_function, x0=x0, method="Nelder-Mead")
-
-    return res
