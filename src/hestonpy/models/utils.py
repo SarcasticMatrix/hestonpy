@@ -34,24 +34,62 @@ def dichotomie(
 
     return (interval[index_inf] + interval[index_sup]) / 2
 
+def newton_raphson(
+        market_price,
+        price_function,
+        vega_function,
+        initial_guess: float = 0.2,
+        tolerance: float = 10**(-6),
+        max_iterations: int = 100
+    ):
+    """
+    Implements the Newton-Raphson method to find implied volatility.
+    price_function should be only a function of volatility that returns the option price.
+    vega_function should be a function of volatility that returns Vega.
+    """
+    volatility = initial_guess
+    for _ in range(max_iterations):
+        price_diff = price_function(volatility) - market_price
+        vega = vega_function(volatility)
+        
+        if abs(price_diff) < tolerance:
+            return volatility
+        
+        if vega == 0:  # Avoid division by zero
+            break
+        
+        volatility -= price_diff / vega
+    
+    return volatility
+
+# Black Scholes Class - Function Updated
 def reverse_blackScholes(
         price: float,
         strike: float,
         time_to_maturity: float,
         bs: BlackScholes,
         flag_option: Literal['call','put'] = 'call',
-        method: Literal['dichotomie'] = 'dichtomie'
+        method: Literal['dichotomie', 'newton_raphson'] = 'newton_raphson'
 ):
     """
-    Reverse the blackScholes formula, compute the implied volatility from market price.
-    bs should be already with the right stirke and maturity
+    Reverse the Black-Scholes formula, compute the implied volatility from market price.
+    bs should be already initialized with the right strike and maturity.
     """
-
-    bs_price = lambda volatility: bs.call_price(strike=strike, time_to_maturity=time_to_maturity, volatility=volatility)
-
+    if flag_option == 'call':
+        bs_price = lambda volatility: bs.call_price(strike=strike, time_to_maturity=time_to_maturity, volatility=volatility)
+    else:
+        bs_price = lambda volatility: bs.put_price(strike=strike, time_to_maturity=time_to_maturity, volatility=volatility)
+    
+    vega_function = lambda volatility: bs.vega(strike=strike, time_to_maturity=time_to_maturity, volatility=volatility)
+    
     if method == 'dichotomie':
         iv = dichotomie(market_price=price, price_function=bs_price)
-        return iv
+    elif method == 'newton_raphson':
+        iv = newton_raphson(market_price=price, price_function=bs_price, vega_function=vega_function)
+    else:
+        raise ValueError("Invalid method. Choose either 'dichotomie' or 'newton_raphson'.")
+    
+    return iv
 
 def compute_smile(
         prices: float,
@@ -59,7 +97,7 @@ def compute_smile(
         time_to_maturity: float,
         bs: BlackScholes,
         flag_option: Literal['call','put'],
-        method: Literal['dichotomie']
+        method: Literal['dichotomie', 'newton_raphson'] = 'newton_raphson'
     ):
 
     ivs = []
