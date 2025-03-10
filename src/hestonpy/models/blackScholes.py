@@ -114,7 +114,6 @@ class BlackScholes:
         put_price = call_price - spot + strike * np.exp(-r * time_to_maturity)
         return put_price
     
-    # Vega Computation in Black Scholes Class
     def vega(
             self,
             strike: float,
