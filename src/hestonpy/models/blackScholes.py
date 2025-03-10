@@ -113,6 +113,27 @@ class BlackScholes:
         call_price = self.call_price(spot, r, volatility, time_to_maturity, strike)
         put_price = call_price - spot + strike * np.exp(-r * time_to_maturity)
         return put_price
+    
+    # Vega Computation in Black Scholes Class
+    def vega(
+            self,
+            strike: float,
+            time_to_maturity: float,
+            spot: float = None,
+            r: float = None,
+            volatility: float = None,
+        ):
+            if spot is None:
+                spot = self.spot
+            if r is None:
+                r = self.r
+            if volatility is None:
+                volatility = self.volatility
+
+            d1 = (np.log(spot / strike) + (r + 0.5 * volatility**2) * time_to_maturity) / (
+                volatility * np.sqrt(time_to_maturity)
+            )
+            return spot * np.sqrt(time_to_maturity) * norm.pdf(d1)
 
     def delta(
         self,
