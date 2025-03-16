@@ -62,14 +62,13 @@ def newton_raphson(
     
     return volatility
 
-# Black Scholes Class - Function Updated
 def reverse_blackScholes(
         price: float,
         strike: float,
         time_to_maturity: float,
         bs: BlackScholes,
         flag_option: Literal['call','put'] = 'call',
-        method: Literal['dichotomie', 'newton_raphson'] = 'newton_raphson'
+        method: Literal['dichotomie', 'newton_raphson'] = 'dichotomie'
 ):
     """
     Reverse the Black-Scholes formula, compute the implied volatility from market price.
@@ -97,12 +96,19 @@ def compute_smile(
         time_to_maturity: float,
         bs: BlackScholes,
         flag_option: Literal['call','put'],
-        method: Literal['dichotomie', 'newton_raphson'] = 'newton_raphson'
+        method: Literal['dichotomie', 'newton_raphson'] = 'dichotomie'
     ):
 
     ivs = []
     for (price, strike) in zip(prices, strikes):
-        iv = reverse_blackScholes(price=price, strike=strike, bs=bs, time_to_maturity=time_to_maturity, flag_option='call', method=method)
+        iv = reverse_blackScholes(
+            price=price, 
+            strike=strike, 
+            bs=bs, 
+            time_to_maturity=time_to_maturity, 
+            flag_option='call', 
+            method=method
+        )
         ivs.append(iv)
 
     return np.array(ivs)
