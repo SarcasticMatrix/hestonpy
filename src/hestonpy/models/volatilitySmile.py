@@ -6,6 +6,7 @@ fontdict = {'fontsize': 10, 'fontweight': 'bold'}
 from scipy.optimize import minimize, basinhopping
 from typing import Literal
 import matplotlib.pyplot as plt
+import pandas as pd
 import numpy as np
 import warnings
 
@@ -62,55 +63,82 @@ class VolatilitySmile:
         bs = BlackScholes(spot=self.atm, r=self.r, mu=self.r, volatility=0.02)
         return bs.call_price(strike=self.strikes, volatility=ivs, time_to_maturity=self.time_to_maturity)
     
-    def compute_smile(self, prices:np.array=None):
+    def compute_smile(self, prices:np.array = None, strikes:np.array = None):
         """
         Computes implied volatilities from option prices using the Black-Scholes model.
         
         Parameters:
-        - prices (np.array, optional): Market option prices corresponding to the strikes.
+        - prices (np.array, optional): option prices corresponding to the strikes.
         
         Returns:
         - np.array: Implied volatilities computed from the option prices.
         """
         if prices is None:
             prices = self.market_prices
-        
+        if strikes is None:
+            strikes = self.strikes
+
         bs = BlackScholes(spot=self.atm, r=self.r, mu=self.r, volatility=0.02)
         smile = compute_smile(
             prices=prices, 
-            strikes=self.strikes, 
+            strikes=strikes, 
             time_to_maturity=self.time_to_maturity,
             bs=bs,
             flag_option='call',
             method='dichotomie'
         )
         return smile
-
-    def compute_mid_iv(
-            self, 
-            bid_prices: np.array, 
-            ask_prices: np.array,
-            bid_ivs: np.array = None,
-            ask_ivs: np.array = None,
-            select_mid_ivs: bool = True,
-        ):
-        """
-        Compute the mid implied volatilities: (sigma_bid + sigma_ask) / 2
-        You can specify if these implied volatilities are now your self.market_ivs
-        """
-
-        if bid_ivs is None:
-            bid_ivs = self.compute_smile(bid_prices)
-
-        if ask_ivs is None:
-            ask_ivs = self.compute_smile(ask_prices)
-
-        mid_ivs = (ask_ivs + bid_ivs) / 2
-        if select_mid_ivs:
-            self.market_ivs = mid_ivs
-        return mid_ivs
     
-    def svi_smooth(self):
+    def filters(
+            self, 
+            full_market_data: pd.DataFrame,
+            select_mid_ivs: bool = True
+        ):
+        strikes = full_market_data['Strike'].values
+
+        # Bid prices and implied vol
+        bid_prices = full_market_data['Bid'].values
+        bid_ivs = self.compute_smile(bid_prices, strikes)
+
+        # Ask prices and implied vol
+        ask_prices = full_market_data['Ask'].values
+        ask_ivs = self.compute_smile(ask_prices, strikes)
+
+        # Mid prices and implied vol
+        mid_ivs = (ask_ivs + bid_ivs)/2
+        mid_prices = (bid_prices + ask_prices)/2
+
+        # 1st mask: trading volume more than 10 contracts
+        mask1 = full_market_data['Volume'] >= 10
+
+        # 2nd mask: mid-prices higher than 0.375
+        mask2 = mid_prices >= 0.375
+
+        # 3rd mask: bid-ask spread must be less than 10%
+        spread = (ask_ivs - bid_ivs)/mid_ivs
+        mask3 = spread <= 0.10
+
+        # 4th mask: in- or out-of-the-money by more than 20% are excluded
+        forward = self.atm * np.exp(self.r * self.time_to_maturity)
+        mask4 = np.abs(self.strikes/forward - 1.0) <= 0.2
+
+        masks = mask1 & mask2 & mask3 & mask4
+        pd.options.mode.chained_assignment = None  # default='warn'
+        market_data = full_market_data.loc[masks]
+        market_data['Mid ivs'] = mid_ivs[masks]
+        market_data['Ask ivs'] = ask_ivs[masks]
+        market_data['Bid ivs'] = bid_ivs[masks]
+        pd.options.mode.chained_assignment = 'warn'
+
+        if select_mid_ivs:
+            # Parameters
+            self.strikes = market_data['Strike']
+            self.market_ivs = market_data['Mid ivs']
+            self.market_prices = mid_prices[mask1 & mask2 & mask3]
+
+        return market_data
+    
+    def svi_smooth(self, select_svi_ivs: bool = False):
         """
         Smooth via a raw SVI
         """
@@ -120,6 +148,8 @@ class VolatilitySmile:
         calibrated_params, calibrated_ivs = raw_svi.calibration(
             strikes=self.strikes, market_ivs=self.market_ivs, forward=forward
         )
+        if select_svi_ivs:
+            self.market_ivs = calibrated_ivs
         return calibrated_params, calibrated_ivs
     
    
@@ -273,9 +303,9 @@ class VolatilitySmile:
         if calibrated_ivs is not None:
             plt.plot(self.strikes/forward, calibrated_ivs, label="calibred", marker='+', color='blue', linestyle="dotted", markersize=4)
         if bid_ivs is not None:
-            plt.scatter(self.strikes/forward, bid_ivs, label="bid", marker=7, color='black', s=20)
+            plt.scatter(self.strikes/forward, bid_ivs, label="bid", marker=6, color='black', s=20)
         if ask_ivs is not None:
-            plt.scatter(self.strikes/forward, bid_ivs, label="ask", marker=6, color='gray', s=20)
+            plt.scatter(self.strikes/forward, ask_ivs, label="ask", marker=7, color='gray', s=20)
 
         plt.xlabel("Moneyness [%]", fontdict=fontdict)
         plt.ylabel("Implied Volatility [%]", fontdict=fontdict)
