@@ -5,6 +5,7 @@ fontdict = {'fontsize': 10, 'fontweight': 'bold'}
 
 from scipy.optimize import minimize, basinhopping
 from typing import Literal
+from datetime import datetime
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -274,7 +275,8 @@ class VolatilitySmile:
             bid_prices: np.array=None,
             bid_ivs: np.array=None,
             ask_prices: np.array=None,
-            ask_ivs: np.array=None,           
+            ask_ivs: np.array=None,
+            maturity: str=None
         ):
         """
         Plots the volatility smile.
@@ -314,7 +316,14 @@ class VolatilitySmile:
 
         plt.xlabel("Moneyness [%]", fontdict=fontdict)
         plt.ylabel("Implied Volatility [%]", fontdict=fontdict)
-        plt.title(f"Volatility smile: {self.time_to_maturity * 252/365 * 12:.3f} mois en avance", fontdict=fontdict)
+
+        if maturity is not None:
+            date = datetime.strptime(maturity, '%Y-%m-%d').date().strftime("%d-%B-%y")
+            title = f"{date}: {self.time_to_maturity * 252/365 * 12:.1f} mois"
+        else:
+            title = f"Time to maturity: {self.time_to_maturity * 252/365 * 12:.3f} mois"
+        
+        plt.title(title, fontdict=fontdict)
         plt.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8)
         plt.legend()
         plt.show()
