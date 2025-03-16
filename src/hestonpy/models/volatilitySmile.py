@@ -128,13 +128,14 @@ class VolatilitySmile:
         market_data['Mid ivs'] = mid_ivs[masks]
         market_data['Ask ivs'] = ask_ivs[masks]
         market_data['Bid ivs'] = bid_ivs[masks]
+        market_data['Mid Price'] = mid_prices[masks]
         pd.options.mode.chained_assignment = 'warn'
 
         if select_mid_ivs:
             # Parameters
-            self.strikes = market_data['Strike']
-            self.market_ivs = market_data['Mid ivs']
-            self.market_prices = mid_prices[mask1 & mask2 & mask3]
+            self.strikes = market_data['Strike'].values
+            self.market_ivs = market_data['Mid ivs'].values
+            self.market_prices = market_data['Mid Price'].values
 
         return market_data
     
@@ -214,13 +215,15 @@ class VolatilitySmile:
         ]
         if guess_correlation_sign == 'positive':
             bounds.append((0.0,1.0))
-            initial_guess[-1] = initial_guess[-1]
+            if initial_guess[-1] < 0:
+                initial_guess[-1] = - initial_guess[-1]
         elif guess_correlation_sign == 'negative':
             bounds.append((-1.0, 0.0))
-            initial_guess[-1] = - initial_guess[-1]
+            if initial_guess[-1] > 0:
+                initial_guess[-1] = - initial_guess[-1]
         elif guess_correlation_sign == 'unknown':
             bounds.append((-1.0,1.0))
-
+        
         # Fast/local calibration scheme
         if speed == 'local':
             with warnings.catch_warnings():
@@ -229,6 +232,8 @@ class VolatilitySmile:
 
         # Global calibration scheme
         elif speed == 'global':
+            print(f"Initial Parameters: kappa={initial_guess[0]} | theta={initial_guess[1]} | sigma={initial_guess[2]} | rho={initial_guess[3]}\n")
+
             minimizer_kwargs = {
                 "method": method,
                 "bounds": bounds
@@ -269,7 +274,7 @@ class VolatilitySmile:
             bid_prices: np.array=None,
             bid_ivs: np.array=None,
             ask_prices: np.array=None,
-            ask_ivs: np.array=None,            
+            ask_ivs: np.array=None,           
         ):
         """
         Plots the volatility smile.
@@ -309,7 +314,7 @@ class VolatilitySmile:
 
         plt.xlabel("Moneyness [%]", fontdict=fontdict)
         plt.ylabel("Implied Volatility [%]", fontdict=fontdict)
-        plt.title("Volatility smile", fontdict=fontdict)
+        plt.title(f"Volatility smile: {self.time_to_maturity * 252/365 * 12:.3f} mois en avance", fontdict=fontdict)
         plt.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8)
         plt.legend()
         plt.show()
