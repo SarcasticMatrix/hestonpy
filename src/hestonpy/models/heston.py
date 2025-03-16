@@ -20,7 +20,6 @@ class Heston:
         drift_emm,
         sigma,
         rho,
-        premium_volatility_risk=0.0,
         seed=42,
     ):
 
@@ -37,7 +36,6 @@ class Heston:
 
         # World parameters
         self.r = r  # interest rate
-        self.premium_volatility_risk = premium_volatility_risk
 
         self.seed = seed  # random seed
 
@@ -78,7 +76,7 @@ class Heston:
             # S[:, i] = S[:, i-1] + self.r * S[:, i-1] * dt + np.sqrt(V[:, i-1]) * S[:, i-1] * ZS
             S[:, i] = (
                 S[:, i - 1]
-                + (self.r + self.premium_volatility_risk * np.sqrt(V[:, i - 1])) * S[:, i - 1] * dt
+                + (self.r + self.drift_emm * np.sqrt(V[:, i - 1])) * S[:, i - 1] * dt
                 + np.sqrt(V[:, i - 1]) * S[:, i - 1] * ZS
             )
 
@@ -406,12 +404,12 @@ class Heston:
         integrand = lambda u: np.exp(-u * np.log(strike) * 1j) * price_hat(u)
 
         price = np.real(
-            np.exp(-alpha * np.log(strike)) / np.pi * quad_vec(f=integrand, a=0, b=50)[0]
+            np.exp(-alpha * np.log(strike)) / np.pi * quad_vec(f=integrand, a=0, b=1000)[0]
         )
 
         if error_boolean:
             error = (
-                np.exp(-alpha * np.log(strike)) / np.pi * quad_vec(f=integrand, a=0, b=50)[1]
+                np.exp(-alpha * np.log(strike)) / np.pi * quad_vec(f=integrand, a=0, b=1000)[1]
             )
             return price, error
         else: 
