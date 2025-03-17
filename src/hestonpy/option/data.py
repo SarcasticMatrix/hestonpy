@@ -1,5 +1,6 @@
 import yfinance as yf
 import pandas as pd
+import numpy as np
 from datetime import datetime
 from typing import Tuple, Optional, Literal
 
@@ -43,7 +44,8 @@ def get_options_data(
             options = opt_chain.calls if flag_option == "call" else opt_chain.puts
 
             maturity = datetime.strptime(exp_date, '%Y-%m-%d').date()
-            time_to_maturity = (maturity - today).days / 252
+            business_days = np.busday_count(today.strftime('%Y-%m-%d'), maturity.strftime('%Y-%m-%d'))
+            time_to_maturity = business_days / 252
 
             if not options.empty:
                 options['Time to Maturity'] = time_to_maturity
