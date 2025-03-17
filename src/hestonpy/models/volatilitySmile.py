@@ -154,13 +154,15 @@ class VolatilitySmile:
             self.market_ivs = calibrated_ivs
         return calibrated_params, calibrated_ivs
     
-   
     def calibration(
             self,
             price_function,
             initial_guess: list = [1.25, 0.04, 0.25, 0.5],
-            guess_correlation_sign: str = Literal['positive','negative','unknown'],
-            speed: str = Literal['local','global'],
+            guess_correlation_sign: Literal['positive','negative','unknown'] = 'unknown',
+            speed: Literal['local','global'] = 'local',
+            weights: np.array = None,
+            power: Literal['sqrt', 'abs', 'square'] = 'square',
+            relative_errors: bool = False,
             method: str = 'L-BFGS-B'
         ):
         """
@@ -179,18 +181,50 @@ class VolatilitySmile:
         If a correlation sign is provided, the function ensures the initial guess for rho has the correct sign.
 
         Parameters:
-        - price_function (callable): Function to compute option prices under the Heston model. `price_function` is typically set as `price_function = heston.call_price`
+        - price_function (callable): Function to compute option prices under the Heston model. Typically set as `price_function = heston.call_price`.
         - initial_guess (list): Initial parameters [kappa, theta, sigma, rho].
         - guess_correlation_sign (str): Assumption on the correlation sign ('positive', 'negative', 'unknown').
         - speed (str): Calibration method ('local' for fast, 'global' for robust optimization).
+        - weights (np.array, optional): Array of weights applied to each observation in the calibration. 
+          If None, uniform weights are used. Weights allow adjusting the importance of different strike prices in the calibration.
+        - power (str, optional): Defines the loss function's exponentiation method. 
+          Options:
+          - 'square': Uses squared differences (default).
+          - 'abs': Uses absolute differences.
+          - 'sqrt': Uses square-root differences.
+        - relative_errors (bool, optional): If True, the calibration minimizes relative errors instead of absolute errors.
+          This can help normalize the impact of different strikes.
         - method (str): Optimization algorithm to use.
 
         Returns:
-        - dict: Calibrated Heston parameters.
+        - dict: Dictionary containing the calibrated Heston parameters.
         """
+        if weights is None:
+            nbr_observations = len(self.strikes)
+            weights = np.array([1] * nbr_observations) / nbr_observations
+        else:
+            weights = weights / np.sum(weights)
 
         index_atm = np.argmin(np.abs(self.strikes - self.atm))
         vol_initial = self.market_ivs[index_atm]**2
+
+
+
+        # Cost function and power, relative_errors parameters
+        def difference_function(model_prices):
+            if not relative_errors:
+                difference = self.market_prices - model_prices
+            else:
+                difference = (self.market_prices - model_prices) / self.market_prices
+            
+            if power == 'abs':
+                return np.sum(np.abs(difference))
+            elif power == 'sqrt':
+                return np.sum(np.sqrt(difference))
+            elif power == 'square':
+                return np.sum(difference**2)
+            else: 
+                raise ValueError("Invalid power. Choose either 'sqrt', 'abs', or 'square'.")
 
         def cost_function(params):
             kappa, theta, sigma, rho = params
@@ -206,13 +240,16 @@ class VolatilitySmile:
             model_prices = price_function(
                     **function_params, v=vol_initial, strike=self.strikes, time_to_maturity=self.time_to_maturity, s=self.atm
                 )
-            return np.sum((model_prices - self.market_prices) ** 2)
+            
+            return difference_function(model_prices)
+
         
+
         # Bounds of parameters
         bounds = [
+            (1e-3, 10),
+            (1e-3, 1),
             (1e-3, 5),
-            (1e-3, 2),
-            (1e-3, 2),
         ]
         if guess_correlation_sign == 'positive':
             bounds.append((0.0,1.0))
@@ -224,6 +261,9 @@ class VolatilitySmile:
                 initial_guess[-1] = - initial_guess[-1]
         elif guess_correlation_sign == 'unknown':
             bounds.append((-1.0,1.0))
+        
+
+
         
         # Fast/local calibration scheme
         if speed == 'local':
@@ -254,7 +294,9 @@ class VolatilitySmile:
                     minimizer_kwargs=minimizer_kwargs,
                     callback=callback
                 )
-                print(result.message, result.success, )
+                print(result.message, result.success)
+        else: 
+            raise ValueError("Invalid speed. Choose either 'local', or 'global'.")
 
         calibrated_params = {
             "vol_initial": vol_initial, 
@@ -266,7 +308,7 @@ class VolatilitySmile:
         }
 
         return calibrated_params
-    
+
     
     def plot(
             self, 
@@ -304,7 +346,7 @@ class VolatilitySmile:
 
         plt.figure(figsize=(8, 5))
 
-        plt.scatter(self.strikes/forward, self.market_ivs, label="data", marker='o', color='red', s=25)
+        plt.scatter(self.strikes/forward, self.market_ivs, label="data", marker='o', color='red', s=20)
         plt.axvline(1, linestyle="--", color="gray", label="ATM Strike")
 
         if calibrated_ivs is not None:
@@ -319,9 +361,9 @@ class VolatilitySmile:
 
         if maturity is not None:
             date = datetime.strptime(maturity, '%Y-%m-%d').date().strftime("%d-%B-%y")
-            title = f"{date}: {self.time_to_maturity * 252/365 * 12:.1f} mois"
+            title = f"{date}: {self.time_to_maturity * 252 / 21:.2f} mois"
         else:
-            title = f"Time to maturity: {self.time_to_maturity * 252/365 * 12:.3f} mois"
+            title = f"Time to maturity: {self.time_to_maturity * 252 / 21:.2f} mois"
         
         plt.title(title, fontdict=fontdict)
         plt.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8)
