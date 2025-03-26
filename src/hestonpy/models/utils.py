@@ -10,29 +10,23 @@ def dichotomie(
         market_price,
         price_function,
         error: float = 10**(-6),
+        vol_inf: float = 10**(-3),
+        vol_sup: float = 1
     ):
     """
     price_function should be only a function of the volatility
     Note that the price_function is always a croissant function of the volatility
     """
-    nbrPoints = int(1/error)+1
-    interval = np.linspace(start=0, stop=1, num=nbrPoints)
-    index_inf = 0
-    index_sup = nbrPoints-1
-
     target_function = lambda volatility: price_function(volatility) - market_price
 
-    while (index_sup - index_inf) > 1:
-
-        index_mid = (index_inf + index_sup) // 2
-
-        if target_function(interval[index_mid]) > 0:
-            index_sup = index_mid
-
+    while vol_sup - vol_inf > error:
+        vol_mid = (vol_inf + vol_sup)/2
+        if target_function(vol_inf) * target_function(vol_mid) < 0:
+            vol_sup = vol_mid
         else:
-            index_inf = index_mid
-
-    return (interval[index_inf] + interval[index_sup]) / 2
+            vol_inf = vol_mid
+            
+    return vol_mid
 
 def newton_raphson(
         market_price,
