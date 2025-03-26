@@ -17,7 +17,7 @@ import numpy as np
 
 
 
-symbol = '^SPX'
+symbol = "AAPL" #'^SPX'
 all_market_data, spot, maturities = get_options_data(symbol)
 r = 0.00
 params = {
@@ -35,14 +35,17 @@ fig.suptitle(f'Market smiles: {symbol}', **fontdict_title)
 if symbol == '^SPX':
     considered_maturities = [maturities[7], maturities[14], maturities[28], maturities[38]]
 else:
-    considered_maturities = [maturities[1], maturities[2], maturities[8], maturities[16]]
+    considered_maturities = [maturities[1], maturities[3], maturities[8], maturities[14]]
 
 ############################################################
 ##### Absolute
 ############################################################
 for maturity, ax in zip(considered_maturities, axs.flatten()):
 
+    print("="*80)
     print(maturity)
+    print("="*80,"\n")
+
     ####################################
     ### Getting and filtering data 
     ####################################
@@ -82,12 +85,14 @@ for maturity, ax in zip(considered_maturities, axs.flatten()):
         guess_correlation_sign='negative',
         initial_guess=[initial_params['kappa'], initial_params['theta'], initial_params['sigma'], initial_params['rho']],
         speed='global',
-        power='square'
+        power='mse'
     )
     calibrated_prices = heston.call_price(
         strike=marketVolatilitySmile.strikes, time_to_maturity=time_to_maturity, **calibrated_params
     )
+    print(marketVolatilitySmile.evaluate_calibration(calibrated_prices, 'price'))
     calibrated_ivs = marketVolatilitySmile.compute_smile(prices=calibrated_prices)
+    print(marketVolatilitySmile.evaluate_calibration(calibrated_ivs, 'iv'))
 
     # Relative calibration
     calibrated_params_relative = marketVolatilitySmile.calibration(
@@ -96,12 +101,14 @@ for maturity, ax in zip(considered_maturities, axs.flatten()):
         guess_correlation_sign='negative',
         initial_guess=[initial_params['kappa'], initial_params['theta'], initial_params['sigma'], initial_params['rho']],
         speed='global',
-        power='square'
+        power='mse'
     )
     calibrated_prices_relative = heston.call_price(
         strike=marketVolatilitySmile.strikes, time_to_maturity=time_to_maturity, **calibrated_params_relative
     )
+    print(marketVolatilitySmile.evaluate_calibration(calibrated_prices_relative, 'price'))
     calibrated_ivs_relative = marketVolatilitySmile.compute_smile(prices=calibrated_prices_relative)
+    print(marketVolatilitySmile.evaluate_calibration(calibrated_ivs_relative, 'iv'))
 
     # Some plots
     ask_ivs = market_data['Ask ivs'].values
