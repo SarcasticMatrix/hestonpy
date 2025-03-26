@@ -11,6 +11,17 @@ import pandas as pd
 import numpy as np
 import warnings
 
+class CustomStep:
+    """
+    Par défaut, basinhopping utilise un saut uniforme sur toutes les dimensions, ce qui peut être sous-optimal. 
+    Un saut gaussien mieux peut être plus adapté à l’échelle de chaque paramètre :
+    """
+
+    def __init__(self, scale):
+        self.scale = scale
+    def __call__(self, x):
+        return x + np.random.normal(scale=self.scale, size=len(x))  # Sauts gaussiens
+
 class VolatilitySmile:
     """
     Represents a volatility smile constructed from market prices or implied volatilities.
@@ -119,11 +130,11 @@ class VolatilitySmile:
 
         # 3rd mask: bid-ask spread must be less than 10%
         spread = (ask_ivs - bid_ivs)/mid_ivs
-        mask3 = spread <= 0.10
+        mask3 = (spread <= 0.30) & (mid_ivs < 0.9)
 
         # 4th mask: in- or out-of-the-money by more than 20% are excluded
         forward = self.atm * np.exp(self.r * self.time_to_maturity)
-        mask4 = np.abs(self.strikes/forward - 1.0) <= 0.2
+        mask4 = np.abs(self.strikes/forward - 1.0) <= 0.30
 
         masks = mask1 & mask2 & mask3 & mask4
         pd.options.mode.chained_assignment = None
@@ -163,7 +174,7 @@ class VolatilitySmile:
             guess_correlation_sign: Literal['positive','negative','unknown'] = 'unknown',
             speed: Literal['local','global'] = 'local',
             weights: np.array = None,
-            power: Literal['sqrt', 'abs', 'square'] = 'square',
+            power: Literal['rmse', 'mae', 'mse'] = 'mse',
             relative_errors: bool = False,
             method: str = 'L-BFGS-B'
         ):
@@ -191,9 +202,9 @@ class VolatilitySmile:
           If None, uniform weights are used. Weights allow adjusting the importance of different strike prices in the calibration.
         - power (str, optional): Defines the loss function's exponentiation method. 
           Options:
-          - 'square': Uses squared differences (default).
-          - 'abs': Uses absolute differences.
-          - 'sqrt': Uses square-root differences.
+          - 'mse': Uses squared differences (default).
+          - 'mae': Uses absolute differences.
+          - 'rmse': Uses square-root differences.
         - relative_errors (bool, optional): If True, the calibration minimizes relative errors instead of absolute errors.
           This can help normalize the impact of different strikes.
         - method (str): Optimization algorithm to use.
@@ -219,14 +230,14 @@ class VolatilitySmile:
             else:
                 difference = (self.market_prices - model_prices) / self.market_prices
             
-            if power == 'abs':
+            if power == 'mae':
                 return np.sum(np.abs(difference))
-            elif power == 'sqrt':
-                return np.sum(np.sqrt(difference))
-            elif power == 'square':
+            elif power == 'rmse':
+                return np.sum(np.sqrt(difference**2))
+            elif power == 'mse':
                 return np.sum(difference**2)
             else: 
-                raise ValueError("Invalid power. Choose either 'sqrt', 'abs', or 'square'.")
+                raise ValueError("Invalid power. Choose either 'rmse', 'mae', or 'mse'.")
 
         def cost_function(params):
             kappa, theta, sigma, rho = params
@@ -249,9 +260,9 @@ class VolatilitySmile:
 
         # Bounds of parameters
         bounds = [
-            (1e-3, 5),   # kappa 
-            (1e-3, 1.5), # theta
-            (1e-3, 3),   # sigma
+            (1e-3, 10),   # kappa 
+            (1e-3, 3), # theta
+            (1e-3, 6),   # sigma
         ]                # rho
         if guess_correlation_sign == 'positive':
             bounds.append((0.0,1.0))
@@ -275,7 +286,7 @@ class VolatilitySmile:
 
         # Global calibration scheme
         elif speed == 'global':
-            print(f"Initial Parameters: kappa={initial_guess[0]} | theta={initial_guess[1]} | sigma={initial_guess[2]} | rho={initial_guess[3]}\n")
+            print(f"Initial Parameters: kappa={initial_guess[0]:.3f} | theta={initial_guess[1]:.3f} | sigma={initial_guess[2]:.3f} | rho={initial_guess[3]:.3f}\n")
 
             minimizer_kwargs = {
                 "method": method,
@@ -284,18 +295,15 @@ class VolatilitySmile:
             def callback(x, f, accepted):
                 if accepted:
                     print("at minimum %.6f accepted %d" % (f, accepted))
-                    print(f"Parameters: kappa={x[0]} | theta={x[1]} | sigma={x[2]} | rho={x[3]}\n")
+                    print(f"Parameters: v0={vol_initial:.3f} | kappa={x[0]:.3f} | theta={x[1]:.3f} | sigma={x[2]:.3f} | rho={x[3]:.3f}\n")
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore", category=RuntimeWarning)
-                result = basinhopping(
-                    cost_function, 
-                    x0=initial_guess,
-                    niter=10,
-                    #stepsize=0.3,
-                    niter_success=5,
-                    minimizer_kwargs=minimizer_kwargs,
-                    callback=callback
-                )
+                step_taker = CustomStep(scale=[3/7, 1.5/7, 3/7, 1/7])
+                result = basinhopping(cost_function, x0=initial_guess, callback=callback, minimizer_kwargs=minimizer_kwargs,
+                                    niter=10, 
+                                    niter_success=10,
+                                    take_step=step_taker, 
+                                    T=2.0)
                 print(result.message, result.success)
         else: 
             raise ValueError("Invalid speed. Choose either 'local', or 'global'.")
@@ -304,12 +312,56 @@ class VolatilitySmile:
             "vol_initial": vol_initial, 
             "kappa": result.x[0],
             "theta": result.x[1],
-            "drift_emm": 0,
             "sigma": result.x[2],
-            "rho": result.x[3]
+            "rho": result.x[3],
+            "drift_emm": 0,
         }
-
+        
+        print(f"Calibrated parameters: v0={vol_initial:.3f} | kappa={result.x[0]:.3f} | theta={result.x[1]:.3f} | sigma={result.x[2]:.3f} | rho={result.x[3]:.3f}\n")
+        
         return calibrated_params
+    
+    def evaluate_calibration(self, model_values: np.array, metric_type: Literal["price", "iv"] = "price"):
+        """
+        Évalue la qualité de la calibration en calculant RMSE, MSE et MAE 
+        soit sur les prix, soit sur les volatilités implicites (IVs).
+
+        Parameters:
+        - model_values (np.array): Valeurs estimées par le modèle (prix ou IVs).
+        - metric_type (str): "price" pour comparer les prix, "iv" pour comparer les IVs.
+
+        Returns:
+        - dict: Contenant les métriques d'erreur absolues et relatives.
+        """
+        if metric_type == "price":
+            actual_values = self.market_prices
+        elif metric_type == "iv":
+            actual_values = self.market_ivs * 100
+            model_values = model_values * 100
+        else:
+            raise ValueError("metric_type must be either 'price' or 'iv'.")
+
+        # Différences absolues et relatives
+        diff = actual_values - model_values
+        diff_rel = diff / (actual_values + 1e-8)  # Évite la division par zéro
+
+        # Calcul des métriques
+        mse = np.mean(diff ** 2)
+        rmse = np.sqrt(mse)
+        mae = np.mean(np.abs(diff))
+
+        mse_pct = np.mean(diff_rel ** 2) * 100
+        rmse_pct = np.sqrt(mse_pct)
+        mae_pct = np.mean(np.abs(diff_rel)) * 100
+
+        return {
+            "MSE": round(mse,3),
+            "RMSE": round(rmse,3),
+            "MAE": round(mae,3),
+            "MSE_%": round(mse_pct,3),
+            "RMSE_%": round(rmse_pct,3),
+            "MAE_%": round(mae_pct,3)
+        }
 
     
     def plot(
