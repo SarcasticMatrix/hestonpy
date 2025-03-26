@@ -96,6 +96,7 @@ class VolatilitySmile:
             select_mid_ivs: bool = True
         ):
         strikes = full_market_data['Strike'].values
+        volumes = full_market_data['Volume'].values
 
         # Bid prices and implied vol
         bid_prices = full_market_data['Bid'].values
@@ -109,8 +110,9 @@ class VolatilitySmile:
         mid_ivs = (ask_ivs + bid_ivs)/2
         mid_prices = (bid_prices + ask_prices)/2
 
+
         # 1st mask: trading volume more than 10 contracts
-        mask1 = full_market_data['Volume'] >= 10
+        mask1 = volumes >= 10
 
         # 2nd mask: mid-prices higher than 0.375
         mask2 = mid_prices >= 0.375
@@ -124,7 +126,7 @@ class VolatilitySmile:
         mask4 = np.abs(self.strikes/forward - 1.0) <= 0.2
 
         masks = mask1 & mask2 & mask3 & mask4
-        pd.options.mode.chained_assignment = None  # default='warn'
+        pd.options.mode.chained_assignment = None
         market_data = full_market_data.loc[masks]
         market_data['Mid ivs'] = mid_ivs[masks]
         market_data['Ask ivs'] = ask_ivs[masks]
@@ -247,10 +249,10 @@ class VolatilitySmile:
 
         # Bounds of parameters
         bounds = [
-            (1e-3, 10),
-            (1e-3, 1),
-            (1e-3, 5),
-        ]
+            (1e-3, 5),   # kappa 
+            (1e-3, 1.5), # theta
+            (1e-3, 3),   # sigma
+        ]                # rho
         if guess_correlation_sign == 'positive':
             bounds.append((0.0,1.0))
             if initial_guess[-1] < 0:
@@ -289,8 +291,8 @@ class VolatilitySmile:
                     cost_function, 
                     x0=initial_guess,
                     niter=10,
-                    stepsize=0.3,
-                    niter_success=4,
+                    #stepsize=0.3,
+                    niter_success=5,
                     minimizer_kwargs=minimizer_kwargs,
                     callback=callback
                 )
