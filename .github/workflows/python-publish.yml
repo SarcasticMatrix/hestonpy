@@ -117,6 +117,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install hestonpy
           pip install pydata-sphinx-theme
           pip install sphinx
 
