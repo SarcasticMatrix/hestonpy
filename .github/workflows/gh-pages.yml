@@ -34,3 +34,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: doc/_build/html
+          branch: gh-pages  # Ajout pour s'assurer que ça pousse bien sur gh-pages
