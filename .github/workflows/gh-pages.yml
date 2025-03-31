@@ -1,19 +1,15 @@
-# Nom de notre workflow
 name: "Build and deploy Github pages"
 
-# Événements sur lesquels il doit être déclenché
 on:
-  push:         # <- Déclenché lorsque l'on pousse du code...
+  push:         
     branches:
-      - master  # <- ... mais seulement sur la branche "master"
+      - main  
 
 jobs:
 
-  # Notre job
   build-and-deploy:
     runs-on: ubuntu-latest
 
-    # Tâches à effectuer, comme expliquées ci-dessus
     steps:
 
       # 1. On récupère le contenu du dépôt
