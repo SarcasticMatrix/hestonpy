@@ -2,6 +2,7 @@
 Calibration
 ###########
 
+Calibration methods on implied volatility smile.
 
 VolatilitySmile
 ===============
