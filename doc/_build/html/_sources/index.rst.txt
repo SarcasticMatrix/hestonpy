@@ -14,9 +14,8 @@ Covered topics by the ``hestonpy`` package:
 * Asset allocations (stochastic optimal control under Heston dynamics).
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
-   ./pages/models.rst
-
-   ./pages/calibration.rst
+   ./pages/apireference/main.rst
+   ./pages/userguide/main.rst

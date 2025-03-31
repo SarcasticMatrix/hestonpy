@@ -17,6 +17,8 @@ release = 'v0.5.0'
 extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.autodoc',
+    'sphinx.ext.mathjax',
+    'nbsphinx',
 ]
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
@@ -28,3 +30,16 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_theme = 'pydata_sphinx_theme'
 html_static_path = ['_static']
+html_logo = "_static/logo.png"
+
+html_theme_options = {
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/SarcasticMatrix/hestonpy",
+            "icon": "fab fa-github-square",
+            "type": "fontawesome",
+        },
+    ],
+    "show_toc_level": 3
+}
