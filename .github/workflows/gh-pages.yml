@@ -1,47 +1,27 @@
-name: "Build and deploy Github pages"
+name: documentation
 
-on:
-  push:         
-    branches:
-      - main  
+on: push
+
+permissions:
+  contents: write
 
 jobs:
-
-  build-and-deploy:
+  docs:
     runs-on: ubuntu-latest
-
     steps:
-
-      # 1. On récupère le contenu du dépôt
-
-      - name: "Checkout"
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-
-      # 2. Partie spécifique à Sphinx (installation des
-      #    dépendances et génération de la doc)
-
-      - name: "Set up Python"
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.10.16
-
-      - name: "Install Python dependencies"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - name: Install dependencies
         run: |
-          pip3 install setuptools
-          pip3 install sphinx pydata-sphinx-theme
-
-      - name: "Build Sphinx Doc"
+          pip install sphinx sphinx_rtd_theme myst_parser
+      - name: Sphinx build
         run: |
-          cd doc
-          make html
-
-      # 3. Déploiement sur les Github Pages
-
-      - name: "Deploy Github Pages"
-        uses: JamesIves/github-pages-deploy-action@v4
+          sphinx-build doc _build
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         with:
-          GITHUB_TOKEN: ${{ secrets.token }}
-          BRANCH: gh-pages     # <- Branche sur laquelle seront commités les fichiers
-          FOLDER: doc/_build/html/  # <- Dossier contenant notre documentation générée
+          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _build/
+          force_orphan: true
