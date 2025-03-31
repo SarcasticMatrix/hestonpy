@@ -10,23 +10,28 @@ from collections import namedtuple
 
 class Bates:
     """
-    stochastic volatility jump (SVJ) model is suggested by Bates
+    Bates model for option pricing with stochastic volatility and jumps.
+
+    This class implements the Bates model, which extends the Heston model by
+    incorporating jumps in the underlying asset price. It is used for pricing
+    European options with stochastic volatility and jump diffusion.
+
+    :param float spot: The current price of the underlying asset.
+    :param float vol_initial: The initial variance of the underlying asset.
+    :param float r: The risk-free interest rate.
+    :param float kappa: The rate at which the variance reverts to the long-term mean.
+    :param float theta: The long-term mean of the variance.
+    :param float drift_emm: The market price of risk for the variance process.
+    :param float sigma: The volatility of the variance process.
+    :param float rho: The correlation between the asset price and its variance.
+    :param float lambda_jump: The intensity of jumps.
+    :param float mu_J: The mean of the jump size.
+    :param float sigma_J: The volatility of the jump size.
+    :param int seed: Seed for the random number generator.
     """
 
     def __init__(
-        self,
-        spot,
-        vol_initial,
-        r,
-        kappa,
-        theta,
-        drift_emm,
-        sigma,
-        rho,
-        lambda_jump,
-        mu_J,
-        sigma_J,
-        seed=42,
+        self, spot: float, vol_initial: float, r: float, kappa: float, theta: float, drift_emm: float, sigma: float, rho: float, lambda_jump: float, mu_J: float, sigma_J: float, seed: int=42,
     ):
 
         # Simulation parameters
@@ -53,6 +58,15 @@ class Bates:
     def characteristic(self, j: int, **kwargs) -> float:
         """
         Extends the characteristic function to include jumps in the Heston model.
+
+        This method calculates the characteristic function for the Bates model,
+        which includes both stochastic volatility and jumps.
+
+        :param int j: Indicator for the characteristic function component (1 or 2).
+        :param kwargs: Additional keyword arguments for model parameters.
+
+        :returns: The characteristic function.
+        :rtype: float
         """
         vol_initial = kwargs.get("vol_initial", self.vol_initial)
 
@@ -102,6 +116,21 @@ class Bates:
             v: np.array = None,
             **kwargs
         ):
+        """
+        Calculate the price of a European call option using the Bates model.
+
+        This method computes the price of a European call option by leveraging
+        the Carr-Madan Fourier pricing method.
+
+        :param np.array strike: The strike price of the option.
+        :param np.array time_to_maturity: Time to maturity of the option in years.
+        :param np.array s: The current price of the underlying asset.
+        :param np.array v: The initial variance of the underlying asset.
+        :param kwargs: Additional keyword arguments for model parameters.
+
+        :returns: The price of the call option.
+        :rtype: float
+        """
         
         price = self.carr_madan_price(
             s=s, 
@@ -125,12 +154,18 @@ class Bates:
         """
         Computes the price of a European call option using the Carr-Madan Fourier pricing method.
 
-        This method employs the Carr-Madan approach, leveraging the characteristic function to calculate
-        the option price.
+        This method employs the Carr-Madan approach, leveraging the characteristic
+        function to calculate the option price.
 
-        Returns:
-        - price (float): The calculated option price.
-        - error (float): The error associated with the option price calculation.
+        :param np.array strike: The strike price of the option.
+        :param np.array time_to_maturity: Time to maturity of the option in years.
+        :param np.array s: The current price of the underlying asset.
+        :param np.array v: The initial variance of the underlying asset.
+        :param bool error_boolean: Flag to return the error associated with the price.
+        :param kwargs: Additional keyword arguments for model parameters.
+
+        :returns: The calculated option price and optionally the error.
+        :rtype: float or tuple
         """
 
         if s is None:

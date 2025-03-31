@@ -5,6 +5,18 @@ from scipy.stats import norm
 
 
 class BlackScholes:
+    """Black-Scholes model for option pricing.
+
+    This class implements the Black-Scholes model for pricing European options.
+    It includes methods for simulating asset paths, calculating option prices,
+    and plotting Greeks.
+
+    :param float spot: The current price of the underlying asset.
+    :param float r: The risk-free interest rate.
+    :param float mu: The expected return of the underlying asset.
+    :param float volatility: The volatility of the underlying asset.
+    :param int seed: Seed for the random number generator.
+    """
 
     def __init__(
         self, spot: float, r: float, mu: float, volatility: float, seed: int = 42
@@ -21,7 +33,20 @@ class BlackScholes:
         scheme: str = Literal["euler", "milstein"],
         nbr_points: int = 100,
         nbr_simulations: int = 1000,
-    ) -> np.array:
+        ) -> np.array:
+        """Simulate asset price paths using the Black-Scholes model.
+
+        This method simulates the price paths of the underlying asset using
+        either the Euler or Milstein discretization scheme.
+
+        :param float time_to_maturity: Time to maturity of the option in years.
+        :param str scheme: Discretization scheme to use ("euler" or "milstein").
+        :param int nbr_points: Number of time points in each simulation.
+        :param int nbr_simulations: Number of simulations to run.
+
+        :returns: Simulated asset price paths.
+        :rtype: np.array
+        """
 
         np.random.seed(self.seed)
 
@@ -54,7 +79,18 @@ class BlackScholes:
         scheme: str = Literal["euler", "milstein"],
         nbr_points: int = 1000,
         time_to_maturity: float = 1,
-    ) -> np.array:
+        ) -> np.array:
+        """Plot a simulated asset price path.
+
+        This method plots a single simulated price path of the underlying asset.
+
+        :param str scheme: Discretization scheme to use ("euler" or "milstein").
+        :param int nbr_points: Number of time points in the simulation.
+        :param float time_to_maturity: Time to maturity of the option in years.
+
+        :returns: Simulated asset price path.
+        :rtype: np.array
+        """
         
         S = self.simulate(nbr_points=nbr_points, scheme=scheme, nbr_simulations=1)
 
@@ -77,7 +113,21 @@ class BlackScholes:
         spot: float = None,
         r: float = None,
         volatility: float = None,
-    ):
+        ):
+        """Calculate the price of a European call option.
+
+        This method calculates the price of a European call option using the
+        Black-Scholes formula.
+
+        :param float strike: The strike price of the option.
+        :param float time_to_maturity: Time to maturity of the option in years.
+        :param float spot: The current price of the underlying asset.
+        :param float r: The risk-free interest rate.
+        :param float volatility: The volatility of the underlying asset.
+
+        :returns: The price of the call option.
+        :rtype: float
+        """
 
         if spot is None:
             spot = self.spot
@@ -102,7 +152,21 @@ class BlackScholes:
         spot: float = None,
         r: float = None,
         volatility: float = None,
-    ):
+        ):
+        """Calculate the price of a European put option.
+
+        This method calculates the price of a European put option using the
+        Black-Scholes formula.
+
+        :param float strike: The strike price of the option.
+        :param float time_to_maturity: Time to maturity of the option in years.
+        :param float spot: The current price of the underlying asset.
+        :param float r: The risk-free interest rate.
+        :param float volatility: The volatility of the underlying asset.
+
+        :returns: The price of the put option.
+        :rtype: float
+        """
         if spot is None:
             spot = self.spot
         if r is None:
@@ -115,24 +179,37 @@ class BlackScholes:
         return put_price
     
     def vega(
-            self,
-            strike: float,
-            time_to_maturity: float,
-            spot: float = None,
-            r: float = None,
-            volatility: float = None,
+        self,
+        strike: float,
+        time_to_maturity: float,
+        spot: float = None,
+        r: float = None,
+        volatility: float = None,
         ):
-            if spot is None:
-                spot = self.spot
-            if r is None:
-                r = self.r
-            if volatility is None:
-                volatility = self.volatility
+        """Calculate the Vega of a European option.
 
-            d1 = (np.log(spot / strike) + (r + 0.5 * volatility**2) * time_to_maturity) / (
-                volatility * np.sqrt(time_to_maturity)
-            )
-            return spot * np.sqrt(time_to_maturity) * norm.pdf(d1)
+        Vega measures the sensitivity of the option price to changes in volatility.
+
+        :param float strike: The strike price of the option.
+        :param float time_to_maturity: Time to maturity of the option in years.
+        :param float spot: The current price of the underlying asset.
+        :param float r: The risk-free interest rate.
+        :param float volatility: The volatility of the underlying asset.
+
+        :returns: The Vega of the option.
+        :rtype: float
+        """
+        if spot is None:
+            spot = self.spot
+        if r is None:
+            r = self.r
+        if volatility is None:
+            volatility = self.volatility
+
+        d1 = (np.log(spot / strike) + (r + 0.5 * volatility**2) * time_to_maturity) / (
+            volatility * np.sqrt(time_to_maturity)
+        )
+        return spot * np.sqrt(time_to_maturity) * norm.pdf(d1)
 
     def delta(
         self,
@@ -142,7 +219,22 @@ class BlackScholes:
         spot: float = None,
         r: float = None,
         volatility: float = None,
-    ):
+        ):
+        """Calculate the Delta of a European option.
+
+        Delta measures the sensitivity of the option price to changes in the
+        underlying asset's price.
+
+        :param float strike: The strike price of the option.
+        :param float time_to_maturity: Time to maturity of the option in years.
+        :param str flag_option: Type of option ("call" or "put").
+        :param float spot: The current price of the underlying asset.
+        :param float r: The risk-free interest rate.
+        :param float volatility: The volatility of the underlying asset.
+
+        :returns: The Delta of the option.
+        :rtype: float
+        """
         if spot is None:
             spot = self.spot
         if r is None:
@@ -161,8 +253,12 @@ class BlackScholes:
 
 
     def delta_surface(self, flag_option: Literal["call", "put"]):
-        """
-        Plot the delta of the option as a function of strike and time to maturity
+        """Plot the Delta surface of the option as a function of strike and time to maturity.
+
+        This method generates a 3D plot of the Delta for a range of strikes and
+        times to maturity.
+
+        :param str flag_option: Type of option ("call" or "put").
         """
 
         Ks = np.arange(start=20, stop=200, step=0.5)
@@ -191,7 +287,21 @@ class BlackScholes:
         spot: float = None,
         r: float = None,
         volatility: float = None,
-    ):
+        ):
+        """Calculate the Gamma of a European option.
+
+        Gamma measures the rate of change of Delta with respect to the underlying
+        asset's price.
+
+        :param float strike: The strike price of the option.
+        :param float time_to_maturity: Time to maturity of the option in years.
+        :param float spot: The current price of the underlying asset.
+        :param float r: The risk-free interest rate.
+        :param float volatility: The volatility of the underlying asset.
+
+        :returns: The Gamma of the option.
+        :rtype: float
+        """
         if spot is None:
             spot = self.spot
         if r is None:
@@ -206,8 +316,9 @@ class BlackScholes:
         return gamma
 
     def gamma_surface(self):
-        """ "
-        Plot the gamma as a function of strike and time to maturity.
+        """Plot the Gamma surface of the option as a function of strike and time to maturity.
+
+        This method generates a 3D plot of the Gamma for a range of strikes and times to maturity.
         """
 
         Ks = np.arange(start=20, stop=200, step=0.5)
@@ -238,26 +349,21 @@ class BlackScholes:
         pricing_volatility: float = None,
         nbr_hedges: float = 252,
         nbr_simulations: float = 100,
-    ):
-        """
-        Implement a delta hedging strategy using both a risky asset (underlying asset)
-        and a non-risky asset for a European option.
-        Parameters:
-            - flag_option (str):
-                Type of option. Should be 'call' for a call option or 'put' for a put option.
-            - strike (float):
-                The strike price of the option.
-            - hedging_volatility (float):
-                The volatility used for hedging purposes.
-            - nbr_hedges (float, optional):
-                The number of simulation steps or trading intervals over the life
-                of the option. Defaults to 1000. This parameter controls how often
-                the portfolio is rebalanced to maintain a delta-neutral position.
-            - nbr_simulations (float, optional):
-                The number of simulations.
-        Returns:
-            - portfolio (np.array): allocation,
-            - S (np.array):
+        ):
+        """Implement a delta hedging strategy for a European option.
+
+        This method simulates a delta hedging strategy using both a risky asset
+        (underlying asset) and a non-risky asset.
+
+        :param str flag_option: Type of option ("call" or "put").
+        :param float strike: The strike price of the option.
+        :param float hedging_volatility: The volatility used for hedging purposes.
+        :param float pricing_volatility: The volatility used for pricing the option.
+        :param int nbr_hedges: The number of hedging intervals.
+        :param int nbr_simulations: The number of simulations.
+
+        :returns: A tuple containing the portfolio value and simulated asset prices.
+        :rtype: tuple
         """
         if pricing_volatility is None:
             pricing_volatility = hedging_volatility
@@ -314,48 +420,24 @@ class BlackScholes:
         nbr_hedges: float = 1000,
         nbr_simulations: float = 100,
     ):
-        """
-        Implement a volatility arbitrage strategy by buying an underpriced option
+        """Implement a volatility arbitrage strategy by buying an underpriced option
         and dynamically delta hedging it to expiry.
 
-        Parameters:
-            - flag_option (str):
-                Type of option. Should be 'call' for a call option. Currently, only
-                'call' options are supported.
-            - T (float):
-                The time to maturity of the option (in years).
-            - strike (float):
-                The strike price of the option.
-            - hedging_volatility (float):
-                The volatility used for delta hedging. This reflects the trader's
-                belief about the actual market volatility.
-            - pricing_volatility (float, optional):
-                The implied volatility used to calculate the option price. If not
-                provided, defaults to the value of `hedging_volatility`.
-            - nbr_hedges (float, optional):
-                The number of trading intervals over the life of the option. This
-                parameter controls how frequently the portfolio is rebalanced to
-                maintain the hedge. Defaults to 1000.
-            - nbr_simulations (float, optional):
-                The number of Monte Carlo simulations for the stock price path.
-                Defaults to 100.
-
-        Returns:
-            - portfolio (np.array):
-                An array representing the value of the portfolio at each step of
-                the simulation. This includes the value of the option, stock
-                holdings, and cash.
-            - S (np.array):
-                An array of simulated underlying asset prices over the life of the
-                option.
-
-        Explanation:
-        This function models a scenario where the implied volatility of an option
-        (used for pricing) differs from the trader's forecasted actual volatility
-        (used for hedging). If the trader's forecast turns out to be correct, a
-        profit can be realized by buying the option and dynamically delta hedging
-        it. The delta for hedging is calculated using the trader's forecasted
+        This function models a scenario where the implied volatility of an option 
+        (used for pricing) differs from the trader’s forecasted actual volatility (used for hedging). 
+        If the trader’s forecast turns out to be correct, a profit can be realized by buying the option 
+        and dynamically delta hedging it. The delta for hedging is calculated using the trader’s forecasted 
         volatility, while the option price reflects the implied volatility.
+
+        :param str flag_option: Type of option ("call").
+        :param float strike: The strike price of the option.
+        :param float hedging_volatility: The volatility used for delta hedging.
+        :param float pricing_volatility: The implied volatility used for pricing.
+        :param int nbr_hedges: The number of hedging intervals.
+        :param int nbr_simulations: The number of simulations.
+
+        :returns: A tuple containing the portfolio value and simulated asset prices.
+        :rtype: tuple
         """
 
         if pricing_volatility is None:

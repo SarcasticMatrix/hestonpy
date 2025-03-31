@@ -9,19 +9,26 @@ from collections import namedtuple
 
 
 class Heston:
+    """
+    Heston model for option pricing with stochastic volatility.
 
-    def __init__(
-        self,
-        spot,
-        vol_initial,
-        r,
-        kappa,
-        theta,
-        drift_emm,
-        sigma,
-        rho,
-        seed=42,
-    ):
+    This class implements the Heston model for pricing European options with stochastic volatility.
+    It includes methods for simulation, pricing, and hedging.
+
+    You can initialize the Heston model parameters under the historical or risk neutral dynamics as you want.
+
+    :param float spot: Current price of the underlying asset.
+    :param float vol_initial: Initial variance of the underlying asset.
+    :param float r: Risk-free interest rate.
+    :param float kappa: Mean reversion speed of the variance.
+    :param float theta: Long-term mean of the variance.
+    :param float drift_emm: Market price of risk (lambda) for the variance process. Usually set as 0
+    :param float sigma: Volatility of the variance (vol of vol).
+    :param float rho: Correlation between the asset price and its variance.
+    :param int seed: Random seed for reproducibility.
+    """
+
+    def __init__(self, spot:float, vol_initial:float, r:float, kappa:float, theta:float, drift_emm:float, sigma:float, rho:float, seed:int=42):
 
         # Simulation parameters
         self.spot = spot  # spot price
@@ -40,12 +47,26 @@ class Heston:
         self.seed = seed  # random seed
 
     def simulate(
-        self,
-        time_to_maturity: float = 1,
-        scheme: str = Literal["euler", "milstein"],
-        nbr_points: int = 100,
-        nbr_simulations: int = 1000,
-    ) -> tuple:
+            self,
+            time_to_maturity: float = 1,
+            scheme: str = Literal["euler", "milstein"],
+            nbr_points: int = 100,
+            nbr_simulations: int = 1000,
+        ) -> tuple:
+        """
+        Simulate asset price and variance paths using the Heston model.
+
+        This method simulates the paths of the underlying asset price and its variance
+        using either the Euler or Milstein discretization scheme.
+
+        :param float time_to_maturity: Time to maturity of the option in years.
+        :param str scheme: Discretization scheme to use ('euler' or 'milstein').
+        :param int nbr_points: Number of time points in each simulation.
+        :param int nbr_simulations: Number of simulations to run.
+
+        :returns: Simulated asset prices, variances, and count of null variances.
+        :rtype: tuple
+        """
 
         random.seed(self.seed)
 
@@ -106,6 +127,19 @@ class Heston:
         scheme: str = Literal["euler", "milstein"],
         nbr_points: int = 100,
     ) -> tuple:
+        """
+        Plot a single simulation of the asset price and variance paths.
+
+        This method simulates and plots the paths of the underlying asset price and its variance
+        using the specified discretization scheme.
+
+        :param float time_to_maturity: Time to maturity of the option in years.
+        :param str scheme: Discretization scheme to use ('euler' or 'milstein').
+        :param int nbr_points: Number of time points in the simulation.
+
+        :returns: Simulated asset prices and variances.
+        :rtype: tuple
+        """
  
         S, V, _ = self.simulate(
             time_to_maturity=time_to_maturity, 
@@ -143,7 +177,21 @@ class Heston:
         scheme: str = Literal["euler", "milstein"],
         nbr_points: int = 100,
         nbr_simulations: int = 1000,
-    ) -> float:
+    ):
+        """
+        Price a European option using Monte Carlo simulation.
+
+        This method prices a European option using Monte Carlo simulation with the Heston model.
+
+        :param float strike: Strike price of the option.
+        :param float time_to_maturity: Time to maturity of the option in years.
+        :param str scheme: Discretization scheme to use ('euler' or 'milstein').
+        :param int nbr_points: Number of time points in each simulation.
+        :param int nbr_simulations: Number of simulations to run.
+
+        :returns: Option price and confidence interval.
+        :rtype: namedtuple
+        """
         
         S, _, null_variance = self.simulate(
             time_to_maturity=time_to_maturity, 
@@ -169,17 +217,18 @@ class Heston:
             price, standard_deviation, infimum, supremum
         )
 
-    def characteristic(self, j: int, **kwargs) -> float:
+    def characteristic(self, j: int, **kwargs):
         """
         Creates the characteristic function Psi_j(x, v, t; u) for a given (x, v, t).
 
         This function returns the characteristic function based on the index provided.
 
-        Parameters:
-        - j (int): Index of the characteristic function (must be 1 or 2).
+        :param int j: Index of the characteristic function (must be 1 or 2).
 
-        Returns:
-        - callable: The characteristic function.
+        :returns: The characteristic function.
+        :rtype: callable
+
+        :raises ValueError: If the index j is not 1 or 2.
         """
 
         vol_initial = kwargs.get("vol_initial", self.vol_initial)  # Initial variance
@@ -234,6 +283,20 @@ class Heston:
             error_boolean: bool = False,
             **kwargs
         ):
+        """
+        Price a European option using the Fourier transform method.
+
+        This method prices a European option using the Fourier transform method with the Heston model.
+
+        :param np.array strike: Strike prices of the options.
+        :param np.array time_to_maturity: Times to maturity of the options.
+        :param np.array s: Current prices of the underlying asset.
+        :param np.array v: Initial variances of the underlying asset.
+        :param bool error_boolean: Whether to return the error of the price calculation.
+
+        :returns: Option prices and errors (if error_boolean is True).
+        :rtype: float or tuple
+        """
 
         if s is None:
             s = self.spot
@@ -273,6 +336,19 @@ class Heston:
             v: np.array = None,
             **kwargs
         ):
+        """
+        Price a European call option using the Carr-Madan method.
+
+        This method prices a European call option using the Carr-Madan Fourier pricing method.
+
+        :param np.array strike: Strike prices of the options.
+        :param np.array time_to_maturity: Times to maturity of the options.
+        :param np.array s: Current prices of the underlying asset.
+        :param np.array v: Initial variances of the underlying asset.
+
+        :returns: Call option prices.
+        :rtype: float
+        """
         
         price = self.carr_madan_price(
             s=s, 
@@ -291,6 +367,19 @@ class Heston:
             s: np.array = None,
             v: np.array = None,
         ):
+        """
+        Calculate the delta of a European call option.
+
+        This method calculates the delta of a European call option using the Heston model.
+
+        :param np.array strike: Strike prices of the options.
+        :param np.array time_to_maturity: Times to maturity of the options.
+        :param np.array s: Current prices of the underlying asset.
+        :param np.array v: Initial variances of the underlying asset.
+
+        :returns: Delta of the call option.
+        :rtype: float
+        """
             
         if s is None:
             s = self.spot
@@ -314,6 +403,19 @@ class Heston:
             s: np.array = None,
             v: np.array = None,
         ):
+        """
+        Calculate the vega of a European call option.
+
+        This method calculates the vega of a European call option using the Heston model.
+
+        :param np.array strike: Strike prices of the options.
+        :param np.array time_to_maturity: Times to maturity of the options.
+        :param np.array s: Current prices of the underlying asset.
+        :param np.array v: Initial variances of the underlying asset.
+
+        :returns: Vega of the call option.
+        :rtype: float
+        """
 
         if s is None:   
             s = self.spot
@@ -383,9 +485,14 @@ class Heston:
         This method employs the Carr-Madan approach, leveraging the characteristic function to calculate
         the option price.
 
-        Returns:
-        - price (float): The calculated option price.
-        - error (float): The error associated with the option price calculation.
+        :param np.array strike: Strike prices of the options.
+        :param np.array time_to_maturity: Times to maturity of the options.
+        :param np.array s: Current prices of the underlying asset.
+        :param np.array v: Initial variances of the underlying asset.
+        :param bool error_boolean: Whether to return the error of the price calculation.
+
+        :returns: Option prices and errors (if error_boolean is True).
+        :rtype: float or tuple
         """
 
         if s is None:
@@ -416,6 +523,13 @@ class Heston:
             return price   
    
     def price_surface(self):
+        """
+        Plot the call price surface as a function of strike and time to maturity.
+
+        This method generates a 3D plot of the call option prices for a range of strikes and maturities.
+
+        :returns: None
+        """
 
         Ks = np.linspace(start=20, stop=200, num=200)
         Ts = np.linspace(start=0.1, stop=2, num=200)
@@ -450,23 +564,15 @@ class Heston:
         The function assumes that both the pricing and hedging models are based on the Heston stochastic volatility model,
         but they may use different volatilities for hedging and pricing.
 
-        Parameters:
+        :param float strike: Strike price of the option to be hedged.
+        :param float strike_hedging: Strike price of the option used for hedging.
+        :param float maturity: Time to maturity of the option to be hedged.
+        :param float maturity_hedging: Time to maturity of the option used for hedging.
+        :param int nbr_points: Number of time points in the simulation.
+        :param int nbr_simulations: Number of simulations to run.
 
-        Returns:
-
-        Methodology:
-            1. Simulation
-            - Simulates paths for the underlying asset prices (`S`) and volatilities (`V`) using the Heston model.
-            2. Greeks Calculation
-            - Calculates vega and delta for both the pricing and hedging models at each time step.
-            3. Hedging
-            - Implements a delta-vega hedging strategy:
-                * `stocks` holds the number of units of the underlying asset.
-                * `derivatives` holds the number of options used for vega hedging.
-                * `bank` holds the amount of cash in a non-risky asset.
-            4. Rebalancing
-            - Rebalances the portfolio at each hedging interval to maintain the desired delta and vega neutrality.
-            ```
+        :returns: Portfolio values, underlying asset prices, variances, and option prices.
+        :rtype: tuple
         """
 
         # Simulation

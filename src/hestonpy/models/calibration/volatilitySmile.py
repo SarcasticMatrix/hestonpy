@@ -25,23 +25,17 @@ import warnings
 class VolatilitySmile:
     """
     Represents a volatility smile constructed from market prices or implied volatilities.
-    Handles the conversion between option prices and implied volatilities using the Black-Scholes model.
-    Supports calibration of Heston and Bates models to fit the observed volatility smile.
 
-    Attributes:
-    -----------
-    strikes : np.array
-        Array of option strike prices.
-    time_to_maturity : np.array
-        Array of time to maturity for the options.
-    atm : float
-        At-the-money forward price.
-    market_prices : np.array, optional
-        Array of market option prices.
-    market_ivs : np.array, optional
-        Array of market implied volatilities.
-    r : float
-        Risk-free interest rate.
+    This class handles the conversion between option prices and implied volatilities using
+    the Black-Scholes model. It supports calibration of Heston and Bates models to fit the
+    observed volatility smile.
+
+    :param np.array strikes: Array of option strike prices.
+    :param np.array time_to_maturity: Array of time to maturity for the options.
+    :param float atm: At-the-money forward price.
+    :param np.array market_prices: Array of market option prices.
+    :param np.array market_ivs: Array of market implied volatilities.
+    :param float r: Risk-free interest rate.
     """
 
     def __init__(
@@ -56,20 +50,12 @@ class VolatilitySmile:
         """
         Initializes the VolatilitySmile object.
 
-        Parameters:
-        -----------
-        strikes : np.array
-            Array of option strike prices.
-        time_to_maturity : np.array
-            Array of time to maturity for the options.
-        atm : float
-            At-the-money forward price.
-        market_prices : np.array, optional
-            Array of market option prices.
-        market_ivs : np.array, optional
-            Array of market implied volatilities.
-        r : float, optional
-            Risk-free interest rate. Default is 0.
+        :param np.array strikes: Array of option strike prices.
+        :param np.array time_to_maturity: Array of time to maturity for the options.
+        :param float atm: At-the-money forward price.
+        :param np.array market_prices: Array of market option prices.
+        :param np.array market_ivs: Array of market implied volatilities.
+        :param float r: Risk-free interest rate. Default is 0.
         """
         if market_prices is None and market_ivs is None:
             raise ValueError(
@@ -97,15 +83,10 @@ class VolatilitySmile:
         """
         Computes option prices from implied volatilities using the Black-Scholes model.
 
-        Parameters:
-        -----------
-        ivs : np.array, optional
-            Implied volatilities corresponding to the strikes. If None, uses self.market_ivs.
+        :param np.array ivs: Implied volatilities corresponding to the strikes. If None, uses self.market_ivs.
 
-        Returns:
-        --------
-        np.array
-            Option prices computed from the implied volatilities.
+        :returns: Option prices computed from the implied volatilities.
+        :rtype: np.array
         """
         if ivs is None:
             ivs = self.market_ivs
@@ -119,17 +100,11 @@ class VolatilitySmile:
         """
         Computes implied volatilities from option prices using the Black-Scholes model.
 
-        Parameters:
-        -----------
-        prices : np.array, optional
-            Option prices corresponding to the strikes. If None, uses self.market_prices.
-        strikes : np.array, optional
-            Strike prices. If None, uses self.strikes.
+        :param np.array prices: Option prices corresponding to the strikes. If None, uses self.market_prices.
+        :param np.array strikes: Strike prices. If None, uses self.strikes.
 
-        Returns:
-        --------
-        np.array
-            Implied volatilities computed from the option prices.
+        :returns: Implied volatilities computed from the option prices.
+        :rtype: np.array
         """
         if prices is None:
             prices = self.market_prices
@@ -151,17 +126,11 @@ class VolatilitySmile:
         """
         Filters market data based on volume, mid-price, bid-ask spread, and moneyness.
 
-        Parameters:
-        -----------
-        full_market_data : pd.DataFrame
-            DataFrame containing market data with columns: 'Strike', 'Volume', 'Bid', 'Ask'.
-        select_mid_ivs : bool, optional
-            If True, selects mid implied volatilities. Default is True.
+        :param pd.DataFrame full_market_data: DataFrame containing market data with columns: 'Strike', 'Volume', 'Bid', 'Ask'.
+        :param bool select_mid_ivs: If True, selects mid implied volatilities. Default is True.
 
-        Returns:
-        --------
-        pd.DataFrame
-            Filtered market data with additional columns: 'Mid ivs', 'Ask ivs', 'Bid ivs', 'Mid Price'.
+        :returns: Filtered market data with additional columns: 'Mid ivs', 'Ask ivs', 'Bid ivs', 'Mid Price'.
+        :rtype: pd.DataFrame
         """
         strikes = full_market_data["Strike"].values
         volumes = full_market_data["Volume"].values
@@ -213,16 +182,10 @@ class VolatilitySmile:
         """
         Smooths the volatility smile using a raw SVI model.
 
-        Parameters:
-        -----------
-        select_svi_ivs : bool, optional
-            If True, selects the calibrated SVI implied volatilities. Default is False.
+        :param bool select_svi_ivs: If True, selects the calibrated SVI implied volatilities. Default is False.
 
-        Returns:
-        --------
-        Tuple[Dict[str, float], np.array]
-            - Dictionary of calibrated SVI parameters.
-            - Array of calibrated implied volatilities.
+        :returns: Dictionary of calibrated SVI parameters and array of calibrated implied volatilities.
+        :rtype: Tuple[Dict[str, float], np.array]
         """
 
         raw_svi = SVI(time_to_maturity=self.time_to_maturity)
@@ -246,47 +209,31 @@ class VolatilitySmile:
         relative_errors: bool = False,
     ):
         """
-        Calibrates a Heston model (parameters: kappa, theta, sigma, rho) to fit the observed volatility smile.
+        Calibrates a Heston model (parameters: kappa, theta, sigma, rho) or a Bates model (parameters: kappa, theta, sigma, rho, lambda_jump, mu_J, sigma_J) to fit the observed volatility smile.
+        
         The initial variance is set to the closest ATM implied volatility from the data to reduce dimensionality.
 
         Two calibration schemes are available:
-        - 'local': A fast but less robust method, sensitive to market noise.
-        - 'global': A more robust but slower method.
+        * 'local': A fast but less robust method, sensitive to market noise.
+        * 'global': A more robust but slower method.
 
         The user can specify a prior belief about the sign of the correlation:
-        - 'positive': Constrains rho to [0,1].
-        - 'negative': Constrains rho to [-1,0].
-        - 'unknown': Allows rho to vary in [-1,1].
+        * 'positive': Constrains rho to [0,1].
+        * 'negative': Constrains rho to [-1,0].
+        * 'unknown': Allows rho to vary in [-1,1].
         If a correlation sign is provided, the function ensures the initial guess for rho has the correct sign.
 
-        Parameters:
-        -----------
-        price_function (callable): 
-            Function to compute option prices under the Heston model or Bates model. 
-            Typically set as `price_function = heston.call_price` or `price_function = bates.call_price`.
-        initial_guess (list): 
-            Initial parameters, [kappa, theta, sigma, rho] for Heston models or [kappa, theta, sigma, rho, lambda_jump, mu_J, sigma_J] for Bates models.
-        guess_correlation_sign (str): 
-            Assumption on the correlation sign ('positive', 'negative', 'unknown').
-        speed (str): 
-            Calibration method ('local' for fast, 'global' for robust optimization).
-        weights (np.array, optional): 
-            Array of weights applied to each observation in the calibration.
-            If None, uniform weights are used. Weights allow adjusting the importance of different strike prices in the calibration.
-        power (str, optional): 
-            Defines the loss function's exponentiation method. Options:
-                'mse': Uses squared differences (default).
-                'mae': Uses absolute differences.
-                'rmse': Uses square-root differences.
-        relative_errors (bool, optional): 
-            If True, the calibration minimizes relative errors instead of absolute errors.
-            This can help normalize the impact of different strikes.
-        method (str): 
-            Optimization algorithm to use. "L-BFGS-B", "SLSQP" or "trust-constr"
+        :param callable price_function: Function to compute option prices under the Heston model or Bates model.
+        :param list initial_guess: Initial parameters, [kappa, theta, sigma, rho] for Heston models or [kappa, theta, sigma, rho, lambda_jump, mu_J, sigma_J] for Bates models.
+        :param str guess_correlation_sign: Assumption on the correlation sign ('positive', 'negative', 'unknown').
+        :param str speed: Calibration method ('local' for fast, 'global' for robust optimization).
+        :param np.array weights: Array of weights applied to each observation in the calibration. If None, uniform weights are used.
+        :param str power: Defines the loss function's exponentiation method ('mse', 'mae', 'rmse').
+        :param bool relative_errors: If True, the calibration minimizes relative errors instead of absolute errors.
+        :param str method: Optimization algorithm to use ("L-BFGS-B", "SLSQP" or "trust-constr").
 
-        Returns:
-        --------
-        - dict: Dictionary containing the calibrated Heston parameters.
+        :returns: Dictionary containing the calibrated Heston parameters.
+        :rtype: dict
         """
         if weights is None:
             weights = 1 / len(self.strikes)
@@ -374,17 +321,11 @@ class VolatilitySmile:
         Evaluates the quality of the calibration by calculating RMSE, MSE, and MAE
         either on prices or implied volatilities (IVs).
 
-        Parameters:
-        -----------
-        model_values : np.array
-            Values estimated by the model (prices or IVs).
-        metric_type : str, optional
-            'price' to compare prices, 'iv' to compare IVs. Default is 'price'.
+        :param np.array model_values: Values estimated by the model (prices or IVs).
+        :param str metric_type: 'price' to compare prices, 'iv' to compare IVs. Default is 'price'.
 
-        Returns:
-        --------
-        Dict[str, float]
-            Dictionary containing the absolute and relative error metrics.
+        :returns: Dictionary containing the absolute and relative error metrics.
+        :rtype: Dict[str, float]
         """
         if metric_type == "price":
             actual_values = self.market_prices
@@ -429,29 +370,20 @@ class VolatilitySmile:
         """
         Plots the volatility smile.
 
-        The function can either:
-        - Plot the smile using only the market data provided in the constructor.
-        - Plot the smile with additional calibrated data (either calibrated implied volatilities or prices).
+        This function can either:
+        * Plot the smile using only the market data provided in the constructor.
+        * Plot the smile with additional calibrated data (either calibrated implied volatilities or prices).
 
         If `calibrated_prices` is provided, the function computes the corresponding implied volatilities
         before plotting.
 
-        Parameters:
-        -----------
-        calibrated_ivs : np.array, optional
-            Calibrated implied volatilities. If provided, they will be plotted.
-        calibrated_prices : np.array, optional
-            Calibrated option prices. If provided, they will be converted to IVs before plotting.
-        bid_prices : np.array, optional
-            Bid prices. If provided, they will be converted to IVs before plotting.
-        bid_ivs : np.array, optional
-            Bid implied volatilities. If provided, they will be plotted.
-        ask_prices : np.array, optional
-            Ask prices. If provided, they will be converted to IVs before plotting.
-        ask_ivs : np.array, optional
-            Ask implied volatilities. If provided, they will be plotted.
-        maturity : str, optional
-            Maturity date in the format 'YYYY-MM-DD'. If provided, it will be used in the plot title.
+        :param np.array calibrated_ivs: Calibrated implied volatilities. If provided, they will be plotted.
+        :param np.array calibrated_prices: Calibrated option prices. If provided, they will be converted to IVs before plotting.
+        :param np.array bid_prices: Bid prices. If provided, they will be converted to IVs before plotting.
+        :param np.array bid_ivs: Bid implied volatilities. If provided, they will be plotted.
+        :param np.array ask_prices: Ask prices. If provided, they will be converted to IVs before plotting.
+        :param np.array ask_ivs: Ask implied volatilities. If provided, they will be plotted.
+        :param str maturity: Maturity date in the format 'YYYY-MM-DD'. If provided, it will be used in the plot title.
         """
 
         if (calibrated_ivs is None) and (calibrated_prices is not None):

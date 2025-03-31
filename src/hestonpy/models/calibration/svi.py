@@ -12,38 +12,30 @@ class StochasticVolatilityInspired:
     This class allows for the calculation of the total implied volatility according to the SVI formulation
     and performs calibration to market data.
 
-    Attributes:
-    -----------
-    time_to_maturity : float
-        Time to maturity of the option in years.
+    :param float time_to_maturity: Time to maturity of the option in years.
     """
 
     def __init__(self, time_to_maturity:float):
+        """
+        Initializes the StochasticVolatilityInspired object.
 
+        :param float time_to_maturity: Time to maturity of the option in years.
+        """
         self.time_to_maturity = time_to_maturity
 
     def raw_formulation(self, k, a:float, b:float, rho:float, m:float, sigma:float):
         """
         Computes the total implied variance according to the raw SVI formulation.
 
-        Parameters:
-        -----------
-        k : float
-            Log-moneyness (log(strike / forward)).
-        a : float
-            Vertical shift parameter.
-        b : float
-            Curvature parameter.
-        rho : float
-            Correlation parameter (-1 < rho < 1).
-        m : float
-            Horizontal translation parameter.
-        sigma : float
-            Scale volatility parameter.
+        :param float k: Log-moneyness (log(strike / forward)).
+        :param float a: Vertical shift parameter.
+        :param float b: Curvature parameter.
+        :param float rho: Correlation parameter (-1 < rho < 1).
+        :param float m: Horizontal translation parameter.
+        :param float sigma: Scale volatility parameter.
 
-        Returns:
-        --------
-        float : Total implied variance associated with log-moneyness k.
+        :returns: Total implied variance associated with log-moneyness k.
+        :rtype: float
         """
         return a + b * ( rho * (k-m) + np.sqrt((k-m)**2 + sigma**2) )
     
@@ -59,24 +51,14 @@ class StochasticVolatilityInspired:
         Calibrates the SVI model to market implied volatilities by minimizing the squared error
         between the model's total implied variance and the market's total implied variance.
 
-        Parameters:
-        -----------
-        strikes : np.array
-            Array of option strike prices.
-        market_ivs : np.array
-            Array of market implied volatilities.
-        forward : float
-            Forward price of the underlying asset. Often np.exp(r * time_to_mat) * spot.
-        x0 : list, optional
-            Initial values of the SVI parameters (a, b, rho, m, sigma, respectively). Default is [0.5, 0.5, 0.5, 0.5, 0.5].
-        method : str, optional
-            Optimization algorithm used. Default is 'SLSQP'.
+        :param np.array strikes: Array of option strike prices.
+        :param np.array market_ivs: Array of market implied volatilities.
+        :param float forward: Forward price of the underlying asset. Often np.exp(r * time_to_mat) * spot.
+        :param list x0: Initial values of the SVI parameters (a, b, rho, m, sigma, respectively). Default is [0.5, 0.5, 0.5, 0.5, 0.5].
+        :param str method: Optimization algorithm used. Default is 'SLSQP'.
 
-        Returns:
-        --------
-        tuple (dict, np.array):
-            - Dictionary of calibrated SVI parameters { "a": ..., "b": ..., "rho": ..., "m": ..., "sigma": ... }.
-            - Array of model implied volatilities after calibration.
+        :returns: Tuple containing a dictionary of calibrated SVI parameters and an array of model implied volatilities after calibration.
+        :rtype: tuple (dict, np.array)
         """
         
         market_total_implied_variance = market_ivs**2 * self.time_to_maturity
