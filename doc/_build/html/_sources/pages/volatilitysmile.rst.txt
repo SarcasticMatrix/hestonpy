@@ -1,0 +1,6 @@
+VolatilitySmile
+===============
+
+
+.. autoclass:: hestonpy.models.calibration.volatilitySmile.VolatilitySmile
+    :members:
