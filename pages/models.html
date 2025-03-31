@@ -310,12 +310,653 @@
 <h1>Models<a class="headerlink" href="#models" title="Link to this heading">#</a></h1>
 <section id="heston">
 <h2>Heston<a class="headerlink" href="#heston" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="hestonpy.models.heston.Heston">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hestonpy.models.heston.</span></span><span class="sig-name descname"><span class="pre">Heston</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_initial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_emm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.heston.Heston" title="Link to this definition">#</a></dt>
+<dd><p>Heston model for option pricing with stochastic volatility.</p>
+<p>This class implements the Heston model for pricing European options with stochastic volatility.
+It includes methods for simulation, pricing, and hedging.</p>
+<p>You can initialize the Heston model parameters under the historical or risk neutral dynamics as you want.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spot</strong> (<em>float</em>) – Current price of the underlying asset.</p></li>
+<li><p><strong>vol_initial</strong> (<em>float</em>) – Initial variance of the underlying asset.</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – Risk-free interest rate.</p></li>
+<li><p><strong>kappa</strong> (<em>float</em>) – Mean reversion speed of the variance.</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) – Long-term mean of the variance.</p></li>
+<li><p><strong>drift_emm</strong> (<em>float</em>) – Market price of risk (lambda) for the variance process. Usually set as 0</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – Volatility of the variance (vol of vol).</p></li>
+<li><p><strong>rho</strong> (<em>float</em>) – Correlation between the asset price and its variance.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Random seed for reproducibility.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.heston.Heston.call_delta">
+<span class="sig-name descname"><span class="pre">call_delta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.heston.Heston.call_delta" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the delta of a European call option.</p>
+<p>This method calculates the delta of a European call option using the Heston model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>np.array</em>) – Strike prices of the options.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>np.array</em>) – Times to maturity of the options.</p></li>
+<li><p><strong>s</strong> (<em>np.array</em>) – Current prices of the underlying asset.</p></li>
+<li><p><strong>v</strong> (<em>np.array</em>) – Initial variances of the underlying asset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Delta of the call option.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.heston.Heston.call_price">
+<span class="sig-name descname"><span class="pre">call_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.heston.Heston.call_price" title="Link to this definition">#</a></dt>
+<dd><p>Price a European call option using the Carr-Madan method.</p>
+<p>This method prices a European call option using the Carr-Madan Fourier pricing method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>np.array</em>) – Strike prices of the options.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>np.array</em>) – Times to maturity of the options.</p></li>
+<li><p><strong>s</strong> (<em>np.array</em>) – Current prices of the underlying asset.</p></li>
+<li><p><strong>v</strong> (<em>np.array</em>) – Initial variances of the underlying asset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Call option prices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.heston.Heston.call_vega">
+<span class="sig-name descname"><span class="pre">call_vega</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.heston.Heston.call_vega" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the vega of a European call option.</p>
+<p>This method calculates the vega of a European call option using the Heston model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>np.array</em>) – Strike prices of the options.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>np.array</em>) – Times to maturity of the options.</p></li>
+<li><p><strong>s</strong> (<em>np.array</em>) – Current prices of the underlying asset.</p></li>
+<li><p><strong>v</strong> (<em>np.array</em>) – Initial variances of the underlying asset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Vega of the call option.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.heston.Heston.carr_madan_price">
+<span class="sig-name descname"><span class="pre">carr_madan_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_boolean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.heston.Heston.carr_madan_price" title="Link to this definition">#</a></dt>
+<dd><p>Computes the price of a European call option using the Carr-Madan Fourier pricing method.</p>
+<p>This method employs the Carr-Madan approach, leveraging the characteristic function to calculate
+the option price.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>np.array</em>) – Strike prices of the options.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>np.array</em>) – Times to maturity of the options.</p></li>
+<li><p><strong>s</strong> (<em>np.array</em>) – Current prices of the underlying asset.</p></li>
+<li><p><strong>v</strong> (<em>np.array</em>) – Initial variances of the underlying asset.</p></li>
+<li><p><strong>error_boolean</strong> (<em>bool</em>) – Whether to return the error of the price calculation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Option prices and errors (if error_boolean is True).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.heston.Heston.characteristic">
+<span class="sig-name descname"><span class="pre">characteristic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.heston.Heston.characteristic" title="Link to this definition">#</a></dt>
+<dd><p>Creates the characteristic function Psi_j(x, v, t; u) for a given (x, v, t).</p>
+<p>This function returns the characteristic function based on the index provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>j</strong> (<em>int</em>) – Index of the characteristic function (must be 1 or 2).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The characteristic function.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the index j is not 1 or 2.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.heston.Heston.delta_vega_hedging">
+<span class="sig-name descname"><span class="pre">delta_vega_hedging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strike_hedging</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maturity_hedging</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">252</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_simulations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.heston.Heston.delta_vega_hedging" title="Link to this definition">#</a></dt>
+<dd><p>Implement a delta-vega hedging strategy for a European option using the Heston model.</p>
+<p>This function simulates the hedging process over the lifetime of the option by dynamically rebalancing a portfolio
+consisting of a risky asset (underlying stock), an option (for vega hedging), and a non-risky asset (bank account).
+The function assumes that both the pricing and hedging models are based on the Heston stochastic volatility model,
+but they may use different volatilities for hedging and pricing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>float</em>) – Strike price of the option to be hedged.</p></li>
+<li><p><strong>strike_hedging</strong> (<em>float</em>) – Strike price of the option used for hedging.</p></li>
+<li><p><strong>maturity</strong> (<em>float</em>) – Time to maturity of the option to be hedged.</p></li>
+<li><p><strong>maturity_hedging</strong> (<em>float</em>) – Time to maturity of the option used for hedging.</p></li>
+<li><p><strong>nbr_points</strong> (<em>int</em>) – Number of time points in the simulation.</p></li>
+<li><p><strong>nbr_simulations</strong> (<em>int</em>) – Number of simulations to run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Portfolio values, underlying asset prices, variances, and option prices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.heston.Heston.fourier_transform_price">
+<span class="sig-name descname"><span class="pre">fourier_transform_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_boolean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.heston.Heston.fourier_transform_price" title="Link to this definition">#</a></dt>
+<dd><p>Price a European option using the Fourier transform method.</p>
+<p>This method prices a European option using the Fourier transform method with the Heston model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>np.array</em>) – Strike prices of the options.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>np.array</em>) – Times to maturity of the options.</p></li>
+<li><p><strong>s</strong> (<em>np.array</em>) – Current prices of the underlying asset.</p></li>
+<li><p><strong>v</strong> (<em>np.array</em>) – Initial variances of the underlying asset.</p></li>
+<li><p><strong>error_boolean</strong> (<em>bool</em>) – Whether to return the error of the price calculation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Option prices and errors (if error_boolean is True).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.heston.Heston.monte_carlo_price">
+<span class="sig-name descname"><span class="pre">monte_carlo_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">typing.Literal['euler',</span> <span class="pre">'milstein']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_simulations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.heston.Heston.monte_carlo_price" title="Link to this definition">#</a></dt>
+<dd><p>Price a European option using Monte Carlo simulation.</p>
+<p>This method prices a European option using Monte Carlo simulation with the Heston model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>float</em>) – Strike price of the option.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>scheme</strong> (<em>str</em>) – Discretization scheme to use (‘euler’ or ‘milstein’).</p></li>
+<li><p><strong>nbr_points</strong> (<em>int</em>) – Number of time points in each simulation.</p></li>
+<li><p><strong>nbr_simulations</strong> (<em>int</em>) – Number of simulations to run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Option price and confidence interval.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>namedtuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.heston.Heston.plot_simulation">
+<span class="sig-name descname"><span class="pre">plot_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">typing.Literal['euler',</span> <span class="pre">'milstein']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#hestonpy.models.heston.Heston.plot_simulation" title="Link to this definition">#</a></dt>
+<dd><p>Plot a single simulation of the asset price and variance paths.</p>
+<p>This method simulates and plots the paths of the underlying asset price and its variance
+using the specified discretization scheme.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>scheme</strong> (<em>str</em>) – Discretization scheme to use (‘euler’ or ‘milstein’).</p></li>
+<li><p><strong>nbr_points</strong> (<em>int</em>) – Number of time points in the simulation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Simulated asset prices and variances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.heston.Heston.price_surface">
+<span class="sig-name descname"><span class="pre">price_surface</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.heston.Heston.price_surface" title="Link to this definition">#</a></dt>
+<dd><p>Plot the call price surface as a function of strike and time to maturity.</p>
+<p>This method generates a 3D plot of the call option prices for a range of strikes and maturities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.heston.Heston.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">typing.Literal['euler',</span> <span class="pre">'milstein']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_simulations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#hestonpy.models.heston.Heston.simulate" title="Link to this definition">#</a></dt>
+<dd><p>Simulate asset price and variance paths using the Heston model.</p>
+<p>This method simulates the paths of the underlying asset price and its variance
+using either the Euler or Milstein discretization scheme.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>scheme</strong> (<em>str</em>) – Discretization scheme to use (‘euler’ or ‘milstein’).</p></li>
+<li><p><strong>nbr_points</strong> (<em>int</em>) – Number of time points in each simulation.</p></li>
+<li><p><strong>nbr_simulations</strong> (<em>int</em>) – Number of simulations to run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Simulated asset prices, variances, and count of null variances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="bates">
 <h2>Bates<a class="headerlink" href="#bates" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="hestonpy.models.bates.Bates">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hestonpy.models.bates.</span></span><span class="sig-name descname"><span class="pre">Bates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vol_initial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_emm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_jump</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu_J</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_J</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.bates.Bates" title="Link to this definition">#</a></dt>
+<dd><p>Bates model for option pricing with stochastic volatility and jumps.</p>
+<p>This class implements the Bates model, which extends the Heston model by
+incorporating jumps in the underlying asset price. It is used for pricing
+European options with stochastic volatility and jump diffusion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spot</strong> (<em>float</em>) – The current price of the underlying asset.</p></li>
+<li><p><strong>vol_initial</strong> (<em>float</em>) – The initial variance of the underlying asset.</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – The risk-free interest rate.</p></li>
+<li><p><strong>kappa</strong> (<em>float</em>) – The rate at which the variance reverts to the long-term mean.</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) – The long-term mean of the variance.</p></li>
+<li><p><strong>drift_emm</strong> (<em>float</em>) – The market price of risk for the variance process.</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – The volatility of the variance process.</p></li>
+<li><p><strong>rho</strong> (<em>float</em>) – The correlation between the asset price and its variance.</p></li>
+<li><p><strong>lambda_jump</strong> (<em>float</em>) – The intensity of jumps.</p></li>
+<li><p><strong>mu_J</strong> (<em>float</em>) – The mean of the jump size.</p></li>
+<li><p><strong>sigma_J</strong> (<em>float</em>) – The volatility of the jump size.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for the random number generator.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.bates.Bates.call_price">
+<span class="sig-name descname"><span class="pre">call_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.bates.Bates.call_price" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the price of a European call option using the Bates model.</p>
+<p>This method computes the price of a European call option by leveraging
+the Carr-Madan Fourier pricing method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>np.array</em>) – The strike price of the option.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>np.array</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>s</strong> (<em>np.array</em>) – The current price of the underlying asset.</p></li>
+<li><p><strong>v</strong> (<em>np.array</em>) – The initial variance of the underlying asset.</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments for model parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The price of the call option.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.bates.Bates.carr_madan_price">
+<span class="sig-name descname"><span class="pre">carr_madan_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_boolean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.bates.Bates.carr_madan_price" title="Link to this definition">#</a></dt>
+<dd><p>Computes the price of a European call option using the Carr-Madan Fourier pricing method.</p>
+<p>This method employs the Carr-Madan approach, leveraging the characteristic
+function to calculate the option price.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>np.array</em>) – The strike price of the option.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>np.array</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>s</strong> (<em>np.array</em>) – The current price of the underlying asset.</p></li>
+<li><p><strong>v</strong> (<em>np.array</em>) – The initial variance of the underlying asset.</p></li>
+<li><p><strong>error_boolean</strong> (<em>bool</em>) – Flag to return the error associated with the price.</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments for model parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The calculated option price and optionally the error.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.bates.Bates.characteristic">
+<span class="sig-name descname"><span class="pre">characteristic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">j</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hestonpy.models.bates.Bates.characteristic" title="Link to this definition">#</a></dt>
+<dd><p>Extends the characteristic function to include jumps in the Heston model.</p>
+<p>This method calculates the characteristic function for the Bates model,
+which includes both stochastic volatility and jumps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>j</strong> (<em>int</em>) – Indicator for the characteristic function component (1 or 2).</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments for model parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The characteristic function.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="blackscholes">
 <h2>BlackScholes<a class="headerlink" href="#blackscholes" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="hestonpy.models.blackScholes.BlackScholes">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hestonpy.models.blackScholes.</span></span><span class="sig-name descname"><span class="pre">BlackScholes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volatility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.blackScholes.BlackScholes" title="Link to this definition">#</a></dt>
+<dd><p>Black-Scholes model for option pricing.</p>
+<p>This class implements the Black-Scholes model for pricing European options.
+It includes methods for simulating asset paths, calculating option prices,
+and plotting Greeks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spot</strong> (<em>float</em>) – The current price of the underlying asset.</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – The risk-free interest rate.</p></li>
+<li><p><strong>mu</strong> (<em>float</em>) – The expected return of the underlying asset.</p></li>
+<li><p><strong>volatility</strong> (<em>float</em>) – The volatility of the underlying asset.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Seed for the random number generator.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.blackScholes.BlackScholes.call_price">
+<span class="sig-name descname"><span class="pre">call_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volatility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.blackScholes.BlackScholes.call_price" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the price of a European call option.</p>
+<p>This method calculates the price of a European call option using the
+Black-Scholes formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>float</em>) – The strike price of the option.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>spot</strong> (<em>float</em>) – The current price of the underlying asset.</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – The risk-free interest rate.</p></li>
+<li><p><strong>volatility</strong> (<em>float</em>) – The volatility of the underlying asset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The price of the call option.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.blackScholes.BlackScholes.delta">
+<span class="sig-name descname"><span class="pre">delta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag_option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'call'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'put'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volatility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.blackScholes.BlackScholes.delta" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the Delta of a European option.</p>
+<p>Delta measures the sensitivity of the option price to changes in the
+underlying asset’s price.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>float</em>) – The strike price of the option.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>flag_option</strong> (<em>str</em>) – Type of option (“call” or “put”).</p></li>
+<li><p><strong>spot</strong> (<em>float</em>) – The current price of the underlying asset.</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – The risk-free interest rate.</p></li>
+<li><p><strong>volatility</strong> (<em>float</em>) – The volatility of the underlying asset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Delta of the option.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.blackScholes.BlackScholes.delta_hedging">
+<span class="sig-name descname"><span class="pre">delta_hedging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag_option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'call'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'put'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hedging_volatility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pricing_volatility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_hedges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">252</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_simulations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.blackScholes.BlackScholes.delta_hedging" title="Link to this definition">#</a></dt>
+<dd><p>Implement a delta hedging strategy for a European option.</p>
+<p>This method simulates a delta hedging strategy using both a risky asset
+(underlying asset) and a non-risky asset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>flag_option</strong> (<em>str</em>) – Type of option (“call” or “put”).</p></li>
+<li><p><strong>strike</strong> (<em>float</em>) – The strike price of the option.</p></li>
+<li><p><strong>hedging_volatility</strong> (<em>float</em>) – The volatility used for hedging purposes.</p></li>
+<li><p><strong>pricing_volatility</strong> (<em>float</em>) – The volatility used for pricing the option.</p></li>
+<li><p><strong>nbr_hedges</strong> (<em>int</em>) – The number of hedging intervals.</p></li>
+<li><p><strong>nbr_simulations</strong> (<em>int</em>) – The number of simulations.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the portfolio value and simulated asset prices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.blackScholes.BlackScholes.delta_surface">
+<span class="sig-name descname"><span class="pre">delta_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flag_option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'call'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'put'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.blackScholes.BlackScholes.delta_surface" title="Link to this definition">#</a></dt>
+<dd><p>Plot the Delta surface of the option as a function of strike and time to maturity.</p>
+<p>This method generates a 3D plot of the Delta for a range of strikes and
+times to maturity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>flag_option</strong> (<em>str</em>) – Type of option (“call” or “put”).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.blackScholes.BlackScholes.gamma">
+<span class="sig-name descname"><span class="pre">gamma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volatility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.blackScholes.BlackScholes.gamma" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the Gamma of a European option.</p>
+<p>Gamma measures the rate of change of Delta with respect to the underlying
+asset’s price.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>float</em>) – The strike price of the option.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>spot</strong> (<em>float</em>) – The current price of the underlying asset.</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – The risk-free interest rate.</p></li>
+<li><p><strong>volatility</strong> (<em>float</em>) – The volatility of the underlying asset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Gamma of the option.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.blackScholes.BlackScholes.gamma_surface">
+<span class="sig-name descname"><span class="pre">gamma_surface</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.blackScholes.BlackScholes.gamma_surface" title="Link to this definition">#</a></dt>
+<dd><p>Plot the Gamma surface of the option as a function of strike and time to maturity.</p>
+<p>This method generates a 3D plot of the Gamma for a range of strikes and times to maturity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.blackScholes.BlackScholes.plot_simulation">
+<span class="sig-name descname"><span class="pre">plot_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">typing.Literal['euler',</span> <span class="pre">'milstein']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="headerlink" href="#hestonpy.models.blackScholes.BlackScholes.plot_simulation" title="Link to this definition">#</a></dt>
+<dd><p>Plot a simulated asset price path.</p>
+<p>This method plots a single simulated price path of the underlying asset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scheme</strong> (<em>str</em>) – Discretization scheme to use (“euler” or “milstein”).</p></li>
+<li><p><strong>nbr_points</strong> (<em>int</em>) – Number of time points in the simulation.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Time to maturity of the option in years.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Simulated asset price path.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.blackScholes.BlackScholes.put_price">
+<span class="sig-name descname"><span class="pre">put_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volatility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.blackScholes.BlackScholes.put_price" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the price of a European put option.</p>
+<p>This method calculates the price of a European put option using the
+Black-Scholes formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>float</em>) – The strike price of the option.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>spot</strong> (<em>float</em>) – The current price of the underlying asset.</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – The risk-free interest rate.</p></li>
+<li><p><strong>volatility</strong> (<em>float</em>) – The volatility of the underlying asset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The price of the put option.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.blackScholes.BlackScholes.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">typing.Literal['euler',</span> <span class="pre">'milstein']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_simulations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="headerlink" href="#hestonpy.models.blackScholes.BlackScholes.simulate" title="Link to this definition">#</a></dt>
+<dd><p>Simulate asset price paths using the Black-Scholes model.</p>
+<p>This method simulates the price paths of the underlying asset using
+either the Euler or Milstein discretization scheme.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>scheme</strong> (<em>str</em>) – Discretization scheme to use (“euler” or “milstein”).</p></li>
+<li><p><strong>nbr_points</strong> (<em>int</em>) – Number of time points in each simulation.</p></li>
+<li><p><strong>nbr_simulations</strong> (<em>int</em>) – Number of simulations to run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Simulated asset price paths.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.blackScholes.BlackScholes.vega">
+<span class="sig-name descname"><span class="pre">vega</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volatility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.blackScholes.BlackScholes.vega" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the Vega of a European option.</p>
+<p>Vega measures the sensitivity of the option price to changes in volatility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>float</em>) – The strike price of the option.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>spot</strong> (<em>float</em>) – The current price of the underlying asset.</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – The risk-free interest rate.</p></li>
+<li><p><strong>volatility</strong> (<em>float</em>) – The volatility of the underlying asset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Vega of the option.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.blackScholes.BlackScholes.volatility_arbitrage">
+<span class="sig-name descname"><span class="pre">volatility_arbitrage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag_option</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'call'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hedging_volatility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pricing_volatility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_hedges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_simulations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hestonpy.models.blackScholes.BlackScholes.volatility_arbitrage" title="Link to this definition">#</a></dt>
+<dd><p>Implement a volatility arbitrage strategy by buying an underpriced option
+and dynamically delta hedging it to expiry.</p>
+<p>This function models a scenario where the implied volatility of an option 
+(used for pricing) differs from the trader’s forecasted actual volatility (used for hedging). 
+If the trader’s forecast turns out to be correct, a profit can be realized by buying the option 
+and dynamically delta hedging it. The delta for hedging is calculated using the trader’s forecasted 
+volatility, while the option price reflects the implied volatility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>flag_option</strong> (<em>str</em>) – Type of option (“call”).</p></li>
+<li><p><strong>strike</strong> (<em>float</em>) – The strike price of the option.</p></li>
+<li><p><strong>hedging_volatility</strong> (<em>float</em>) – The volatility used for delta hedging.</p></li>
+<li><p><strong>pricing_volatility</strong> (<em>float</em>) – The implied volatility used for pricing.</p></li>
+<li><p><strong>nbr_hedges</strong> (<em>int</em>) – The number of hedging intervals.</p></li>
+<li><p><strong>nbr_simulations</strong> (<em>int</em>) – The number of simulations.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the portfolio value and simulated asset prices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -366,9 +1007,49 @@
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heston">Heston</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bates">Bates</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#blackscholes">BlackScholes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heston">Heston</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.heston.Heston"><code class="docutils literal notranslate"><span class="pre">Heston</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.heston.Heston.call_delta"><code class="docutils literal notranslate"><span class="pre">Heston.call_delta()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.heston.Heston.call_price"><code class="docutils literal notranslate"><span class="pre">Heston.call_price()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.heston.Heston.call_vega"><code class="docutils literal notranslate"><span class="pre">Heston.call_vega()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.heston.Heston.carr_madan_price"><code class="docutils literal notranslate"><span class="pre">Heston.carr_madan_price()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.heston.Heston.characteristic"><code class="docutils literal notranslate"><span class="pre">Heston.characteristic()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.heston.Heston.delta_vega_hedging"><code class="docutils literal notranslate"><span class="pre">Heston.delta_vega_hedging()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.heston.Heston.fourier_transform_price"><code class="docutils literal notranslate"><span class="pre">Heston.fourier_transform_price()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.heston.Heston.monte_carlo_price"><code class="docutils literal notranslate"><span class="pre">Heston.monte_carlo_price()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.heston.Heston.plot_simulation"><code class="docutils literal notranslate"><span class="pre">Heston.plot_simulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.heston.Heston.price_surface"><code class="docutils literal notranslate"><span class="pre">Heston.price_surface()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.heston.Heston.simulate"><code class="docutils literal notranslate"><span class="pre">Heston.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bates">Bates</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates"><code class="docutils literal notranslate"><span class="pre">Bates</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.call_price"><code class="docutils literal notranslate"><span class="pre">Bates.call_price()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.carr_madan_price"><code class="docutils literal notranslate"><span class="pre">Bates.carr_madan_price()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.characteristic"><code class="docutils literal notranslate"><span class="pre">Bates.characteristic()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#blackscholes">BlackScholes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.blackScholes.BlackScholes"><code class="docutils literal notranslate"><span class="pre">BlackScholes</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.blackScholes.BlackScholes.call_price"><code class="docutils literal notranslate"><span class="pre">BlackScholes.call_price()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.blackScholes.BlackScholes.delta"><code class="docutils literal notranslate"><span class="pre">BlackScholes.delta()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.blackScholes.BlackScholes.delta_hedging"><code class="docutils literal notranslate"><span class="pre">BlackScholes.delta_hedging()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.blackScholes.BlackScholes.delta_surface"><code class="docutils literal notranslate"><span class="pre">BlackScholes.delta_surface()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.blackScholes.BlackScholes.gamma"><code class="docutils literal notranslate"><span class="pre">BlackScholes.gamma()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.blackScholes.BlackScholes.gamma_surface"><code class="docutils literal notranslate"><span class="pre">BlackScholes.gamma_surface()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.blackScholes.BlackScholes.plot_simulation"><code class="docutils literal notranslate"><span class="pre">BlackScholes.plot_simulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.blackScholes.BlackScholes.put_price"><code class="docutils literal notranslate"><span class="pre">BlackScholes.put_price()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.blackScholes.BlackScholes.simulate"><code class="docutils literal notranslate"><span class="pre">BlackScholes.simulate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.blackScholes.BlackScholes.vega"><code class="docutils literal notranslate"><span class="pre">BlackScholes.vega()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.blackScholes.BlackScholes.volatility_arbitrage"><code class="docutils literal notranslate"><span class="pre">BlackScholes.volatility_arbitrage()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
