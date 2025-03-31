@@ -1,6 +1,0 @@
-Bates
-=====
-
-
-.. autoclass:: hestonpy.models.bates.Bates
-    :members:
