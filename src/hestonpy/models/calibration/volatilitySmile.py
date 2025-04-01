@@ -11,7 +11,7 @@ from hestonpy.models.calibration._utils_optimisation import (
 from hestonpy.models.blackScholes import BlackScholes
 from hestonpy.models.calibration.svi import StochasticVolatilityInspired as SVI
 
-fontdict = {"fontsize": 10, "fontweight": "bold"}
+fontdict = {"fontsize": 20, "fontweight": "bold"}
 
 from scipy.optimize import minimize, basinhopping, NonlinearConstraint
 from typing import Literal
@@ -155,11 +155,11 @@ class VolatilitySmile:
 
         # 3rd mask: bid-ask spread must be less than 10%
         spread = (ask_ivs - bid_ivs) / mid_ivs
-        mask3 = (spread <= 0.10) & (ask_ivs < 0.9) & (mid_ivs < 0.5)
+        mask3 = (spread <= 0.30) & (ask_ivs < 0.9) & (mid_ivs < 0.5)
 
         # 4th mask: in- or out-of-the-money by more than 20% are excluded
         forward = self.atm * np.exp(self.r * self.time_to_maturity)
-        mask4 = np.abs(self.strikes / forward - 1.0) <= 0.20
+        mask4 = np.abs(self.strikes / forward - 1.0) <= 0.30
 
         masks = mask1 & mask2 & mask3 & mask4
         pd.options.mode.chained_assignment = None
@@ -459,4 +459,5 @@ class VolatilitySmile:
             alpha=0.8,
         )
         plt.legend()
+        plt.savefig("smile.png")
         plt.show()
