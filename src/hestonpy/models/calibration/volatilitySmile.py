@@ -214,13 +214,16 @@ class VolatilitySmile:
         The initial variance is set to the closest ATM implied volatility from the data to reduce dimensionality.
 
         Two calibration schemes are available:
+
         * 'local': A fast but less robust method, sensitive to market noise.
         * 'global': A more robust but slower method.
 
         The user can specify a prior belief about the sign of the correlation:
+
         * 'positive': Constrains rho to [0,1].
         * 'negative': Constrains rho to [-1,0].
         * 'unknown': Allows rho to vary in [-1,1].
+        
         If a correlation sign is provided, the function ensures the initial guess for rho has the correct sign.
 
         :param callable price_function: Function to compute option prices under the Heston model or Bates model.
@@ -230,7 +233,7 @@ class VolatilitySmile:
         :param np.array weights: Array of weights applied to each observation in the calibration. If None, uniform weights are used.
         :param str power: Defines the loss function's exponentiation method ('mse', 'mae', 'rmse').
         :param bool relative_errors: If True, the calibration minimizes relative errors instead of absolute errors.
-        :param str method: Optimization algorithm to use ("L-BFGS-B", "SLSQP" or "trust-constr").
+        :param str method: Local optimization algorithm to use ("L-BFGS-B", "SLSQP" or "trust-constr").
 
         :returns: Dictionary containing the calibrated Heston parameters.
         :rtype: dict
