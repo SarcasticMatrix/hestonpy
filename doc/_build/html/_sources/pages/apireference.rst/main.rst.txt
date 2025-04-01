@@ -1,7 +1,0 @@
-~~~~~~~~~~~~~
-API reference
-~~~~~~~~~~~~~
-
-./apireference.rst/models.rst
-
-./apireference.rst/calibration.rst
