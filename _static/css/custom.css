@@ -1,10 +1,12 @@
 .bd-header {
-    height: 70px;  
+    height: 90px;  
     font-size: 1.5rem; 
 }
 
-.bd-header .navbar {
-    padding: 10px 20px;
+/* Agrandir le logo en haut à gauche */
+.navbar-brand img {
+  height: 60px;  /* Ajuste cette valeur selon tes besoins */
+  max-height: none; /* Assure que le logo n'est pas limité en hauteur */
 }
 
 

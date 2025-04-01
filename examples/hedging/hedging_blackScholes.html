@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../../_static/_static/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=333bfdd5" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=af91de31" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -122,8 +122,8 @@
       
     
     
-    <img src="../../_static/logo-light.png" class="logo__image only-light" alt="hestonpy v0.5.7 documentation - Home"/>
-    <img src="../../_static/logo-light.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.7 documentation - Home"/>
+    <img src="../../_static/logo-light-no-bg.png" class="logo__image only-light" alt="hestonpy v0.5.7 documentation - Home"/>
+    <img src="../../_static/logo-light-no-bg.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.7 documentation - Home"/>
   
   
 </a></div>
@@ -398,7 +398,7 @@
   <section id="Hedging-with-Black-Scholes">
 <h1>Hedging with Black-Scholes<a class="headerlink" href="#Hedging-with-Black-Scholes" title="Link to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
@@ -417,7 +417,7 @@ nbr_hedges = len(dates)-1
 <section id="Replication">
 <h1>Replication<a class="headerlink" href="#Replication" title="Link to this heading">#</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>real_vol = 0.15
@@ -465,7 +465,7 @@ plt.show()
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>price = bs.call_price(strike=bs.spot, time_to_maturity=0.5)
@@ -500,7 +500,7 @@ plt.show()
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from scipy.stats import norm
@@ -543,7 +543,7 @@ plt.show()
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>implied_volatility = 0.15
@@ -612,7 +612,7 @@ plt.show()
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>implied_volatility = 0.15
@@ -683,8 +683,8 @@ plt.show()
 <li><p><strong>Question</strong>: How can we make money if our forecast is correct?</p></li>
 <li><p><strong>Answer</strong>: Buy the option and delta hedge. But which delta do we use?</p></li>
 </ul>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>np.random.seed(42)
@@ -722,44 +722,8 @@ portfolio_real, _ = model.volatility_arbitrage(
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[16], line 14</span>
-<span class="ansi-green-intense-fg ansi-bold">     11</span> implied_volatility <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">0.20</span>
-<span class="ansi-green-intense-fg ansi-bold">     12</span> model <span style="color: rgb(98,98,98)">=</span> BlackScholes(spot<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">100</span>, r<span style="color: rgb(98,98,98)">=</span>r, mu<span style="color: rgb(98,98,98)">=</span>mu, volatility<span style="color: rgb(98,98,98)">=</span>real_volatility)
-<span class="ansi-green-fg">---&gt; 14</span> portfolio_iv, _ <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">model</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">volatility_arbitrage</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-intense-fg ansi-bold">     15</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">pricing_volatility</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">implied_volatility</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     16</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">hedging_volatility</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">implied_volatility</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     17</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">strike</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">strike</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     18</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     19</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">flag_option</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">call</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">nbr_hedges</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">nbr_hedges</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     21</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">nbr_simulations</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">nbr_simulations</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span> <span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     24</span> portfolio_real, _ <span style="color: rgb(98,98,98)">=</span> model<span style="color: rgb(98,98,98)">.</span>volatility_arbitrage(
-<span class="ansi-green-intense-fg ansi-bold">     25</span>     pricing_volatility<span style="color: rgb(98,98,98)">=</span>implied_volatility,
-<span class="ansi-green-intense-fg ansi-bold">     26</span>     hedging_volatility<span style="color: rgb(98,98,98)">=</span>real_volatility,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     31</span>     nbr_simulations<span style="color: rgb(98,98,98)">=</span>nbr_simulations,
-<span class="ansi-green-intense-fg ansi-bold">     32</span> )
-
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/hestonpy/models/blackScholes.py:347</span>, in <span class="ansi-cyan-fg">BlackScholes.volatility_arbitrage</span><span class="ansi-blue-fg">(self, strike, time_to_maturity, flag_option, hedging_volatility, pricing_volatility, nbr_hedges, nbr_simulations)</span>
-<span class="ansi-green-intense-fg ansi-bold">    344</span> time <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>linspace(start<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>, stop<span style="color: rgb(98,98,98)">=</span>time_to_maturity, num<span style="color: rgb(98,98,98)">=</span>nbr_hedges <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(98,98,98)">1</span>)
-<span class="ansi-green-intense-fg ansi-bold">    345</span> dt <span style="color: rgb(98,98,98)">=</span> time_to_maturity <span style="color: rgb(98,98,98)">/</span> nbr_hedges
-<span class="ansi-green-fg">--&gt; 347</span> S <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">simulate</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">scheme</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">milstein</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">n</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">nbr_hedges</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">N</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">nbr_simulations</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    348</span> portfolio <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>zeros_like(S)
-<span class="ansi-green-intense-fg ansi-bold">    349</span> portfolio[:, <span style="color: rgb(98,98,98)">0</span>] <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">0</span>  <span style="color: rgb(95,135,135)"># Arbitrage</span>
-
-<span class="ansi-red-fg">TypeError</span>: BlackScholes.simulate() got an unexpected keyword argument &#39;n&#39;
-</pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>number_plots = 15  # must be &lt; nPaths
@@ -767,7 +731,7 @@ File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3
 # Plotting results
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 6), sharey=True)
 
-time_points = np.linspace(0, T, nbr_points + 1)
+time_points = np.linspace(0, 1, nbr_hedges + 1)
 
 # Hedging with actual volatility
 ax1.set_title(
@@ -799,8 +763,15 @@ plt.show()
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/examples_hedging_hedging_blackScholes_10_0.png" src="../../_images/examples_hedging_hedging_blackScholes_10_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 6), sharey=True)
@@ -851,8 +822,15 @@ plt.show()
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/examples_hedging_hedging_blackScholes_11_0.png" src="../../_images/examples_hedging_hedging_blackScholes_11_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Statistics
@@ -861,7 +839,7 @@ plt.show()
 final_pnl = portfolio_iv[:, -1]
 mean_pnl = np.mean(final_pnl)
 std_pnl = np.std(final_pnl)
-pathwise_var = np.mean([np.sum(np.diff(portfolio_iv[i]) ** 2) for i in range(nPaths)])
+pathwise_var = np.mean([np.sum(np.diff(portfolio_iv[i]) ** 2) for i in range(nbr_simulations)])
 
 print(f&quot;Experiment 1 (blue) - Hedging with implied volatility:&quot;)
 print(f&quot;  Mean PnL(T): {mean_pnl:.2f}&quot;)
@@ -872,7 +850,7 @@ print(f&quot;  Pathwise Quadratic Variation: {pathwise_var:.2f}\n&quot;)
 final_pnl = portfolio_real[:, -1]
 mean_pnl = np.mean(final_pnl)
 std_pnl = np.std(final_pnl)
-pathwise_var = np.mean([np.sum(np.diff(portfolio_real[i]) ** 2) for i in range(nPaths)])
+pathwise_var = np.mean([np.sum(np.diff(portfolio_real[i]) ** 2) for i in range(nbr_simulations)])
 
 print(f&quot;Experiment 2 (black) - Hedging with actual/forecasted volatility:&quot;)
 print(f&quot;  Mean PnL(T): {mean_pnl:.2f}&quot;)
@@ -880,6 +858,23 @@ print(f&quot;  Std Dev PnL(T): {std_pnl:.2f}&quot;)
 print(f&quot;  Pathwise Quadratic Variation: {pathwise_var:.2f}\n&quot;)
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Experiment 1 (blue) - Hedging with implied volatility:
+  Mean PnL(T): 3.96
+  Std Dev PnL(T): 1.99
+  Pathwise Quadratic Variation: 1.13
+
+Experiment 2 (black) - Hedging with actual/forecasted volatility:
+  Mean PnL(T): 3.96
+  Std Dev PnL(T): 0.78
+  Pathwise Quadratic Variation: 4.23
+
+</pre></div></div>
 </div>
 </section>
 

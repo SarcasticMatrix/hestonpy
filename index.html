@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>hestonpy &#8212; hestonpy v0.5.7 documentation</title>
+    <title>hestonpy: Calibration of stochastic volatility models &#8212; hestonpy v0.5.7 documentation</title>
   
   
   
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/_static/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=333bfdd5" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=af91de31" />
   
   <!-- So that users can add custom icons -->
   <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -120,8 +120,8 @@
       
     
     
-    <img src="_static/logo-light.png" class="logo__image only-light" alt="hestonpy v0.5.7 documentation - Home"/>
-    <img src="_static/logo-light.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.7 documentation - Home"/>
+    <img src="_static/logo-light-no-bg.png" class="logo__image only-light" alt="hestonpy v0.5.7 documentation - Home"/>
+    <img src="_static/logo-light-no-bg.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.7 documentation - Home"/>
   
   
 </a></div>
@@ -332,11 +332,11 @@
   <!-- CSS overrides on the homepage only -->
 <style>
 .bd-main .bd-content .bd-article-container {
-max-width: 70rem; /* Make homepage a little wider instead of 60em */
+max-width: 75rem; /* Make homepage a little wider instead of 60em */
 }
 /* Extra top/bottom padding to the sections */
 article.bd-article section {
-padding: 3rem 0 7rem;
+padding: 7rem 0 7rem;
 }
 /* Override all h1 headers except for the hidden ones */
 h1:not(.sd-d-none) {
@@ -350,43 +350,46 @@ h3:not(#hero h3) {
 font-weight: bold;
 text-align: center;
 }
-</style><section id="hestonpy">
-<h1 class="sd-d-none">hestonpy<a class="headerlink" href="#hestonpy" title="Link to this heading">#</a></h1>
-<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
-<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 docutils">
-<div class="sd-col sd-d-flex-row docutils">
-<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-none no-border docutils">
-<div class="sd-card-body docutils">
-<div id="hero-left">  <!-- Start Hero -->
-<h2 style="font-size: 60px; font-weight: bold; margin: 5rem auto 0;">hestonpy</h2>
-<h3 style="font-weight: bold; margin-top: 0;">Stochastic Volatility models</h3>
-<p>hestonpy is a Python package for the calibration of stochastic volatility models.</p>
+</style><section id="hestonpy-calibration-of-stochastic-volatility-models">
+<h1 class="sd-d-none">hestonpy: Calibration of stochastic volatility models<a class="headerlink" href="#hestonpy-calibration-of-stochastic-volatility-models" title="Link to this heading">#</a></h1>
+<div style="display: flex;">
 
-<div class="homepage-button-container">
-<div class="homepage-button-container-row">
-    <a href="./getting_started/index.html" class="homepage-button primary-button">User guide</a>
-    <a href="./examples/index.html" class="homepage-button secondary-button">Examples</a>
-</div>
-<div class="homepage-button-container-row">
-    <a href="./api/index.html" class="homepage-button-link">See API Reference →</a>
-</div>
-</div>
-</div>  <!-- End Hero --></div>
-</div>
-</div>
-<div class="sd-col sd-d-flex-row docutils">
-<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-none no-border docutils">
-<div class="sd-card-body docutils">
-<a class="reference internal image-reference" href="_images/example.jpeg"><img alt="_images/example.jpeg" src="_images/example.jpeg" style="width: 100%;" />
-</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
+    <div style="flex: 1;">
+        <div id="hero-left">  <!-- Start Hero -->
+            <h2 style="font-size: 60px; font-weight: bold; margin: 5rem auto 0;">hestonpy</h2>
+            <h3 style="font-size: 25px; font-weight: bold; margin-top: 0;">Stochastic Volatility models</h3>
+            <p>
+                <code>hestonpy</code> implements <b>Heston</b> and <b>Bates</b> models for options <b>pricing</b>,
+                <b>hedging</b>, and robust <b>calibration</b> on implied volatility smiles.
+            </p>
+
+            <div class="homepage-button-container">
+            <div class="homepage-button-container-row">
+                <a href="./getting_started/index.html" class="homepage-button primary-button">User guide</a>
+                <a href="./examples/index.html" class="homepage-button secondary-button">Examples</a>
+            </div>
+            <div class="homepage-button-container-row">
+                <a href="./api/index.html" class="homepage-button-link">See API Reference →</a>
+            </div>
+            </div>
+        </div>  <!-- End Hero -->
+    </div>
+
+    <div style="flex: 2; display: flex; flex-direction: column;">
+
+        <div style="flex: 1;">
+            <img src="_static/_images/smile-bates.png" alt="implied vol market smile" style="width: 100%;">
+        </div>
+
+        <div style="flex: 1;">
+
+        </div>
+    </div>
+
+</div></section>
 <section id="key-features">
 <h1>Key features<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h1>
+<p><strong>It is an user friendly, intuitive and humble python library. Please, contact me if you have any suggestions!</strong></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">hestonpy</span></code> Python package implements the <strong>Heston</strong> and <strong>Bates</strong> models for option <strong>pricing</strong>, <strong>hedging</strong>,
 and robust <strong>calibration</strong> on implied volatility smiles.
 The package also includes functionality for optimal portfolio allocation using stochastic control techniques.</p>
