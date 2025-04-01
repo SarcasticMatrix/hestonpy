@@ -55,6 +55,142 @@ class Bates:
 
         self.seed = seed  # random seed
 
+    def simulate(
+        self, 
+        time_to_maturity: float = 1, 
+        scheme: str = "euler", 
+        nbr_points: int = 100, 
+        nbr_simulations: int = 1000
+    ) -> tuple:
+        """
+        Simule les prix des actifs et la variance en utilisant le modèle Bates avec des sauts dans les prix.
+
+        :param float time_to_maturity: Temps jusqu'à l'échéance de l'option en années.
+        :param str scheme: Schéma de discrétisation à utiliser ('euler' ou 'milstein').
+        :param int nbr_points: Nombre de points de temps dans chaque simulation.
+        :param int nbr_simulations: Nombre de simulations à effectuer.
+
+        :returns: Les prix simulés des actifs, les variances, le comptage des variances nulles et les sauts.
+        :rtype: tuple
+        """
+
+        # Initialisation des paramètres de simulation
+        dt = time_to_maturity / nbr_points
+        S = np.zeros((nbr_simulations, nbr_points + 1))  # Prix des actifs
+        V = np.zeros((nbr_simulations, nbr_points + 1))  # Variances
+        jump_occurences = np.zeros((nbr_simulations, nbr_points + 1))  # Jumps
+        S[:, 0] = self.spot
+        V[:, 0] = self.vol_initial
+
+        null_variance = 0
+
+        # Début de la simulation des trajectoires
+        for i in range(1, nbr_points + 1):
+
+            # Appliquer le schéma de réflexion pour le processus de variance (s'assurer que la variance est positive)
+            V[:, i - 1] = np.abs(V[:, i - 1])
+
+            # Vérifier les variances nulles
+            if np.any(V[:, i - 1] == 0):
+                null_variance += np.sum(V[i - 1, :] == 0)
+
+            # Générer des variables normales pour les mouvements browniens
+            N1 = np.random.normal(loc=0, scale=1, size=nbr_simulations)
+            N2 = np.random.normal(loc=0, scale=1, size=nbr_simulations)
+            ZV = N1 * np.sqrt(dt)
+            ZS = (self.rho * N1 + np.sqrt(1 - self.rho ** 2) * N2) * np.sqrt(dt)
+
+            # Générer les sauts pour chaque instant et chaque simulation
+            jump_occurences[:, i] = np.random.poisson(self.lambda_jump * dt, nbr_simulations)
+            jumps = jump_occurences[:, i] * (np.exp(np.random.normal(self.mu_J, self.sigma_J, nbr_simulations)) - 1)
+
+            # Mise à jour des prix des actifs avec les sauts
+            S[:, i] = (
+                S[:, i - 1]
+                + (self.r + self.drift_emm * np.sqrt(V[:, i - 1])) * S[:, i - 1] * dt
+                + np.sqrt(V[:, i - 1]) * S[:, i - 1] * ZS
+                + S[:, i - 1] * jumps
+            )
+
+            # Mise à jour de la variance (pas de sauts dans la variance, donc même que le modèle Heston)
+            V[:, i] = V[:, i - 1] + (
+                self.kappa * (self.theta - V[:, i - 1]) - self.drift_emm * V[:, i - 1]
+            ) * dt + self.sigma * np.sqrt(V[:, i - 1]) * ZV
+
+            # Ajustement du schéma de Milstein (optionnel)
+            if scheme == "milstein":
+                S[:, i] += 1 / 2 * V[:, i - 1] * S[:, i - 1] * (ZS**2 - dt)
+                V[:, i] += 1 / 4 * self.sigma**2 * (ZV**2 - dt)
+
+        # Retourner les résultats
+        if nbr_simulations == 1:
+            S = S.flatten()
+            V = V.flatten()
+            jump_occurences = jump_occurences.flatten()  # Aplatir les sauts si on a une seule simulation
+
+        return S, V, null_variance, jump_occurences
+
+
+
+    def plot_simulation(
+        self,
+        time_to_maturity: float = 1,
+        scheme: str = Literal["euler", "milstein"],
+        nbr_points: int = 100,
+    ) -> tuple:
+        """
+        Plot a single simulation of the asset price and variance paths.
+
+        This method simulates and plots the paths of the underlying asset price and its variance
+        using the specified discretization scheme.
+
+        :param float time_to_maturity: Time to maturity of the option in years.
+        :param str scheme: Discretization scheme to use ('euler' or 'milstein').
+        :param int nbr_points: Number of time points in the simulation.
+
+        :returns: Simulated asset prices and variances.
+        :rtype: tuple
+        """
+ 
+        S, V, _, jumps = self.simulate(
+            time_to_maturity=time_to_maturity, 
+            scheme=scheme, 
+            nbr_points=nbr_points, 
+            nbr_simulations=1
+        )
+
+
+        fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True, figsize=(15,8))
+
+        ax1.plot(
+            np.linspace(0, time_to_maturity, nbr_points + 1), S, label="Risky asset", color="blue", linewidth=1,
+        )
+
+        jump_indices = np.where(jumps != 0)[0]
+        jump_indices = jump_indices - 1
+        if jump_indices.size > 0:
+            ax1.scatter(
+                np.linspace(0, time_to_maturity, nbr_points + 1)[jump_indices], 
+                S[jump_indices], color="red", label="Jumps", zorder=5, marker='+',s=60
+            )
+
+
+        ax1.set_ylabel("Value [$]", fontsize=12)
+        ax1.legend(loc="upper left")
+        ax1.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8,)
+
+        ax2.plot(np.linspace(0, 1, nbr_points + 1),np.sqrt(V),label="Volatility",color="orange",linewidth=1,)
+        ax2.set_xlabel("Time", fontsize=12)
+        ax2.set_ylabel("Instantaneous volatility [%]", fontsize=12)
+        ax2.legend(loc="upper left")
+        ax2.grid(visible=True,which="major",linestyle="--",dashes=(5, 10),color="gray",linewidth=0.5,alpha=0.8,)
+
+        fig.suptitle(f"Bates Model Simulation with {scheme} scheme", fontsize=16)
+        plt.tight_layout()
+        plt.show()
+
+        return S, V
+
     def characteristic(self, j: int, **kwargs) -> float:
         """
         Extends the characteristic function to include jumps in the Heston model.
@@ -194,4 +330,28 @@ class Bates:
             return price, error
         else: 
             return price   
-   
+
+
+
+if __name__ == "__main__":
+
+    # Paramètres du modèle Bates
+    params = {
+        'vol_initial': np.float64(0.04061648109278204),
+        'kappa': np.float64(0.6923585666487466),
+        'theta': np.float64(1.0728827988086265),
+        'drift_emm': 0,
+        'sigma': np.float64(1.1861044273587131),
+        'rho': np.float64(-0.8549556775813509),
+        'lambda_jump': np.float64(4.495056249998712),
+        'mu_J': np.float64(-0.05650398032298261),
+        'sigma_J': np.float64(0.05000126603766209)
+    }
+    
+    bates_model = Bates(
+        spot=5580,        
+        r=0.00,          
+        **params
+    )
+
+    bates_model.plot_simulation(time_to_maturity=1, scheme="milstein", nbr_points=252*12)
