@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hestonpy"
-version = "0.5.7"
+version = "0.5.8"
 description = "Heston models: pricing, calibration, hedging."
 authors = ["SarcasticMatrix"]
 license = "MIT"
@@ -16,6 +16,10 @@ tqdm = "^4.67.1"
 datetime = "^5.5"
 yfinance = "^0.2.54"
 
+
+[tool.poetry.group.dev.dependencies]
+myst-parser = "^4.0.1"
+sphinx-design = "^0.6.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
