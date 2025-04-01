@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/_static/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=333bfdd5" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=af91de31" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -119,8 +119,8 @@
       
     
     
-    <img src="../_static/logo-light.png" class="logo__image only-light" alt="hestonpy v0.5.7 documentation - Home"/>
-    <img src="../_static/logo-light.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.7 documentation - Home"/>
+    <img src="../_static/logo-light-no-bg.png" class="logo__image only-light" alt="hestonpy v0.5.7 documentation - Home"/>
+    <img src="../_static/logo-light-no-bg.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.7 documentation - Home"/>
   
   
 </a></div>
@@ -750,6 +750,51 @@ which includes both stochastic volatility and jumps.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.bates.Bates.plot_simulation">
+<span class="sig-name descname"><span class="pre">plot_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">typing.Literal['euler',</span> <span class="pre">'milstein']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="../_modules/hestonpy/models/bates.html#Bates.plot_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.bates.Bates.plot_simulation" title="Link to this definition">#</a></dt>
+<dd><p>Plot a single simulation of the asset price and variance paths.</p>
+<p>This method simulates and plots the paths of the underlying asset price and its variance
+using the specified discretization scheme.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>scheme</strong> (<em>str</em>) – Discretization scheme to use (‘euler’ or ‘milstein’).</p></li>
+<li><p><strong>nbr_points</strong> (<em>int</em>) – Number of time points in the simulation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Simulated asset prices and variances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.bates.Bates.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euler'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_simulations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="../_modules/hestonpy/models/bates.html#Bates.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.bates.Bates.simulate" title="Link to this definition">#</a></dt>
+<dd><p>Simule les prix des actifs et la variance en utilisant le modèle Bates avec des sauts dans les prix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Temps jusqu’à l’échéance de l’option en années.</p></li>
+<li><p><strong>scheme</strong> (<em>str</em>) – Schéma de discrétisation à utiliser (‘euler’ ou ‘milstein’).</p></li>
+<li><p><strong>nbr_points</strong> (<em>int</em>) – Nombre de points de temps dans chaque simulation.</p></li>
+<li><p><strong>nbr_simulations</strong> (<em>int</em>) – Nombre de simulations à effectuer.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Les prix simulés des actifs, les variances, le comptage des variances nulles et les sauts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -1094,6 +1139,8 @@ volatility, while the option price reflects the implied volatility.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.call_price"><code class="docutils literal notranslate"><span class="pre">Bates.call_price()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.carr_madan_price"><code class="docutils literal notranslate"><span class="pre">Bates.carr_madan_price()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.characteristic"><code class="docutils literal notranslate"><span class="pre">Bates.characteristic()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.plot_simulation"><code class="docutils literal notranslate"><span class="pre">Bates.plot_simulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.simulate"><code class="docutils literal notranslate"><span class="pre">Bates.simulate()</span></code></a></li>
 </ul>
 </li>
 </ul>

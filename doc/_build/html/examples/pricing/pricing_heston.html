@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../../_static/_static/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=333bfdd5" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=af91de31" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -52,7 +52,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/pricing/pricing_heston';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="Examples" href="../index.html" />
+    <link rel="next" title="Calibration" href="../calibration/index.html" />
+    <link rel="prev" title="Pricing" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -121,8 +122,8 @@
       
     
     
-    <img src="../../_static/logo-light.png" class="logo__image only-light" alt="hestonpy v0.5.7 documentation - Home"/>
-    <img src="../../_static/logo-light.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.7 documentation - Home"/>
+    <img src="../../_static/logo-light-no-bg.png" class="logo__image only-light" alt="hestonpy v0.5.7 documentation - Home"/>
+    <img src="../../_static/logo-light-no-bg.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.7 documentation - Home"/>
   
   
 </a></div>
@@ -311,8 +312,26 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Initialisation of the model</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Pricing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Initialisation of the model</a></li>
 
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../calibration/index.html">Calibration</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_synthetic_data.html">With syntetic market price</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../calibration/parameters_impacts_and_stability.html">Impact of parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_real_data.html">With syntetic market price</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../hedging/index.html">Hedging</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../hedging/hedging_blackScholes.html">Hedging with Black-Scholes</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../hedging/hedging_heston.html">Hedging with Heston</a></li>
+</ul>
+</details></li>
 </ul>
 </div>
 </nav></div>
@@ -355,6 +374,9 @@
     </li>
     
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Examples</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Pricing</a></li>
     
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Initialisation of the model</span></li>
   </ul>
@@ -696,13 +718,22 @@ Carr-Madan in 0.0549s : price $11.936, error $7.18e-12 , and Confidence interval
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../index.html"
+       href="index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Examples</p>
+        <p class="prev-next-title">Pricing</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../calibration/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Calibration</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

@@ -31,6 +31,8 @@
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=333bfdd5" />
   
   <!-- So that users can add custom icons -->
   <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -130,6 +132,26 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
   </ul>
 </nav></div>
       
@@ -217,6 +239,26 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
   </ul>
 </nav></div>
           
@@ -324,7 +366,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.blackScholes</span><span class="w"> </span><span class="kn">import</span> <span class="n">BlackScholes</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.calibration.svi</span><span class="w"> </span><span class="kn">import</span> <span class="n">StochasticVolatilityInspired</span> <span class="k">as</span> <span class="n">SVI</span>
 
-<span class="n">fontdict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;fontweight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">}</span>
+<span class="n">fontdict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;fontweight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">}</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span><span class="p">,</span> <span class="n">basinhopping</span><span class="p">,</span> <span class="n">NonlinearConstraint</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
@@ -478,11 +520,11 @@
 
         <span class="c1"># 3rd mask: bid-ask spread must be less than 10%</span>
         <span class="n">spread</span> <span class="o">=</span> <span class="p">(</span><span class="n">ask_ivs</span> <span class="o">-</span> <span class="n">bid_ivs</span><span class="p">)</span> <span class="o">/</span> <span class="n">mid_ivs</span>
-        <span class="n">mask3</span> <span class="o">=</span> <span class="p">(</span><span class="n">spread</span> <span class="o">&lt;=</span> <span class="mf">0.10</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ask_ivs</span> <span class="o">&lt;</span> <span class="mf">0.9</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mid_ivs</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">mask3</span> <span class="o">=</span> <span class="p">(</span><span class="n">spread</span> <span class="o">&lt;=</span> <span class="mf">0.30</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ask_ivs</span> <span class="o">&lt;</span> <span class="mf">0.9</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mid_ivs</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span>
 
         <span class="c1"># 4th mask: in- or out-of-the-money by more than 20% are excluded</span>
         <span class="n">forward</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">atm</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="p">)</span>
-        <span class="n">mask4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">0.20</span>
+        <span class="n">mask4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">0.30</span>
 
         <span class="n">masks</span> <span class="o">=</span> <span class="n">mask1</span> <span class="o">&amp;</span> <span class="n">mask2</span> <span class="o">&amp;</span> <span class="n">mask3</span> <span class="o">&amp;</span> <span class="n">mask4</span>
         <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="kc">None</span>
@@ -794,6 +836,7 @@
             <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;smile.png&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 </div>
 

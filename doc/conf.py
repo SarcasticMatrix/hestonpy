@@ -41,8 +41,8 @@ html_css_files = [
 
 html_theme_options = {
    "logo": {
-      "image_light": "_static/logo-light.png",
-      "image_dark": "_static/logo-light.png",
+      "image_light": "_static/logo-light-no-bg.png",
+      "image_dark": "_static/logo-light-no-bg.png",
    },
 
     "icon_links": [
