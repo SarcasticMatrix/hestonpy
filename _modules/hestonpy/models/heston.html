@@ -1,0 +1,1101 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hestonpy.models.heston &#8212; hestonpy v0.5.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=333bfdd5" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=2dea12e0"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/hestonpy/models/heston';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo-light.png" class="logo__image only-light" alt="hestonpy v0.5.7 documentation - Home"/>
+    <img src="../../../_static/logo-light.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.7 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/SarcasticMatrix/hestonpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/SarcasticMatrix/hestonpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">hestonpy.models.heston</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for hestonpy.models.heston</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">random</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">quad</span><span class="p">,</span> <span class="n">quad_vec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">namedtuple</span>
+
+
+<div class="viewcode-block" id="Heston">
+<a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Heston</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Heston model for option pricing with stochastic volatility.</span>
+
+<span class="sd">    This class implements the Heston model for pricing European options with stochastic volatility.</span>
+<span class="sd">    It includes methods for simulation, pricing, and hedging.</span>
+
+<span class="sd">    You can initialize the Heston model parameters under the historical or risk neutral dynamics as you want.</span>
+
+<span class="sd">    :param float spot: Current price of the underlying asset.</span>
+<span class="sd">    :param float vol_initial: Initial variance of the underlying asset.</span>
+<span class="sd">    :param float r: Risk-free interest rate.</span>
+<span class="sd">    :param float kappa: Mean reversion speed of the variance.</span>
+<span class="sd">    :param float theta: Long-term mean of the variance.</span>
+<span class="sd">    :param float drift_emm: Market price of risk (lambda) for the variance process. Usually set as 0</span>
+<span class="sd">    :param float sigma: Volatility of the variance (vol of vol).</span>
+<span class="sd">    :param float rho: Correlation between the asset price and its variance.</span>
+<span class="sd">    :param int seed: Random seed for reproducibility.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">vol_initial</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">kappa</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">drift_emm</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">rho</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
+
+        <span class="c1"># Simulation parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spot</span> <span class="o">=</span> <span class="n">spot</span>  <span class="c1"># spot price</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span> <span class="o">=</span> <span class="n">vol_initial</span>  <span class="c1"># initial variance</span>
+
+        <span class="c1"># Model parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">=</span> <span class="n">kappa</span>  <span class="c1"># mean reversion speed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span>  <span class="c1"># long term variance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>  <span class="c1"># vol of variance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="n">rho</span>  <span class="c1"># correlation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drift_emm</span> <span class="o">=</span> <span class="n">drift_emm</span>  <span class="c1"># lambda from P to martingale measure Q (Equivalent Martingale Measure)</span>
+
+        <span class="c1"># World parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>  <span class="c1"># interest rate</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>  <span class="c1"># random seed</span>
+
+<div class="viewcode-block" id="Heston.simulate">
+<a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.simulate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;euler&quot;</span><span class="p">,</span> <span class="s2">&quot;milstein&quot;</span><span class="p">],</span>
+            <span class="n">nbr_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="n">nbr_simulations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulate asset price and variance paths using the Heston model.</span>
+
+<span class="sd">        This method simulates the paths of the underlying asset price and its variance</span>
+<span class="sd">        using either the Euler or Milstein discretization scheme.</span>
+
+<span class="sd">        :param float time_to_maturity: Time to maturity of the option in years.</span>
+<span class="sd">        :param str scheme: Discretization scheme to use (&#39;euler&#39; or &#39;milstein&#39;).</span>
+<span class="sd">        :param int nbr_points: Number of time points in each simulation.</span>
+<span class="sd">        :param int nbr_simulations: Number of simulations to run.</span>
+
+<span class="sd">        :returns: Simulated asset prices, variances, and count of null variances.</span>
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">time_to_maturity</span> <span class="o">/</span> <span class="n">nbr_points</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nbr_simulations</span><span class="p">,</span> <span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nbr_simulations</span><span class="p">,</span> <span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">S</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
+        <span class="n">V</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span>
+
+        <span class="n">null_variance</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+
+            <span class="c1"># Apply reflection scheme</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="n">null_variance</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">V</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="c1"># Brownian motion</span>
+            <span class="n">N1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">nbr_simulations</span><span class="p">)</span>
+            <span class="n">N2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">nbr_simulations</span><span class="p">)</span>
+            <span class="n">ZV</span> <span class="o">=</span> <span class="n">N1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+            <span class="n">ZS</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">N1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">N2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+
+            <span class="c1"># Update the processes</span>
+            <span class="c1"># S[:, i] = S[:, i-1] + self.r * S[:, i-1] * dt + np.sqrt(V[:, i-1]) * S[:, i-1] * ZS</span>
+            <span class="n">S</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">S</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">drift_emm</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]))</span> <span class="o">*</span> <span class="n">S</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dt</span>
+                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">S</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">ZS</span>
+            <span class="p">)</span>
+
+            <span class="n">V</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="o">+</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">-</span> <span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                    <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">drift_emm</span> <span class="o">*</span> <span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="p">)</span>
+                <span class="o">*</span> <span class="n">dt</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">ZV</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;milstein&quot;</span><span class="p">:</span>
+                <span class="n">S</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">S</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">ZS</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">dt</span><span class="p">)</span>
+                <span class="c1"># S[:, i] += 1/4 * S[:, i-1]**2 * (ZS**2 - dt)</span>
+                <span class="n">V</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">ZV</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">dt</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">nbr_simulations</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">S</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">V</span> <span class="o">=</span> <span class="n">V</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">null_variance</span></div>
+
+
+<div class="viewcode-block" id="Heston.plot_simulation">
+<a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.plot_simulation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_simulation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;euler&quot;</span><span class="p">,</span> <span class="s2">&quot;milstein&quot;</span><span class="p">],</span>
+        <span class="n">nbr_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot a single simulation of the asset price and variance paths.</span>
+
+<span class="sd">        This method simulates and plots the paths of the underlying asset price and its variance</span>
+<span class="sd">        using the specified discretization scheme.</span>
+
+<span class="sd">        :param float time_to_maturity: Time to maturity of the option in years.</span>
+<span class="sd">        :param str scheme: Discretization scheme to use (&#39;euler&#39; or &#39;milstein&#39;).</span>
+<span class="sd">        :param int nbr_points: Number of time points in the simulation.</span>
+
+<span class="sd">        :returns: Simulated asset prices and variances.</span>
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+ 
+        <span class="n">S</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+            <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span> 
+            <span class="n">scheme</span><span class="o">=</span><span class="n">scheme</span><span class="p">,</span> 
+            <span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_points</span><span class="p">,</span> 
+            <span class="n">nbr_simulations</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
+
+        <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+        <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">S</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Risky asset&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Value [$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,)</span>
+
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">V</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Volatility&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sqrt{\theta}$&quot;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Instantaneous volatility [%]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span><span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,)</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Heston Model Simulation with </span><span class="si">{</span><span class="n">scheme</span><span class="si">}</span><span class="s2"> scheme&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span></div>
+
+    
+<div class="viewcode-block" id="Heston.monte_carlo_price">
+<a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.monte_carlo_price">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">monte_carlo_price</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">strike</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;euler&quot;</span><span class="p">,</span> <span class="s2">&quot;milstein&quot;</span><span class="p">],</span>
+        <span class="n">nbr_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">nbr_simulations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Price a European option using Monte Carlo simulation.</span>
+
+<span class="sd">        This method prices a European option using Monte Carlo simulation with the Heston model.</span>
+
+<span class="sd">        :param float strike: Strike price of the option.</span>
+<span class="sd">        :param float time_to_maturity: Time to maturity of the option in years.</span>
+<span class="sd">        :param str scheme: Discretization scheme to use (&#39;euler&#39; or &#39;milstein&#39;).</span>
+<span class="sd">        :param int nbr_points: Number of time points in each simulation.</span>
+<span class="sd">        :param int nbr_simulations: Number of simulations to run.</span>
+
+<span class="sd">        :returns: Option price and confidence interval.</span>
+<span class="sd">        :rtype: namedtuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">S</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">null_variance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+            <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span> 
+            <span class="n">scheme</span><span class="o">=</span><span class="n">scheme</span><span class="p">,</span> 
+            <span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_points</span><span class="p">,</span> 
+            <span class="n">nbr_simulations</span><span class="o">=</span><span class="n">nbr_simulations</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Variance has been null </span><span class="si">{</span><span class="n">null_variance</span><span class="si">}</span><span class="s2"> times over the </span><span class="si">{</span><span class="n">nbr_points</span><span class="o">*</span><span class="n">nbr_simulations</span><span class="si">}</span><span class="s2"> iterations (</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">null_variance</span><span class="o">/</span><span class="p">(</span><span class="n">nbr_points</span><span class="o">*</span><span class="n">nbr_simulations</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">%) &quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">ST</span> <span class="o">=</span> <span class="n">S</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">payoff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">ST</span> <span class="o">-</span> <span class="n">strike</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">discounted_payoff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">time_to_maturity</span><span class="p">)</span> <span class="o">*</span> <span class="n">payoff</span>
+
+        <span class="n">price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">discounted_payoff</span><span class="p">)</span>
+        <span class="n">standard_deviation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">discounted_payoff</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">nbr_simulations</span><span class="p">)</span>
+        <span class="n">infimum</span> <span class="o">=</span> <span class="n">price</span> <span class="o">-</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">standard_deviation</span> <span class="o">/</span> <span class="n">nbr_simulations</span><span class="p">)</span>
+        <span class="n">supremum</span> <span class="o">=</span> <span class="n">price</span> <span class="o">+</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">standard_deviation</span> <span class="o">/</span> <span class="n">nbr_simulations</span><span class="p">)</span>
+
+        <span class="n">Result</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Results&quot;</span><span class="p">,</span> <span class="s2">&quot;price std infinum supremum&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Result</span><span class="p">(</span>
+            <span class="n">price</span><span class="p">,</span> <span class="n">standard_deviation</span><span class="p">,</span> <span class="n">infimum</span><span class="p">,</span> <span class="n">supremum</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Heston.characteristic">
+<a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.characteristic">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the characteristic function Psi_j(x, v, t; u) for a given (x, v, t).</span>
+
+<span class="sd">        This function returns the characteristic function based on the index provided.</span>
+
+<span class="sd">        :param int j: Index of the characteristic function (must be 1 or 2).</span>
+
+<span class="sd">        :returns: The characteristic function.</span>
+<span class="sd">        :rtype: callable</span>
+
+<span class="sd">        :raises ValueError: If the index j is not 1 or 2.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">vol_initial</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;vol_initial&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span><span class="p">)</span>  <span class="c1"># Initial variance</span>
+
+        <span class="c1"># Model parameters</span>
+        <span class="n">kappa</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;kappa&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span><span class="p">)</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;theta&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sigma&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">)</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rho&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">)</span>
+        <span class="n">drift_emm</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;drift_emm&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">drift_emm</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">uj</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">bj</span> <span class="o">=</span> <span class="n">kappa</span> <span class="o">+</span> <span class="n">drift_emm</span> <span class="o">-</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">sigma</span>
+        <span class="k">elif</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">uj</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">bj</span> <span class="o">=</span> <span class="n">kappa</span> <span class="o">+</span> <span class="n">drift_emm</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Argument j (int) must be 1 or 2&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">kappa</span> <span class="o">*</span> <span class="n">theta</span> <span class="o">/</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span>
+
+        <span class="n">dj</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">rho</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">-</span> <span class="n">bj</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="o">-</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">uj</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">-</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">gj</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="p">(</span><span class="n">rho</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">-</span> <span class="n">bj</span> <span class="o">-</span> <span class="n">dj</span><span class="p">(</span><span class="n">u</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="n">rho</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">-</span> <span class="n">bj</span> <span class="o">+</span> <span class="n">dj</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">Cj</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">tau</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="n">tau</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">bj</span> <span class="o">-</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">+</span> <span class="n">dj</span><span class="p">(</span><span class="n">u</span><span class="p">))</span> <span class="o">*</span> <span class="n">tau</span>
+            <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gj</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dj</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">tau</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gj</span><span class="p">(</span><span class="n">u</span><span class="p">)))</span>
+        <span class="p">)</span>
+        <span class="n">Dj</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">tau</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="p">(</span><span class="n">bj</span> <span class="o">-</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">+</span> <span class="n">dj</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
+            <span class="o">/</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span>
+            <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dj</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">tau</span><span class="p">))</span>
+            <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gj</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dj</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">tau</span><span class="p">))</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+            <span class="n">Cj</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="o">+</span> <span class="n">Dj</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">v</span> <span class="o">+</span> <span class="n">u</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Heston.fourier_transform_price">
+<a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.fourier_transform_price">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fourier_transform_price</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> 
+            <span class="n">strike</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> 
+            <span class="n">time_to_maturity</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+            <span class="n">s</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">error_boolean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Price a European option using the Fourier transform method.</span>
+
+<span class="sd">        This method prices a European option using the Fourier transform method with the Heston model.</span>
+
+<span class="sd">        :param np.array strike: Strike prices of the options.</span>
+<span class="sd">        :param np.array time_to_maturity: Times to maturity of the options.</span>
+<span class="sd">        :param np.array s: Current prices of the underlying asset.</span>
+<span class="sd">        :param np.array v: Initial variances of the underlying asset.</span>
+<span class="sd">        :param bool error_boolean: Whether to return the error of the price calculation.</span>
+
+<span class="sd">        :returns: Option prices and errors (if error_boolean is True).</span>
+<span class="sd">        :rtype: float or tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;vol_initial&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span><span class="p">)</span>  <span class="c1"># Initial variance</span>
+        
+        <span class="n">psi1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">integrand1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">Q1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">quad_vec</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">integrand1</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1000</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">error_boolean</span><span class="p">:</span>
+            <span class="n">error1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">quad_vec</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">integrand1</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1000</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">psi2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">integrand2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">Q2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">quad_vec</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">integrand2</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1000</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">error_boolean</span><span class="p">:</span>
+            <span class="n">error2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">quad_vec</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">integrand2</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1000</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">price</span> <span class="o">=</span> <span class="n">s</span> <span class="o">*</span> <span class="n">Q1</span> <span class="o">-</span> <span class="n">strike</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">time_to_maturity</span><span class="p">)</span> <span class="o">*</span> <span class="n">Q2</span>
+    
+        <span class="k">if</span> <span class="n">error_boolean</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span> <span class="o">*</span> <span class="n">error1</span> <span class="o">+</span> <span class="n">strike</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">time_to_maturity</span><span class="p">)</span> <span class="o">*</span> <span class="n">error2</span>
+            <span class="k">return</span> <span class="n">price</span><span class="p">,</span> <span class="n">error</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="k">return</span> <span class="n">price</span></div>
+
+        
+<div class="viewcode-block" id="Heston.call_price">
+<a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.call_price">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">call_price</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> 
+            <span class="n">strike</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> 
+            <span class="n">time_to_maturity</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+            <span class="n">s</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Price a European call option using the Carr-Madan method.</span>
+
+<span class="sd">        This method prices a European call option using the Carr-Madan Fourier pricing method.</span>
+
+<span class="sd">        :param np.array strike: Strike prices of the options.</span>
+<span class="sd">        :param np.array time_to_maturity: Times to maturity of the options.</span>
+<span class="sd">        :param np.array s: Current prices of the underlying asset.</span>
+<span class="sd">        :param np.array v: Initial variances of the underlying asset.</span>
+
+<span class="sd">        :returns: Call option prices.</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carr_madan_price</span><span class="p">(</span>
+            <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> 
+            <span class="n">v</span><span class="o">=</span><span class="n">v</span><span class="p">,</span>
+            <span class="n">strike</span><span class="o">=</span><span class="n">strike</span><span class="p">,</span> 
+            <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">price</span></div>
+
+    
+    
+<div class="viewcode-block" id="Heston.call_delta">
+<a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.call_delta">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">call_delta</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">strike</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> 
+            <span class="n">time_to_maturity</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+            <span class="n">s</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the delta of a European call option.</span>
+
+<span class="sd">        This method calculates the delta of a European call option using the Heston model.</span>
+
+<span class="sd">        :param np.array strike: Strike prices of the options.</span>
+<span class="sd">        :param np.array time_to_maturity: Times to maturity of the options.</span>
+<span class="sd">        :param np.array s: Current prices of the underlying asset.</span>
+<span class="sd">        :param np.array v: Initial variances of the underlying asset.</span>
+
+<span class="sd">        :returns: Delta of the call option.</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+            
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span>
+
+        <span class="n">psi1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">integrand</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">Q1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">quad_vec</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">integrand</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1000</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">Q1</span></div>
+
+
+   
+<div class="viewcode-block" id="Heston.call_vega">
+<a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.call_vega">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">call_vega</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">strike</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> 
+            <span class="n">time_to_maturity</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+            <span class="n">s</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the vega of a European call option.</span>
+
+<span class="sd">        This method calculates the vega of a European call option using the Heston model.</span>
+
+<span class="sd">        :param np.array strike: Strike prices of the options.</span>
+<span class="sd">        :param np.array time_to_maturity: Times to maturity of the options.</span>
+<span class="sd">        :param np.array s: Current prices of the underlying asset.</span>
+<span class="sd">        :param np.array v: Initial variances of the underlying asset.</span>
+
+<span class="sd">        :returns: Vega of the call option.</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>   
+            <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span>
+
+        <span class="n">u1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">b1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">drift_emm</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
+        <span class="n">u2</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">b2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">drift_emm</span>
+
+        <span class="n">d1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">-</span> <span class="n">b1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u1</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">-</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">d2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">-</span> <span class="n">b2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">-</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">g1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">-</span> <span class="n">b1</span> <span class="o">-</span> <span class="n">d1</span><span class="p">(</span><span class="n">u</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">-</span> <span class="n">b1</span> <span class="o">+</span> <span class="n">d1</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">g2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">-</span> <span class="n">b2</span> <span class="o">-</span> <span class="n">d2</span><span class="p">(</span><span class="n">u</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">-</span> <span class="n">b2</span> <span class="o">+</span> <span class="n">d2</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">D1</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">tau</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="p">(</span><span class="n">b1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">+</span> <span class="n">d1</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
+            <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span>
+            <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">d1</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">tau</span><span class="p">))</span>
+            <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">g1</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">d1</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">tau</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="n">D2</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">tau</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="p">(</span><span class="n">b2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">+</span> <span class="n">d2</span><span class="p">(</span><span class="n">u</span><span class="p">))</span>
+            <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span>
+            <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">d2</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">tau</span><span class="p">))</span>
+            <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">g2</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">d2</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">tau</span><span class="p">))</span>
+        <span class="p">)</span>
+
+        <span class="n">psi1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">integrand1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">D1</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">integral1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">quad_vec</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">integrand1</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1000</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">psi2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">integrand2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">D2</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">integral2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">quad_vec</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">integrand2</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1000</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">s</span> <span class="o">*</span> <span class="n">integral1</span> <span class="o">-</span> <span class="n">strike</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">time_to_maturity</span><span class="p">)</span> <span class="o">*</span> <span class="n">integral2</span></div>
+
+
+    
+<div class="viewcode-block" id="Heston.carr_madan_price">
+<a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.carr_madan_price">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">carr_madan_price</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> 
+            <span class="n">strike</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> 
+            <span class="n">time_to_maturity</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+            <span class="n">s</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">error_boolean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the price of a European call option using the Carr-Madan Fourier pricing method.</span>
+
+<span class="sd">        This method employs the Carr-Madan approach, leveraging the characteristic function to calculate</span>
+<span class="sd">        the option price.</span>
+
+<span class="sd">        :param np.array strike: Strike prices of the options.</span>
+<span class="sd">        :param np.array time_to_maturity: Times to maturity of the options.</span>
+<span class="sd">        :param np.array s: Current prices of the underlying asset.</span>
+<span class="sd">        :param np.array v: Initial variances of the underlying asset.</span>
+<span class="sd">        :param bool error_boolean: Whether to return the error of the price calculation.</span>
+
+<span class="sd">        :returns: Option prices and errors (if error_boolean is True).</span>
+<span class="sd">        :rtype: float or tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;vol_initial&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span><span class="p">)</span>  <span class="c1"># Initial variance</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span>
+
+        <span class="n">price_hat</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">time_to_maturity</span><span class="p">)</span>
+            <span class="o">/</span> <span class="p">(</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">-</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">u</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+            <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span> <span class="o">-</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">integrand</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">price_hat</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+
+        <span class="n">price</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strike</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">quad_vec</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">integrand</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1000</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">error_boolean</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strike</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">quad_vec</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">integrand</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1000</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">price</span><span class="p">,</span> <span class="n">error</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="k">return</span> <span class="n">price</span>   </div>
+
+   
+<div class="viewcode-block" id="Heston.price_surface">
+<a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.price_surface">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">price_surface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot the call price surface as a function of strike and time to maturity.</span>
+
+<span class="sd">        This method generates a 3D plot of the call option prices for a range of strikes and maturities.</span>
+
+<span class="sd">        :returns: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">Ks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+        <span class="n">Ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+        <span class="n">K_mesh</span><span class="p">,</span> <span class="n">T_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">Ks</span><span class="p">,</span> <span class="n">Ts</span><span class="p">)</span>
+
+        <span class="n">call_prices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">K_mesh</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">T_mesh</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spot</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span><span class="p">)</span>
+
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">K_mesh</span><span class="p">,</span> <span class="n">T_mesh</span><span class="p">,</span> <span class="n">call_prices</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Call price as a function of strike and time to maturity&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Strike ($K$)&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Time to maturity ($T$)&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;Price&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Heston.delta_vega_hedging">
+<a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.delta_vega_hedging">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delta_vega_hedging</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> 
+        <span class="n">strike</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">strike_hedging</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">maturity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">maturity_hedging</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">nbr_points</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">252</span><span class="p">,</span> 
+        <span class="n">nbr_simulations</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Implement a delta-vega hedging strategy for a European option using the Heston model.</span>
+
+<span class="sd">        This function simulates the hedging process over the lifetime of the option by dynamically rebalancing a portfolio</span>
+<span class="sd">        consisting of a risky asset (underlying stock), an option (for vega hedging), and a non-risky asset (bank account).</span>
+<span class="sd">        The function assumes that both the pricing and hedging models are based on the Heston stochastic volatility model,</span>
+<span class="sd">        but they may use different volatilities for hedging and pricing.</span>
+
+<span class="sd">        :param float strike: Strike price of the option to be hedged.</span>
+<span class="sd">        :param float strike_hedging: Strike price of the option used for hedging.</span>
+<span class="sd">        :param float maturity: Time to maturity of the option to be hedged.</span>
+<span class="sd">        :param float maturity_hedging: Time to maturity of the option used for hedging.</span>
+<span class="sd">        :param int nbr_points: Number of time points in the simulation.</span>
+<span class="sd">        :param int nbr_simulations: Number of simulations to run.</span>
+
+<span class="sd">        :returns: Portfolio values, underlying asset prices, variances, and option prices.</span>
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Simulation</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">maturity</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">time_to_maturities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">maturity</span> <span class="o">-</span> <span class="n">time</span><span class="p">,</span> <span class="p">(</span><span class="n">nbr_simulations</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">time_hedging</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">maturity</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">time_to_maturities_hedging</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">maturity_hedging</span> <span class="o">-</span> <span class="n">time_hedging</span><span class="p">,</span> <span class="p">(</span><span class="n">nbr_simulations</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">maturity</span> <span class="o">/</span> <span class="n">nbr_points</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span>
+
+        <span class="n">S</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+            <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">maturity</span><span class="p">,</span> 
+            <span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_points</span><span class="p">,</span> 
+            <span class="n">nbr_simulations</span><span class="o">=</span><span class="n">nbr_simulations</span><span class="p">,</span> 
+            <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;milstein&#39;</span>
+        <span class="p">)</span>
+        <span class="n">portfolio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+
+        <span class="c1"># Prices Calculation</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing option prices ...&quot;</span><span class="p">)</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strike</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturities</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">)</span>
+        <span class="n">C_hedging</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strike_hedging</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturities_hedging</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">)</span>
+
+        <span class="c1"># Vegas Calculation</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing vegas ...&quot;</span><span class="p">)</span>
+        <span class="n">vega</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_vega</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strike</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturities</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">)</span>
+        <span class="n">vega_hedging</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_vega</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strike_hedging</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturities_hedging</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">)</span>
+
+        <span class="c1"># Deltas Calculation</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing deltas ...&quot;</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_delta</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strike</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturities</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">)</span>
+        <span class="n">delta_hedging</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_delta</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strike_hedging</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturities_hedging</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">)</span>
+        
+        <span class="c1"># Delta-vega hedging</span>
+        <span class="n">stocks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nbr_simulations</span><span class="p">)</span>
+        <span class="n">derivatives</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nbr_simulations</span><span class="p">)</span>
+        <span class="n">bank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nbr_simulations</span><span class="p">)</span>
+
+        <span class="n">portfolio</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">C</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">derivatives</span> <span class="o">=</span> <span class="n">vega</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">vega_hedging</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">stocks</span> <span class="o">=</span> <span class="n">delta</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">derivatives</span> <span class="o">*</span> <span class="n">delta_hedging</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">bank</span> <span class="o">=</span> <span class="n">portfolio</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">stocks</span> <span class="o">*</span> <span class="n">S</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">derivatives</span> <span class="o">*</span> <span class="n">C_hedging</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_points</span><span class="p">)):</span>
+
+            <span class="c1"># Mise à jour de la banque</span>
+            <span class="n">bank</span> <span class="o">=</span> <span class="n">bank</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dt</span> <span class="o">*</span> <span class="n">r</span><span class="p">)</span>
+
+            <span class="c1"># Mise à jour du portefeuille : valeur totale = banque + actions + dérivés</span>
+            <span class="n">portfolio</span><span class="p">[:,</span> <span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">bank</span> <span class="o">+</span> <span class="n">stocks</span> <span class="o">*</span> <span class="n">S</span><span class="p">[:,</span> <span class="n">t</span><span class="p">]</span> <span class="o">+</span> <span class="n">derivatives</span> <span class="o">*</span> <span class="n">C_hedging</span><span class="p">[:,</span> <span class="n">t</span><span class="p">]</span>
+
+            <span class="c1"># Nouvelle couverture</span>
+            <span class="n">derivatives</span> <span class="o">=</span> <span class="n">vega</span><span class="p">[:,</span> <span class="n">t</span><span class="p">]</span> <span class="o">/</span> <span class="n">vega_hedging</span><span class="p">[:,</span> <span class="n">t</span><span class="p">]</span>
+            <span class="n">stocks</span> <span class="o">=</span> <span class="n">delta</span><span class="p">[:,</span> <span class="n">t</span><span class="p">]</span> <span class="o">-</span> <span class="n">derivatives</span> <span class="o">*</span> <span class="n">delta_hedging</span><span class="p">[:,</span> <span class="n">t</span><span class="p">]</span>
+
+            <span class="n">bank</span> <span class="o">=</span> <span class="n">portfolio</span><span class="p">[:,</span> <span class="n">t</span><span class="p">]</span> <span class="o">-</span> <span class="n">stocks</span> <span class="o">*</span> <span class="n">S</span><span class="p">[:,</span> <span class="n">t</span><span class="p">]</span> <span class="o">-</span> <span class="n">derivatives</span> <span class="o">*</span> <span class="n">C_hedging</span><span class="p">[:,</span> <span class="n">t</span><span class="p">]</span>
+
+        <span class="n">portfolio</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">bank</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dt</span> <span class="o">*</span> <span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="n">stocks</span> <span class="o">*</span> <span class="n">S</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">derivatives</span> <span class="o">*</span> <span class="n">C_hedging</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">portfolio</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">C</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Théophile Schmutz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
