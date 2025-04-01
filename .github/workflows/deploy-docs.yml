@@ -1,0 +1,40 @@
+name: "Build and Deploy Documentation 📖"
+
+on:
+  push:
+    paths:
+      - 'doc/**'  # Déclenche uniquement si un fichier dans doc/ change
+  workflow_dispatch:  # Permet de déclencher manuellement
+
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install hestonpy 
+          pip install sphinx 
+          pip install pydata-sphinx-theme sphinx-design nbsphinx myst-parser
+          sudo apt install pandoc
+          pip install pandoc
+
+      - name: Build Sphinx documentation
+        run: |
+          cd doc
+          make html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: doc/_build/html
+          branch: gh-pages
