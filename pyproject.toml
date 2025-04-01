@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hestonpy"
-version = "0.5.8"
+version = "0.5.9"
 description = "Heston models: pricing, calibration, hedging."
 authors = ["SarcasticMatrix"]
 license = "MIT"
