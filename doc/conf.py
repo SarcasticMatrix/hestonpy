@@ -15,14 +15,14 @@ release = 'v0.5.7'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "myst_parser",  # Active le support des fichiers Markdown
     "sphinx_design", # Pour les grilles et les cartes
+    "myst_parser",  # Active le support des fichiers Markdown
+    'nbsphinx',
     'sphinx.ext.githubpages',
     'sphinx.ext.autodoc',
     'sphinx.ext.mathjax',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
-    'nbsphinx',
 ]
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
