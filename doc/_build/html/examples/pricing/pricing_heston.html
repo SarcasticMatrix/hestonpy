@@ -315,20 +315,21 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Pricing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Initialisation of the model</a></li>
 
+
+
+
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../calibration/index.html">Calibration</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_synthetic_data.html">With syntetic market price</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../calibration/parameters_impacts_and_stability.html">Impact of parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_real_data.html">With syntetic market price</a></li>
-
-
+<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_real_data.html">Calibration on market data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_heston.html">Calibration of Heston models on market data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_bates.html">Calibration of Bates models on market data</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../hedging/index.html">Hedging</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../hedging/hedging_blackScholes.html">Hedging with Black-Scholes</a></li>
-
-
 <li class="toctree-l2"><a class="reference internal" href="../hedging/hedging_heston.html">Hedging with Heston</a></li>
 </ul>
 </details></li>
@@ -420,9 +421,9 @@
 <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
-    <span class="s2">&quot;drift_emm&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
     <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
     <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;drift_emm&quot;</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="n">heston</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">S0</span><span class="p">,</span> <span class="n">vol_initial</span><span class="o">=</span><span class="n">V0</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
@@ -444,8 +445,10 @@
 <img alt="../../_images/examples_pricing_pricing_heston_3_0.png" src="../../_images/examples_pricing_pricing_heston_3_0.png" />
 </div>
 </div>
+<p>There are three different ways to price with an <code class="docutils literal notranslate"><span class="pre">Heston</span></code> object: Monte Carlo, Heston original formula and Carr-Madan</p>
+</section>
 <section id="Price-via-Monte-Carlo">
-<h2>Price via Monte Carlo<a class="headerlink" href="#Price-via-Monte-Carlo" title="Link to this heading">#</a></h2>
+<h1>Price via Monte Carlo<a class="headerlink" href="#Price-via-Monte-Carlo" title="Link to this heading">#</a></h1>
 <p>Parameters</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -478,7 +481,7 @@
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Variance has been null 0 times over the 100000 iterations (0.0%)
-Monte Carlo Euler scheme in 0.0452s : price $12.05, std 0.49, and Confidence interval [12.01,12.09]
+Monte Carlo Euler scheme in 0.0445s : price $12.06, std 0.49, and Confidence interval [12.02,12.11]
 
 </pre></div></div>
 </div>
@@ -504,13 +507,13 @@ Monte Carlo Euler scheme in 0.0452s : price $12.05, std 0.49, and Confidence int
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Variance has been null 0 times over the 100000 iterations (0.0%)
-Monte Carlo Milstein scheme in 0.0415s : price $12.02, std 0.49, and Confidence interval [11.97,12.06]
+Monte Carlo Milstein scheme in 0.0577s : price $12.03, std 0.49, and Confidence interval [11.99,12.08]
 
 </pre></div></div>
 </div>
 </section>
 <section id="Price-via-Fourier-Transform">
-<h2>Price via Fourier Transform<a class="headerlink" href="#Price-via-Fourier-Transform" title="Link to this heading">#</a></h2>
+<h1>Price via Fourier Transform<a class="headerlink" href="#Price-via-Fourier-Transform" title="Link to this heading">#</a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -531,13 +534,13 @@ Monte Carlo Milstein scheme in 0.0415s : price $12.02, std 0.49, and Confidence 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Fourier Transform in 0.1629s : price $11.936, error $0.0 , and Confidence interval [11.936,11.936]
+Fourier Transform in 0.1561s : price $11.952, error $0.0 , and Confidence interval [11.952,11.952]
 
 </pre></div></div>
 </div>
 </section>
 <section id="Price-via-Carr-Madan-formula">
-<h2>Price via Carr-Madan formula<a class="headerlink" href="#Price-via-Carr-Madan-formula" title="Link to this heading">#</a></h2>
+<h1>Price via Carr-Madan formula<a class="headerlink" href="#Price-via-Carr-Madan-formula" title="Link to this heading">#</a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -558,11 +561,13 @@ Fourier Transform in 0.1629s : price $11.936, error $0.0 , and Confidence interv
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Carr-Madan in 0.0549s : price $11.936, error $7.18e-12 , and Confidence interval [11.936,11.936]
+Carr-Madan in 0.0896s : price $11.952, error $1.447e-10 , and Confidence interval [11.952,11.952]
 
 </pre></div></div>
 </div>
 </section>
+<section id="Other">
+<h1>Other<a class="headerlink" href="#Other" title="Link to this heading">#</a></h1>
 <section id="Path-simulations">
 <h2>Path simulations<a class="headerlink" href="#Path-simulations" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
@@ -578,13 +583,13 @@ Carr-Madan in 0.0549s : price $11.936, error $7.18e-12 , and Confidence interval
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_pricing_pricing_heston_16_0.png" src="../../_images/examples_pricing_pricing_heston_16_0.png" />
+<img alt="../../_images/examples_pricing_pricing_heston_18_0.png" src="../../_images/examples_pricing_pricing_heston_18_0.png" />
 </div>
 </div>
-</section>
 </section>
 <section id="Characteristic-function">
-<h1>Characteristic function<a class="headerlink" href="#Characteristic-function" title="Link to this heading">#</a></h1>
+<h2>Characteristic function<a class="headerlink" href="#Characteristic-function" title="Link to this heading">#</a></h2>
+<p>One can do a sanity check of the characteristic functions used in the derivation of the Heston original formula</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -601,42 +606,52 @@ Carr-Madan in 0.0549s : price $11.936, error $7.18e-12 , and Confidence interval
 </pre></div>
 </div>
 </div>
+<p>Check the real and imaginary parts</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2D plot</span>
-<span class="c1"># Create subplots for real and imaginary parts</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># Plot real part of psi1 and psi2</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\mathfrak</span><span class="si">{Re}</span><span class="s1">(\psi_1)$ and $\mathfrak</span><span class="si">{Re}</span><span class="s1">(\psi_2)$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$|\psi_1|$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_1$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_2$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$u$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Real part&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\mathfrak</span><span class="si">{Re}</span><span class="s1">(\psi_1)$ and $\mathfrak</span><span class="si">{Re}</span><span class="s1">(\psi_2)$&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$|\psi_1|$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_1$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_2$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$u$&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Real part&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
 <span class="c1"># Plot imaginary part of psi1 and psi2</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\mathfrak</span><span class="si">{Im}</span><span class="s1">(\psi_1)$ and $\mathfrak</span><span class="si">{Im}</span><span class="s1">(\psi_2)$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$|\psi_1|$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_1$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_2$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$u$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Imaginary part&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\mathfrak</span><span class="si">{Im}</span><span class="s1">(\psi_1)$ and $\mathfrak</span><span class="si">{Im}</span><span class="s1">(\psi_2)$&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$|\psi_1|$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_1$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_2$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$u$&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Imaginary part&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-<span class="c1">#plt.tight_layout()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-
-<span class="c1"># 3D plot</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/examples_pricing_pricing_heston_23_0.png" src="../../_images/examples_pricing_pricing_heston_23_0.png" />
+</div>
+</div>
+<p>3D plot of the characteristic functions</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_1$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_2$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
@@ -648,9 +663,22 @@ Carr-Madan in 0.0549s : price $11.936, error $7.18e-12 , and Confidence interval
 <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;Imaginary part&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="c1">## Integration over R_+</span>
-<span class="n">psi1</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/examples_pricing_pricing_heston_25_0.png" src="../../_images/examples_pricing_pricing_heston_25_0.png" />
+</div>
+</div>
+<p>Check the integrability over <span class="math notranslate nohighlight">\(R_+\)</span></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psi1</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">integrand1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">u</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="p">))</span>
 <span class="n">psi2</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">integrand2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">u</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="p">))</span>
@@ -672,29 +700,15 @@ Carr-Madan in 0.0549s : price $11.936, error $7.18e-12 , and Confidence interval
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_pricing_pricing_heston_19_0.png" src="../../_images/examples_pricing_pricing_heston_19_0.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_pricing_pricing_heston_19_1.png" src="../../_images/examples_pricing_pricing_heston_19_1.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/home/theo/Documents/packages/hestonpy/src/hestonpy/models/heston.py:211: RuntimeWarning: divide by zero encountered in divide
+/home/theo/Documents/packages/hestonpy/src/hestonpy/models/heston.py:258: RuntimeWarning: divide by zero encountered in divide
   gj = lambda u: (rho * sigma * u * 1j - bj - dj(u)) / (
-/home/theo/Documents/packages/hestonpy/src/hestonpy/models/heston.py:211: RuntimeWarning: invalid value encountered in divide
+/home/theo/Documents/packages/hestonpy/src/hestonpy/models/heston.py:258: RuntimeWarning: invalid value encountered in divide
   gj = lambda u: (rho * sigma * u * 1j - bj - dj(u)) / (
-/home/theo/Documents/packages/hestonpy/src/hestonpy/models/heston.py:217: RuntimeWarning: invalid value encountered in divide
+/home/theo/Documents/packages/hestonpy/src/hestonpy/models/heston.py:264: RuntimeWarning: invalid value encountered in divide
   - 2 * np.log((1 - gj(u) * np.exp(dj(u) * tau)) / (1 - gj(u)))
-/home/theo/Documents/packages/hestonpy/src/hestonpy/models/heston.py:220: RuntimeWarning: invalid value encountered in divide
+/home/theo/Documents/packages/hestonpy/src/hestonpy/models/heston.py:267: RuntimeWarning: invalid value encountered in divide
   lambda tau, u: (bj - rho * sigma * u * 1j + dj(u))
 </pre></div></div>
 </div>
@@ -702,9 +716,10 @@ Carr-Madan in 0.0549s : price $11.936, error $7.18e-12 , and Confidence interval
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_pricing_pricing_heston_19_3.png" src="../../_images/examples_pricing_pricing_heston_19_3.png" />
+<img alt="../../_images/examples_pricing_pricing_heston_27_1.png" src="../../_images/examples_pricing_pricing_heston_27_1.png" />
 </div>
 </div>
+</section>
 </section>
 
 
@@ -754,14 +769,15 @@ Carr-Madan in 0.0549s : price $11.936, error $7.18e-12 , and Confidence interval
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Initialisation of the model</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Monte-Carlo">Price via Monte Carlo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Fourier-Transform">Price via Fourier Transform</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Carr-Madan-formula">Price via Carr-Madan formula</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Initialisation of the model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Monte-Carlo">Price via Monte Carlo</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Fourier-Transform">Price via Fourier Transform</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Carr-Madan-formula">Price via Carr-Madan formula</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Other">Other</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Path-simulations">Path simulations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Characteristic-function">Characteristic function</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Characteristic-function">Characteristic function</a></li>
 </ul>
 
   </nav></div>

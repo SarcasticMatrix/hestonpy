@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/_static/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=333bfdd5" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=af91de31" />
   
   <!-- So that users can add custom icons -->
   <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -116,8 +116,8 @@
       
     
     
-    <img src="../../../_static/logo-light.png" class="logo__image only-light" alt="hestonpy v0.5.7 documentation - Home"/>
-    <img src="../../../_static/logo-light.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.7 documentation - Home"/>
+    <img src="../../../_static/logo-light-no-bg.png" class="logo__image only-light" alt="hestonpy v0.5.7 documentation - Home"/>
+    <img src="../../../_static/logo-light-no-bg.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.7 documentation - Home"/>
   
   
 </a></div>
@@ -363,58 +363,6 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">namedtuple</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">Bates</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Bates model for option pricing with stochastic volatility and jumps.</span>
-
-<span class="sd">    This class implements the Bates model, which extends the Heston model by</span>
-<span class="sd">    incorporating jumps in the underlying asset price. It is used for pricing</span>
-<span class="sd">    European options with stochastic volatility and jump diffusion.</span>
-
-<span class="sd">    :param float spot: The current price of the underlying asset.</span>
-<span class="sd">    :param float vol_initial: The initial variance of the underlying asset.</span>
-<span class="sd">    :param float r: The risk-free interest rate.</span>
-<span class="sd">    :param float kappa: The rate at which the variance reverts to the long-term mean.</span>
-<span class="sd">    :param float theta: The long-term mean of the variance.</span>
-<span class="sd">    :param float drift_emm: The market price of risk for the variance process.</span>
-<span class="sd">    :param float sigma: The volatility of the variance process.</span>
-<span class="sd">    :param float rho: The correlation between the asset price and its variance.</span>
-<span class="sd">    :param float lambda_jump: The intensity of jumps.</span>
-<span class="sd">    :param float mu_J: The mean of the jump size.</span>
-<span class="sd">    :param float sigma_J: The volatility of the jump size.</span>
-<span class="sd">    :param int seed: Seed for the random number generator.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">vol_initial</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">kappa</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">drift_emm</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">rho</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">lambda_jump</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mu_J</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigma_J</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
-    <span class="p">):</span>
-
-        <span class="c1"># Simulation parameters</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">spot</span> <span class="o">=</span> <span class="n">spot</span>  <span class="c1"># spot price</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span> <span class="o">=</span> <span class="n">vol_initial</span>  <span class="c1"># initial variance</span>
-
-        <span class="c1"># Model parameters</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">=</span> <span class="n">kappa</span>  <span class="c1"># mean reversion speed</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span>  <span class="c1"># long term variance</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span>  <span class="c1"># vol of variance</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="n">rho</span>  <span class="c1"># correlation</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">drift_emm</span> <span class="o">=</span> <span class="n">drift_emm</span>  <span class="c1"># lambda from P to martingale measure Q (Equivalent Martingale Measure)</span>
-
-        <span class="c1"># Jump parameters</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lambda_jump</span> <span class="o">=</span> <span class="n">lambda_jump</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mu_J</span> <span class="o">=</span> <span class="n">mu_J</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sigma_J</span> <span class="o">=</span> <span class="n">sigma_J</span>
-
-        <span class="c1"># World parameters</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>  <span class="c1"># interest rate</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>  <span class="c1"># random seed</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">random</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
-
-
 <div class="viewcode-block" id="Bates">
 <a class="viewcode-back" href="../../../api/models.html#hestonpy.models.bates.Bates">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Bates</span><span class="p">:</span>
@@ -655,10 +603,11 @@
         <span class="n">Dj</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">tau</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="p">(</span><span class="n">bj</span> <span class="o">-</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">+</span> <span class="n">dj</span><span class="p">(</span><span class="n">u</span><span class="p">))</span> <span class="o">/</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dj</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">tau</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gj</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">dj</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">tau</span><span class="p">))</span>
 
         <span class="c1"># Jump component</span>
-        <span class="n">char_jump</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">,</span> <span class="n">tau</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lambda_jump</span> <span class="o">*</span> <span class="n">tau</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="n">mu_J</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sigma_J</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">component_jump</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">,</span> <span class="n">tau</span><span class="p">:</span> <span class="n">lambda_jump</span> <span class="o">*</span> <span class="n">tau</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="n">mu_J</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sigma_J</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">component_jump</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">,</span> <span class="n">tau</span><span class="p">:</span> <span class="o">-</span> <span class="n">lambda_jump</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">mu_J</span> <span class="o">+</span> <span class="n">sigma_J</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">lambda_jump</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="n">mu_J</span> <span class="o">-</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma_J</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">Cj</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="o">+</span> <span class="n">Dj</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">v</span> <span class="o">+</span> <span class="n">u</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">char_jump</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">)</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">Cj</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="o">+</span> <span class="n">Dj</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">v</span> <span class="o">+</span> <span class="n">u</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="o">*</span><span class="n">component_jump</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">))</span>
         <span class="p">)</span></div>
 
 

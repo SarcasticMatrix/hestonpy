@@ -82,13 +82,13 @@ The package also includes functionality for optimal portfolio allocation using s
 
 Covered topics by the ``hestonpy`` package:
 
-* Heston, Bates, and Black-Scholes models (path simulations, options pricing, etc.).
+* Heston, Bates, and Black-Scholes models (vanilla options pricing, hedging).
 * Calibration on implied volatility smile (from Yahoo Finance data, personal data, or synthetic data).
-* De-noising market data (SVI implementation).
+* De-noising market data (SVI implementation and filters).
 * Asset allocations (stochastic optimal control under Heston dynamics).
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: Contents:
 
    ./api/index.rst

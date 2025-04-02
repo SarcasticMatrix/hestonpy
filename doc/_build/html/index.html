@@ -395,50 +395,24 @@ and robust <strong>calibration</strong> on implied volatility smiles.
 The package also includes functionality for optimal portfolio allocation using stochastic control techniques.</p>
 <p>Covered topics by the <code class="docutils literal notranslate"><span class="pre">hestonpy</span></code> package:</p>
 <ul class="simple">
-<li><p>Heston, Bates, and Black-Scholes models (path simulations, options pricing, etc.).</p></li>
+<li><p>Heston, Bates, and Black-Scholes models (vanilla options pricing, hedging).</p></li>
 <li><p>Calibration on implied volatility smile (from Yahoo Finance data, personal data, or synthetic data).</p></li>
-<li><p>De-noising market data (SVI implementation).</p></li>
+<li><p>De-noising market data (SVI implementation and filters).</p></li>
 <li><p>Asset allocations (stochastic optimal control under Heston dynamics).</p></li>
 </ul>
 <div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/index.html">API reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/models.html">Models</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/models.html#heston">Heston</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/models.html#bates">Bates</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/models.html#blackscholes">BlackScholes</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="api/calibration.html">Calibration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/calibration.html#volatilitysmile">VolatilitySmile</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/calibration.html#stochasticvolatilityinspired">StochasticVolatilityInspired</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/calibration.html">Calibration</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="user_guide/index.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples/pricing/index.html">Pricing</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="examples/pricing/pricing_heston.html">Initialisation of the model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples/pricing/pricing_heston.html#Characteristic-function">Characteristic function</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="examples/calibration/index.html">Calibration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="examples/calibration/calibration_synthetic_data.html">With syntetic market price</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples/calibration/parameters_impacts_and_stability.html">Impact of parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples/calibration/calibration_real_data.html">With syntetic market price</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples/calibration/calibration_real_data.html#Calibration-with-an-Heston-model">Calibration with an Heston model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples/calibration/calibration_real_data.html#Calibration-with-a-Baites-model">Calibration with a Baites model</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="examples/hedging/index.html">Hedging</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="examples/hedging/hedging_blackScholes.html">Hedging with Black-Scholes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples/hedging/hedging_blackScholes.html#Replication">Replication</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples/hedging/hedging_blackScholes.html#Hedging-with-a-misspecified-model">Hedging with a misspecified model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples/hedging/hedging_heston.html">Hedging with Heston</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/pricing/index.html">Pricing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/calibration/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/hedging/index.html">Hedging</a></li>
 </ul>
 </li>
 </ul>
