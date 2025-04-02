@@ -314,20 +314,21 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pricing/index.html">Pricing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston.html">Initialisation of the model</a></li>
 
+
+
+
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../calibration/index.html">Calibration</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_synthetic_data.html">With syntetic market price</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../calibration/parameters_impacts_and_stability.html">Impact of parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_real_data.html">With syntetic market price</a></li>
-
-
+<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_real_data.html">Calibration on market data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_heston.html">Calibration of Heston models on market data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_bates.html">Calibration of Bates models on market data</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Hedging</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="hedging_blackScholes.html">Hedging with Black-Scholes</a></li>
-
-
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Hedging with Heston</a></li>
 </ul>
 </details></li>
@@ -394,10 +395,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="Hedging-with-Heston">
-<h1>Hedging with Heston<a class="headerlink" href="#Hedging-with-Heston" title="Link to this heading">#</a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+  <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.heston import Heston
@@ -406,28 +405,33 @@ import numpy as np
 </pre></div>
 </div>
 </div>
+<section id="Hedging-with-Heston">
+<h1>Hedging with Heston<a class="headerlink" href="#Hedging-with-Heston" title="Link to this heading">#</a></h1>
+<p>We delta and vega hedge with an other call with 110% of strike and 120% of time to maturity</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Parameters for the Heston model
 S0 = 100.0  # Initial spot price
 V0 = 0.06  # Initial volatility
 r = 0.03  # Risk-free interest rate
-kappa = 1.0  # Mean reversion rate
-theta = 0.06  # Long-term volatility
-drift_emm = 0.01  # Drift term
-sigma = 0.3  # Volatility of volatility
-rho = -0.5  # Correlation between asset and volatility
 
-heston = Heston(S0, V0, r, kappa, theta, drift_emm, sigma, rho)
+params = {
+    &#39;kappa&#39;: 1.0,  # Mean reversion rate
+    &#39;theta&#39;: 0.06,  # Long-term volatility
+    &#39;drift_emm&#39;: 0.00,  # Drift term
+    &#39;sigma&#39;: 0.3,  # Volatility of volatility
+    &#39;rho&#39;: -0.5,  # Correlation between asset and volatility
+}
+heston = Heston(spot=S0, vol_initial=V0, r=r, **params)
 
 strike = 100
 strike_hedging = 110
 maturity = 1
 maturity_hedging = 1.2
 nbr_points = 252
-nbr_simulations = 100
+nbr_simulations = 1000
 
 portfolio, S, V, C = heston.delta_vega_hedging(
     strike,
@@ -455,17 +459,20 @@ Computing deltas ...
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 251/251 [00:00&lt;00:00, 30163.61it/s]
+100%|██████████| 251/251 [00:00&lt;00:00, 9276.82it/s]
 </pre></div></div>
 </div>
+<section id="Replication-errors">
+<h2>Replication errors<a class="headerlink" href="#Replication-errors" title="Link to this heading">#</a></h2>
+<p>Sanity check of the replication</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ST = S[:, -1]
 VT = portfolio[:, -1]
 
-plt.figure(figsize=(8, 8))
+plt.figure(figsize=(5, 5))
 plt.title(&quot;Réplication du payoff&quot;)
 plt.grid(linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5)
 plt.minorticks_on()
@@ -483,11 +490,12 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_3_0.png" src="../../_images/examples_hedging_hedging_heston_3_0.png" />
+<img alt="../../_images/examples_hedging_hedging_heston_6_0.png" src="../../_images/examples_hedging_hedging_heston_6_0.png" />
 </div>
 </div>
+<p>Sanity check of the replication</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ST = S[:, -1]
@@ -523,11 +531,12 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_4_0.png" src="../../_images/examples_hedging_hedging_heston_4_0.png" />
+<img alt="../../_images/examples_hedging_hedging_heston_8_0.png" src="../../_images/examples_hedging_hedging_heston_8_0.png" />
 </div>
 </div>
+<p>## Evolution of the replication portfolio</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>time = np.linspace(start=0, stop=maturity, num=nbr_points + 1)
@@ -561,14 +570,15 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_5_0.png" src="../../_images/examples_hedging_hedging_heston_5_0.png" />
+<img alt="../../_images/examples_hedging_hedging_heston_10_0.png" src="../../_images/examples_hedging_hedging_heston_10_0.png" />
 </div>
 </div>
+<p>More fancy examples</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nbr_simulations_to_plot = 50
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nbr_simulations_to_plot = 5
 time = np.linspace(start=0, stop=maturity, num=nbr_points + 1)
 paths = range(nbr_simulations_to_plot)
 
@@ -608,354 +618,39 @@ for path in paths:
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_0.png" src="../../_images/examples_hedging_hedging_heston_6_0.png" />
+<img alt="../../_images/examples_hedging_hedging_heston_12_0.png" src="../../_images/examples_hedging_hedging_heston_12_0.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_1.png" src="../../_images/examples_hedging_hedging_heston_6_1.png" />
+<img alt="../../_images/examples_hedging_hedging_heston_12_1.png" src="../../_images/examples_hedging_hedging_heston_12_1.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_2.png" src="../../_images/examples_hedging_hedging_heston_6_2.png" />
+<img alt="../../_images/examples_hedging_hedging_heston_12_2.png" src="../../_images/examples_hedging_hedging_heston_12_2.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_3.png" src="../../_images/examples_hedging_hedging_heston_6_3.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_4.png" src="../../_images/examples_hedging_hedging_heston_6_4.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_5.png" src="../../_images/examples_hedging_hedging_heston_6_5.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_6.png" src="../../_images/examples_hedging_hedging_heston_6_6.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_7.png" src="../../_images/examples_hedging_hedging_heston_6_7.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_8.png" src="../../_images/examples_hedging_hedging_heston_6_8.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_9.png" src="../../_images/examples_hedging_hedging_heston_6_9.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_10.png" src="../../_images/examples_hedging_hedging_heston_6_10.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_11.png" src="../../_images/examples_hedging_hedging_heston_6_11.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_12.png" src="../../_images/examples_hedging_hedging_heston_6_12.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_13.png" src="../../_images/examples_hedging_hedging_heston_6_13.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_14.png" src="../../_images/examples_hedging_hedging_heston_6_14.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_15.png" src="../../_images/examples_hedging_hedging_heston_6_15.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_16.png" src="../../_images/examples_hedging_hedging_heston_6_16.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_17.png" src="../../_images/examples_hedging_hedging_heston_6_17.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_18.png" src="../../_images/examples_hedging_hedging_heston_6_18.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_19.png" src="../../_images/examples_hedging_hedging_heston_6_19.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_20.png" src="../../_images/examples_hedging_hedging_heston_6_20.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_21.png" src="../../_images/examples_hedging_hedging_heston_6_21.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_22.png" src="../../_images/examples_hedging_hedging_heston_6_22.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_23.png" src="../../_images/examples_hedging_hedging_heston_6_23.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_24.png" src="../../_images/examples_hedging_hedging_heston_6_24.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_25.png" src="../../_images/examples_hedging_hedging_heston_6_25.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_26.png" src="../../_images/examples_hedging_hedging_heston_6_26.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_27.png" src="../../_images/examples_hedging_hedging_heston_6_27.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_28.png" src="../../_images/examples_hedging_hedging_heston_6_28.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_29.png" src="../../_images/examples_hedging_hedging_heston_6_29.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_30.png" src="../../_images/examples_hedging_hedging_heston_6_30.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_31.png" src="../../_images/examples_hedging_hedging_heston_6_31.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_32.png" src="../../_images/examples_hedging_hedging_heston_6_32.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_33.png" src="../../_images/examples_hedging_hedging_heston_6_33.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_34.png" src="../../_images/examples_hedging_hedging_heston_6_34.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_35.png" src="../../_images/examples_hedging_hedging_heston_6_35.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_36.png" src="../../_images/examples_hedging_hedging_heston_6_36.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_37.png" src="../../_images/examples_hedging_hedging_heston_6_37.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_38.png" src="../../_images/examples_hedging_hedging_heston_6_38.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_39.png" src="../../_images/examples_hedging_hedging_heston_6_39.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_40.png" src="../../_images/examples_hedging_hedging_heston_6_40.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_41.png" src="../../_images/examples_hedging_hedging_heston_6_41.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_42.png" src="../../_images/examples_hedging_hedging_heston_6_42.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_43.png" src="../../_images/examples_hedging_hedging_heston_6_43.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_44.png" src="../../_images/examples_hedging_hedging_heston_6_44.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_45.png" src="../../_images/examples_hedging_hedging_heston_6_45.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_46.png" src="../../_images/examples_hedging_hedging_heston_6_46.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_47.png" src="../../_images/examples_hedging_hedging_heston_6_47.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_48.png" src="../../_images/examples_hedging_hedging_heston_6_48.png" />
+<img alt="../../_images/examples_hedging_hedging_heston_12_3.png" src="../../_images/examples_hedging_hedging_heston_12_3.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_hedging_hedging_heston_6_49.png" src="../../_images/examples_hedging_hedging_heston_6_49.png" />
+<img alt="../../_images/examples_hedging_hedging_heston_12_4.png" src="../../_images/examples_hedging_hedging_heston_12_4.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># time = np.linspace(start=0, stop=maturity, num=nbr_points + 1)
@@ -1009,7 +704,7 @@ for path in paths:
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># time = np.linspace(start=0, stop=maturity, num=nbr_points + 1)
@@ -1063,6 +758,7 @@ for path in paths:
 </div>
 </div>
 </section>
+</section>
 
 
                 </article>
@@ -1093,6 +789,18 @@ for path in paths:
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Replication-errors">Replication errors</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">

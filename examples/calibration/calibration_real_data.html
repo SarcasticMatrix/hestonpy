@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>With syntetic market price &#8212; hestonpy v0.5.7 documentation</title>
+    <title>Calibration on market data &#8212; hestonpy v0.5.7 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/calibration/calibration_real_data';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Hedging" href="../hedging/index.html" />
+    <link rel="next" title="Calibration of Heston models on market data" href="calibration_heston.html" />
     <link rel="prev" title="Impact of parameters" href="parameters_impacts_and_stability.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -315,20 +315,21 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pricing/index.html">Pricing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston.html">Initialisation of the model</a></li>
 
+
+
+
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Calibration</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="calibration_synthetic_data.html">With syntetic market price</a></li>
 <li class="toctree-l2"><a class="reference internal" href="parameters_impacts_and_stability.html">Impact of parameters</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">With syntetic market price</a></li>
-
-
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Calibration on market data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_heston.html">Calibration of Heston models on market data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_bates.html">Calibration of Bates models on market data</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../hedging/index.html">Hedging</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../hedging/hedging_blackScholes.html">Hedging with Black-Scholes</a></li>
-
-
 <li class="toctree-l2"><a class="reference internal" href="../hedging/hedging_heston.html">Hedging with Heston</a></li>
 </ul>
 </details></li>
@@ -378,7 +379,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Calibration</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">With syntetic market price</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Calibration on market data</span></li>
   </ul>
 </nav>
 </div>
@@ -395,10 +396,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="With-syntetic-market-price">
-<h1>With syntetic market price<a class="headerlink" href="#With-syntetic-market-price" title="Link to this heading">#</a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+  <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.heston import Heston
@@ -409,15 +408,17 @@ r = 0.00
 </pre></div>
 </div>
 </div>
+<section id="Calibration-on-market-data">
+<h1>Calibration on market data<a class="headerlink" href="#Calibration-on-market-data" title="Link to this heading">#</a></h1>
 <p>Get market data</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.option.data import get_options_data, filter_data_for_maturity
-
-all_market_data, spot, maturities = get_options_data(symbol=&#39;^SPX&#39;)
-maturities, spot
+symbol=&#39;^SPX&#39;
+all_market_data, spot, maturities = get_options_data(symbol=symbol)
+spot
 </pre></div>
 </div>
 </div>
@@ -427,74 +428,89 @@ maturities, spot
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-((&#39;2025-03-31&#39;,
-  &#39;2025-04-01&#39;,
-  &#39;2025-04-02&#39;,
-  &#39;2025-04-03&#39;,
-  &#39;2025-04-04&#39;,
-  &#39;2025-04-07&#39;,
-  &#39;2025-04-08&#39;,
-  &#39;2025-04-09&#39;,
-  &#39;2025-04-10&#39;,
-  &#39;2025-04-11&#39;,
-  &#39;2025-04-14&#39;,
-  &#39;2025-04-15&#39;,
-  &#39;2025-04-16&#39;,
-  &#39;2025-04-17&#39;,
-  &#39;2025-04-21&#39;,
-  &#39;2025-04-22&#39;,
-  &#39;2025-04-23&#39;,
-  &#39;2025-04-24&#39;,
-  &#39;2025-04-25&#39;,
-  &#39;2025-04-28&#39;,
-  &#39;2025-04-29&#39;,
-  &#39;2025-04-30&#39;,
-  &#39;2025-05-01&#39;,
-  &#39;2025-05-02&#39;,
-  &#39;2025-05-05&#39;,
-  &#39;2025-05-06&#39;,
-  &#39;2025-05-08&#39;,
-  &#39;2025-05-09&#39;,
-  &#39;2025-05-16&#39;,
-  &#39;2025-05-30&#39;,
-  &#39;2025-06-20&#39;,
-  &#39;2025-06-30&#39;,
-  &#39;2025-07-18&#39;,
-  &#39;2025-07-31&#39;,
-  &#39;2025-08-15&#39;,
-  &#39;2025-08-29&#39;,
-  &#39;2025-09-19&#39;,
-  &#39;2025-09-30&#39;,
-  &#39;2025-10-17&#39;,
-  &#39;2025-11-21&#39;,
-  &#39;2025-12-19&#39;,
-  &#39;2025-12-31&#39;,
-  &#39;2026-01-16&#39;,
-  &#39;2026-02-20&#39;,
-  &#39;2026-03-20&#39;,
-  &#39;2026-03-31&#39;,
-  &#39;2026-04-17&#39;,
-  &#39;2026-06-18&#39;,
-  &#39;2026-12-18&#39;,
-  &#39;2027-12-17&#39;,
-  &#39;2028-12-15&#39;,
-  &#39;2029-12-21&#39;,
-  &#39;2030-12-20&#39;),
- np.float64(5580.93994140625))
+np.float64(5664.0498046875)
 </pre></div></div>
 </div>
+<p>Choose your smile/maturity</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>maturity = maturities[7]
-full_market_data = filter_data_for_maturity(all_market_data, maturity)
-full_market_data
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>maturities
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;2025-04-02&#39;,
+ &#39;2025-04-03&#39;,
+ &#39;2025-04-04&#39;,
+ &#39;2025-04-07&#39;,
+ &#39;2025-04-08&#39;,
+ &#39;2025-04-09&#39;,
+ &#39;2025-04-10&#39;,
+ &#39;2025-04-11&#39;,
+ &#39;2025-04-14&#39;,
+ &#39;2025-04-15&#39;,
+ &#39;2025-04-16&#39;,
+ &#39;2025-04-17&#39;,
+ &#39;2025-04-21&#39;,
+ &#39;2025-04-22&#39;,
+ &#39;2025-04-23&#39;,
+ &#39;2025-04-24&#39;,
+ &#39;2025-04-25&#39;,
+ &#39;2025-04-28&#39;,
+ &#39;2025-04-29&#39;,
+ &#39;2025-04-30&#39;,
+ &#39;2025-05-01&#39;,
+ &#39;2025-05-02&#39;,
+ &#39;2025-05-05&#39;,
+ &#39;2025-05-06&#39;,
+ &#39;2025-05-08&#39;,
+ &#39;2025-05-09&#39;,
+ &#39;2025-05-16&#39;,
+ &#39;2025-05-30&#39;,
+ &#39;2025-06-20&#39;,
+ &#39;2025-06-30&#39;,
+ &#39;2025-07-18&#39;,
+ &#39;2025-07-31&#39;,
+ &#39;2025-08-15&#39;,
+ &#39;2025-08-29&#39;,
+ &#39;2025-09-19&#39;,
+ &#39;2025-09-30&#39;,
+ &#39;2025-10-17&#39;,
+ &#39;2025-11-21&#39;,
+ &#39;2025-12-19&#39;,
+ &#39;2025-12-31&#39;,
+ &#39;2026-01-16&#39;,
+ &#39;2026-02-20&#39;,
+ &#39;2026-03-20&#39;,
+ &#39;2026-03-31&#39;,
+ &#39;2026-04-17&#39;,
+ &#39;2026-06-18&#39;,
+ &#39;2026-12-18&#39;,
+ &#39;2027-12-17&#39;,
+ &#39;2028-12-15&#39;,
+ &#39;2029-12-21&#39;,
+ &#39;2030-12-20&#39;)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>maturity = maturities[28]
+full_market_data = filter_data_for_maturity(all_market_data, maturity)
+full_market_data.head()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -529,132 +545,66 @@ full_market_data
   <tbody>
     <tr>
       <th>0</th>
-      <td>820.14</td>
-      <td>657.5</td>
-      <td>675.60</td>
-      <td>0.000010</td>
-      <td>4900.0</td>
-      <td>1.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
+      <td>5495.40</td>
+      <td>5423.4</td>
+      <td>5439.2</td>
+      <td>0.00001</td>
+      <td>200.0</td>
+      <td>2.0</td>
+      <td>0.22619</td>
+      <td>2025-06-20</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>506.75</td>
-      <td>270.4</td>
-      <td>288.60</td>
-      <td>0.214546</td>
-      <td>5300.0</td>
+      <td>5208.01</td>
+      <td>5219.9</td>
+      <td>5238.0</td>
+      <td>0.00001</td>
+      <td>400.0</td>
       <td>1.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
+      <td>0.22619</td>
+      <td>2025-06-20</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>297.18</td>
-      <td>218.1</td>
-      <td>236.30</td>
-      <td>0.218949</td>
-      <td>5360.0</td>
+      <td>5010.16</td>
+      <td>5021.5</td>
+      <td>5039.6</td>
+      <td>0.00001</td>
+      <td>600.0</td>
       <td>1.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
+      <td>0.22619</td>
+      <td>2025-06-20</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>188.04</td>
-      <td>135.3</td>
-      <td>136.50</td>
-      <td>0.197213</td>
-      <td>5480.0</td>
-      <td>1.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
+      <td>4820.39</td>
+      <td>4823.9</td>
+      <td>4842.0</td>
+      <td>0.00001</td>
+      <td>800.0</td>
+      <td>6.0</td>
+      <td>0.22619</td>
+      <td>2025-06-20</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>243.30</td>
-      <td>121.9</td>
-      <td>123.10</td>
-      <td>0.197678</td>
-      <td>5500.0</td>
+      <td>4608.28</td>
+      <td>4626.4</td>
+      <td>4644.1</td>
+      <td>0.00001</td>
+      <td>1000.0</td>
       <td>2.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>85</th>
-      <td>0.15</td>
-      <td>0.0</td>
-      <td>0.25</td>
-      <td>0.209481</td>
-      <td>6150.0</td>
-      <td>106.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-    </tr>
-    <tr>
-      <th>86</th>
-      <td>0.20</td>
-      <td>0.0</td>
-      <td>0.20</td>
-      <td>0.220101</td>
-      <td>6200.0</td>
-      <td>1.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-    </tr>
-    <tr>
-      <th>87</th>
-      <td>0.08</td>
-      <td>0.0</td>
-      <td>0.20</td>
-      <td>0.250007</td>
-      <td>6300.0</td>
-      <td>1.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-    </tr>
-    <tr>
-      <th>88</th>
-      <td>0.08</td>
-      <td>0.0</td>
-      <td>0.20</td>
-      <td>0.278816</td>
-      <td>6400.0</td>
-      <td>2.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-    </tr>
-    <tr>
-      <th>89</th>
-      <td>0.12</td>
-      <td>0.0</td>
-      <td>0.15</td>
-      <td>0.299323</td>
-      <td>6500.0</td>
-      <td>10.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
+      <td>0.22619</td>
+      <td>2025-06-20</td>
     </tr>
   </tbody>
 </table>
-<p>90 rows × 8 columns</p>
 </div></div>
 </div>
+<p>Sanity check of the data from yfinance</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>time_to_maturity = full_market_data[&#39;Time to Maturity&#39;].iloc[0]
@@ -679,737 +629,131 @@ marketVolatilitySmile.plot(bid_prices=bid_prices, ask_prices=ask_prices)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_calibration_calibration_real_data_5_0.png" src="../../_images/examples_calibration_calibration_real_data_5_0.png" />
+<img alt="../../_images/examples_calibration_calibration_real_data_8_0.png" src="../../_images/examples_calibration_calibration_real_data_8_0.png" />
 </div>
 </div>
-<p>filter market data</p>
-<p>la iv du marché fait pas trop de sens, plutot utiliser</p>
+<p>Hmmm it is ugly, run some filters and use the mid implied volatility to denoise the market,</p>
 <div class="math notranslate nohighlight">
 \[\frac{\sigma_{bid}+\sigma_{ask}}{2}\]</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>market_data = marketVolatilitySmile.filters(full_market_data)
 marketVolatilitySmile.plot()
-market_data
+market_data.head()
 </pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_calibration_calibration_real_data_8_0.png" src="../../_images/examples_calibration_calibration_real_data_8_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[6], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> market_data <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">marketVolatilitySmile</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">filters</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">full_market_data</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> marketVolatilitySmile<span style="color: rgb(98,98,98)">.</span>plot()
+<span class="ansi-green-intense-fg ansi-bold">      3</span> market_data<span style="color: rgb(98,98,98)">.</span>head()
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
+File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/calibration/volatilitySmile.py:144</span>, in <span class="ansi-cyan-fg">VolatilitySmile.filters</span><span class="ansi-blue-fg">(self, full_market_data, select_mid_ivs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    142</span> <span style="color: rgb(95,135,135)"># Ask prices and implied vol</span>
+<span class="ansi-green-intense-fg ansi-bold">    143</span> ask_prices <span style="color: rgb(98,98,98)">=</span> full_market_data[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Ask</span><span style="color: rgb(175,0,0)">&#34;</span>]<span style="color: rgb(98,98,98)">.</span>values
+<span class="ansi-green-fg">--&gt; 144</span> ask_ivs <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">compute_smile</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">ask_prices</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">strikes</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    146</span> <span style="color: rgb(95,135,135)"># Mid prices and implied vol</span>
+<span class="ansi-green-intense-fg ansi-bold">    147</span> mid_ivs <span style="color: rgb(98,98,98)">=</span> (ask_ivs <span style="color: rgb(98,98,98)">+</span> bid_ivs) <span style="color: rgb(98,98,98)">/</span> <span style="color: rgb(98,98,98)">2</span>
 
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Call Price</th>
-      <th>Bid</th>
-      <th>Ask</th>
-      <th>Implied Volatility</th>
-      <th>Strike</th>
-      <th>Volume</th>
-      <th>Time to Maturity</th>
-      <th>Maturity</th>
-      <th>Mid ivs</th>
-      <th>Ask ivs</th>
-      <th>Bid ivs</th>
-      <th>Mid Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>5</th>
-      <td>119.75</td>
-      <td>106.10</td>
-      <td>107.30</td>
-      <td>0.197812</td>
-      <td>5525.0</td>
-      <td>18.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.204371</td>
-      <td>0.206068</td>
-      <td>0.202673</td>
-      <td>106.700</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>109.77</td>
-      <td>100.10</td>
-      <td>101.30</td>
-      <td>0.197777</td>
-      <td>5535.0</td>
-      <td>34.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.204358</td>
-      <td>0.206030</td>
-      <td>0.202686</td>
-      <td>100.700</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>102.21</td>
-      <td>91.60</td>
-      <td>92.30</td>
-      <td>0.196713</td>
-      <td>5550.0</td>
-      <td>192.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.203963</td>
-      <td>0.204921</td>
-      <td>0.203004</td>
-      <td>91.950</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>94.59</td>
-      <td>85.70</td>
-      <td>86.80</td>
-      <td>0.196648</td>
-      <td>5560.0</td>
-      <td>21.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.203360</td>
-      <td>0.204855</td>
-      <td>0.201865</td>
-      <td>86.250</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>81.38</td>
-      <td>69.80</td>
-      <td>71.00</td>
-      <td>0.195019</td>
-      <td>5590.0</td>
-      <td>15.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.201535</td>
-      <td>0.203153</td>
-      <td>0.199918</td>
-      <td>70.400</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>77.20</td>
-      <td>67.30</td>
-      <td>68.50</td>
-      <td>0.194619</td>
-      <td>5595.0</td>
-      <td>13.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.201114</td>
-      <td>0.202734</td>
-      <td>0.199495</td>
-      <td>67.900</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>74.13</td>
-      <td>65.20</td>
-      <td>65.80</td>
-      <td>0.193558</td>
-      <td>5600.0</td>
-      <td>83.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.200818</td>
-      <td>0.201629</td>
-      <td>0.200007</td>
-      <td>65.500</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>62.53</td>
-      <td>55.60</td>
-      <td>56.70</td>
-      <td>0.192345</td>
-      <td>5620.0</td>
-      <td>15.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.198857</td>
-      <td>0.200367</td>
-      <td>0.197347</td>
-      <td>56.150</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>56.23</td>
-      <td>51.20</td>
-      <td>52.30</td>
-      <td>0.191292</td>
-      <td>5630.0</td>
-      <td>36.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.197741</td>
-      <td>0.199270</td>
-      <td>0.196212</td>
-      <td>51.750</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>99.17</td>
-      <td>47.00</td>
-      <td>48.10</td>
-      <td>0.190197</td>
-      <td>5640.0</td>
-      <td>12.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.196574</td>
-      <td>0.198126</td>
-      <td>0.195023</td>
-      <td>47.550</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>50.90</td>
-      <td>43.00</td>
-      <td>44.10</td>
-      <td>0.189057</td>
-      <td>5650.0</td>
-      <td>12.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.195357</td>
-      <td>0.196939</td>
-      <td>0.193774</td>
-      <td>43.550</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>47.60</td>
-      <td>39.30</td>
-      <td>40.30</td>
-      <td>0.187874</td>
-      <td>5660.0</td>
-      <td>26.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.194236</td>
-      <td>0.195707</td>
-      <td>0.192765</td>
-      <td>39.800</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>53.38</td>
-      <td>33.90</td>
-      <td>35.00</td>
-      <td>0.186089</td>
-      <td>5675.0</td>
-      <td>11.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.192164</td>
-      <td>0.193849</td>
-      <td>0.190480</td>
-      <td>34.450</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>38.49</td>
-      <td>32.50</td>
-      <td>33.10</td>
-      <td>0.184784</td>
-      <td>5680.0</td>
-      <td>325.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.191554</td>
-      <td>0.192486</td>
-      <td>0.190621</td>
-      <td>32.800</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>31.10</td>
-      <td>26.00</td>
-      <td>27.00</td>
-      <td>0.182427</td>
-      <td>5700.0</td>
-      <td>20.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.188355</td>
-      <td>0.190026</td>
-      <td>0.186684</td>
-      <td>26.500</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>64.49</td>
-      <td>24.60</td>
-      <td>25.60</td>
-      <td>0.181824</td>
-      <td>5705.0</td>
-      <td>10.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.187695</td>
-      <td>0.189401</td>
-      <td>0.185989</td>
-      <td>25.100</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>27.50</td>
-      <td>20.80</td>
-      <td>21.30</td>
-      <td>0.178628</td>
-      <td>5720.0</td>
-      <td>94.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.185160</td>
-      <td>0.186075</td>
-      <td>0.184245</td>
-      <td>21.050</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>25.40</td>
-      <td>18.20</td>
-      <td>19.10</td>
-      <td>0.177941</td>
-      <td>5730.0</td>
-      <td>14.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.183624</td>
-      <td>0.185358</td>
-      <td>0.181890</td>
-      <td>18.650</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>20.79</td>
-      <td>16.00</td>
-      <td>16.80</td>
-      <td>0.176194</td>
-      <td>5740.0</td>
-      <td>30.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.181905</td>
-      <td>0.183538</td>
-      <td>0.180272</td>
-      <td>16.400</td>
-    </tr>
-    <tr>
-      <th>44</th>
-      <td>17.22</td>
-      <td>13.90</td>
-      <td>14.80</td>
-      <td>0.174874</td>
-      <td>5750.0</td>
-      <td>12.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.180207</td>
-      <td>0.182165</td>
-      <td>0.178249</td>
-      <td>14.350</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>17.30</td>
-      <td>13.00</td>
-      <td>13.80</td>
-      <td>0.173936</td>
-      <td>5755.0</td>
-      <td>17.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.179382</td>
-      <td>0.181181</td>
-      <td>0.177582</td>
-      <td>13.400</td>
-    </tr>
-    <tr>
-      <th>46</th>
-      <td>15.12</td>
-      <td>12.10</td>
-      <td>12.90</td>
-      <td>0.173218</td>
-      <td>5760.0</td>
-      <td>28.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.178575</td>
-      <td>0.180438</td>
-      <td>0.176711</td>
-      <td>12.500</td>
-    </tr>
-    <tr>
-      <th>47</th>
-      <td>25.38</td>
-      <td>11.20</td>
-      <td>12.00</td>
-      <td>0.172311</td>
-      <td>5765.0</td>
-      <td>14.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.177554</td>
-      <td>0.179489</td>
-      <td>0.175619</td>
-      <td>11.600</td>
-    </tr>
-    <tr>
-      <th>48</th>
-      <td>13.03</td>
-      <td>10.50</td>
-      <td>11.00</td>
-      <td>0.170708</td>
-      <td>5770.0</td>
-      <td>10.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.176563</td>
-      <td>0.177820</td>
-      <td>0.175305</td>
-      <td>10.750</td>
-    </tr>
-    <tr>
-      <th>49</th>
-      <td>13.34</td>
-      <td>9.70</td>
-      <td>10.40</td>
-      <td>0.170815</td>
-      <td>5775.0</td>
-      <td>16.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.176105</td>
-      <td>0.177933</td>
-      <td>0.174278</td>
-      <td>10.050</td>
-    </tr>
-    <tr>
-      <th>50</th>
-      <td>12.42</td>
-      <td>9.00</td>
-      <td>9.70</td>
-      <td>0.170266</td>
-      <td>5780.0</td>
-      <td>60.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.175460</td>
-      <td>0.177361</td>
-      <td>0.173560</td>
-      <td>9.350</td>
-    </tr>
-    <tr>
-      <th>52</th>
-      <td>10.76</td>
-      <td>7.70</td>
-      <td>8.30</td>
-      <td>0.168572</td>
-      <td>5790.0</td>
-      <td>10.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.173818</td>
-      <td>0.175595</td>
-      <td>0.172041</td>
-      <td>8.000</td>
-    </tr>
-    <tr>
-      <th>54</th>
-      <td>8.34</td>
-      <td>6.50</td>
-      <td>7.10</td>
-      <td>0.167153</td>
-      <td>5800.0</td>
-      <td>28.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.172171</td>
-      <td>0.174122</td>
-      <td>0.170219</td>
-      <td>6.800</td>
-    </tr>
-    <tr>
-      <th>55</th>
-      <td>12.72</td>
-      <td>6.00</td>
-      <td>6.50</td>
-      <td>0.166116</td>
-      <td>5805.0</td>
-      <td>14.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.171331</td>
-      <td>0.173039</td>
-      <td>0.169623</td>
-      <td>6.250</td>
-    </tr>
-    <tr>
-      <th>56</th>
-      <td>9.95</td>
-      <td>5.50</td>
-      <td>6.00</td>
-      <td>0.165505</td>
-      <td>5810.0</td>
-      <td>26.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.170600</td>
-      <td>0.172395</td>
-      <td>0.168804</td>
-      <td>5.750</td>
-    </tr>
-    <tr>
-      <th>57</th>
-      <td>9.25</td>
-      <td>5.00</td>
-      <td>5.60</td>
-      <td>0.165383</td>
-      <td>5815.0</td>
-      <td>10.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.169999</td>
-      <td>0.172266</td>
-      <td>0.167733</td>
-      <td>5.300</td>
-    </tr>
-    <tr>
-      <th>59</th>
-      <td>5.75</td>
-      <td>4.20</td>
-      <td>4.70</td>
-      <td>0.163827</td>
-      <td>5825.0</td>
-      <td>11.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.168550</td>
-      <td>0.170656</td>
-      <td>0.166445</td>
-      <td>4.450</td>
-    </tr>
-    <tr>
-      <th>60</th>
-      <td>6.72</td>
-      <td>3.80</td>
-      <td>4.30</td>
-      <td>0.163110</td>
-      <td>5830.0</td>
-      <td>11.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.167667</td>
-      <td>0.169901</td>
-      <td>0.165433</td>
-      <td>4.050</td>
-    </tr>
-    <tr>
-      <th>61</th>
-      <td>3.88</td>
-      <td>3.20</td>
-      <td>3.60</td>
-      <td>0.161843</td>
-      <td>5840.0</td>
-      <td>211.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.166590</td>
-      <td>0.168592</td>
-      <td>0.164587</td>
-      <td>3.400</td>
-    </tr>
-    <tr>
-      <th>62</th>
-      <td>3.50</td>
-      <td>2.65</td>
-      <td>3.00</td>
-      <td>0.160653</td>
-      <td>5850.0</td>
-      <td>32.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.165371</td>
-      <td>0.167354</td>
-      <td>0.163388</td>
-      <td>2.825</td>
-    </tr>
-    <tr>
-      <th>63</th>
-      <td>2.63</td>
-      <td>2.20</td>
-      <td>2.45</td>
-      <td>0.159066</td>
-      <td>5860.0</td>
-      <td>202.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.164085</td>
-      <td>0.165700</td>
-      <td>0.162470</td>
-      <td>2.325</td>
-    </tr>
-    <tr>
-      <th>64</th>
-      <td>2.32</td>
-      <td>1.80</td>
-      <td>2.05</td>
-      <td>0.158395</td>
-      <td>5870.0</td>
-      <td>107.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.163163</td>
-      <td>0.165004</td>
-      <td>0.161321</td>
-      <td>1.925</td>
-    </tr>
-    <tr>
-      <th>65</th>
-      <td>3.40</td>
-      <td>1.65</td>
-      <td>1.90</td>
-      <td>0.158486</td>
-      <td>5875.0</td>
-      <td>71.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.163130</td>
-      <td>0.165084</td>
-      <td>0.161176</td>
-      <td>1.775</td>
-    </tr>
-    <tr>
-      <th>66</th>
-      <td>4.93</td>
-      <td>1.50</td>
-      <td>1.75</td>
-      <td>0.158395</td>
-      <td>5880.0</td>
-      <td>33.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.162923</td>
-      <td>0.165006</td>
-      <td>0.160841</td>
-      <td>1.625</td>
-    </tr>
-    <tr>
-      <th>67</th>
-      <td>1.72</td>
-      <td>1.20</td>
-      <td>1.45</td>
-      <td>0.157723</td>
-      <td>5890.0</td>
-      <td>23.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.161879</td>
-      <td>0.164292</td>
-      <td>0.159467</td>
-      <td>1.325</td>
-    </tr>
-    <tr>
-      <th>68</th>
-      <td>1.41</td>
-      <td>1.00</td>
-      <td>1.20</td>
-      <td>0.157143</td>
-      <td>5900.0</td>
-      <td>74.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.161470</td>
-      <td>0.163684</td>
-      <td>0.159255</td>
-      <td>1.100</td>
-    </tr>
-    <tr>
-      <th>69</th>
-      <td>1.07</td>
-      <td>0.80</td>
-      <td>1.05</td>
-      <td>0.157967</td>
-      <td>5910.0</td>
-      <td>40.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.161381</td>
-      <td>0.164543</td>
-      <td>0.158219</td>
-      <td>0.925</td>
-    </tr>
-    <tr>
-      <th>70</th>
-      <td>0.92</td>
-      <td>0.65</td>
-      <td>0.90</td>
-      <td>0.158334</td>
-      <td>5920.0</td>
-      <td>99.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.161297</td>
-      <td>0.164924</td>
-      <td>0.157670</td>
-      <td>0.775</td>
-    </tr>
-    <tr>
-      <th>74</th>
-      <td>0.82</td>
-      <td>0.35</td>
-      <td>0.60</td>
-      <td>0.160775</td>
-      <td>5950.0</td>
-      <td>20.0</td>
-      <td>0.027778</td>
-      <td>2025-04-09</td>
-      <td>0.162109</td>
-      <td>0.167506</td>
-      <td>0.156712</td>
-      <td>0.475</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
+File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/calibration/volatilitySmile.py:115</span>, in <span class="ansi-cyan-fg">VolatilitySmile.compute_smile</span><span class="ansi-blue-fg">(self, prices, strikes)</span>
+<span class="ansi-green-intense-fg ansi-bold">    112</span>     strikes <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>strikes
+<span class="ansi-green-intense-fg ansi-bold">    114</span> bs <span style="color: rgb(98,98,98)">=</span> BlackScholes(spot<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>atm, r<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>r, mu<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>r, volatility<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0.02</span>)
+<span class="ansi-green-fg">--&gt; 115</span> smile <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">compute_smile</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-intense-fg ansi-bold">    116</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">prices</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">prices</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    117</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">strikes</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">strikes</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    118</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    119</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">bs</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">bs</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    120</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">flag_option</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">call</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    121</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">method</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">dichotomie</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    122</span> <span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    123</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> smile
+
+File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/calibration/_utils.py:98</span>, in <span class="ansi-cyan-fg">compute_smile</span><span class="ansi-blue-fg">(prices, strikes, time_to_maturity, bs, flag_option, method)</span>
+<span class="ansi-green-intense-fg ansi-bold">     96</span> ivs <span style="color: rgb(98,98,98)">=</span> []
+<span class="ansi-green-intense-fg ansi-bold">     97</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> (price, strike) <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> <span style="color: rgb(0,135,0)">zip</span>(prices, strikes):
+<span class="ansi-green-fg">---&gt; 98</span>     iv <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">reverse_blackScholes</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-intense-fg ansi-bold">     99</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">price</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">price</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span>
+<span class="ansi-green-intense-fg ansi-bold">    100</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">strike</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">strike</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span>
+<span class="ansi-green-intense-fg ansi-bold">    101</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">bs</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">bs</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span>
+<span class="ansi-green-intense-fg ansi-bold">    102</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span>
+<span class="ansi-green-intense-fg ansi-bold">    103</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">flag_option</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">call</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span>
+<span class="ansi-green-intense-fg ansi-bold">    104</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">method</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">method</span>
+<span class="ansi-green-intense-fg ansi-bold">    105</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    106</span>     ivs<span style="color: rgb(98,98,98)">.</span>append(iv)
+<span class="ansi-green-intense-fg ansi-bold">    108</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> np<span style="color: rgb(98,98,98)">.</span>array(ivs)
+
+File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/calibration/_utils.py:79</span>, in <span class="ansi-cyan-fg">reverse_blackScholes</span><span class="ansi-blue-fg">(price, strike, time_to_maturity, bs, flag_option, method)</span>
+<span class="ansi-green-intense-fg ansi-bold">     76</span> vega_function <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> volatility: bs<span style="color: rgb(98,98,98)">.</span>vega(strike<span style="color: rgb(98,98,98)">=</span>strike, time_to_maturity<span style="color: rgb(98,98,98)">=</span>time_to_maturity, volatility<span style="color: rgb(98,98,98)">=</span>volatility)
+<span class="ansi-green-intense-fg ansi-bold">     78</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> method <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">dichotomie</span><span style="color: rgb(175,0,0)">&#39;</span>:
+<span class="ansi-green-fg">---&gt; 79</span>     iv <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">dichotomie</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">market_price</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">price</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">price_function</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">bs_price</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     80</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> method <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">newton_raphson</span><span style="color: rgb(175,0,0)">&#39;</span>:
+<span class="ansi-green-intense-fg ansi-bold">     81</span>     iv <span style="color: rgb(98,98,98)">=</span> newton_raphson(market_price<span style="color: rgb(98,98,98)">=</span>price, price_function<span style="color: rgb(98,98,98)">=</span>bs_price, vega_function<span style="color: rgb(98,98,98)">=</span>vega_function)
+
+File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/calibration/_utils.py:24</span>, in <span class="ansi-cyan-fg">dichotomie</span><span class="ansi-blue-fg">(market_price, price_function, error, vol_inf, vol_sup)</span>
+<span class="ansi-green-intense-fg ansi-bold">     22</span> <span class="ansi-bold" style="color: rgb(0,135,0)">while</span> vol_sup <span style="color: rgb(98,98,98)">-</span> vol_inf <span style="color: rgb(98,98,98)">&gt;</span> error:
+<span class="ansi-green-intense-fg ansi-bold">     23</span>     vol_mid <span style="color: rgb(98,98,98)">=</span> (vol_inf <span style="color: rgb(98,98,98)">+</span> vol_sup)<span style="color: rgb(98,98,98)">/</span><span style="color: rgb(98,98,98)">2</span>
+<span class="ansi-green-fg">---&gt; 24</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> target_function(vol_inf) <span style="color: rgb(98,98,98)">*</span> <span class="ansi-yellow-bg">target_function</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">vol_mid</span><span class="ansi-yellow-bg">)</span> <span style="color: rgb(98,98,98)">&lt;</span> <span style="color: rgb(98,98,98)">0</span>:
+<span class="ansi-green-intense-fg ansi-bold">     25</span>         vol_sup <span style="color: rgb(98,98,98)">=</span> vol_mid
+<span class="ansi-green-intense-fg ansi-bold">     26</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+
+File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/calibration/_utils.py:20</span>, in <span class="ansi-cyan-fg">dichotomie.&lt;locals&gt;.&lt;lambda&gt;</span><span class="ansi-blue-fg">(volatility)</span>
+<span class="ansi-green-intense-fg ansi-bold">      9</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span><span style="color: rgb(188,188,188)"> </span><span style="color: rgb(0,0,255)">dichotomie</span>(
+<span class="ansi-green-intense-fg ansi-bold">     10</span>         market_price,
+<span class="ansi-green-intense-fg ansi-bold">     11</span>         price_function,
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-intense-fg ansi-bold">     14</span>         vol_sup: <span style="color: rgb(0,135,0)">float</span> <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">1</span>
+<span class="ansi-green-intense-fg ansi-bold">     15</span>     ):
+<span class="ansi-green-intense-fg ansi-bold">     16</span> <span style="color: rgb(188,188,188)">    </span><span style="color: rgb(175,0,0)">&#34;&#34;&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">     17</span> <span style="color: rgb(175,0,0)">    price_function should be only a function of the volatility</span>
+<span class="ansi-green-intense-fg ansi-bold">     18</span> <span style="color: rgb(175,0,0)">    Note that the price_function is always a croissant function of the volatility</span>
+<span class="ansi-green-intense-fg ansi-bold">     19</span> <span style="color: rgb(175,0,0)">    &#34;&#34;&#34;</span>
+<span class="ansi-green-fg">---&gt; 20</span>     target_function <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> volatility: <span class="ansi-yellow-bg">price_function</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">volatility</span><span class="ansi-yellow-bg">)</span> <span style="color: rgb(98,98,98)">-</span> market_price
+<span class="ansi-green-intense-fg ansi-bold">     22</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">while</span> vol_sup <span style="color: rgb(98,98,98)">-</span> vol_inf <span style="color: rgb(98,98,98)">&gt;</span> error:
+<span class="ansi-green-intense-fg ansi-bold">     23</span>         vol_mid <span style="color: rgb(98,98,98)">=</span> (vol_inf <span style="color: rgb(98,98,98)">+</span> vol_sup)<span style="color: rgb(98,98,98)">/</span><span style="color: rgb(98,98,98)">2</span>
+
+File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/calibration/_utils.py:72</span>, in <span class="ansi-cyan-fg">reverse_blackScholes.&lt;locals&gt;.&lt;lambda&gt;</span><span class="ansi-blue-fg">(volatility)</span>
+<span class="ansi-green-intense-fg ansi-bold">     67</span> <span style="color: rgb(175,0,0)">&#34;&#34;&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">     68</span> <span style="color: rgb(175,0,0)">Reverse the Black-Scholes formula, compute the implied volatility from market price.</span>
+<span class="ansi-green-intense-fg ansi-bold">     69</span> <span style="color: rgb(175,0,0)">bs should be already initialized with the right strike and maturity.</span>
+<span class="ansi-green-intense-fg ansi-bold">     70</span> <span style="color: rgb(175,0,0)">&#34;&#34;&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">     71</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> flag_option <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">call</span><span style="color: rgb(175,0,0)">&#39;</span>:
+<span class="ansi-green-fg">---&gt; 72</span>     bs_price <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> volatility: <span class="ansi-yellow-bg">bs</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">call_price</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">strike</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">strike</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">volatility</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">volatility</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     73</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+<span class="ansi-green-intense-fg ansi-bold">     74</span>     bs_price <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> volatility: bs<span style="color: rgb(98,98,98)">.</span>put_price(strike<span style="color: rgb(98,98,98)">=</span>strike, time_to_maturity<span style="color: rgb(98,98,98)">=</span>time_to_maturity, volatility<span style="color: rgb(98,98,98)">=</span>volatility)
+
+File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/blackScholes.py:144</span>, in <span class="ansi-cyan-fg">BlackScholes.call_price</span><span class="ansi-blue-fg">(self, strike, time_to_maturity, spot, r, volatility)</span>
+<span class="ansi-green-intense-fg ansi-bold">    140</span>     d1 <span style="color: rgb(98,98,98)">=</span> (np<span style="color: rgb(98,98,98)">.</span>log(spot <span style="color: rgb(98,98,98)">/</span> strike) <span style="color: rgb(98,98,98)">+</span> (r <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(98,98,98)">0.5</span> <span style="color: rgb(98,98,98)">*</span> volatility<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span>) <span style="color: rgb(98,98,98)">*</span> time_to_maturity) <span style="color: rgb(98,98,98)">/</span> (
+<span class="ansi-green-intense-fg ansi-bold">    141</span>         volatility <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>sqrt(time_to_maturity)
+<span class="ansi-green-intense-fg ansi-bold">    142</span>     )
+<span class="ansi-green-intense-fg ansi-bold">    143</span>     d2 <span style="color: rgb(98,98,98)">=</span> d1 <span style="color: rgb(98,98,98)">-</span> volatility <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>sqrt(time_to_maturity)
+<span class="ansi-green-fg">--&gt; 144</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> spot <span style="color: rgb(98,98,98)">*</span> norm<span style="color: rgb(98,98,98)">.</span>cdf(d1) <span style="color: rgb(98,98,98)">-</span> strike <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span>r <span style="color: rgb(98,98,98)">*</span> time_to_maturity) <span style="color: rgb(98,98,98)">*</span> <span class="ansi-yellow-bg">norm</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">cdf</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">d2</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    145</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+<span class="ansi-green-intense-fg ansi-bold">    146</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> np<span style="color: rgb(98,98,98)">.</span>maximum(<span style="color: rgb(98,98,98)">0</span>, spot<span style="color: rgb(98,98,98)">-</span>strike)
+
+File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/stats/_distn_infrastructure.py:2128</span>, in <span class="ansi-cyan-fg">rv_continuous.cdf</span><span class="ansi-blue-fg">(self, x, *args, **kwds)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2126</span> args <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">tuple</span>(<span style="color: rgb(0,135,0)">map</span>(asarray, args))
+<span class="ansi-green-intense-fg ansi-bold">   2127</span> _a, _b <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_get_support(<span style="color: rgb(98,98,98)">*</span>args)
+<span class="ansi-green-fg">-&gt; 2128</span> dtyp <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">np</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">promote_types</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">dtype</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">np</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">float64</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2129</span> x <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>asarray((x <span style="color: rgb(98,98,98)">-</span> loc)<span style="color: rgb(98,98,98)">/</span>scale, dtype<span style="color: rgb(98,98,98)">=</span>dtyp)
+<span class="ansi-green-intense-fg ansi-bold">   2130</span> cond0 <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_argcheck(<span style="color: rgb(98,98,98)">*</span>args) <span style="color: rgb(98,98,98)">&amp;</span> (scale <span style="color: rgb(98,98,98)">&gt;</span> <span style="color: rgb(98,98,98)">0</span>)
+
+<span class="ansi-red-fg">KeyboardInterrupt</span>:
+</pre></div></div>
 </div>
-</section>
+<p>We can now calibrate an Heston model and an Bates model on the cleaned data</p>
 <section id="Calibration-with-an-Heston-model">
-<h1>Calibration with an Heston model<a class="headerlink" href="#Calibration-with-an-Heston-model" title="Link to this heading">#</a></h1>
+<h2>Calibration with an Heston model<a class="headerlink" href="#Calibration-with-an-Heston-model" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>params = {
@@ -1449,31 +793,34 @@ calibrated_params
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Calibrated parameters: v0=0.041 | kappa=1.253 | theta=0.083 | sigma=0.514 | rho=-1.000
+Calibrated parameters: v0=0.036 | kappa=9.763 | theta=0.063 | sigma=1.832 | rho=-0.807
 
-at minimum 0.142027 accepted 1
-Parameters: kappa=1.253 | theta=0.083 | sigma=0.514 | rho=-1.000
+at minimum 0.023551 accepted 1
+Parameters: kappa=9.763 | theta=0.063 | sigma=1.832 | rho=-0.806
 
-at minimum 0.141561 accepted 1
-Parameters: kappa=0.029 | theta=1.856 | sigma=0.508 | rho=-1.000
+at minimum 0.023571 accepted 1
+Parameters: kappa=9.894 | theta=0.063 | sigma=1.848 | rho=-0.806
 
-at minimum 0.141567 accepted 1
-Parameters: kappa=0.045 | theta=1.189 | sigma=0.508 | rho=-1.000
+at minimum 0.023614 accepted 1
+Parameters: kappa=9.919 | theta=0.063 | sigma=1.854 | rho=-0.806
 
-at minimum 0.141564 accepted 1
-Parameters: kappa=0.036 | theta=1.481 | sigma=0.508 | rho=-1.000
+at minimum 0.023563 accepted 1
+Parameters: kappa=9.898 | theta=0.063 | sigma=1.849 | rho=-0.806
 
-at minimum 0.141561 accepted 1
-Parameters: kappa=0.030 | theta=1.742 | sigma=0.508 | rho=-1.000
+at minimum 0.023532 accepted 1
+Parameters: kappa=9.870 | theta=0.063 | sigma=1.846 | rho=-0.806
 
-at minimum 0.141562 accepted 1
-Parameters: kappa=0.032 | theta=1.655 | sigma=0.508 | rho=-1.000
+at minimum 0.023557 accepted 1
+Parameters: kappa=9.895 | theta=0.063 | sigma=1.849 | rho=-0.806
 
-at minimum 0.141564 accepted 1
-Parameters: kappa=0.038 | theta=1.416 | sigma=0.508 | rho=-1.000
+at minimum 0.024002 accepted 1
+Parameters: kappa=9.088 | theta=0.064 | sigma=1.759 | rho=-0.807
+
+at minimum 0.023537 accepted 1
+Parameters: kappa=9.880 | theta=0.063 | sigma=1.847 | rho=-0.806
 
 [&#39;success condition satisfied&#39;] True
-Calibrated parameters: v0=0.041 | kappa=0.029 | theta=1.856 | sigma=0.508 | rho=-1.000
+Calibrated parameters: v0=0.036 | kappa=9.870 | theta=0.063 | sigma=1.846 | rho=-0.806
 
 </pre></div></div>
 </div>
@@ -1481,28 +828,51 @@ Calibrated parameters: v0=0.041 | kappa=0.029 | theta=1.856 | sigma=0.508 | rho=
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_calibration_calibration_real_data_10_1.png" src="../../_images/examples_calibration_calibration_real_data_10_1.png" />
+<img alt="../../_images/examples_calibration_calibration_real_data_13_1.png" src="../../_images/examples_calibration_calibration_real_data_13_1.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;vol_initial&#39;: np.float64(0.04061648109278204),
- &#39;kappa&#39;: np.float64(0.028553188117173153),
- &#39;theta&#39;: np.float64(1.8562394988036592),
- &#39;sigma&#39;: np.float64(0.5081268884807789),
- &#39;rho&#39;: np.float64(-1.0),
+{&#39;vol_initial&#39;: np.float64(0.03646176147871301),
+ &#39;kappa&#39;: np.float64(9.869725719029796),
+ &#39;theta&#39;: np.float64(0.06333193499610625),
+ &#39;sigma&#39;: np.float64(1.8457229965916433),
+ &#39;rho&#39;: np.float64(-0.8061467404885212),
  &#39;drift_emm&#39;: 0}
 </pre></div></div>
 </div>
 </section>
 <section id="Calibration-with-a-Baites-model">
-<h1>Calibration with a Baites model<a class="headerlink" href="#Calibration-with-a-Baites-model" title="Link to this heading">#</a></h1>
+<h2>Calibration with a Baites model<a class="headerlink" href="#Calibration-with-a-Baites-model" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>calibrated_params
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;vol_initial&#39;: np.float64(0.03418126258045936),
+ &#39;kappa&#39;: np.float64(1.6524307981357256),
+ &#39;theta&#39;: np.float64(0.001),
+ &#39;drift_emm&#39;: 0,
+ &#39;sigma&#39;: np.float64(0.4948309329882636),
+ &#39;rho&#39;: np.float64(-0.7498716551238577),
+ &#39;lambda_jump&#39;: np.float64(0.1167875695521678),
+ &#39;mu_J&#39;: np.float64(-0.5),
+ &#39;sigma_J&#39;: np.float64(0.3473307538042298)}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>params = {
@@ -1514,6 +884,18 @@ Calibrated parameters: v0=0.041 | kappa=0.029 | theta=1.856 | sigma=0.508 | rho=
     &quot;mu_J&quot;: -0.1,
     &#39;sigma_J&#39;: 0.3
 }
+
+params = {
+    &quot;kappa&quot;: calibrated_params[&quot;kappa&quot;],
+    &quot;theta&quot;: calibrated_params[&quot;theta&quot;],
+    &quot;sigma&quot;: calibrated_params[&quot;sigma&quot;],
+    &quot;rho&quot;: calibrated_params[&quot;rho&quot;],
+    &quot;lambda_jump&quot;: calibrated_params[&quot;lambda_jump&quot;],
+    &quot;mu_J&quot;: calibrated_params[&quot;mu_J&quot;],
+    &#39;sigma_J&#39;: calibrated_params[&#39;sigma_J&#39;]
+}
+
+
 bates = Bates(spot=spot, vol_initial=0.06, r=r, drift_emm=0, **params)
 
 initial_params = marketVolatilitySmile.calibration(
@@ -1548,41 +930,26 @@ calibrated_params
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Calibrated parameters:
- v0=0.041 | kappa=1.211 | theta=0.753 | sigma=1.329 | rho=-0.805  | lambda_jump=3.189  | mu_J=-0.491  | sigma_J=0.052
+ v0=0.034 | kappa=1.652 | theta=0.001 | sigma=0.495 | rho=-0.750  | lambda_jump=0.117  | mu_J=-0.500  | sigma_J=0.050
 
-at minimum 0.002224 accepted 1
-Parameters: kappa=1.211 | theta=0.753 | sigma=1.329 | rho=-0.805  | lambda_jump=3.189  | mu_J=-0.491  | sigma_J=0.050
+at minimum nan accepted 1
+Parameters: kappa=1.652 | theta=0.001 | sigma=0.495 | rho=-0.750  | lambda_jump=0.117  | mu_J=-0.500  | sigma_J=0.050
 
-at minimum 0.002204 accepted 1
-Parameters: kappa=0.701 | theta=1.260 | sigma=1.319 | rho=-0.805  | lambda_jump=3.180  | mu_J=-0.496  | sigma_J=0.050
+at minimum 0.732971 accepted 1
+Parameters: kappa=1.652 | theta=0.001 | sigma=0.495 | rho=-0.750  | lambda_jump=0.117  | mu_J=-0.500  | sigma_J=0.347
 
-at minimum 0.000720 accepted 1
-Parameters: kappa=0.489 | theta=1.465 | sigma=1.158 | rho=-0.846  | lambda_jump=3.150  | mu_J=-0.227  | sigma_J=0.125
+at minimum 0.732971 accepted 1
+Parameters: kappa=1.652 | theta=0.001 | sigma=0.495 | rho=-0.750  | lambda_jump=0.117  | mu_J=-0.500  | sigma_J=0.347
 
-at minimum 0.000742 accepted 1
-Parameters: kappa=0.628 | theta=1.168 | sigma=1.165 | rho=-0.843  | lambda_jump=3.013  | mu_J=-0.443  | sigma_J=0.207
+at minimum 0.734213 accepted 1
+Parameters: kappa=1.758 | theta=0.003 | sigma=0.499 | rho=-0.751  | lambda_jump=0.117  | mu_J=-0.500  | sigma_J=0.349
 
-at minimum 0.000618 accepted 1
-Parameters: kappa=0.692 | theta=1.073 | sigma=1.186 | rho=-0.855  | lambda_jump=4.495  | mu_J=-0.057  | sigma_J=0.050
-
-at minimum 0.000746 accepted 1
-Parameters: kappa=0.921 | theta=0.815 | sigma=1.170 | rho=-0.843  | lambda_jump=3.009  | mu_J=-0.480  | sigma_J=0.221
-
-at minimum 0.000751 accepted 1
-Parameters: kappa=1.437 | theta=0.540 | sigma=1.177 | rho=-0.843  | lambda_jump=3.018  | mu_J=-0.464  | sigma_J=0.215
-
-at minimum 0.000756 accepted 1
-Parameters: kappa=1.893 | theta=0.422 | sigma=1.183 | rho=-0.843  | lambda_jump=3.022  | mu_J=-0.467  | sigma_J=0.216
-
-at minimum 0.000756 accepted 1
-Parameters: kappa=2.082 | theta=0.388 | sigma=1.185 | rho=-0.843  | lambda_jump=3.036  | mu_J=-0.425  | sigma_J=0.201
-
-at minimum 0.000762 accepted 1
-Parameters: kappa=2.317 | theta=0.355 | sigma=1.190 | rho=-0.843  | lambda_jump=3.019  | mu_J=-0.500  | sigma_J=0.228
+at minimum 0.732971 accepted 1
+Parameters: kappa=1.652 | theta=0.001 | sigma=0.495 | rho=-0.750  | lambda_jump=0.117  | mu_J=-0.500  | sigma_J=0.347
 
 [&#39;success condition satisfied&#39;] True
 Calibrated parameters:
- v0=0.041 | kappa=0.692 | theta=1.073 | sigma=1.186 | rho=-0.855  | lambda_jump=4.495  | mu_J=-0.057  | sigma_J=0.050
+ v0=0.034 | kappa=1.652 | theta=0.001 | sigma=0.495 | rho=-0.750  | lambda_jump=0.117  | mu_J=-0.500  | sigma_J=0.347
 
 </pre></div></div>
 </div>
@@ -1590,26 +957,89 @@ Calibrated parameters:
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_calibration_calibration_real_data_12_1.png" src="../../_images/examples_calibration_calibration_real_data_12_1.png" />
+<img alt="../../_images/examples_calibration_calibration_real_data_16_1.png" src="../../_images/examples_calibration_calibration_real_data_16_1.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;vol_initial&#39;: np.float64(0.04061648109278204),
- &#39;kappa&#39;: np.float64(0.6923585666487466),
- &#39;theta&#39;: np.float64(1.0728827988086265),
+{&#39;vol_initial&#39;: np.float64(0.03418126258045936),
+ &#39;kappa&#39;: np.float64(1.6524340301076816),
+ &#39;theta&#39;: np.float64(0.001),
  &#39;drift_emm&#39;: 0,
- &#39;sigma&#39;: np.float64(1.1861044273587131),
- &#39;rho&#39;: np.float64(-0.8549556775813509),
- &#39;lambda_jump&#39;: np.float64(4.495056249998712),
- &#39;mu_J&#39;: np.float64(-0.05650398032298261),
- &#39;sigma_J&#39;: np.float64(0.05000126603766209)}
+ &#39;sigma&#39;: np.float64(0.49483092969382403),
+ &#39;rho&#39;: np.float64(-0.7498713974833794),
+ &#39;lambda_jump&#39;: np.float64(0.11678766889964226),
+ &#39;mu_J&#39;: np.float64(-0.5),
+ &#39;sigma_J&#39;: np.float64(0.34733044904436533)}
 </pre></div></div>
 </div>
+<p>Fancy plot</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from datetime import datetime
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as font_manager
+font_legend = font_manager.FontProperties(
+    style=&#39;normal&#39;,
+    size=20,
+)
+fontdict = {
+    &quot;fontsize&quot;: 20,
+    # &quot;fontweight&quot;: &quot;bold&quot;
+}
+fontdict_suptitle = {
+    &#39;fontsize&#39;: 30,
+    &#39;fontweight&#39;: &#39;bold&#39;
+    }
+fontdict_title = {
+    &#39;fontsize&#39;: 30,
+    &#39;fontweight&#39;: &#39;bold&#39;
+    }
+
+calibrated_prices = bates.call_price(strike=marketVolatilitySmile.strikes, time_to_maturity=time_to_maturity, **calibrated_params)
+calibrated_ivs = marketVolatilitySmile.compute_smile(prices=calibrated_prices)
+ask_ivs = market_data[&#39;Ask ivs&#39;].values
+bid_ivs = market_data[&#39;Bid ivs&#39;].values
+forward = marketVolatilitySmile.atm * np.exp(marketVolatilitySmile.r * marketVolatilitySmile.time_to_maturity)
+
+plt.figure(figsize=(15, 10))
+plt.axvline(1, linestyle=&quot;--&quot;, color=&quot;gray&quot;, label=&#39;ATM&#39;)
+plt.plot(marketVolatilitySmile.strikes / forward, calibrated_ivs, marker=&#39;+&#39;, color=&#39;#2c6089&#39;, linestyle=&quot;dotted&quot;, markersize=14, linewidth=2, label=&#39;calibrated&#39;)
+plt.scatter(marketVolatilitySmile.strikes / forward, marketVolatilitySmile.market_ivs, marker=&#39;o&#39;, color=&#39;red&#39;, s=20, label=&#39;market&#39;)
+plt.scatter(marketVolatilitySmile.strikes / forward, bid_ivs, marker=6, color=&#39;black&#39;, s=40, label=&#39;bid&#39;)
+plt.scatter(marketVolatilitySmile.strikes / forward, ask_ivs, marker=7, color=&#39;gray&#39;, s=40, label=&#39;ask&#39;)
+
+plt.xlabel(&quot;Moneyness [%]&quot;, fontdict=fontdict)
+plt.ylabel(&quot;Implied Volatility [%]&quot;, fontdict=fontdict)
+plt.xlim((0.65, 1.35))
+
+date = datetime.strptime(maturity, &#39;%Y-%m-%d&#39;).date().strftime(&quot;%d-%B-%y&quot;)
+title = f&quot;{symbol} Maturity {date}&quot;
+plt.suptitle(title, fontsize=35, fontweight=&#39;bold&#39;, color=&#39;#2c6089&#39;)
+plt.title(f&quot;in {marketVolatilitySmile.time_to_maturity * 252 / 5:.1f} weeks&quot;, color=&quot;grey&quot;, style=&#39;italic&#39;, fontsize=25)
+
+plt.grid(visible=True, which=&quot;major&quot;, linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5, alpha=0.8)
+plt.legend(fontsize=15)
+plt.tight_layout()
+plt.savefig(&quot;smile-bates.png&quot;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/examples_calibration_calibration_real_data_18_0.png" src="../../_images/examples_calibration_calibration_real_data_18_0.png" />
+</div>
+</div>
+</section>
 </section>
 
 
@@ -1632,11 +1062,11 @@ Calibrated parameters:
       </div>
     </a>
     <a class="right-next"
-       href="../hedging/index.html"
+       href="calibration_heston.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Hedging</p>
+        <p class="prev-next-title">Calibration of Heston models on market data</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1659,11 +1089,9 @@ Calibrated parameters:
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">With syntetic market price</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Calibration-with-an-Heston-model">Calibration with an Heston model</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Calibration-with-a-Baites-model">Calibration with a Baites model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Calibration-with-an-Heston-model">Calibration with an Heston model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Calibration-with-a-Baites-model">Calibration with a Baites model</a></li>
 </ul>
-
   </nav></div>
 
   <div class="sidebar-secondary-item">
