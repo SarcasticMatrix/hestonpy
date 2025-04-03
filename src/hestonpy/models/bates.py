@@ -74,37 +74,31 @@ class Bates:
         :rtype: tuple
         """
 
-        # Initialisation des paramètres de simulation
         dt = time_to_maturity / nbr_points
-        S = np.zeros((nbr_simulations, nbr_points + 1))  # Prix des actifs
-        V = np.zeros((nbr_simulations, nbr_points + 1))  # Variances
-        jump_occurences = np.zeros((nbr_simulations, nbr_points + 1))  # Jumps
+        S = np.zeros((nbr_simulations, nbr_points + 1))  
+        V = np.zeros((nbr_simulations, nbr_points + 1))  
+        jump_occurences = np.zeros((nbr_simulations, nbr_points + 1))  
         S[:, 0] = self.spot
         V[:, 0] = self.vol_initial
 
         null_variance = 0
 
-        # Début de la simulation des trajectoires
         for i in range(1, nbr_points + 1):
 
-            # Appliquer le schéma de réflexion pour le processus de variance (s'assurer que la variance est positive)
             V[:, i - 1] = np.abs(V[:, i - 1])
-
-            # Vérifier les variances nulles
             if np.any(V[:, i - 1] == 0):
                 null_variance += np.sum(V[i - 1, :] == 0)
 
-            # Générer des variables normales pour les mouvements browniens
+            #  mouvements browniens
             N1 = np.random.normal(loc=0, scale=1, size=nbr_simulations)
             N2 = np.random.normal(loc=0, scale=1, size=nbr_simulations)
             ZV = N1 * np.sqrt(dt)
             ZS = (self.rho * N1 + np.sqrt(1 - self.rho ** 2) * N2) * np.sqrt(dt)
 
-            # Générer les sauts pour chaque instant et chaque simulation
+            # sauts
             jump_occurences[:, i] = np.random.poisson(self.lambda_jump * dt, nbr_simulations)
             jumps = jump_occurences[:, i] * (np.exp(np.random.normal(self.mu_J, self.sigma_J, nbr_simulations)) - 1)
 
-            # Mise à jour des prix des actifs avec les sauts
             S[:, i] = (
                 S[:, i - 1]
                 + (self.r + self.drift_emm * np.sqrt(V[:, i - 1])) * S[:, i - 1] * dt
@@ -112,25 +106,67 @@ class Bates:
                 + S[:, i - 1] * jumps
             )
 
-            # Mise à jour de la variance (pas de sauts dans la variance, donc même que le modèle Heston)
             V[:, i] = V[:, i - 1] + (
                 self.kappa * (self.theta - V[:, i - 1]) - self.drift_emm * V[:, i - 1]
             ) * dt + self.sigma * np.sqrt(V[:, i - 1]) * ZV
 
-            # Ajustement du schéma de Milstein (optionnel)
             if scheme == "milstein":
                 S[:, i] += 1 / 2 * V[:, i - 1] * S[:, i - 1] * (ZS**2 - dt)
                 V[:, i] += 1 / 4 * self.sigma**2 * (ZV**2 - dt)
 
-        # Retourner les résultats
         if nbr_simulations == 1:
             S = S.flatten()
             V = V.flatten()
-            jump_occurences = jump_occurences.flatten()  # Aplatir les sauts si on a une seule simulation
+            jump_occurences = jump_occurences.flatten()
 
         return S, V, null_variance, jump_occurences
 
+    def monte_carlo_price(
+        self,
+        strike: float,
+        time_to_maturity: float,
+        scheme: str = Literal["euler", "milstein"],
+        nbr_points: int = 100,
+        nbr_simulations: int = 1000,
+    ):
+        """
+        Price a European option using Monte Carlo simulation.
 
+        This method prices a European option using Monte Carlo simulation with the Heston model.
+
+        :param float strike: Strike price of the option.
+        :param float time_to_maturity: Time to maturity of the option in years.
+        :param str scheme: Discretization scheme to use ('euler' or 'milstein').
+        :param int nbr_points: Number of time points in each simulation.
+        :param int nbr_simulations: Number of simulations to run.
+
+        :returns: Option price and confidence interval.
+        :rtype: namedtuple
+        """
+        
+        S, _, null_variance, _ = self.simulate(
+            time_to_maturity=time_to_maturity, 
+            scheme=scheme, 
+            nbr_points=nbr_points, 
+            nbr_simulations=nbr_simulations
+        )
+        print(
+            f"Variance has been null {null_variance} times over the {nbr_points*nbr_simulations} iterations ({round(null_variance/(nbr_points*nbr_simulations)*100,2)}%) "
+        )
+
+        ST = S[:, -1]
+        payoff = np.maximum(ST - strike, 0)
+        discounted_payoff = np.exp(-self.r * time_to_maturity) * payoff
+
+        price = np.mean(discounted_payoff)
+        standard_deviation = np.std(discounted_payoff, ddof=1) / np.sqrt(nbr_simulations)
+        infimum = price - 1.96 * np.sqrt(standard_deviation / nbr_simulations)
+        supremum = price + 1.96 * np.sqrt(standard_deviation / nbr_simulations)
+
+        Result = namedtuple("Results", "price std infinum supremum")
+        return Result(
+            price, standard_deviation, infimum, supremum
+        )
 
     def plot_simulation(
         self,
@@ -167,7 +203,6 @@ class Bates:
         )
 
         jump_indices = np.where(jumps != 0)[0]
-        jump_indices = jump_indices - 1
         if jump_indices.size > 0:
             ax1.scatter(
                 np.linspace(0, time_to_maturity, nbr_points + 1)[jump_indices], 
@@ -179,7 +214,7 @@ class Bates:
         ax1.legend(loc="upper left")
         ax1.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8,)
 
-        ax2.plot(np.linspace(0, 1, nbr_points + 1),np.sqrt(V),label="Volatility",color="orange",linewidth=1,)
+        ax2.plot(np.linspace(0, time_to_maturity, nbr_points + 1),np.sqrt(V),label="Volatility",color="orange",linewidth=1,)
         ax2.set_xlabel("Time", fontsize=12)
         ax2.set_ylabel("Instantaneous volatility [%]", fontsize=12)
         ax2.legend(loc="upper left")
@@ -238,10 +273,11 @@ class Bates:
         Dj = lambda tau, u: (bj - rho * sigma * u * 1j + dj(u)) / sigma**2 * (1 - np.exp(dj(u) * tau)) / (1 - gj(u) * np.exp(dj(u) * tau))
 
         # Jump component
-        char_jump = lambda u, tau: np.exp(lambda_jump * tau * (np.exp(1j * u * mu_J - 0.5 * sigma_J**2 * u**2) - 1))
+        component_jump = lambda u, tau: lambda_jump * tau * (np.exp(1j * u * mu_J - 0.5 * sigma_J**2 * u**2) - 1)
+        component_jump = lambda u, tau: - lambda_jump * 1j * u * (np.exp(mu_J + sigma_J**2/2) - 1) + lambda_jump * (np.exp(1j * u * mu_J - u**2*sigma_J**2 / 2) - 1)
 
         return lambda x, v, time_to_maturity, u: (
-            np.exp(Cj(time_to_maturity, u) + Dj(time_to_maturity, u) * v + u * x * 1j) * char_jump(u, time_to_maturity)
+            np.exp(Cj(time_to_maturity, u) + Dj(time_to_maturity, u) * v + u * x * 1j) * np.exp(time_to_maturity*component_jump(u, time_to_maturity))
         )
 
     def call_price(
@@ -330,7 +366,31 @@ class Bates:
             return price, error
         else: 
             return price   
+        
+    def price_surface(self):
+        """
+        Plot the call price surface as a function of strike and time to maturity.
 
+        This method generates a 3D plot of the call option prices for a range of strikes and maturities.
+
+        :returns: None
+        """
+
+        Ks = np.linspace(start=20, stop=200, num=200)
+        Ts = np.linspace(start=0.1, stop=2, num=200)
+        K_mesh, T_mesh = np.meshgrid(Ks, Ts)
+
+        call_prices = self.call_price(strike=K_mesh, time_to_maturity=T_mesh, s=self.spot, v=self.vol_initial)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection="3d")
+        ax.plot_surface(K_mesh, T_mesh, call_prices.T, edgecolor="royalblue", lw=0.5, rstride=8, cstride=8, alpha=0.3)
+        ax.set_title("Call price as a function of strike and time to maturity")
+        ax.set_xlabel(r"Strike ($K$)")
+        ax.set_ylabel(r"Time to maturity ($T$)")
+        ax.set_zlabel("Price")
+        ax.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8)
+        plt.show()
 
 
 if __name__ == "__main__":

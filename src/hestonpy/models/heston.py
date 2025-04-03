@@ -157,7 +157,7 @@ class Heston:
         ax1.legend(loc="upper left")
         ax1.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8,)
 
-        ax2.plot(np.linspace(0, 1, nbr_points + 1),np.sqrt(V),label="Volatility",color="orange",linewidth=1,)
+        ax2.plot(np.linspace(0, time_to_maturity, nbr_points + 1),np.sqrt(V),label="Volatility",color="orange",linewidth=1,)
         ax2.axhline(y=np.sqrt(self.theta),label=r"$\sqrt{\theta}$",linestyle="--",color="black",)
         ax2.set_xlabel("Time", fontsize=12)
         ax2.set_ylabel("Instantaneous volatility [%]", fontsize=12)
