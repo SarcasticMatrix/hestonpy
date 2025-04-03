@@ -6,3 +6,4 @@ Pricing
     :caption: Contents:
     
     ./pricing_heston.ipynb
+    ./pricing_heston copy.ipynb

@@ -17,6 +17,13 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "# Pricing with Heston "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "## Initialisation of the model"
    ]
   },

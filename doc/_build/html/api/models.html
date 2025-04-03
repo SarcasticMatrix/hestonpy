@@ -751,6 +751,30 @@ which includes both stochastic volatility and jumps.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.bates.Bates.monte_carlo_price">
+<span class="sig-name descname"><span class="pre">monte_carlo_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strike</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">typing.Literal['euler',</span> <span class="pre">'milstein']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_simulations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hestonpy/models/bates.html#Bates.monte_carlo_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.bates.Bates.monte_carlo_price" title="Link to this definition">#</a></dt>
+<dd><p>Price a European option using Monte Carlo simulation.</p>
+<p>This method prices a European option using Monte Carlo simulation with the Heston model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strike</strong> (<em>float</em>) – Strike price of the option.</p></li>
+<li><p><strong>time_to_maturity</strong> (<em>float</em>) – Time to maturity of the option in years.</p></li>
+<li><p><strong>scheme</strong> (<em>str</em>) – Discretization scheme to use (‘euler’ or ‘milstein’).</p></li>
+<li><p><strong>nbr_points</strong> (<em>int</em>) – Number of time points in each simulation.</p></li>
+<li><p><strong>nbr_simulations</strong> (<em>int</em>) – Number of simulations to run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Option price and confidence interval.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>namedtuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="hestonpy.models.bates.Bates.plot_simulation">
 <span class="sig-name descname"><span class="pre">plot_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_to_maturity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">typing.Literal['euler',</span> <span class="pre">'milstein']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbr_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="../_modules/hestonpy/models/bates.html#Bates.plot_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.bates.Bates.plot_simulation" title="Link to this definition">#</a></dt>
 <dd><p>Plot a single simulation of the asset price and variance paths.</p>
@@ -769,6 +793,18 @@ using the specified discretization scheme.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.bates.Bates.price_surface">
+<span class="sig-name descname"><span class="pre">price_surface</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hestonpy/models/bates.html#Bates.price_surface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.bates.Bates.price_surface" title="Link to this definition">#</a></dt>
+<dd><p>Plot the call price surface as a function of strike and time to maturity.</p>
+<p>This method generates a 3D plot of the call option prices for a range of strikes and maturities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1139,7 +1175,9 @@ volatility, while the option price reflects the implied volatility.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.call_price"><code class="docutils literal notranslate"><span class="pre">Bates.call_price()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.carr_madan_price"><code class="docutils literal notranslate"><span class="pre">Bates.carr_madan_price()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.characteristic"><code class="docutils literal notranslate"><span class="pre">Bates.characteristic()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.monte_carlo_price"><code class="docutils literal notranslate"><span class="pre">Bates.monte_carlo_price()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.plot_simulation"><code class="docutils literal notranslate"><span class="pre">Bates.plot_simulation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.price_surface"><code class="docutils literal notranslate"><span class="pre">Bates.price_surface()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.bates.Bates.simulate"><code class="docutils literal notranslate"><span class="pre">Bates.simulate()</span></code></a></li>
 </ul>
 </li>
