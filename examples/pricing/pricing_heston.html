@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Initialisation of the model &#8212; hestonpy v0.5.7 documentation</title>
+    <title>Pricing with Heston &#8212; hestonpy v0.5.7 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/pricing/pricing_heston';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Calibration" href="../calibration/index.html" />
+    <link rel="next" title="Pricing with Bates" href="pricing_heston%20copy.html" />
     <link rel="prev" title="Pricing" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -313,11 +313,8 @@
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Pricing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Initialisation of the model</a></li>
-
-
-
-
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Pricing with Heston</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pricing_heston%20copy.html">Pricing with Bates</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../calibration/index.html">Calibration</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -379,7 +376,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Pricing</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Initialisation of the model</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Pricing with Heston</span></li>
   </ul>
 </nav>
 </div>
@@ -408,8 +405,10 @@ import numpy as np
 </pre></div>
 </div>
 </div>
+<section id="Pricing-with-Heston">
+<h1>Pricing with Heston<a class="headerlink" href="#Pricing-with-Heston" title="Link to this heading">#</a></h1>
 <section id="Initialisation-of-the-model">
-<h1>Initialisation of the model<a class="headerlink" href="#Initialisation-of-the-model" title="Link to this heading">#</a></h1>
+<h2>Initialisation of the model<a class="headerlink" href="#Initialisation-of-the-model" title="Link to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -442,13 +441,13 @@ heston = Heston(spot=S0, vol_initial=V0, r=r, **params)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_pricing_pricing_heston_3_0.png" src="../../_images/examples_pricing_pricing_heston_3_0.png" />
+<img alt="../../_images/examples_pricing_pricing_heston_4_0.png" src="../../_images/examples_pricing_pricing_heston_4_0.png" />
 </div>
 </div>
 <p>There are three different ways to price with an <code class="docutils literal notranslate"><span class="pre">Heston</span></code> object: Monte Carlo, Heston original formula and Carr-Madan</p>
 </section>
 <section id="Price-via-Monte-Carlo">
-<h1>Price via Monte Carlo<a class="headerlink" href="#Price-via-Monte-Carlo" title="Link to this heading">#</a></h1>
+<h2>Price via Monte Carlo<a class="headerlink" href="#Price-via-Monte-Carlo" title="Link to this heading">#</a></h2>
 <p>Parameters</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -513,7 +512,7 @@ Monte Carlo Milstein scheme in 0.0577s : price $12.03, std 0.49, and Confidence 
 </div>
 </section>
 <section id="Price-via-Fourier-Transform">
-<h1>Price via Fourier Transform<a class="headerlink" href="#Price-via-Fourier-Transform" title="Link to this heading">#</a></h1>
+<h2>Price via Fourier Transform<a class="headerlink" href="#Price-via-Fourier-Transform" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -540,7 +539,7 @@ Fourier Transform in 0.1561s : price $11.952, error $0.0 , and Confidence interv
 </div>
 </section>
 <section id="Price-via-Carr-Madan-formula">
-<h1>Price via Carr-Madan formula<a class="headerlink" href="#Price-via-Carr-Madan-formula" title="Link to this heading">#</a></h1>
+<h2>Price via Carr-Madan formula<a class="headerlink" href="#Price-via-Carr-Madan-formula" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -567,9 +566,9 @@ Carr-Madan in 0.0896s : price $11.952, error $1.447e-10 , and Confidence interva
 </div>
 </section>
 <section id="Other">
-<h1>Other<a class="headerlink" href="#Other" title="Link to this heading">#</a></h1>
+<h2>Other<a class="headerlink" href="#Other" title="Link to this heading">#</a></h2>
 <section id="Path-simulations">
-<h2>Path simulations<a class="headerlink" href="#Path-simulations" title="Link to this heading">#</a></h2>
+<h3>Path simulations<a class="headerlink" href="#Path-simulations" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -583,12 +582,12 @@ S, V = heston.plot_simulation(time_to_maturity=1, scheme=&quot;milstein&quot;, n
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_pricing_pricing_heston_18_0.png" src="../../_images/examples_pricing_pricing_heston_18_0.png" />
+<img alt="../../_images/examples_pricing_pricing_heston_19_0.png" src="../../_images/examples_pricing_pricing_heston_19_0.png" />
 </div>
 </div>
 </section>
 <section id="Characteristic-function">
-<h2>Characteristic function<a class="headerlink" href="#Characteristic-function" title="Link to this heading">#</a></h2>
+<h3>Characteristic function<a class="headerlink" href="#Characteristic-function" title="Link to this heading">#</a></h3>
 <p>One can do a sanity check of the characteristic functions used in the derivation of the Heston original formula</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
@@ -643,7 +642,7 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_pricing_pricing_heston_23_0.png" src="../../_images/examples_pricing_pricing_heston_23_0.png" />
+<img alt="../../_images/examples_pricing_pricing_heston_24_0.png" src="../../_images/examples_pricing_pricing_heston_24_0.png" />
 </div>
 </div>
 <p>3D plot of the characteristic functions</p>
@@ -670,7 +669,7 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_pricing_pricing_heston_25_0.png" src="../../_images/examples_pricing_pricing_heston_25_0.png" />
+<img alt="../../_images/examples_pricing_pricing_heston_26_0.png" src="../../_images/examples_pricing_pricing_heston_26_0.png" />
 </div>
 </div>
 <p>Check the integrability over <span class="math notranslate nohighlight">\(R_+\)</span></p>
@@ -716,9 +715,10 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_pricing_pricing_heston_27_1.png" src="../../_images/examples_pricing_pricing_heston_27_1.png" />
+<img alt="../../_images/examples_pricing_pricing_heston_28_1.png" src="../../_images/examples_pricing_pricing_heston_28_1.png" />
 </div>
 </div>
+</section>
 </section>
 </section>
 
@@ -742,11 +742,11 @@ plt.show()
       </div>
     </a>
     <a class="right-next"
-       href="../calibration/index.html"
+       href="pricing_heston%20copy.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Calibration</p>
+        <p class="prev-next-title">Pricing with Bates</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -769,17 +769,16 @@ plt.show()
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Initialisation of the model</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Monte-Carlo">Price via Monte Carlo</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Fourier-Transform">Price via Fourier Transform</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Carr-Madan-formula">Price via Carr-Madan formula</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Other">Other</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Path-simulations">Path simulations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Characteristic-function">Characteristic function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Initialisation-of-the-model">Initialisation of the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Monte-Carlo">Price via Monte Carlo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Fourier-Transform">Price via Fourier Transform</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Carr-Madan-formula">Price via Carr-Madan formula</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Other">Other</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Path-simulations">Path simulations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Characteristic-function">Characteristic function</a></li>
 </ul>
 </li>
 </ul>
-
   </nav></div>
 
   <div class="sidebar-secondary-item">

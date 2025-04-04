@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Impact of parameters &#8212; hestonpy v0.5.7 documentation</title>
+    <title>Pricing with Bates &#8212; hestonpy v0.5.7 documentation</title>
   
   
   
@@ -49,11 +49,11 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/calibration/parameters_impacts_and_stability';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/pricing/pricing_heston copy';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Calibration on market data" href="calibration_real_data.html" />
-    <link rel="prev" title="With syntetic market price" href="calibration_synthetic_data.html" />
+    <link rel="next" title="Calibration" href="../calibration/index.html" />
+    <link rel="prev" title="Pricing with Heston" href="pricing_heston.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -312,17 +312,17 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../pricing/index.html">Pricing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston.html">Pricing with Heston</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston%20copy.html">Pricing with Bates</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Pricing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pricing_heston.html">Pricing with Heston</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Pricing with Bates</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Calibration</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="calibration_synthetic_data.html">With syntetic market price</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Impact of parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_real_data.html">Calibration on market data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_heston.html">Calibration of Heston models on market data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_bates.html">Calibration of Bates models on market data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../calibration/index.html">Calibration</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_synthetic_data.html">With syntetic market price</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../calibration/parameters_impacts_and_stability.html">Impact of parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_real_data.html">Calibration on market data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_heston.html">Calibration of Heston models on market data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../calibration/calibration_bates.html">Calibration of Bates models on market data</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../hedging/index.html">Hedging</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -374,9 +374,9 @@
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Examples</a></li>
     
     
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Calibration</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Pricing</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Impact of parameters</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Pricing with Bates</span></li>
   </ul>
 </nav>
 </div>
@@ -393,125 +393,50 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="Impact-of-parameters">
-<h1>Impact of parameters<a class="headerlink" href="#Impact-of-parameters" title="Link to this heading">#</a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+  <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.heston import Heston
-from hestonpy.models.calibration.volatilitySmile import VolatilitySmile, fontdict
-
-import numpy as np
-import pandas as pd
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.bates import Bates
 
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
+import time
+import numpy as np
 </pre></div>
 </div>
 </div>
-<p>What is the impact of each parameters on the calibrated smile ?</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<section id="Pricing-with-Bates">
+<h1>Pricing with Bates<a class="headerlink" href="#Pricing-with-Bates" title="Link to this heading">#</a></h1>
+<section id="Initialisation-of-the-model">
+<h2>Initialisation of the model<a class="headerlink" href="#Initialisation-of-the-model" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Paramètres initiaux du modèle Heston
-spot = 100            # Prix spot
-vol_initial = 0.02    # Variance initiale
-r = 0.00
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>S0 = 100
+V0 = 0.06
+r = 0.05
+
 params = {
-    &quot;kappa&quot;: 1.25,
+    &quot;kappa&quot;: 1,
     &quot;theta&quot;: 0.06,
+    &quot;sigma&quot;: 0.3,
+    &quot;rho&quot;: -0.5,
+    &#39;lambda_jump&#39;: 4.5,
+    &#39;mu_J&#39;: 0.00,
+    &#39;sigma_J&#39;: 0.05,
     &quot;drift_emm&quot;: 0.00,
-    &quot;sigma&quot;: 0.6,
-    &quot;rho&quot;: -0.8,
 }
-time_to_maturity = 1
-model = Heston(spot, vol_initial, r, **params)
 
-strikes = np.arange(40, 200, 10)
-prices = model.call_price(strike=strikes, time_to_maturity=time_to_maturity)
-
-smile = VolatilitySmile(strikes=strikes, time_to_maturity=1, atm=spot, market_prices=prices)
-smile.plot()
+bates = Bates(spot=S0, vol_initial=V0, r=r, **params)
 </pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_calibration_parameters_impacts_and_stability_3_0.png" src="../../_images/examples_calibration_parameters_impacts_and_stability_3_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Paramètres de base du modèle Heston
-base_params = {
-    &quot;vol_initial&quot;: 0.02,   # Variance initiale
-    &quot;kappa&quot;: 2.0,          # Vitesse de réversion
-    &quot;theta&quot;: 0.02,         # Variance à long terme
-    &quot;sigma&quot;: 0.5,          # Volatilité de la variance
-    &quot;rho&quot;: -0.5,           # Corrélation
-}
-
-# Définition des paramètres à tester
-params_to_test = {
-    &quot;vol_initial&quot;: [0.01, 0.02, 0.03, 0.05, 0.06],
-    &quot;sigma&quot;: [0.1, 0.3, 0.5, 0.7, 0.8],
-    &quot;kappa&quot;: [1.0, 2.0, 3.0, 4.0, 5.0],
-    &quot;theta&quot;: [0.01, 0.03, 0.05, 0.07, 0.10],
-    &quot;rho&quot;: [-0.5, -0.15, 0, 0.15, 0.5],
-}
-
-# Dictionnaire pour convertir les noms en LaTex
-latex_labels = {
-    &quot;vol_initial&quot;: r&quot;$v_0$&quot;,
-    &quot;sigma&quot;: r&quot;$\sigma$&quot;,
-    &quot;kappa&quot;: r&quot;$\kappa$&quot;,
-    &quot;theta&quot;: r&quot;$\theta$&quot;,
-    &quot;rho&quot;: r&quot;$\rho$&quot;,
-}
-
-strikes = np.arange(40, 200, 5)
-
-
-fig = plt.figure(figsize=(17, 10))
-gs = gridspec.GridSpec(2, 3, figure=fig)
-
-axes = [fig.add_subplot(gs[0, i]) for i in range(3)]  # Première ligne
-axes.append(fig.add_subplot(gs[1, 0]))  # En bas à gauche
-axes.append(fig.add_subplot(gs[1, 1:]))  # Fusion des deux derniers
-
-# Fonction pour tracer les volatility smiles
-def plot_vol_smile(ax, param_name, param_values):
-    ax.axvline(spot, linestyle=&quot;--&quot;, color=&quot;gray&quot;, label=&quot;ATM Strike&quot;)
-
-    for value in param_values:
-        params = base_params.copy()
-        params[param_name] = value
-
-        model = Heston(spot=spot, r=r, drift_emm=0, **params)
-        prices = model.call_price(strike=strikes, time_to_maturity=1)
-        smile = VolatilitySmile(strikes=strikes, atm=spot, market_prices=prices, time_to_maturity=1)
-        implied_vols = smile.compute_smile(prices)
-
-        ax.plot(strikes, implied_vols, label=f&#39;{latex_labels[param_name]} = {value}&#39;, marker=&#39;+&#39;, linestyle=&quot;dotted&quot;, markersize=4)
-
-    ax.set_title(f&quot;Impact of {latex_labels[param_name]} on smile&quot;, fontdict=fontdict)
-    ax.set_xlabel(&quot;Strike&quot;)
-    ax.set_ylabel(&quot;Implied Volatility [%]&quot;, fontdict=fontdict)
-    ax.grid(visible=True, which=&quot;major&quot;, linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5, alpha=0.8)
-    ax.legend()
-
-# Tracer les courbes sur chaque subplot
-for i, (param_name, param_values) in enumerate(params_to_test.items()):
-    plot_vol_smile(axes[i], param_name, param_values)
-
-plt.tight_layout()
-plt.show()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>bates.price_surface()
 </pre></div>
 </div>
 </div>
@@ -519,9 +444,121 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_calibration_parameters_impacts_and_stability_4_0.png" src="../../_images/examples_calibration_parameters_impacts_and_stability_4_0.png" />
+<img alt="../../_images/examples_pricing_pricing_heston_copy_4_0.png" src="../../_images/examples_pricing_pricing_heston_copy_4_0.png" />
 </div>
 </div>
+</section>
+<section id="Price-via-Monte-Carlo">
+<h2>Price via Monte Carlo<a class="headerlink" href="#Price-via-Monte-Carlo" title="Link to this heading">#</a></h2>
+<p>Parameters</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nbr_points = 100
+nbr_simulations = 10**3
+</pre></div>
+</div>
+</div>
+<p>Via Euler-Maruyama scheme</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>start_time = time.time()
+result = bates.monte_carlo_price(nbr_points=nbr_points, nbr_simulations=nbr_simulations, strike=100, time_to_maturity=1, scheme=&quot;euler&quot;)
+time_delta = round(time.time() - start_time,4)
+price_euler = round(result.price, 2)
+std_euler = round(result.std, 2)
+infinum_euler = round(result.infinum, 2)
+supremum_euler = round(result.supremum, 2)
+print(f&quot;Monte Carlo Euler scheme in {time_delta}s : price ${price_euler}, std {std_euler}, and Confidence interval [{infinum_euler},{supremum_euler}]\n&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Variance has been null 0 times over the 100000 iterations (0.0%)
+Monte Carlo Euler scheme in 0.0637s : price $13.83, std 0.58, and Confidence interval [13.78,13.88]
+
+</pre></div></div>
+</div>
+<p>Via Milstein scheme</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>start_time = time.time()
+result = bates.monte_carlo_price(nbr_points=nbr_points, nbr_simulations=nbr_simulations, strike=100, time_to_maturity=1, scheme=&quot;milstein&quot;)
+time_delta = round(time.time() - start_time,4)
+price_milstein = round(result.price, 2)
+std_milstein = round(result.std, 2)
+infinum_milstein = round(result.infinum, 2)
+supremum_milstein = round(result.supremum, 2)
+print(f&quot;Monte Carlo Milstein scheme in {time_delta}s : price ${price_milstein}, std {std_milstein}, and Confidence interval [{infinum_milstein},{supremum_milstein}]\n&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Variance has been null 0 times over the 100000 iterations (0.0%)
+Monte Carlo Milstein scheme in 0.0552s : price $13.17, std 0.57, and Confidence interval [13.13,13.22]
+
+</pre></div></div>
+</div>
+</section>
+<section id="Price-via-Carr-Madan-formula">
+<h2>Price via Carr-Madan formula<a class="headerlink" href="#Price-via-Carr-Madan-formula" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>start_time = time.time()
+price_CM, error_CM = bates.carr_madan_price(strike=100, time_to_maturity=1, error_boolean=True)
+time_delta = round(time.time() - start_time,4)
+infinum = round(price_CM-error_CM, 3)
+supremum = round(price_CM+error_CM, 3)
+price_CM = round(price_CM, 3)
+error_CM = round(error_CM, 14)
+print(f&quot;Carr-Madan in {time_delta}s : price ${price_CM}, error ${error_CM} , and Confidence interval [{infinum},{supremum}]\n&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Carr-Madan in 0.1314s : price $12.779, error $1.4462e-10 , and Confidence interval [12.779,12.779]
+
+</pre></div></div>
+</div>
+</section>
+<section id="Path-simulations">
+<h2>Path simulations<a class="headerlink" href="#Path-simulations" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>scheme = &#39;milstein&#39;
+_ = bates.plot_simulation(time_to_maturity=10, scheme=scheme, nbr_points=252*4)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/examples_pricing_pricing_heston_copy_15_0.png" src="../../_images/examples_pricing_pricing_heston_copy_15_0.png" />
+</div>
+</div>
+</section>
 </section>
 
 
@@ -535,20 +572,20 @@ plt.show()
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="calibration_synthetic_data.html"
+       href="pricing_heston.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">With syntetic market price</p>
+        <p class="prev-next-title">Pricing with Heston</p>
       </div>
     </a>
     <a class="right-next"
-       href="calibration_real_data.html"
+       href="../calibration/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Calibration on market data</p>
+        <p class="prev-next-title">Calibration</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -564,10 +601,25 @@ plt.show()
 
 
   <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Initialisation-of-the-model">Initialisation of the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Monte-Carlo">Price via Monte Carlo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Price-via-Carr-Madan-formula">Price via Carr-Madan formula</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Path-simulations">Path simulations</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/examples/calibration/parameters_impacts_and_stability.ipynb.txt"
+      <li><a href="../../_sources/examples/pricing/pricing_heston copy.ipynb.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>

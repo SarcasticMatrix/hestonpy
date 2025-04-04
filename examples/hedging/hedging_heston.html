@@ -312,11 +312,8 @@
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pricing/index.html">Pricing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston.html">Initialisation of the model</a></li>
-
-
-
-
+<li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston.html">Pricing with Heston</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston%20copy.html">Pricing with Bates</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../calibration/index.html">Calibration</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -534,7 +531,9 @@ plt.show()
 <img alt="../../_images/examples_hedging_hedging_heston_8_0.png" src="../../_images/examples_hedging_hedging_heston_8_0.png" />
 </div>
 </div>
-<p>## Evolution of the replication portfolio</p>
+</section>
+<section id="Evolution-of-the-replication-portfolio">
+<h2>Evolution of the replication portfolio<a class="headerlink" href="#Evolution-of-the-replication-portfolio" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
@@ -649,114 +648,6 @@ for path in paths:
 <img alt="../../_images/examples_hedging_hedging_heston_12_4.png" src="../../_images/examples_hedging_hedging_heston_12_4.png" />
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># time = np.linspace(start=0, stop=maturity, num=nbr_points + 1)
-
-# paths = range(nbr_simulations)
-
-# for path in paths:
-
-#     fig, (ax1, ax2, ax3) = plt.subplots(3, figsize=(15, 10))
-#     plt.suptitle(f&quot;Portefeuille de réplication - simulation {path}&quot;)
-
-#     # Masquage des zones où S est en dessous du strike
-#     C_upper = np.ma.masked_where(S[path, :] &lt; strike, C[path, :])
-#     C_lower = np.ma.masked_where(S[path, :] &gt;= strike, C[path, :])
-
-#     St_upper = np.ma.masked_where(S[path, :] &lt; strike, S[path, :])
-#     St_lower = np.ma.masked_where(S[path, :] &gt;= strike, S[path, :])
-
-#     Vt_upper = np.ma.masked_where(S[path, :] &lt; strike, V[path, :])
-#     Vt_lower = np.ma.masked_where(S[path, :] &gt;= strike, V[path, :])
-
-#     # Tracé avec des styles différents
-#     ax1.plot(time, C_lower, label=r&quot;Target call ($S_t &lt; K$)&quot;, color=&#39;red&#39;, marker=&#39;+&#39;)
-#     ax1.plot(time, C_upper, label=r&quot;Target call ($S_t &gt; K$)&quot;, color=&#39;green&#39;, marker=&#39;+&#39;)
-#     ax1.plot(time, portfolio[path, :], label=&quot;Portfolio&quot;, color=&#39;blue&#39;)
-#     ax1.grid(linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5)
-#     ax1.minorticks_on()
-#     ax1.legend()
-
-#     # Tracé du sous-jacent et des strikes
-#     ax2.axhline(y=strike, label=&quot;Target strike&quot;, linestyle=&quot;dashed&quot;, color=&#39;black&#39;, linewidth=0.7)
-#     # ax2.plot(time, S[path, :], label=&quot;Underlying&quot;)
-#     ax2.plot(time, St_lower, label=r&quot;Underlying ($S_t &lt; K$)&quot;, color=&#39;red&#39;, marker=&#39;+&#39;)
-#     ax2.plot(time, St_upper, label=r&quot;Underlying ($S_t &gt; K$)&quot;, color=&#39;green&#39;, marker=&#39;+&#39;)
-#     ax2.grid(linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5)
-#     ax2.minorticks_on()
-#     ax2.legend()
-
-#     # Tracé du sous-jacent et des strikes
-#     ax3.plot(time, Vt_lower*100, label=r&quot;Target call ($S_t &lt; K$)&quot;, color=&#39;red&#39;, marker=&#39;+&#39;)
-#     ax3.plot(time, Vt_upper*100, label=r&quot;Target call ($S_t &gt; K$)&quot;, color=&#39;green&#39;, marker=&#39;+&#39;)
-#     ax3.grid(linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5)
-#     ax3.minorticks_on()
-#     ax3.set_xlabel(&quot;Time&quot;)
-#     ax3.set_ylabel(&quot;%&quot;)
-#     ax3.legend()
-
-#     plt.tight_layout()
-#     plt.show()
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># time = np.linspace(start=0, stop=maturity, num=nbr_points + 1)
-
-# paths = range(nbr_simulations)
-
-# for path in paths:
-
-#     fig, (ax1, ax2, ax3) = plt.subplots(3, figsize=(15, 10))
-#     plt.suptitle(f&quot;Portefeuille de réplication - simulation {path}&quot;)
-
-#     # Masquage des zones où S est en dessous du strike
-#     C_upper = np.ma.masked_where(S[path, :] &lt; strike, C[path, :])
-#     C_lower = np.ma.masked_where(S[path, :] &gt;= strike, C[path, :])
-
-#     St_upper = np.ma.masked_where(S[path, :] &lt; strike, S[path, :])
-#     St_lower = np.ma.masked_where(S[path, :] &gt;= strike, S[path, :])
-
-#     Vt_upper = np.ma.masked_where(S[path, :] &lt; strike, V[path, :])
-#     Vt_lower = np.ma.masked_where(S[path, :] &gt;= strike, V[path, :])
-
-#     # Tracé avec des styles différents
-#     ax1.plot(time, C_lower, label=r&quot;Target call ($S_t &lt; K$)&quot;, color=&#39;red&#39;, marker=&#39;+&#39;)
-#     ax1.plot(time, C_upper, label=r&quot;Target call ($S_t &gt; K$)&quot;, color=&#39;green&#39;, marker=&#39;+&#39;)
-#     ax1.plot(time, portfolio[path, :], label=&quot;Portfolio&quot;, color=&#39;blue&#39;)
-#     ax1.grid(linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5)
-#     ax1.minorticks_on()
-#     ax1.legend()
-
-#     # Tracé du sous-jacent et des strikes
-#     ax2.axhline(y=strike, label=&quot;Target strike&quot;, linestyle=&quot;dashed&quot;, color=&#39;black&#39;, linewidth=0.7)
-#     # ax2.plot(time, S[path, :], label=&quot;Underlying&quot;)
-#     ax2.plot(time, St_lower, label=r&quot;Underlying ($S_t &lt; K$)&quot;, color=&#39;red&#39;, marker=&#39;+&#39;)
-#     ax2.plot(time, St_upper, label=r&quot;Underlying ($S_t &gt; K$)&quot;, color=&#39;green&#39;, marker=&#39;+&#39;)
-#     ax2.grid(linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5)
-#     ax2.minorticks_on()
-#     ax2.legend()
-
-#     # Tracé du sous-jacent et des strikes
-#     ax3.plot(time, Vt_lower*100, label=r&quot;Target call ($S_t &lt; K$)&quot;, color=&#39;red&#39;, marker=&#39;+&#39;)
-#     ax3.plot(time, Vt_upper*100, label=r&quot;Target call ($S_t &gt; K$)&quot;, color=&#39;green&#39;, marker=&#39;+&#39;)
-#     ax3.grid(linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5)
-#     ax3.minorticks_on()
-#     ax3.set_xlabel(&quot;Time&quot;)
-#     ax3.set_ylabel(&quot;%&quot;)
-#     ax3.legend()
-
-#     plt.tight_layout()
-#     plt.show()
-</pre></div>
-</div>
-</div>
 </section>
 </section>
 
@@ -799,6 +690,7 @@ for path in paths:
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Replication-errors">Replication errors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Evolution-of-the-replication-portfolio">Evolution of the replication portfolio</a></li>
 </ul>
   </nav></div>
 

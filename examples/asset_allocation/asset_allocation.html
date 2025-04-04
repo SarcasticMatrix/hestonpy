@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Impact of parameters &#8212; hestonpy v0.5.7 documentation</title>
+    <title>Initialisation of the model &#8212; hestonpy v0.5.7 documentation</title>
   
   
   
@@ -49,11 +49,9 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/calibration/parameters_impacts_and_stability';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/asset_allocation/asset_allocation';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Calibration on market data" href="calibration_real_data.html" />
-    <link rel="prev" title="With syntetic market price" href="calibration_synthetic_data.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -152,7 +150,7 @@
 </li>
 
 
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../index.html">
     Examples
   </a>
@@ -261,7 +259,7 @@
 </li>
 
 
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../index.html">
     Examples
   </a>
@@ -310,28 +308,7 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../pricing/index.html">Pricing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston.html">Pricing with Heston</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston%20copy.html">Pricing with Bates</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Calibration</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="calibration_synthetic_data.html">With syntetic market price</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Impact of parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_real_data.html">Calibration on market data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_heston.html">Calibration of Heston models on market data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_bates.html">Calibration of Bates models on market data</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../hedging/index.html">Hedging</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../hedging/hedging_blackScholes.html">Hedging with Black-Scholes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../hedging/hedging_heston.html">Hedging with Heston</a></li>
-</ul>
-</details></li>
-</ul>
-</div>
+  <div class="bd-toc-item navbar-nav"></div>
 </nav></div>
     </div>
   
@@ -370,13 +347,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Examples</a></li>
-    
-    
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Calibration</a></li>
-    
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Impact of parameters</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Initialisation of the model</span></li>
   </ul>
 </nav>
 </div>
@@ -393,47 +364,80 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="Impact-of-parameters">
-<h1>Impact of parameters<a class="headerlink" href="#Impact-of-parameters" title="Link to this heading">#</a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+  <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.heston import Heston
-from hestonpy.models.calibration.volatilitySmile import VolatilitySmile, fontdict
-
-import numpy as np
-import pandas as pd
+from hestonpy.portfolio.Portfolio import Portfolio
+from hestonpy.portfolio.strategies import naive_strategy, optimal_allocate_strategy, run_strategies
 
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
+import numpy as np
 </pre></div>
 </div>
 </div>
-<p>What is the impact of each parameters on the calibrated smile ?</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<section id="Initialisation-of-the-model">
+<h1>Initialisation of the model<a class="headerlink" href="#Initialisation-of-the-model" title="Link to this heading">#</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Paramètres initiaux du modèle Heston
-spot = 100            # Prix spot
-vol_initial = 0.02    # Variance initiale
-r = 0.00
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>spot = 100
+r = 0.05
+
 params = {
+    &quot;vol_initial&quot;: 0.06,
     &quot;kappa&quot;: 1.25,
     &quot;theta&quot;: 0.06,
     &quot;drift_emm&quot;: 0.00,
     &quot;sigma&quot;: 0.6,
     &quot;rho&quot;: -0.8,
 }
+
 time_to_maturity = 1
-model = Heston(spot, vol_initial, r, **params)
+heston = Heston(spot=spot, r=r, **params)
+S, V, _ = heston.simulate(scheme=&#39;milstein&#39;, nbr_simulations=100, nbr_points=252)
 
-strikes = np.arange(40, 200, 10)
-prices = model.call_price(strike=strikes, time_to_maturity=time_to_maturity)
+time = np.linspace(start=0, stop=time_to_maturity, num=len(S))
+dt = time[1] - time[0]
 
-smile = VolatilitySmile(strikes=strikes, time_to_maturity=1, atm=spot, market_prices=prices)
-smile.plot()
+portfolio = Portfolio(r=r, dt=dt)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Naive-constant-allocation-strategy">
+<h1>Naive constant allocation strategy<a class="headerlink" href="#Naive-constant-allocation-strategy" title="Link to this heading">#</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>allocation1 = naive_strategy(0.5, len(S))
+bank_account, stocks_account = portfolio.back_test(S=S, portfolio0=spot, allocation_strategy=allocation1)
+portfolio_value1 = bank_account + stocks_account
+
+allocation2 = naive_strategy(0.7, len(S))
+bank_account, stocks_account = portfolio.back_test(S=S, portfolio0=spot, allocation_strategy=allocation2)
+portfolio_value2 = bank_account + stocks_account
+
+allocation3 = naive_strategy(1, len(S))
+bank_account, stocks_account = portfolio.back_test(S=S, portfolio0=spot, allocation_strategy=allocation3)
+portfolio_value3 = bank_account + stocks_account
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Optimal-allocation-strategy">
+<h1>Optimal allocation strategy<a class="headerlink" href="#Optimal-allocation-strategy" title="Link to this heading">#</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>p = 0.02
+optimal_allocation = optimal_allocate_strategy(heston=heston, p=p, time=time)
+bank_account, stocks_account = portfolio.back_test(S=S, portfolio0=spot, allocation_strategy=optimal_allocation)
+portfolio_value_optimal = bank_account + stocks_account
 </pre></div>
 </div>
 </div>
@@ -441,85 +445,116 @@ smile.plot()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_calibration_parameters_impacts_and_stability_3_0.png" src="../../_images/examples_calibration_parameters_impacts_and_stability_3_0.png" />
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[12], line 2</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> p <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">0.02</span>
+<span class="ansi-green-fg">----&gt; 2</span> optimal_allocation <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">optimal_allocate_strategy</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">heston</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">heston</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">p</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">p</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">time</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">time</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> bank_account, stocks_account <span style="color: rgb(98,98,98)">=</span> portfolio<span style="color: rgb(98,98,98)">.</span>back_test(S<span style="color: rgb(98,98,98)">=</span>S, portfolio0<span style="color: rgb(98,98,98)">=</span>spot, allocation_strategy<span style="color: rgb(98,98,98)">=</span>optimal_allocation)
+<span class="ansi-green-intense-fg ansi-bold">      4</span> portfolio_value_optimal <span style="color: rgb(98,98,98)">=</span> bank_account <span style="color: rgb(98,98,98)">+</span> stocks_account
+
+File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/portfolio/strategies.py:61</span>, in <span class="ansi-cyan-fg">optimal_allocate_strategy</span><span class="ansi-blue-fg">(heston, p, time)</span>
+<span class="ansi-green-intense-fg ansi-bold">     45</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span><span style="color: rgb(188,188,188)"> </span><span style="color: rgb(0,0,255)">optimal_allocate_strategy</span>(
+<span class="ansi-green-intense-fg ansi-bold">     46</span>         heston:Heston,
+<span class="ansi-green-intense-fg ansi-bold">     47</span>         p:<span style="color: rgb(0,135,0)">float</span>,
+<span class="ansi-green-intense-fg ansi-bold">     48</span>         time:np<span style="color: rgb(98,98,98)">.</span>array
+<span class="ansi-green-intense-fg ansi-bold">     49</span>     ) <span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">&gt;</span> np<span style="color: rgb(98,98,98)">.</span>array:
+<span class="ansi-green-intense-fg ansi-bold">     50</span> <span style="color: rgb(188,188,188)">    </span><span style="color: rgb(175,0,0)">&#34;&#34;&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">     51</span> <span style="color: rgb(175,0,0)">    Implement the optimal allocation of the portfolio based on premium volatility risk and p.</span>
+<span class="ansi-green-intense-fg ansi-bold">     52</span>
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-intense-fg ansi-bold">     58</span> <span style="color: rgb(175,0,0)">    - np.array: Number of stocks over time to hold over time.</span>
+<span class="ansi-green-intense-fg ansi-bold">     59</span> <span style="color: rgb(175,0,0)">    &#34;&#34;&#34;</span>
+<span class="ansi-green-fg">---&gt; 61</span>     k0 <span style="color: rgb(98,98,98)">=</span> p <span style="color: rgb(98,98,98)">*</span> <span class="ansi-yellow-bg">heston</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">premium_volatility_risk</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">/</span> (<span style="color: rgb(98,98,98)">1</span><span style="color: rgb(98,98,98)">-</span>p)
+<span class="ansi-green-intense-fg ansi-bold">     62</span>     k1 <span style="color: rgb(98,98,98)">=</span> heston<span style="color: rgb(98,98,98)">.</span>kappa <span style="color: rgb(98,98,98)">-</span> p <span style="color: rgb(98,98,98)">*</span> heston<span style="color: rgb(98,98,98)">.</span>premium_volatility_risk <span style="color: rgb(98,98,98)">*</span> heston<span style="color: rgb(98,98,98)">.</span>sigma <span style="color: rgb(98,98,98)">*</span> heston<span style="color: rgb(98,98,98)">.</span>rho <span style="color: rgb(98,98,98)">/</span> (<span style="color: rgb(98,98,98)">1</span><span style="color: rgb(98,98,98)">-</span>p)
+<span class="ansi-green-intense-fg ansi-bold">     63</span>     k2 <span style="color: rgb(98,98,98)">=</span> heston<span style="color: rgb(98,98,98)">.</span>sigma<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">+</span> p <span style="color: rgb(98,98,98)">*</span> heston<span style="color: rgb(98,98,98)">.</span>sigma<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> heston<span style="color: rgb(98,98,98)">.</span>rho<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">/</span>(<span style="color: rgb(98,98,98)">1</span><span style="color: rgb(98,98,98)">-</span>p)
+
+<span class="ansi-red-fg">AttributeError</span>: &#39;Heston&#39; object has no attribute &#39;premium_volatility_risk&#39;
+</pre></div></div>
 </div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</section>
+<section id="Run-strategies">
+<h1>Run strategies<a class="headerlink" href="#Run-strategies" title="Link to this heading">#</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Paramètres de base du modèle Heston
-base_params = {
-    &quot;vol_initial&quot;: 0.02,   # Variance initiale
-    &quot;kappa&quot;: 2.0,          # Vitesse de réversion
-    &quot;theta&quot;: 0.02,         # Variance à long terme
-    &quot;sigma&quot;: 0.5,          # Volatilité de la variance
-    &quot;rho&quot;: -0.5,           # Corrélation
-}
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>seeds = np.arange(1, 1000, 1) + np.random.randint(low=0, high=100000)
+run_strategies(seeds, portfolio0=spot)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Plot-strategies">
+<h1>Plot strategies<a class="headerlink" href="#Plot-strategies" title="Link to this heading">#</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
 
-# Définition des paramètres à tester
-params_to_test = {
-    &quot;vol_initial&quot;: [0.01, 0.02, 0.03, 0.05, 0.06],
-    &quot;sigma&quot;: [0.1, 0.3, 0.5, 0.7, 0.8],
-    &quot;kappa&quot;: [1.0, 2.0, 3.0, 4.0, 5.0],
-    &quot;theta&quot;: [0.01, 0.03, 0.05, 0.07, 0.10],
-    &quot;rho&quot;: [-0.5, -0.15, 0, 0.15, 0.5],
-}
+ax1.plot(time, portfolio_value1, label=r&#39;$\pi_{50\%}$&#39;, color=&#39;blue&#39;, linewidth=1)
+ax1.plot(time, portfolio_value2, label=r&#39;$\pi_{75\%}$&#39;, color=&#39;green&#39;, linewidth=1)
+ax1.plot(time, portfolio_value3, label=r&#39;$\pi_{100\%}$&#39;, color=&#39;red&#39;, linewidth=1)
+ax1.plot(time, portfolio_value_optimal, label=r&#39;$\pi^\star$&#39;, color=&#39;purple&#39;, linewidth=1)
 
-# Dictionnaire pour convertir les noms en LaTex
-latex_labels = {
-    &quot;vol_initial&quot;: r&quot;$v_0$&quot;,
-    &quot;sigma&quot;: r&quot;$\sigma$&quot;,
-    &quot;kappa&quot;: r&quot;$\kappa$&quot;,
-    &quot;theta&quot;: r&quot;$\theta$&quot;,
-    &quot;rho&quot;: r&quot;$\rho$&quot;,
-}
+ax1.plot(time, S, label=&#39;Stock&#39;, color=&#39;black&#39;, linewidth=1)
+ax1.set_ylabel(&#39;Value [currency unit]&#39;)
+ax1.set_title(&#39;Portfolio Value over Time&#39;)
+ax1.legend()
+ax1.grid(visible=True)
 
-strikes = np.arange(40, 200, 5)
+# P&amp;L
+PnL1 = np.diff(portfolio_value1)
+PnL2 = np.diff(portfolio_value2)
+PnL3 = np.diff(portfolio_value3)
+PnL_opt = np.diff(portfolio_value_optimal)
+
+print(
+    &quot;Total variation of the strategies&quot;,
+    f&quot;\n PnL1: {round(np.mean(PnL1**2),2)}&quot;,
+    f&quot;\n PnL2: {round(np.mean(PnL2**2),2)}&quot;
+    f&quot;\n PnL3: {round(np.mean(PnL3**2),2)}&quot;
+    f&quot;\n PnL opt: {round(np.mean(PnL_opt**2),2)}&quot;
+)
+
+ax2.plot(time[1:], PnL1, label=r&#39;$\pi_{50\%}$&#39;, color=&#39;blue&#39;, linewidth=0.7)
+ax2.plot(time[1:], PnL2, label=r&#39;$\pi_{75\%}$&#39;, color=&#39;green&#39;, linewidth=0.7)
+ax2.plot(time[1:], PnL3, label=r&#39;$\pi_{100\%}$&#39;, color=&#39;red&#39;, linewidth=0.7)
+
+ax2.plot(time[1:], PnL_opt, label=r&#39;$\pi^\star$&#39;, color=&#39;purple&#39;, linewidth=0.7)
 
 
-fig = plt.figure(figsize=(17, 10))
-gs = gridspec.GridSpec(2, 3, figure=fig)
+ax2.set_xlabel(&#39;Time&#39;)
+ax2.set_ylabel(r&#39;$PnL(t)$&#39;)
+ax2.set_title(r&#39;$PnL$&#39;)
+ax2.legend()
+ax2.grid(visible=True)
 
-axes = [fig.add_subplot(gs[0, i]) for i in range(3)]  # Première ligne
-axes.append(fig.add_subplot(gs[1, 0]))  # En bas à gauche
-axes.append(fig.add_subplot(gs[1, 1:]))  # Fusion des deux derniers
-
-# Fonction pour tracer les volatility smiles
-def plot_vol_smile(ax, param_name, param_values):
-    ax.axvline(spot, linestyle=&quot;--&quot;, color=&quot;gray&quot;, label=&quot;ATM Strike&quot;)
-
-    for value in param_values:
-        params = base_params.copy()
-        params[param_name] = value
-
-        model = Heston(spot=spot, r=r, drift_emm=0, **params)
-        prices = model.call_price(strike=strikes, time_to_maturity=1)
-        smile = VolatilitySmile(strikes=strikes, atm=spot, market_prices=prices, time_to_maturity=1)
-        implied_vols = smile.compute_smile(prices)
-
-        ax.plot(strikes, implied_vols, label=f&#39;{latex_labels[param_name]} = {value}&#39;, marker=&#39;+&#39;, linestyle=&quot;dotted&quot;, markersize=4)
-
-    ax.set_title(f&quot;Impact of {latex_labels[param_name]} on smile&quot;, fontdict=fontdict)
-    ax.set_xlabel(&quot;Strike&quot;)
-    ax.set_ylabel(&quot;Implied Volatility [%]&quot;, fontdict=fontdict)
-    ax.grid(visible=True, which=&quot;major&quot;, linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5, alpha=0.8)
-    ax.legend()
-
-# Tracer les courbes sur chaque subplot
-for i, (param_name, param_values) in enumerate(params_to_test.items()):
-    plot_vol_smile(axes[i], param_name, param_values)
-
+plt.suptitle(&#39;Asset allocation under Heston&#39;)
 plt.tight_layout()
 plt.show()
+
+
+## Surface plot
+p = np.arange(start=0, stop=1, step=0.01)
+p = p[1:-1]
+time = np.arange(start=0, stop=1, step=0.01)
+p, tau = np.meshgrid(p, heston.T - time)
+
+Z = optimal_allocate_strategy(heston=heston, p=p, time=tau)
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection=&#39;3d&#39;)
+ax.plot_surface(tau, p, Z)
+
+ax.set_xlabel(&#39;p&#39;)
+ax.set_ylabel(r&#39;$\tau$&#39;)
+ax.set_zlabel(r&#39;$\%$ of portfolio in stock&#39;)
+
+plt.show()
 </pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_calibration_parameters_impacts_and_stability_4_0.png" src="../../_images/examples_calibration_parameters_impacts_and_stability_4_0.png" />
 </div>
 </div>
 </section>
@@ -534,24 +569,6 @@ plt.show()
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="calibration_synthetic_data.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">With syntetic market price</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="calibration_real_data.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Calibration on market data</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -564,10 +581,27 @@ plt.show()
 
 
   <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Initialisation of the model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Naive-constant-allocation-strategy">Naive constant allocation strategy</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Optimal-allocation-strategy">Optimal allocation strategy</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-strategies">Run strategies</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Plot-strategies">Plot strategies</a></li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/examples/calibration/parameters_impacts_and_stability.ipynb.txt"
+      <li><a href="../../_sources/examples/asset_allocation/asset_allocation.ipynb.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>

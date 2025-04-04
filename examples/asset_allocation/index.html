@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Impact of parameters &#8212; hestonpy v0.5.7 documentation</title>
+    <title>Assets allocation &#8212; hestonpy v0.5.7 documentation</title>
   
   
   
@@ -32,7 +32,6 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../../_static/_static/css/custom.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=af91de31" />
   
@@ -49,11 +48,9 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/calibration/parameters_impacts_and_stability';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/asset_allocation/index';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Calibration on market data" href="calibration_real_data.html" />
-    <link rel="prev" title="With syntetic market price" href="calibration_synthetic_data.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -152,7 +149,7 @@
 </li>
 
 
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../index.html">
     Examples
   </a>
@@ -231,8 +228,10 @@
       
       
       
+        
+      
       <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
 
   
@@ -261,7 +260,7 @@
 </li>
 
 
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../index.html">
     Examples
   </a>
@@ -305,36 +304,6 @@
     
   </div>
   
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-<nav class="bd-docs-nav bd-links"
-     aria-label="Section Navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../pricing/index.html">Pricing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston.html">Pricing with Heston</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston%20copy.html">Pricing with Bates</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Calibration</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="calibration_synthetic_data.html">With syntetic market price</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Impact of parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_real_data.html">Calibration on market data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_heston.html">Calibration of Heston models on market data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_bates.html">Calibration of Bates models on market data</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../hedging/index.html">Hedging</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../hedging/hedging_blackScholes.html">Hedging with Black-Scholes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../hedging/hedging_heston.html">Hedging with Heston</a></li>
-</ul>
-</details></li>
-</ul>
-</div>
-</nav></div>
-    </div>
-  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
       <div class="sidebar-primary-item">
@@ -370,13 +339,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Examples</a></li>
-    
-    
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Calibration</a></li>
-    
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Impact of parameters</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Assets allocation</span></li>
   </ul>
 </nav>
 </div>
@@ -393,134 +356,17 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="Impact-of-parameters">
-<h1>Impact of parameters<a class="headerlink" href="#Impact-of-parameters" title="Link to this heading">#</a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.heston import Heston
-from hestonpy.models.calibration.volatilitySmile import VolatilitySmile, fontdict
-
-import numpy as np
-import pandas as pd
-
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
-</pre></div>
-</div>
-</div>
-<p>What is the impact of each parameters on the calibrated smile ?</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Paramètres initiaux du modèle Heston
-spot = 100            # Prix spot
-vol_initial = 0.02    # Variance initiale
-r = 0.00
-params = {
-    &quot;kappa&quot;: 1.25,
-    &quot;theta&quot;: 0.06,
-    &quot;drift_emm&quot;: 0.00,
-    &quot;sigma&quot;: 0.6,
-    &quot;rho&quot;: -0.8,
-}
-time_to_maturity = 1
-model = Heston(spot, vol_initial, r, **params)
-
-strikes = np.arange(40, 200, 10)
-prices = model.call_price(strike=strikes, time_to_maturity=time_to_maturity)
-
-smile = VolatilitySmile(strikes=strikes, time_to_maturity=1, atm=spot, market_prices=prices)
-smile.plot()
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_calibration_parameters_impacts_and_stability_3_0.png" src="../../_images/examples_calibration_parameters_impacts_and_stability_3_0.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Paramètres de base du modèle Heston
-base_params = {
-    &quot;vol_initial&quot;: 0.02,   # Variance initiale
-    &quot;kappa&quot;: 2.0,          # Vitesse de réversion
-    &quot;theta&quot;: 0.02,         # Variance à long terme
-    &quot;sigma&quot;: 0.5,          # Volatilité de la variance
-    &quot;rho&quot;: -0.5,           # Corrélation
-}
-
-# Définition des paramètres à tester
-params_to_test = {
-    &quot;vol_initial&quot;: [0.01, 0.02, 0.03, 0.05, 0.06],
-    &quot;sigma&quot;: [0.1, 0.3, 0.5, 0.7, 0.8],
-    &quot;kappa&quot;: [1.0, 2.0, 3.0, 4.0, 5.0],
-    &quot;theta&quot;: [0.01, 0.03, 0.05, 0.07, 0.10],
-    &quot;rho&quot;: [-0.5, -0.15, 0, 0.15, 0.5],
-}
-
-# Dictionnaire pour convertir les noms en LaTex
-latex_labels = {
-    &quot;vol_initial&quot;: r&quot;$v_0$&quot;,
-    &quot;sigma&quot;: r&quot;$\sigma$&quot;,
-    &quot;kappa&quot;: r&quot;$\kappa$&quot;,
-    &quot;theta&quot;: r&quot;$\theta$&quot;,
-    &quot;rho&quot;: r&quot;$\rho$&quot;,
-}
-
-strikes = np.arange(40, 200, 5)
-
-
-fig = plt.figure(figsize=(17, 10))
-gs = gridspec.GridSpec(2, 3, figure=fig)
-
-axes = [fig.add_subplot(gs[0, i]) for i in range(3)]  # Première ligne
-axes.append(fig.add_subplot(gs[1, 0]))  # En bas à gauche
-axes.append(fig.add_subplot(gs[1, 1:]))  # Fusion des deux derniers
-
-# Fonction pour tracer les volatility smiles
-def plot_vol_smile(ax, param_name, param_values):
-    ax.axvline(spot, linestyle=&quot;--&quot;, color=&quot;gray&quot;, label=&quot;ATM Strike&quot;)
-
-    for value in param_values:
-        params = base_params.copy()
-        params[param_name] = value
-
-        model = Heston(spot=spot, r=r, drift_emm=0, **params)
-        prices = model.call_price(strike=strikes, time_to_maturity=1)
-        smile = VolatilitySmile(strikes=strikes, atm=spot, market_prices=prices, time_to_maturity=1)
-        implied_vols = smile.compute_smile(prices)
-
-        ax.plot(strikes, implied_vols, label=f&#39;{latex_labels[param_name]} = {value}&#39;, marker=&#39;+&#39;, linestyle=&quot;dotted&quot;, markersize=4)
-
-    ax.set_title(f&quot;Impact of {latex_labels[param_name]} on smile&quot;, fontdict=fontdict)
-    ax.set_xlabel(&quot;Strike&quot;)
-    ax.set_ylabel(&quot;Implied Volatility [%]&quot;, fontdict=fontdict)
-    ax.grid(visible=True, which=&quot;major&quot;, linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5, alpha=0.8)
-    ax.legend()
-
-# Tracer les courbes sur chaque subplot
-for i, (param_name, param_values) in enumerate(params_to_test.items()):
-    plot_vol_smile(axes[i], param_name, param_values)
-
-plt.tight_layout()
-plt.show()
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_calibration_parameters_impacts_and_stability_4_0.png" src="../../_images/examples_calibration_parameters_impacts_and_stability_4_0.png" />
-</div>
+  <section id="assets-allocation">
+<h1>Assets allocation<a class="headerlink" href="#assets-allocation" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="asset_allocation.html">Initialisation of the model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asset_allocation.html#Naive-constant-allocation-strategy">Naive constant allocation strategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asset_allocation.html#Optimal-allocation-strategy">Optimal allocation strategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asset_allocation.html#Run-strategies">Run strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asset_allocation.html#Plot-strategies">Plot strategies</a></li>
+</ul>
 </div>
 </section>
 
@@ -534,24 +380,6 @@ plt.show()
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="calibration_synthetic_data.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">With syntetic market price</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="calibration_real_data.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Calibration on market data</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -567,7 +395,7 @@ plt.show()
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/examples/calibration/parameters_impacts_and_stability.ipynb.txt"
+      <li><a href="../../_sources/examples/asset_allocation/index.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>
