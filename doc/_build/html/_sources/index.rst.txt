@@ -73,7 +73,7 @@ hestonpy: Calibration of stochastic volatility models
 Key features
 ~~~~~~~~~~~~
 
-**It is an user friendly, intuitive and humble python library. Please, contact me if you have any suggestions!**
+**It is an user friendly, intuitive and humble python library. Please, contact me if you have any suggestions! :)**
 
 
 The ``hestonpy`` Python package implements the **Heston** and **Bates** models for option **pricing**, **hedging**, 

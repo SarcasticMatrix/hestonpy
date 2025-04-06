@@ -313,7 +313,8 @@
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../pricing/index.html">Pricing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston.html">Initialisation of the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston.html">Pricing with Heston</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pricing/pricing_heston%20copy.html">Pricing with Bates</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Calibration</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -393,19 +394,16 @@
                 <article class="bd-article">
                   
   <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.heston</span><span class="w"> </span><span class="kn">import</span> <span class="n">Heston</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.calibration.volatilitySmile</span><span class="w"> </span><span class="kn">import</span> <span class="n">VolatilitySmile</span><span class="p">,</span> <span class="n">fontdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.calibration.volatilitySmile</span><span class="w"> </span><span class="kn">import</span> <span class="n">VolatilitySmile</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.option.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_options_data</span><span class="p">,</span> <span class="n">filter_data_for_maturity</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.font_manager</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">font_manager</span>
-<span class="n">font_legend</span> <span class="o">=</span> <span class="n">font_manager</span><span class="o">.</span><span class="n">FontProperties</span><span class="p">(</span>
-    <span class="n">style</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span>
-    <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-<span class="p">)</span>
+
 <span class="n">fontdict_title</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
     <span class="s1">&#39;fontweight&#39;</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span>
@@ -419,7 +417,7 @@
 <h1>Calibration of Heston models on market data<a class="headerlink" href="#Calibration-of-Heston-models-on-market-data" title="Link to this heading">#</a></h1>
 <p>We will calibrate our models on S&amp;P smiles. You can also try with Apple, but there is less liquidity on the market, so less available maturities. Some parameters,</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;^SPX&#39;</span>
@@ -443,7 +441,7 @@
 </div>
 <p>For each maturity/smile we filter the data (based on bid-ask spread, the moneyness etc.), then we calibrate with a local optimiser to initialise our global optimiser.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;constrained&quot;</span><span class="p">)</span>
@@ -485,7 +483,7 @@
     <span class="n">heston</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
     <span class="n">initial_params</span> <span class="o">=</span> <span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">calibration</span><span class="p">(</span>
         <span class="n">price_function</span><span class="o">=</span><span class="n">heston</span><span class="o">.</span><span class="n">call_price</span><span class="p">,</span>
-        <span class="n">guess_correlation_sign</span><span class="o">=</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span>
+        <span class="n">guess_correlation_sign</span><span class="o">=</span><span class="s1">&#39;unknown&#39;</span><span class="p">,</span>
         <span class="n">initial_guess</span><span class="o">=</span><span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;kappa&#39;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]],</span>
         <span class="n">speed</span><span class="o">=</span><span class="s1">&#39;local&#39;</span><span class="p">,</span>
     <span class="p">)</span>
@@ -494,7 +492,7 @@
     <span class="n">calibrated_params</span> <span class="o">=</span> <span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">calibration</span><span class="p">(</span>
         <span class="n">relative_errors</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">price_function</span><span class="o">=</span><span class="n">heston</span><span class="o">.</span><span class="n">call_price</span><span class="p">,</span>
-        <span class="n">guess_correlation_sign</span><span class="o">=</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span>
+        <span class="n">guess_correlation_sign</span><span class="o">=</span><span class="s1">&#39;unknown&#39;</span><span class="p">,</span>
         <span class="n">initial_guess</span><span class="o">=</span><span class="p">[</span><span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;kappa&#39;</span><span class="p">],</span> <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">],</span> <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">],</span> <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]],</span>
         <span class="n">speed</span><span class="o">=</span><span class="s1">&#39;global&#39;</span><span class="p">,</span>
         <span class="n">power</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span>
@@ -534,7 +532,7 @@
         <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span> <span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">market_ivs</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mid&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span> <span class="n">bid_ivs</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;bid&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span> <span class="n">ask_ivs</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ask&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="n">font_legend</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alignment</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span> <span class="n">calibrated_ivs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
@@ -543,12 +541,12 @@
         <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span> <span class="n">bid_ivs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span> <span class="n">ask_ivs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Moneyness [%]&quot;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Implied Volatility [%]&quot;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Moneyness [%]&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Implied Volatility [%]&quot;</span><span class="p">)</span>
 
     <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">maturity</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%B-%y&quot;</span><span class="p">)</span>
     <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">date</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">252</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">5</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> semaines&quot;</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -561,208 +559,232 @@
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ================================================================================
-2025-04-11
+2025-04-15
 ================================================================================
 
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[3], line 38</span>
-<span class="ansi-green-intense-fg ansi-bold">     34</span> <span style="color: rgb(95,135,135)">####################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     35</span> <span style="color: rgb(95,135,135)">### Calibration </span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span> <span style="color: rgb(95,135,135)">####################################</span>
-<span class="ansi-green-intense-fg ansi-bold">     37</span> heston <span style="color: rgb(98,98,98)">=</span> Heston(spot<span style="color: rgb(98,98,98)">=</span>spot, r<span style="color: rgb(98,98,98)">=</span>r, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>params)
-<span class="ansi-green-fg">---&gt; 38</span> initial_params <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">marketVolatilitySmile</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">calibration</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-intense-fg ansi-bold">     39</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">price_function</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">heston</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">call_price</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">guess_correlation_sign</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">negative</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     41</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">initial_guess</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">params</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">kappa</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">params</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">theta</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">params</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">sigma</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">params</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">rho</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     42</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">speed</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">local</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     43</span> <span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     45</span> <span style="color: rgb(95,135,135)"># Absolute calibration</span>
-<span class="ansi-green-intense-fg ansi-bold">     46</span> calibrated_params <span style="color: rgb(98,98,98)">=</span> marketVolatilitySmile<span style="color: rgb(98,98,98)">.</span>calibration(
-<span class="ansi-green-intense-fg ansi-bold">     47</span>     relative_errors<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">False</span>,
-<span class="ansi-green-intense-fg ansi-bold">     48</span>     price_function<span style="color: rgb(98,98,98)">=</span>heston<span style="color: rgb(98,98,98)">.</span>call_price,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">     52</span>     power<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">mse</span><span style="color: rgb(175,0,0)">&#39;</span>
-<span class="ansi-green-intense-fg ansi-bold">     53</span> )
+Calibrated parameters: v0=0.031 | kappa=1.335 | theta=0.088 | sigma=0.395 | rho=1.000
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/calibration/volatilitySmile.py:293</span>, in <span class="ansi-cyan-fg">VolatilitySmile.calibration</span><span class="ansi-blue-fg">(self, price_function, initial_guess, guess_correlation_sign, speed, power, method, weights, relative_errors)</span>
-<span class="ansi-green-intense-fg ansi-bold">    291</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">with</span> warnings<span style="color: rgb(98,98,98)">.</span>catch_warnings():
-<span class="ansi-green-intense-fg ansi-bold">    292</span>         warnings<span style="color: rgb(98,98,98)">.</span>simplefilter(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">ignore</span><span style="color: rgb(175,0,0)">&#34;</span>, category<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(215,95,95)">RuntimeWarning</span>)
-<span class="ansi-green-fg">--&gt; 293</span>         result <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">minimize</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">cost_function</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">initial_guess</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">minimizer_kwargs</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    295</span> <span style="color: rgb(95,135,135)">########################################</span>
-<span class="ansi-green-intense-fg ansi-bold">    296</span> <span style="color: rgb(95,135,135)">#### Global calibration scheme</span>
-<span class="ansi-green-intense-fg ansi-bold">    297</span> <span style="color: rgb(95,135,135)">########################################</span>
-<span class="ansi-green-intense-fg ansi-bold">    298</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> speed <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">global</span><span style="color: rgb(175,0,0)">&#34;</span>:
+at minimum 0.183945 accepted 1
+Parameters: kappa=1.335 | theta=0.088 | sigma=0.395 | rho=1.000
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_minimize.py:738</span>, in <span class="ansi-cyan-fg">minimize</span><span class="ansi-blue-fg">(fun, x0, args, method, jac, hess, hessp, bounds, constraints, tol, callback, options)</span>
-<span class="ansi-green-intense-fg ansi-bold">    735</span>     res <span style="color: rgb(98,98,98)">=</span> _minimize_newtoncg(fun, x0, args, jac, hess, hessp, callback,
-<span class="ansi-green-intense-fg ansi-bold">    736</span>                              <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>options)
-<span class="ansi-green-intense-fg ansi-bold">    737</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> meth <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">l-bfgs-b</span><span style="color: rgb(175,0,0)">&#39;</span>:
-<span class="ansi-green-fg">--&gt; 738</span>     res <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_minimize_lbfgsb</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">fun</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">jac</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">bounds</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    739</span> <span class="ansi-yellow-bg">                           </span><span class="ansi-yellow-bg">callback</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">callback</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">options</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    740</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> meth <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">tnc</span><span style="color: rgb(175,0,0)">&#39;</span>:
-<span class="ansi-green-intense-fg ansi-bold">    741</span>     res <span style="color: rgb(98,98,98)">=</span> _minimize_tnc(fun, x0, args, jac, bounds, callback<span style="color: rgb(98,98,98)">=</span>callback,
-<span class="ansi-green-intense-fg ansi-bold">    742</span>                         <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>options)
+at minimum 0.183928 accepted 1
+Parameters: kappa=1.165 | theta=0.096 | sigma=0.394 | rho=1.000
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_lbfgsb_py.py:441</span>, in <span class="ansi-cyan-fg">_minimize_lbfgsb</span><span class="ansi-blue-fg">(fun, x0, args, jac, bounds, disp, maxcor, ftol, gtol, eps, maxfun, maxiter, iprint, callback, maxls, finite_diff_rel_step, **unknown_options)</span>
-<span class="ansi-green-intense-fg ansi-bold">    433</span> _lbfgsb<span style="color: rgb(98,98,98)">.</span>setulb(m, x, low_bnd, upper_bnd, nbd, f, g, factr, pgtol, wa,
-<span class="ansi-green-intense-fg ansi-bold">    434</span>                iwa, task, lsave, isave, dsave, maxls, ln_task)
-<span class="ansi-green-intense-fg ansi-bold">    436</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> task[<span style="color: rgb(98,98,98)">0</span>] <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(98,98,98)">3</span>:
-<span class="ansi-green-intense-fg ansi-bold">    437</span>     <span style="color: rgb(95,135,135)"># The minimization routine wants f and g at the current x.</span>
-<span class="ansi-green-intense-fg ansi-bold">    438</span>     <span style="color: rgb(95,135,135)"># Note that interruptions due to maxfun are postponed</span>
-<span class="ansi-green-intense-fg ansi-bold">    439</span>     <span style="color: rgb(95,135,135)"># until the completion of the current minimization iteration.</span>
-<span class="ansi-green-intense-fg ansi-bold">    440</span>     <span style="color: rgb(95,135,135)"># Overwrite f and g:</span>
-<span class="ansi-green-fg">--&gt; 441</span>     f, g <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">func_and_grad</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    442</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> task[<span style="color: rgb(98,98,98)">0</span>] <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(98,98,98)">1</span>:
-<span class="ansi-green-intense-fg ansi-bold">    443</span>     <span style="color: rgb(95,135,135)"># new iteration</span>
-<span class="ansi-green-intense-fg ansi-bold">    444</span>     n_iterations <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">1</span>
+at minimum 0.183817 accepted 1
+Parameters: kappa=0.054 | theta=1.405 | sigma=0.391 | rho=1.000
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py:345</span>, in <span class="ansi-cyan-fg">ScalarFunction.fun_and_grad</span><span class="ansi-blue-fg">(self, x)</span>
-<span class="ansi-green-intense-fg ansi-bold">    343</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_update_x(x)
-<span class="ansi-green-intense-fg ansi-bold">    344</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_update_fun()
-<span class="ansi-green-fg">--&gt; 345</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_update_grad</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    346</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>f, <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>g
+at minimum 0.183817 accepted 1
+Parameters: kappa=0.057 | theta=1.337 | sigma=0.391 | rho=1.000
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py:307</span>, in <span class="ansi-cyan-fg">ScalarFunction._update_grad</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">    305</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_orig_grad <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> FD_METHODS:
-<span class="ansi-green-intense-fg ansi-bold">    306</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_update_fun()
-<span class="ansi-green-fg">--&gt; 307</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>g <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_wrapped_grad</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">f0</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    308</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>g_updated <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">True</span>
+at minimum 0.183816 accepted 1
+Parameters: kappa=0.041 | theta=1.825 | sigma=0.390 | rho=1.000
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py:48</span>, in <span class="ansi-cyan-fg">_wrapper_grad.&lt;locals&gt;.wrapped1</span><span class="ansi-blue-fg">(x, f0)</span>
-<span class="ansi-green-intense-fg ansi-bold">     46</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span><span style="color: rgb(188,188,188)"> </span><span style="color: rgb(0,0,255)">wrapped1</span>(x, f0<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>):
-<span class="ansi-green-intense-fg ansi-bold">     47</span>     ncalls[<span style="color: rgb(98,98,98)">0</span>] <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">1</span>
-<span class="ansi-green-fg">---&gt; 48</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">approx_derivative</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-intense-fg ansi-bold">     49</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">fun</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">f0</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">f0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">finite_diff_options</span>
-<span class="ansi-green-intense-fg ansi-bold">     50</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+at minimum 0.183816 accepted 1
+Parameters: kappa=0.046 | theta=1.651 | sigma=0.390 | rho=1.000
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_numdiff.py:523</span>, in <span class="ansi-cyan-fg">approx_derivative</span><span class="ansi-blue-fg">(fun, x0, method, rel_step, abs_step, f0, bounds, sparsity, as_linear_operator, args, kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    520</span>     use_one_sided <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">False</span>
-<span class="ansi-green-intense-fg ansi-bold">    522</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> sparsity <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-<span class="ansi-green-fg">--&gt; 523</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">_dense_difference</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">fun_wrapped</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">f0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">h</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    524</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">use_one_sided</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">method</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    525</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
-<span class="ansi-green-intense-fg ansi-bold">    526</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> issparse(sparsity) <span class="ansi-bold" style="color: rgb(175,0,255)">and</span> <span style="color: rgb(0,135,0)">len</span>(sparsity) <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(98,98,98)">2</span>:
+at minimum 0.183817 accepted 1
+Parameters: kappa=0.050 | theta=1.530 | sigma=0.390 | rho=1.000
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_numdiff.py:596</span>, in <span class="ansi-cyan-fg">_dense_difference</span><span class="ansi-blue-fg">(fun, x0, f0, h, use_one_sided, method)</span>
-<span class="ansi-green-intense-fg ansi-bold">    594</span>     x1[i] <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> h[i]
-<span class="ansi-green-intense-fg ansi-bold">    595</span>     dx <span style="color: rgb(98,98,98)">=</span> x1[i] <span style="color: rgb(98,98,98)">-</span> x0[i]  <span style="color: rgb(95,135,135)"># Recompute dx as exactly representable number.</span>
-<span class="ansi-green-fg">--&gt; 596</span>     df <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">fun</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">x1</span><span class="ansi-yellow-bg">)</span> <span style="color: rgb(98,98,98)">-</span> f0
-<span class="ansi-green-intense-fg ansi-bold">    597</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> method <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">3-point</span><span style="color: rgb(175,0,0)">&#39;</span> <span class="ansi-bold" style="color: rgb(175,0,255)">and</span> use_one_sided[i]:
-<span class="ansi-green-intense-fg ansi-bold">    598</span>     x1[i] <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> h[i]
+at minimum 0.187207 accepted 1
+Parameters: kappa=0.038 | theta=2.146 | sigma=0.429 | rho=0.888
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_numdiff.py:474</span>, in <span class="ansi-cyan-fg">approx_derivative.&lt;locals&gt;.fun_wrapped</span><span class="ansi-blue-fg">(x)</span>
-<span class="ansi-green-intense-fg ansi-bold">    471</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> xp<span style="color: rgb(98,98,98)">.</span>isdtype(x<span style="color: rgb(98,98,98)">.</span>dtype, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">real floating</span><span style="color: rgb(175,0,0)">&#34;</span>):
-<span class="ansi-green-intense-fg ansi-bold">    472</span>     x <span style="color: rgb(98,98,98)">=</span> xp<span style="color: rgb(98,98,98)">.</span>astype(x, x0<span style="color: rgb(98,98,98)">.</span>dtype)
-<span class="ansi-green-fg">--&gt; 474</span> f <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>atleast_1d(<span class="ansi-yellow-bg">fun</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>)
-<span class="ansi-green-intense-fg ansi-bold">    475</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> f<span style="color: rgb(98,98,98)">.</span>ndim <span style="color: rgb(98,98,98)">&gt;</span> <span style="color: rgb(98,98,98)">1</span>:
-<span class="ansi-green-intense-fg ansi-bold">    476</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">RuntimeError</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">`fun` return value has </span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    477</span>                        <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">more than 1 dimension.</span><span style="color: rgb(175,0,0)">&#34;</span>)
+at minimum 0.183816 accepted 1
+Parameters: kappa=0.043 | theta=1.773 | sigma=0.390 | rho=1.000
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py:21</span>, in <span class="ansi-cyan-fg">_wrapper_fun.&lt;locals&gt;.wrapped</span><span class="ansi-blue-fg">(x)</span>
-<span class="ansi-green-intense-fg ansi-bold">     17</span> ncalls[<span style="color: rgb(98,98,98)">0</span>] <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">1</span>
-<span class="ansi-green-intense-fg ansi-bold">     18</span> <span style="color: rgb(95,135,135)"># Send a copy because the user may overwrite it.</span>
-<span class="ansi-green-intense-fg ansi-bold">     19</span> <span style="color: rgb(95,135,135)"># Overwriting results in undefined behaviour because</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span style="color: rgb(95,135,135)"># fun(self.x) will change self.x, with the two no longer linked.</span>
-<span class="ansi-green-fg">---&gt; 21</span> fx <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">fun</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">np</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">copy</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span> <span style="color: rgb(95,135,135)"># Make sure the function returns a true scalar</span>
-<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> np<span style="color: rgb(98,98,98)">.</span>isscalar(fx):
+at minimum 0.183815 accepted 1
+Parameters: kappa=0.037 | theta=2.064 | sigma=0.390 | rho=1.000
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/calibration/volatilitySmile.py:270</span>, in <span class="ansi-cyan-fg">VolatilitySmile.calibration.&lt;locals&gt;.cost_function</span><span class="ansi-blue-fg">(params)</span>
-<span class="ansi-green-intense-fg ansi-bold">    268</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span><span style="color: rgb(188,188,188)"> </span><span style="color: rgb(0,0,255)">cost_function</span>(params):
-<span class="ansi-green-intense-fg ansi-bold">    269</span>     function_params <span style="color: rgb(98,98,98)">=</span> _get_parameters(model_type, params)
-<span class="ansi-green-fg">--&gt; 270</span>     model_prices <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">price_function</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-intense-fg ansi-bold">    271</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">function_params</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    272</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">v</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">vol_initial</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    273</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">strike</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">strikes</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    274</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    275</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">s</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">atm</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    276</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    278</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> difference_function(<span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>market_prices, model_prices)
+at minimum 0.183815 accepted 1
+Parameters: kappa=0.033 | theta=2.282 | sigma=0.390 | rho=1.000
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/heston.py:353</span>, in <span class="ansi-cyan-fg">Heston.call_price</span><span class="ansi-blue-fg">(self, strike, time_to_maturity, s, v, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    331</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span><span style="color: rgb(188,188,188)"> </span><span style="color: rgb(0,0,255)">call_price</span>(
-<span class="ansi-green-intense-fg ansi-bold">    332</span>         <span style="color: rgb(0,135,0)">self</span>,
-<span class="ansi-green-intense-fg ansi-bold">    333</span>         strike: np<span style="color: rgb(98,98,98)">.</span>array,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">    337</span>         <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs
-<span class="ansi-green-intense-fg ansi-bold">    338</span>     ):
-<span class="ansi-green-intense-fg ansi-bold">    339</span> <span style="color: rgb(188,188,188)">    </span><span style="color: rgb(175,0,0)">&#34;&#34;&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    340</span> <span style="color: rgb(175,0,0)">    Price a European call option using the Carr-Madan method.</span>
-<span class="ansi-green-intense-fg ansi-bold">    341</span>
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">    350</span> <span style="color: rgb(175,0,0)">    :rtype: float</span>
-<span class="ansi-green-intense-fg ansi-bold">    351</span> <span style="color: rgb(175,0,0)">    &#34;&#34;&#34;</span>
-<span class="ansi-green-fg">--&gt; 353</span>     price <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">carr_madan_price</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-intense-fg ansi-bold">    354</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">s</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">s</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span>
-<span class="ansi-green-intense-fg ansi-bold">    355</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">v</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">v</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    356</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">strike</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">strike</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span>
-<span class="ansi-green-intense-fg ansi-bold">    357</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    358</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span>
-<span class="ansi-green-intense-fg ansi-bold">    359</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    360</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> price
+[&#39;requested number of basinhopping iterations completed successfully&#39;] True
+Calibrated parameters: v0=0.031 | kappa=0.033 | theta=2.282 | sigma=0.390 | rho=1.000
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/heston.py:514</span>, in <span class="ansi-cyan-fg">Heston.carr_madan_price</span><span class="ansi-blue-fg">(self, strike, time_to_maturity, s, v, error_boolean, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    505</span> price_hat <span style="color: rgb(98,98,98)">=</span> (
-<span class="ansi-green-intense-fg ansi-bold">    506</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>r <span style="color: rgb(98,98,98)">*</span> time_to_maturity)
-<span class="ansi-green-intense-fg ansi-bold">    507</span>     <span style="color: rgb(98,98,98)">/</span> (alpha<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">+</span> alpha <span style="color: rgb(98,98,98)">-</span> u<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">+</span> u <span style="color: rgb(98,98,98)">*</span> (<span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> alpha <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(98,98,98)">1</span>) <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j)
-<span class="ansi-green-intense-fg ansi-bold">    508</span>     <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>characteristic(j<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">2</span>, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs)(x, v, time_to_maturity, u <span style="color: rgb(98,98,98)">-</span> (alpha <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(98,98,98)">1</span>) <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j)
-<span class="ansi-green-intense-fg ansi-bold">    509</span> )
-<span class="ansi-green-intense-fg ansi-bold">    511</span> integrand <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span>u <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log(strike) <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j) <span style="color: rgb(98,98,98)">*</span> price_hat(u)
-<span class="ansi-green-intense-fg ansi-bold">    513</span> price <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>real(
-<span class="ansi-green-fg">--&gt; 514</span>     np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span>alpha <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log(strike)) <span style="color: rgb(98,98,98)">/</span> np<span style="color: rgb(98,98,98)">.</span>pi <span style="color: rgb(98,98,98)">*</span> <span class="ansi-yellow-bg">quad_vec</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">integrand</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">a</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">b</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1000</span><span class="ansi-yellow-bg">)</span>[<span style="color: rgb(98,98,98)">0</span>]
-<span class="ansi-green-intense-fg ansi-bold">    515</span> )
-<span class="ansi-green-intense-fg ansi-bold">    517</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> error_boolean:
-<span class="ansi-green-intense-fg ansi-bold">    518</span>     error <span style="color: rgb(98,98,98)">=</span> (
-<span class="ansi-green-intense-fg ansi-bold">    519</span>         np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span>alpha <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log(strike)) <span style="color: rgb(98,98,98)">/</span> np<span style="color: rgb(98,98,98)">.</span>pi <span style="color: rgb(98,98,98)">*</span> quad_vec(f<span style="color: rgb(98,98,98)">=</span>integrand, a<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>, b<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1000</span>)[<span style="color: rgb(98,98,98)">1</span>]
-<span class="ansi-green-intense-fg ansi-bold">    520</span>     )
+{&#39;MSE&#39;: np.float64(0.184), &#39;RMSE&#39;: np.float64(0.429), &#39;MAE&#39;: np.float64(0.311), &#39;MSE_%&#39;: np.float64(4.567), &#39;RMSE_%&#39;: np.float64(2.137), &#39;MAE_%&#39;: np.float64(13.576)}
+{&#39;MSE&#39;: np.float64(0.498), &#39;RMSE&#39;: np.float64(0.706), &#39;MAE&#39;: np.float64(0.471), &#39;MSE_%&#39;: np.float64(0.089), &#39;RMSE_%&#39;: np.float64(0.299), &#39;MAE_%&#39;: np.float64(2.142)}
+at minimum 0.110745 accepted 1
+Parameters: kappa=1.406 | theta=0.691 | sigma=0.001 | rho=-0.623
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/integrate/_quad_vec.py:412</span>, in <span class="ansi-cyan-fg">quad_vec</span><span class="ansi-blue-fg">(f, a, b, epsabs, epsrel, norm, cache_size, limit, workers, points, quadrature, full_output, args)</span>
-<span class="ansi-green-intense-fg ansi-bold">    409</span>     err_sum <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">-</span>neg_old_err
-<span class="ansi-green-intense-fg ansi-bold">    411</span> <span style="color: rgb(95,135,135)"># Subdivide intervals</span>
-<span class="ansi-green-fg">--&gt; 412</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> parts <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> mapwrapper(_subdivide_interval, to_process):
-<span class="ansi-green-intense-fg ansi-bold">    413</span>     dint, derr, dround_err, subint, dneval <span style="color: rgb(98,98,98)">=</span> parts
-<span class="ansi-green-intense-fg ansi-bold">    414</span>     neval <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> dneval
+at minimum 0.110778 accepted 1
+Parameters: kappa=0.996 | theta=0.947 | sigma=0.001 | rho=-0.425
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/integrate/_quad_vec.py:472</span>, in <span class="ansi-cyan-fg">_subdivide_interval</span><span class="ansi-blue-fg">(args)</span>
-<span class="ansi-green-intense-fg ansi-bold">    470</span> s1, err1, round1 <span style="color: rgb(98,98,98)">=</span> _quadrature(a, c, f, norm_func)
-<span class="ansi-green-intense-fg ansi-bold">    471</span> dneval <span style="color: rgb(98,98,98)">=</span> _quadrature<span style="color: rgb(98,98,98)">.</span>num_eval
-<span class="ansi-green-fg">--&gt; 472</span> s2, err2, round2 <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_quadrature</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">c</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">b</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">norm_func</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    473</span> dneval <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> _quadrature<span style="color: rgb(98,98,98)">.</span>num_eval
-<span class="ansi-green-intense-fg ansi-bold">    474</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> old_int <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
+at minimum 0.014858 accepted 1
+Parameters: kappa=10.000 | theta=0.386 | sigma=5.081 | rho=-0.673
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/integrate/_quad_vec.py:626</span>, in <span class="ansi-cyan-fg">_quadrature_gk21</span><span class="ansi-blue-fg">(a, b, f, norm_func)</span>
-<span class="ansi-green-intense-fg ansi-bold">    603</span> <span style="color: rgb(95,135,135)"># 21-point weights</span>
-<span class="ansi-green-intense-fg ansi-bold">    604</span> v <span style="color: rgb(98,98,98)">=</span> (<span style="color: rgb(98,98,98)">0.011694638867371874278064396062192</span>,
-<span class="ansi-green-intense-fg ansi-bold">    605</span>      <span style="color: rgb(98,98,98)">0.032558162307964727478818972459390</span>,
-<span class="ansi-green-intense-fg ansi-bold">    606</span>      <span style="color: rgb(98,98,98)">0.054755896574351996031381300244580</span>,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">    623</span>      <span style="color: rgb(98,98,98)">0.032558162307964727478818972459390</span>,
-<span class="ansi-green-intense-fg ansi-bold">    624</span>      <span style="color: rgb(98,98,98)">0.011694638867371874278064396062192</span>)
-<span class="ansi-green-fg">--&gt; 626</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">_quadrature_gk</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">a</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">b</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">norm_func</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">w</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">v</span><span class="ansi-yellow-bg">)</span>
+at minimum 0.014883 accepted 1
+Parameters: kappa=9.524 | theta=0.405 | sigma=5.085 | rho=-0.675
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/integrate/_quad_vec.py:535</span>, in <span class="ansi-cyan-fg">_quadrature_gk</span><span class="ansi-blue-fg">(a, b, f, norm_func, x, w, v)</span>
-<span class="ansi-green-intense-fg ansi-bold">    533</span>     s_k <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> vv <span style="color: rgb(98,98,98)">*</span> ff
-<span class="ansi-green-intense-fg ansi-bold">    534</span>     <span style="color: rgb(95,135,135)"># \int |f(x)|</span>
-<span class="ansi-green-fg">--&gt; 535</span>     s_k_abs <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> vv <span style="color: rgb(98,98,98)">*</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">abs</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">ff</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    537</span> <span style="color: rgb(95,135,135)"># Gauss</span>
-<span class="ansi-green-intense-fg ansi-bold">    538</span> s_g <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">0.0</span>
+at minimum 0.014868 accepted 1
+Parameters: kappa=9.996 | theta=0.370 | sigma=4.912 | rho=-0.662
 
-<span class="ansi-red-fg">KeyboardInterrupt</span>:
+at minimum 0.994388 accepted 1
+Parameters: kappa=8.634 | theta=0.004 | sigma=5.284 | rho=-0.999
+
+at minimum 0.014904 accepted 1
+Parameters: kappa=9.247 | theta=0.429 | sigma=5.204 | rho=-0.684
+
+at minimum 0.014966 accepted 1
+Parameters: kappa=8.493 | theta=0.479 | sigma=5.323 | rho=-0.694
+
+[&#39;success condition satisfied&#39;] True
+Calibrated parameters: v0=0.031 | kappa=10.000 | theta=0.386 | sigma=5.081 | rho=-0.673
+
+{&#39;MSE&#39;: np.float64(5.378), &#39;RMSE&#39;: np.float64(2.319), &#39;MAE&#39;: np.float64(0.761), &#39;MSE_%&#39;: np.float64(1.486), &#39;RMSE_%&#39;: np.float64(1.219), &#39;MAE_%&#39;: np.float64(9.319)}
+{&#39;MSE&#39;: np.float64(0.561), &#39;RMSE&#39;: np.float64(0.749), &#39;MAE&#39;: np.float64(0.437), &#39;MSE_%&#39;: np.float64(0.165), &#39;RMSE_%&#39;: np.float64(0.406), &#39;MAE_%&#39;: np.float64(2.196)}
+================================================================================
+2025-04-25
+================================================================================
+
+Calibrated parameters: v0=0.030 | kappa=0.926 | theta=0.001 | sigma=0.152 | rho=1.000
+
+at minimum 3.690574 accepted 1
+Parameters: kappa=0.926 | theta=0.001 | sigma=0.152 | rho=1.000
+
+at minimum 3.690574 accepted 1
+Parameters: kappa=0.926 | theta=0.001 | sigma=0.152 | rho=1.000
+
+at minimum 3.690574 accepted 1
+Parameters: kappa=0.926 | theta=0.001 | sigma=0.152 | rho=1.000
+
+at minimum 3.690574 accepted 1
+Parameters: kappa=0.926 | theta=0.001 | sigma=0.152 | rho=1.000
+
+at minimum 3.690747 accepted 1
+Parameters: kappa=1.015 | theta=0.003 | sigma=0.152 | rho=1.000
+
+at minimum 3.690574 accepted 1
+Parameters: kappa=0.926 | theta=0.001 | sigma=0.152 | rho=1.000
+
+[&#39;success condition satisfied&#39;] True
+Calibrated parameters: v0=0.030 | kappa=0.926 | theta=0.001 | sigma=0.152 | rho=1.000
+
+{&#39;MSE&#39;: np.float64(3.691), &#39;RMSE&#39;: np.float64(1.921), &#39;MAE&#39;: np.float64(1.276), &#39;MSE_%&#39;: np.float64(3.77), &#39;RMSE_%&#39;: np.float64(1.942), &#39;MAE_%&#39;: np.float64(14.201)}
+{&#39;MSE&#39;: np.float64(0.521), &#39;RMSE&#39;: np.float64(0.721), &#39;MAE&#39;: np.float64(0.582), &#39;MSE_%&#39;: np.float64(0.196), &#39;RMSE_%&#39;: np.float64(0.443), &#39;MAE_%&#39;: np.float64(3.37)}
+at minimum 0.010113 accepted 1
+Parameters: kappa=0.934 | theta=0.108 | sigma=0.001 | rho=-0.954
+
+at minimum 0.010105 accepted 1
+Parameters: kappa=1.942 | theta=0.069 | sigma=0.001 | rho=-0.992
+
+at minimum 0.010096 accepted 1
+Parameters: kappa=2.146 | theta=0.066 | sigma=0.001 | rho=-0.886
+
+at minimum 0.010104 accepted 1
+Parameters: kappa=2.466 | theta=0.061 | sigma=0.001 | rho=-1.000
+
+at minimum 0.003794 accepted 1
+Parameters: kappa=10.000 | theta=0.057 | sigma=1.016 | rho=-0.351
+
+at minimum 0.003951 accepted 1
+Parameters: kappa=1.194 | theta=0.218 | sigma=0.822 | rho=-0.352
+
+at minimum 0.003967 accepted 1
+Parameters: kappa=0.400 | theta=0.580 | sigma=0.804 | rho=-0.351
+
+at minimum 0.003969 accepted 1
+Parameters: kappa=0.283 | theta=0.803 | sigma=0.801 | rho=-0.351
+
+at minimum 0.003794 accepted 1
+Parameters: kappa=10.000 | theta=0.057 | sigma=1.016 | rho=-0.351
+
+at minimum 0.003795 accepted 1
+Parameters: kappa=9.980 | theta=0.057 | sigma=1.016 | rho=-0.351
+
+[&#39;requested number of basinhopping iterations completed successfully&#39;] True
+Calibrated parameters: v0=0.030 | kappa=10.000 | theta=0.057 | sigma=1.016 | rho=-0.351
+
+{&#39;MSE&#39;: np.float64(17.683), &#39;RMSE&#39;: np.float64(4.205), &#39;MAE&#39;: np.float64(1.635), &#39;MSE_%&#39;: np.float64(0.379), &#39;RMSE_%&#39;: np.float64(0.616), &#39;MAE_%&#39;: np.float64(4.876)}
+{&#39;MSE&#39;: np.float64(0.951), &#39;RMSE&#39;: np.float64(0.975), &#39;MAE&#39;: np.float64(0.426), &#39;MSE_%&#39;: np.float64(0.455), &#39;RMSE_%&#39;: np.float64(0.674), &#39;MAE_%&#39;: np.float64(2.625)}
+================================================================================
+2025-07-18
+================================================================================
+
+Calibrated parameters: v0=0.037 | kappa=0.004 | theta=3.000 | sigma=0.318 | rho=-0.730
+
+at minimum 0.975403 accepted 1
+Parameters: kappa=0.004 | theta=3.000 | sigma=0.318 | rho=-0.730
+
+at minimum 0.975403 accepted 1
+Parameters: kappa=0.004 | theta=2.998 | sigma=0.318 | rho=-0.730
+
+at minimum 0.975413 accepted 1
+Parameters: kappa=0.004 | theta=2.927 | sigma=0.318 | rho=-0.730
+
+at minimum 0.975429 accepted 1
+Parameters: kappa=0.005 | theta=2.816 | sigma=0.318 | rho=-0.730
+
+at minimum 0.975403 accepted 1
+Parameters: kappa=0.004 | theta=2.999 | sigma=0.318 | rho=-0.730
+
+at minimum 0.975403 accepted 1
+Parameters: kappa=0.004 | theta=3.000 | sigma=0.318 | rho=-0.730
+
+[&#39;success condition satisfied&#39;] True
+Calibrated parameters: v0=0.037 | kappa=0.004 | theta=3.000 | sigma=0.318 | rho=-0.730
+
+{&#39;MSE&#39;: np.float64(0.975), &#39;RMSE&#39;: np.float64(0.988), &#39;MAE&#39;: np.float64(0.82), &#39;MSE_%&#39;: np.float64(2.335), &#39;RMSE_%&#39;: np.float64(1.528), &#39;MAE_%&#39;: np.float64(7.485)}
+{&#39;MSE&#39;: np.float64(0.125), &#39;RMSE&#39;: np.float64(0.354), &#39;MAE&#39;: np.float64(0.223), &#39;MSE_%&#39;: np.float64(0.051), &#39;RMSE_%&#39;: np.float64(0.225), &#39;MAE_%&#39;: np.float64(1.388)}
+at minimum 0.001370 accepted 1
+Parameters: kappa=0.022 | theta=3.000 | sigma=0.582 | rho=-0.722
+
+at minimum 0.001370 accepted 1
+Parameters: kappa=0.024 | theta=2.808 | sigma=0.582 | rho=-0.722
+
+at minimum 0.001370 accepted 1
+Parameters: kappa=0.022 | theta=2.999 | sigma=0.582 | rho=-0.722
+
+[&#39;success condition satisfied&#39;] True
+Calibrated parameters: v0=0.037 | kappa=0.024 | theta=2.808 | sigma=0.582 | rho=-0.722
+
+{&#39;MSE&#39;: np.float64(20.174), &#39;RMSE&#39;: np.float64(4.492), &#39;MAE&#39;: np.float64(2.16), &#39;MSE_%&#39;: np.float64(0.137), &#39;RMSE_%&#39;: np.float64(0.37), &#39;MAE_%&#39;: np.float64(2.729)}
+{&#39;MSE&#39;: np.float64(0.167), &#39;RMSE&#39;: np.float64(0.408), &#39;MAE&#39;: np.float64(0.227), &#39;MSE_%&#39;: np.float64(0.044), &#39;RMSE_%&#39;: np.float64(0.211), &#39;MAE_%&#39;: np.float64(1.245)}
+================================================================================
+2026-01-16
+================================================================================
+
+Calibrated parameters: v0=0.040 | kappa=0.340 | theta=0.318 | sigma=0.655 | rho=-1.000
+
+at minimum 6049.358096 accepted 1
+Parameters: kappa=0.340 | theta=0.318 | sigma=0.655 | rho=-1.000
+
+at minimum 6049.331692 accepted 1
+Parameters: kappa=0.344 | theta=0.314 | sigma=0.654 | rho=-1.000
+
+[&#39;success condition satisfied&#39;] True
+Calibrated parameters: v0=0.040 | kappa=0.344 | theta=0.314 | sigma=0.654 | rho=-1.000
+
+{&#39;MSE&#39;: np.float64(6049.332), &#39;RMSE&#39;: np.float64(77.777), &#39;MAE&#39;: np.float64(31.917), &#39;MSE_%&#39;: np.float64(124.849), &#39;RMSE_%&#39;: np.float64(11.174), &#39;MAE_%&#39;: np.float64(53.89)}
+{&#39;MSE&#39;: np.float64(1143.565), &#39;RMSE&#39;: np.float64(33.817), &#39;MAE&#39;: np.float64(14.747), &#39;MSE_%&#39;: np.float64(594.588), &#39;RMSE_%&#39;: np.float64(24.384), &#39;MAE_%&#39;: np.float64(101.997)}
+at minimum 0.008761 accepted 1
+Parameters: kappa=0.138 | theta=0.396 | sigma=0.518 | rho=-0.846
+
+at minimum 0.008756 accepted 1
+Parameters: kappa=0.156 | theta=0.362 | sigma=0.526 | rho=-0.846
+
+at minimum 0.008777 accepted 1
+Parameters: kappa=0.081 | theta=0.630 | sigma=0.503 | rho=-0.847
+
+at minimum 0.008782 accepted 1
+Parameters: kappa=0.062 | theta=0.800 | sigma=0.497 | rho=-0.847
+
+at minimum 0.008633 accepted 1
+Parameters: kappa=1.737 | theta=0.100 | sigma=1.039 | rho=-0.829
+
+at minimum 0.008635 accepted 1
+Parameters: kappa=1.477 | theta=0.104 | sigma=0.948 | rho=-0.831
+
+[&#39;requested number of basinhopping iterations completed successfully&#39;] True
+Calibrated parameters: v0=0.040 | kappa=1.737 | theta=0.100 | sigma=1.039 | rho=-0.829
+
+{&#39;MSE&#39;: np.float64(6572.069), &#39;RMSE&#39;: np.float64(81.068), &#39;MAE&#39;: np.float64(18.632), &#39;MSE_%&#39;: np.float64(0.863), &#39;RMSE_%&#39;: np.float64(0.929), &#39;MAE_%&#39;: np.float64(4.461)}
+{&#39;MSE&#39;: np.float64(18.403), &#39;RMSE&#39;: np.float64(4.29), &#39;MAE&#39;: np.float64(1.019), &#39;MSE_%&#39;: np.float64(0.903), &#39;RMSE_%&#39;: np.float64(0.95), &#39;MAE_%&#39;: np.float64(3.123)}
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_calibration_calibration_heston_5_2.png" src="../../_images/examples_calibration_calibration_heston_5_2.png" />
+<img alt="../../_images/examples_calibration_calibration_heston_5_1.png" src="../../_images/examples_calibration_calibration_heston_5_1.png" />
 </div>
 </div>
 </section>
