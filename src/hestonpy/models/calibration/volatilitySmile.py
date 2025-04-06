@@ -459,5 +459,4 @@ class VolatilitySmile:
             alpha=0.8,
         )
         plt.legend()
-        plt.savefig("smile.png")
         plt.show()
