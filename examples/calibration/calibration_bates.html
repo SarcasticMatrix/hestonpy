@@ -394,19 +394,15 @@
                 <article class="bd-article">
                   
   <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.bates import Bates
-from hestonpy.models.calibration.volatilitySmile import VolatilitySmile, fontdict
+from hestonpy.models.calibration.volatilitySmile import VolatilitySmile
 from hestonpy.option.data import get_options_data, filter_data_for_maturity
 
 import matplotlib.pyplot as plt
-import matplotlib.font_manager as font_manager
-font_legend = font_manager.FontProperties(
-    style=&#39;normal&#39;,
-    size=10,
-)
+
 fontdict_title = {
     &#39;fontsize&#39;: 20,
     &#39;fontweight&#39;: &#39;bold&#39;
@@ -420,7 +416,7 @@ import numpy as np
 <h1>Calibration of Bates models on market data<a class="headerlink" href="#Calibration-of-Bates-models-on-market-data" title="Link to this heading">#</a></h1>
 <p>We will calibrate our models on S&amp;P smiles. You can also try with Apple, but there is less liquidity on the market, so less available maturities. Some parameters,</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>symbol = &#39;^SPX&#39;
@@ -447,7 +443,7 @@ params = {
 </div>
 <p>For each maturity/smile we filter the data (based on bid-ask spread, the moneyness etc.), then we calibrate with a local optimiser to initialise our global optimiser.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, axs = plt.subplots(2, 2, layout=&quot;constrained&quot;)
@@ -519,7 +515,7 @@ for maturity, ax in zip(considered_maturities, axs.flatten()):
         ax.scatter(marketVolatilitySmile.strikes / forward, marketVolatilitySmile.market_ivs, label=&quot;mid&quot;, marker=&#39;o&#39;, color=&#39;red&#39;, s=20)
         ax.scatter(marketVolatilitySmile.strikes / forward, bid_ivs, label=&quot;bid&quot;, marker=6, color=&#39;black&#39;, s=20)
         ax.scatter(marketVolatilitySmile.strikes / forward, ask_ivs, label=&quot;ask&quot;, marker=7, color=&#39;gray&#39;, s=20)
-        ax.legend(loc=&#39;upper right&#39;, prop=font_legend, ncol=2, alignment=&#39;left&#39;)
+        ax.legend(loc=&#39;upper right&#39;, ncol=2, alignment=&#39;left&#39;)
     else:
         ax.axvline(1, linestyle=&quot;--&quot;, color=&quot;gray&quot;)
         ax.plot(marketVolatilitySmile.strikes / forward, calibrated_ivs, marker=&#39;+&#39;, color=&#39;blue&#39;, linestyle=&quot;dotted&quot;, markersize=4)
@@ -527,12 +523,12 @@ for maturity, ax in zip(considered_maturities, axs.flatten()):
         ax.scatter(marketVolatilitySmile.strikes / forward, bid_ivs, marker=6, color=&#39;black&#39;, s=20)
         ax.scatter(marketVolatilitySmile.strikes / forward, ask_ivs, marker=7, color=&#39;gray&#39;, s=20)
 
-    ax.set_xlabel(&quot;Moneyness [%]&quot;, fontdict=fontdict)
-    ax.set_ylabel(&quot;Implied Volatility [%]&quot;, fontdict=fontdict)
+    ax.set_xlabel(&quot;Moneyness [%]&quot;)
+    ax.set_ylabel(&quot;Implied Volatility [%]&quot;)
 
     date = datetime.strptime(maturity, &#39;%Y-%m-%d&#39;).date().strftime(&quot;%d-%B-%y&quot;)
     title = f&quot;{date}: {marketVolatilitySmile.time_to_maturity * 252 / 5:.1f} semaines&quot;
-    ax.set_title(title, fontdict=fontdict)
+    ax.set_title(title)
     ax.grid(visible=True, which=&quot;major&quot;, linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5, alpha=0.8)
 
 plt.show()
@@ -545,7 +541,83 @@ plt.show()
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 ================================================================================
-2025-04-11
+2025-04-15
+================================================================================
+
+Calibrated parameters:
+ v0=0.223 | kappa=10.000 | theta=0.337 | sigma=4.583 | rho=-0.784  | lambda_jump=0.010  | mu_J=-0.042  | sigma_J=0.050
+
+at minimum 0.182654 accepted 1
+Parameters: kappa=10.000 | theta=0.337 | sigma=4.583 | rho=-0.784  | lambda_jump=0.010  | mu_J=-0.042  | sigma_J=0.050
+
+at minimum 0.146750 accepted 1
+Parameters: kappa=10.000 | theta=0.001 | sigma=3.544 | rho=-0.738  | lambda_jump=0.367  | mu_J=-0.500  | sigma_J=0.050
+
+at minimum 0.150792 accepted 1
+Parameters: kappa=10.000 | theta=0.002 | sigma=3.536 | rho=-0.739  | lambda_jump=0.434  | mu_J=-0.421  | sigma_J=0.155
+
+at minimum 0.146750 accepted 1
+Parameters: kappa=10.000 | theta=0.001 | sigma=3.544 | rho=-0.738  | lambda_jump=0.367  | mu_J=-0.500  | sigma_J=0.050
+
+at minimum 0.151485 accepted 1
+Parameters: kappa=10.000 | theta=0.008 | sigma=3.621 | rho=-0.735  | lambda_jump=0.371  | mu_J=-0.500  | sigma_J=0.058
+
+at minimum 0.146750 accepted 1
+Parameters: kappa=10.000 | theta=0.001 | sigma=3.544 | rho=-0.738  | lambda_jump=0.367  | mu_J=-0.500  | sigma_J=0.050
+
+at minimum 0.146750 accepted 1
+Parameters: kappa=10.000 | theta=0.001 | sigma=3.544 | rho=-0.738  | lambda_jump=0.367  | mu_J=-0.500  | sigma_J=0.050
+
+at minimum 0.146750 accepted 1
+Parameters: kappa=10.000 | theta=0.001 | sigma=3.544 | rho=-0.738  | lambda_jump=0.367  | mu_J=-0.500  | sigma_J=0.050
+
+at minimum 0.211669 accepted 1
+Parameters: kappa=0.001 | theta=2.360 | sigma=3.705 | rho=-0.776  | lambda_jump=0.086  | mu_J=-0.500  | sigma_J=0.050
+
+at minimum 0.211667 accepted 1
+Parameters: kappa=0.001 | theta=2.179 | sigma=3.705 | rho=-0.776  | lambda_jump=0.086  | mu_J=-0.500  | sigma_J=0.050
+
+at minimum 0.211671 accepted 1
+Parameters: kappa=0.001 | theta=2.483 | sigma=3.705 | rho=-0.776  | lambda_jump=0.086  | mu_J=-0.500  | sigma_J=0.050
+
+[&#39;requested number of basinhopping iterations completed successfully&#39;] True
+Calibrated parameters:
+ v0=0.223 | kappa=10.000 | theta=0.001 | sigma=3.544 | rho=-0.738  | lambda_jump=0.367  | mu_J=-0.500  | sigma_J=0.050
+
+================================================================================
+2025-04-25
+================================================================================
+
+Calibrated parameters:
+ v0=0.132 | kappa=3.190 | theta=0.001 | sigma=1.861 | rho=-0.757  | lambda_jump=0.453  | mu_J=-0.493  | sigma_J=0.050
+
+at minimum 0.227626 accepted 1
+Parameters: kappa=10.000 | theta=0.001 | sigma=1.817 | rho=-0.704  | lambda_jump=1.068  | mu_J=-0.304  | sigma_J=0.050
+
+at minimum 0.227626 accepted 1
+Parameters: kappa=10.000 | theta=0.001 | sigma=1.817 | rho=-0.704  | lambda_jump=1.068  | mu_J=-0.304  | sigma_J=0.050
+
+at minimum 0.228971 accepted 1
+Parameters: kappa=9.239 | theta=0.001 | sigma=1.814 | rho=-0.710  | lambda_jump=0.975  | mu_J=-0.320  | sigma_J=0.050
+
+at minimum 0.228551 accepted 1
+Parameters: kappa=9.537 | theta=0.002 | sigma=1.822 | rho=-0.708  | lambda_jump=1.004  | mu_J=-0.315  | sigma_J=0.050
+
+at minimum 0.227986 accepted 1
+Parameters: kappa=9.799 | theta=0.001 | sigma=1.815 | rho=-0.705  | lambda_jump=1.039  | mu_J=-0.309  | sigma_J=0.054
+
+at minimum 0.227626 accepted 1
+Parameters: kappa=10.000 | theta=0.001 | sigma=1.817 | rho=-0.704  | lambda_jump=1.068  | mu_J=-0.304  | sigma_J=0.050
+
+at minimum 0.227626 accepted 1
+Parameters: kappa=10.000 | theta=0.001 | sigma=1.816 | rho=-0.704  | lambda_jump=1.067  | mu_J=-0.304  | sigma_J=0.050
+
+[&#39;success condition satisfied&#39;] True
+Calibrated parameters:
+ v0=0.132 | kappa=10.000 | theta=0.001 | sigma=1.817 | rho=-0.704  | lambda_jump=1.068  | mu_J=-0.304  | sigma_J=0.050
+
+================================================================================
+2025-07-18
 ================================================================================
 
 </pre></div></div>
@@ -553,259 +625,89 @@ plt.show()
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/theo/Documents/packages/hestonpy/src/hestonpy/models/blackScholes.py:140: RuntimeWarning: divide by zero encountered in divide
+  d1 = (np.log(spot / strike) + (r + 0.5 * volatility**2) * time_to_maturity) / (
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[3], line 39</span>
-<span class="ansi-green-intense-fg ansi-bold">     37</span> bates <span style="color: rgb(98,98,98)">=</span> Bates(spot<span style="color: rgb(98,98,98)">=</span>spot, r<span style="color: rgb(98,98,98)">=</span>r, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>params)
-<span class="ansi-green-intense-fg ansi-bold">     38</span> initial_guess <span style="color: rgb(98,98,98)">=</span> [params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">kappa</span><span style="color: rgb(175,0,0)">&#39;</span>], params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">theta</span><span style="color: rgb(175,0,0)">&#39;</span>], params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">sigma</span><span style="color: rgb(175,0,0)">&#39;</span>], params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">rho</span><span style="color: rgb(175,0,0)">&#39;</span>], params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">lambda_jump</span><span style="color: rgb(175,0,0)">&#39;</span>], params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">mu_J</span><span style="color: rgb(175,0,0)">&#39;</span>], params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">sigma_J</span><span style="color: rgb(175,0,0)">&#39;</span>]]
-<span class="ansi-green-fg">---&gt; 39</span> initial_params <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">marketVolatilitySmile</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">calibration</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">price_function</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">bates</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">call_price</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     41</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">initial_guess</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">initial_guess</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     42</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">guess_correlation_sign</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">negative</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     43</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">speed</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">local</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     44</span> <span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     46</span> initial_guess <span style="color: rgb(98,98,98)">=</span> [initial_params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">kappa</span><span style="color: rgb(175,0,0)">&#39;</span>], initial_params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">theta</span><span style="color: rgb(175,0,0)">&#39;</span>], initial_params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">sigma</span><span style="color: rgb(175,0,0)">&#39;</span>], initial_params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">rho</span><span style="color: rgb(175,0,0)">&#39;</span>],
-<span class="ansi-green-intense-fg ansi-bold">     47</span>                 initial_params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">lambda_jump</span><span style="color: rgb(175,0,0)">&#39;</span>], initial_params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">mu_J</span><span style="color: rgb(175,0,0)">&#39;</span>], initial_params[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">sigma_J</span><span style="color: rgb(175,0,0)">&#39;</span>]]
-<span class="ansi-green-intense-fg ansi-bold">     48</span> calibrated_params <span style="color: rgb(98,98,98)">=</span> marketVolatilitySmile<span style="color: rgb(98,98,98)">.</span>calibration(
-<span class="ansi-green-intense-fg ansi-bold">     49</span>     price_function<span style="color: rgb(98,98,98)">=</span>bates<span style="color: rgb(98,98,98)">.</span>call_price,
-<span class="ansi-green-intense-fg ansi-bold">     50</span>     guess_correlation_sign<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">negative</span><span style="color: rgb(175,0,0)">&#39;</span>,
-<span class="ansi-green-intense-fg ansi-bold">     51</span>     initial_guess<span style="color: rgb(98,98,98)">=</span>initial_guess,
-<span class="ansi-green-intense-fg ansi-bold">     52</span>     speed<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">global</span><span style="color: rgb(175,0,0)">&#39;</span>,
-<span class="ansi-green-intense-fg ansi-bold">     53</span> )
+Calibrated parameters:
+ v0=0.084 | kappa=1.733 | theta=0.382 | sigma=2.877 | rho=-0.866  | lambda_jump=1.918  | mu_J=-0.061  | sigma_J=0.050
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/calibration/volatilitySmile.py:293</span>, in <span class="ansi-cyan-fg">VolatilitySmile.calibration</span><span class="ansi-blue-fg">(self, price_function, initial_guess, guess_correlation_sign, speed, power, method, weights, relative_errors)</span>
-<span class="ansi-green-intense-fg ansi-bold">    291</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">with</span> warnings<span style="color: rgb(98,98,98)">.</span>catch_warnings():
-<span class="ansi-green-intense-fg ansi-bold">    292</span>         warnings<span style="color: rgb(98,98,98)">.</span>simplefilter(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">ignore</span><span style="color: rgb(175,0,0)">&#34;</span>, category<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(215,95,95)">RuntimeWarning</span>)
-<span class="ansi-green-fg">--&gt; 293</span>         result <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">minimize</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">cost_function</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">initial_guess</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">minimizer_kwargs</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    295</span> <span style="color: rgb(95,135,135)">########################################</span>
-<span class="ansi-green-intense-fg ansi-bold">    296</span> <span style="color: rgb(95,135,135)">#### Global calibration scheme</span>
-<span class="ansi-green-intense-fg ansi-bold">    297</span> <span style="color: rgb(95,135,135)">########################################</span>
-<span class="ansi-green-intense-fg ansi-bold">    298</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> speed <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">global</span><span style="color: rgb(175,0,0)">&#34;</span>:
+at minimum 0.677344 accepted 1
+Parameters: kappa=2.503 | theta=0.341 | sigma=3.738 | rho=-0.896  | lambda_jump=4.045  | mu_J=-0.039  | sigma_J=0.050
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_minimize.py:738</span>, in <span class="ansi-cyan-fg">minimize</span><span class="ansi-blue-fg">(fun, x0, args, method, jac, hess, hessp, bounds, constraints, tol, callback, options)</span>
-<span class="ansi-green-intense-fg ansi-bold">    735</span>     res <span style="color: rgb(98,98,98)">=</span> _minimize_newtoncg(fun, x0, args, jac, hess, hessp, callback,
-<span class="ansi-green-intense-fg ansi-bold">    736</span>                              <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>options)
-<span class="ansi-green-intense-fg ansi-bold">    737</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> meth <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">l-bfgs-b</span><span style="color: rgb(175,0,0)">&#39;</span>:
-<span class="ansi-green-fg">--&gt; 738</span>     res <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_minimize_lbfgsb</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">fun</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">jac</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">bounds</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    739</span> <span class="ansi-yellow-bg">                           </span><span class="ansi-yellow-bg">callback</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">callback</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">options</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    740</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> meth <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">tnc</span><span style="color: rgb(175,0,0)">&#39;</span>:
-<span class="ansi-green-intense-fg ansi-bold">    741</span>     res <span style="color: rgb(98,98,98)">=</span> _minimize_tnc(fun, x0, args, jac, bounds, callback<span style="color: rgb(98,98,98)">=</span>callback,
-<span class="ansi-green-intense-fg ansi-bold">    742</span>                         <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>options)
+at minimum 0.620353 accepted 1
+Parameters: kappa=1.891 | theta=0.427 | sigma=3.897 | rho=-0.914  | lambda_jump=5.059  | mu_J=-0.037  | sigma_J=0.050
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_lbfgsb_py.py:441</span>, in <span class="ansi-cyan-fg">_minimize_lbfgsb</span><span class="ansi-blue-fg">(fun, x0, args, jac, bounds, disp, maxcor, ftol, gtol, eps, maxfun, maxiter, iprint, callback, maxls, finite_diff_rel_step, **unknown_options)</span>
-<span class="ansi-green-intense-fg ansi-bold">    433</span> _lbfgsb<span style="color: rgb(98,98,98)">.</span>setulb(m, x, low_bnd, upper_bnd, nbd, f, g, factr, pgtol, wa,
-<span class="ansi-green-intense-fg ansi-bold">    434</span>                iwa, task, lsave, isave, dsave, maxls, ln_task)
-<span class="ansi-green-intense-fg ansi-bold">    436</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> task[<span style="color: rgb(98,98,98)">0</span>] <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(98,98,98)">3</span>:
-<span class="ansi-green-intense-fg ansi-bold">    437</span>     <span style="color: rgb(95,135,135)"># The minimization routine wants f and g at the current x.</span>
-<span class="ansi-green-intense-fg ansi-bold">    438</span>     <span style="color: rgb(95,135,135)"># Note that interruptions due to maxfun are postponed</span>
-<span class="ansi-green-intense-fg ansi-bold">    439</span>     <span style="color: rgb(95,135,135)"># until the completion of the current minimization iteration.</span>
-<span class="ansi-green-intense-fg ansi-bold">    440</span>     <span style="color: rgb(95,135,135)"># Overwrite f and g:</span>
-<span class="ansi-green-fg">--&gt; 441</span>     f, g <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">func_and_grad</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    442</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> task[<span style="color: rgb(98,98,98)">0</span>] <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(98,98,98)">1</span>:
-<span class="ansi-green-intense-fg ansi-bold">    443</span>     <span style="color: rgb(95,135,135)"># new iteration</span>
-<span class="ansi-green-intense-fg ansi-bold">    444</span>     n_iterations <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">1</span>
+at minimum 0.737909 accepted 1
+Parameters: kappa=2.485 | theta=0.330 | sigma=3.583 | rho=-0.923  | lambda_jump=6.253  | mu_J=-0.001  | sigma_J=0.050
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py:345</span>, in <span class="ansi-cyan-fg">ScalarFunction.fun_and_grad</span><span class="ansi-blue-fg">(self, x)</span>
-<span class="ansi-green-intense-fg ansi-bold">    343</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_update_x(x)
-<span class="ansi-green-intense-fg ansi-bold">    344</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_update_fun()
-<span class="ansi-green-fg">--&gt; 345</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_update_grad</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    346</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>f, <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>g
+at minimum 1.516186 accepted 1
+Parameters: kappa=1.980 | theta=0.388 | sigma=3.353 | rho=-0.929  | lambda_jump=5.722  | mu_J=-0.017  | sigma_J=0.050
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py:307</span>, in <span class="ansi-cyan-fg">ScalarFunction._update_grad</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">    305</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_orig_grad <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> FD_METHODS:
-<span class="ansi-green-intense-fg ansi-bold">    306</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_update_fun()
-<span class="ansi-green-fg">--&gt; 307</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>g <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_wrapped_grad</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">f0</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    308</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>g_updated <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">True</span>
+[&#39;success condition satisfied&#39;] True
+Calibrated parameters:
+ v0=0.084 | kappa=1.891 | theta=0.427 | sigma=3.897 | rho=-0.914  | lambda_jump=5.059  | mu_J=-0.037  | sigma_J=0.050
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py:48</span>, in <span class="ansi-cyan-fg">_wrapper_grad.&lt;locals&gt;.wrapped1</span><span class="ansi-blue-fg">(x, f0)</span>
-<span class="ansi-green-intense-fg ansi-bold">     46</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span><span style="color: rgb(188,188,188)"> </span><span style="color: rgb(0,0,255)">wrapped1</span>(x, f0<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>):
-<span class="ansi-green-intense-fg ansi-bold">     47</span>     ncalls[<span style="color: rgb(98,98,98)">0</span>] <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">1</span>
-<span class="ansi-green-fg">---&gt; 48</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">approx_derivative</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-intense-fg ansi-bold">     49</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">fun</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">f0</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">f0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">finite_diff_options</span>
-<span class="ansi-green-intense-fg ansi-bold">     50</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+================================================================================
+2026-01-16
+================================================================================
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_numdiff.py:523</span>, in <span class="ansi-cyan-fg">approx_derivative</span><span class="ansi-blue-fg">(fun, x0, method, rel_step, abs_step, f0, bounds, sparsity, as_linear_operator, args, kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    520</span>     use_one_sided <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">False</span>
-<span class="ansi-green-intense-fg ansi-bold">    522</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> sparsity <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-<span class="ansi-green-fg">--&gt; 523</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">_dense_difference</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">fun_wrapped</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">f0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">h</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    524</span> <span class="ansi-yellow-bg">                             </span><span class="ansi-yellow-bg">use_one_sided</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">method</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    525</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
-<span class="ansi-green-intense-fg ansi-bold">    526</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> issparse(sparsity) <span class="ansi-bold" style="color: rgb(175,0,255)">and</span> <span style="color: rgb(0,135,0)">len</span>(sparsity) <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(98,98,98)">2</span>:
+Calibrated parameters:
+ v0=0.070 | kappa=0.697 | theta=0.034 | sigma=2.990 | rho=-0.889  | lambda_jump=0.562  | mu_J=0.166  | sigma_J=0.050
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_numdiff.py:596</span>, in <span class="ansi-cyan-fg">_dense_difference</span><span class="ansi-blue-fg">(fun, x0, f0, h, use_one_sided, method)</span>
-<span class="ansi-green-intense-fg ansi-bold">    594</span>     x1[i] <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> h[i]
-<span class="ansi-green-intense-fg ansi-bold">    595</span>     dx <span style="color: rgb(98,98,98)">=</span> x1[i] <span style="color: rgb(98,98,98)">-</span> x0[i]  <span style="color: rgb(95,135,135)"># Recompute dx as exactly representable number.</span>
-<span class="ansi-green-fg">--&gt; 596</span>     df <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">fun</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">x1</span><span class="ansi-yellow-bg">)</span> <span style="color: rgb(98,98,98)">-</span> f0
-<span class="ansi-green-intense-fg ansi-bold">    597</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> method <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">3-point</span><span style="color: rgb(175,0,0)">&#39;</span> <span class="ansi-bold" style="color: rgb(175,0,255)">and</span> use_one_sided[i]:
-<span class="ansi-green-intense-fg ansi-bold">    598</span>     x1[i] <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> h[i]
+at minimum nan accepted 1
+Parameters: kappa=0.697 | theta=0.034 | sigma=2.990 | rho=-0.889  | lambda_jump=0.562  | mu_J=0.166  | sigma_J=0.050
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_numdiff.py:474</span>, in <span class="ansi-cyan-fg">approx_derivative.&lt;locals&gt;.fun_wrapped</span><span class="ansi-blue-fg">(x)</span>
-<span class="ansi-green-intense-fg ansi-bold">    471</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> xp<span style="color: rgb(98,98,98)">.</span>isdtype(x<span style="color: rgb(98,98,98)">.</span>dtype, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">real floating</span><span style="color: rgb(175,0,0)">&#34;</span>):
-<span class="ansi-green-intense-fg ansi-bold">    472</span>     x <span style="color: rgb(98,98,98)">=</span> xp<span style="color: rgb(98,98,98)">.</span>astype(x, x0<span style="color: rgb(98,98,98)">.</span>dtype)
-<span class="ansi-green-fg">--&gt; 474</span> f <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>atleast_1d(<span class="ansi-yellow-bg">fun</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>)
-<span class="ansi-green-intense-fg ansi-bold">    475</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> f<span style="color: rgb(98,98,98)">.</span>ndim <span style="color: rgb(98,98,98)">&gt;</span> <span style="color: rgb(98,98,98)">1</span>:
-<span class="ansi-green-intense-fg ansi-bold">    476</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">RuntimeError</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">`fun` return value has </span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    477</span>                        <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">more than 1 dimension.</span><span style="color: rgb(175,0,0)">&#34;</span>)
+at minimum 8681.453210 accepted 1
+Parameters: kappa=3.563 | theta=1.040 | sigma=1.937 | rho=-0.647  | lambda_jump=3.544  | mu_J=0.235  | sigma_J=0.468
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/optimize/_differentiable_functions.py:21</span>, in <span class="ansi-cyan-fg">_wrapper_fun.&lt;locals&gt;.wrapped</span><span class="ansi-blue-fg">(x)</span>
-<span class="ansi-green-intense-fg ansi-bold">     17</span> ncalls[<span style="color: rgb(98,98,98)">0</span>] <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">1</span>
-<span class="ansi-green-intense-fg ansi-bold">     18</span> <span style="color: rgb(95,135,135)"># Send a copy because the user may overwrite it.</span>
-<span class="ansi-green-intense-fg ansi-bold">     19</span> <span style="color: rgb(95,135,135)"># Overwriting results in undefined behaviour because</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span style="color: rgb(95,135,135)"># fun(self.x) will change self.x, with the two no longer linked.</span>
-<span class="ansi-green-fg">---&gt; 21</span> fx <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">fun</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">np</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">copy</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span> <span style="color: rgb(95,135,135)"># Make sure the function returns a true scalar</span>
-<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> np<span style="color: rgb(98,98,98)">.</span>isscalar(fx):
+at minimum nan accepted 1
+Parameters: kappa=3.078 | theta=1.398 | sigma=1.808 | rho=-0.547  | lambda_jump=2.498  | mu_J=0.203  | sigma_J=0.335
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/calibration/volatilitySmile.py:270</span>, in <span class="ansi-cyan-fg">VolatilitySmile.calibration.&lt;locals&gt;.cost_function</span><span class="ansi-blue-fg">(params)</span>
-<span class="ansi-green-intense-fg ansi-bold">    268</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span><span style="color: rgb(188,188,188)"> </span><span style="color: rgb(0,0,255)">cost_function</span>(params):
-<span class="ansi-green-intense-fg ansi-bold">    269</span>     function_params <span style="color: rgb(98,98,98)">=</span> _get_parameters(model_type, params)
-<span class="ansi-green-fg">--&gt; 270</span>     model_prices <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">price_function</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-intense-fg ansi-bold">    271</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">function_params</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    272</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">v</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">vol_initial</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    273</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">strike</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">strikes</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    274</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    275</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">s</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">atm</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    276</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    278</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> difference_function(<span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>market_prices, model_prices)
+at minimum nan accepted 1
+Parameters: kappa=3.326 | theta=1.664 | sigma=1.637 | rho=-0.580  | lambda_jump=2.047  | mu_J=0.227  | sigma_J=0.255
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/bates.py:272</span>, in <span class="ansi-cyan-fg">Bates.call_price</span><span class="ansi-blue-fg">(self, strike, time_to_maturity, s, v, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    248</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span><span style="color: rgb(188,188,188)"> </span><span style="color: rgb(0,0,255)">call_price</span>(
-<span class="ansi-green-intense-fg ansi-bold">    249</span>         <span style="color: rgb(0,135,0)">self</span>,
-<span class="ansi-green-intense-fg ansi-bold">    250</span>         strike: np<span style="color: rgb(98,98,98)">.</span>array,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">    254</span>         <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs
-<span class="ansi-green-intense-fg ansi-bold">    255</span>     ):
-<span class="ansi-green-intense-fg ansi-bold">    256</span> <span style="color: rgb(188,188,188)">    </span><span style="color: rgb(175,0,0)">&#34;&#34;&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    257</span> <span style="color: rgb(175,0,0)">    Calculate the price of a European call option using the Bates model.</span>
-<span class="ansi-green-intense-fg ansi-bold">    258</span>
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">    269</span> <span style="color: rgb(175,0,0)">    :rtype: float</span>
-<span class="ansi-green-intense-fg ansi-bold">    270</span> <span style="color: rgb(175,0,0)">    &#34;&#34;&#34;</span>
-<span class="ansi-green-fg">--&gt; 272</span>     price <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">carr_madan_price</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-intense-fg ansi-bold">    273</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">s</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">s</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span>
-<span class="ansi-green-intense-fg ansi-bold">    274</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">v</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">v</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    275</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">strike</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">strike</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span>
-<span class="ansi-green-intense-fg ansi-bold">    276</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    277</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span>
-<span class="ansi-green-intense-fg ansi-bold">    278</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    279</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> price
+at minimum nan accepted 1
+Parameters: kappa=3.055 | theta=1.871 | sigma=1.677 | rho=-0.782  | lambda_jump=1.738  | mu_J=0.265  | sigma_J=0.274
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/bates.py:324</span>, in <span class="ansi-cyan-fg">Bates.carr_madan_price</span><span class="ansi-blue-fg">(self, strike, time_to_maturity, s, v, error_boolean, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    315</span> price_hat <span style="color: rgb(98,98,98)">=</span> (
-<span class="ansi-green-intense-fg ansi-bold">    316</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>r <span style="color: rgb(98,98,98)">*</span> time_to_maturity)
-<span class="ansi-green-intense-fg ansi-bold">    317</span>     <span style="color: rgb(98,98,98)">/</span> (alpha<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">+</span> alpha <span style="color: rgb(98,98,98)">-</span> u<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">+</span> u <span style="color: rgb(98,98,98)">*</span> (<span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> alpha <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(98,98,98)">1</span>) <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j)
-<span class="ansi-green-intense-fg ansi-bold">    318</span>     <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>characteristic(j<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">2</span>, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs)(x, v, time_to_maturity, u <span style="color: rgb(98,98,98)">-</span> (alpha <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(98,98,98)">1</span>) <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j)
-<span class="ansi-green-intense-fg ansi-bold">    319</span> )
-<span class="ansi-green-intense-fg ansi-bold">    321</span> integrand <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span>u <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log(strike) <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j) <span style="color: rgb(98,98,98)">*</span> price_hat(u)
-<span class="ansi-green-intense-fg ansi-bold">    323</span> price <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>real(
-<span class="ansi-green-fg">--&gt; 324</span>     np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span>alpha <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log(strike)) <span style="color: rgb(98,98,98)">/</span> np<span style="color: rgb(98,98,98)">.</span>pi <span style="color: rgb(98,98,98)">*</span> <span class="ansi-yellow-bg">quad_vec</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">integrand</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">a</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">0</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">b</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1000</span><span class="ansi-yellow-bg">)</span>[<span style="color: rgb(98,98,98)">0</span>]
-<span class="ansi-green-intense-fg ansi-bold">    325</span> )
-<span class="ansi-green-intense-fg ansi-bold">    327</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> error_boolean:
-<span class="ansi-green-intense-fg ansi-bold">    328</span>     error <span style="color: rgb(98,98,98)">=</span> (
-<span class="ansi-green-intense-fg ansi-bold">    329</span>         np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span>alpha <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log(strike)) <span style="color: rgb(98,98,98)">/</span> np<span style="color: rgb(98,98,98)">.</span>pi <span style="color: rgb(98,98,98)">*</span> quad_vec(f<span style="color: rgb(98,98,98)">=</span>integrand, a<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>, b<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1000</span>)[<span style="color: rgb(98,98,98)">1</span>]
-<span class="ansi-green-intense-fg ansi-bold">    330</span>     )
+at minimum 8681.453210 accepted 1
+Parameters: kappa=0.001 | theta=1.535 | sigma=2.932 | rho=-0.489  | lambda_jump=5.120  | mu_J=-0.500  | sigma_J=0.050
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/integrate/_quad_vec.py:412</span>, in <span class="ansi-cyan-fg">quad_vec</span><span class="ansi-blue-fg">(f, a, b, epsabs, epsrel, norm, cache_size, limit, workers, points, quadrature, full_output, args)</span>
-<span class="ansi-green-intense-fg ansi-bold">    409</span>     err_sum <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">-</span>neg_old_err
-<span class="ansi-green-intense-fg ansi-bold">    411</span> <span style="color: rgb(95,135,135)"># Subdivide intervals</span>
-<span class="ansi-green-fg">--&gt; 412</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> parts <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> mapwrapper(_subdivide_interval, to_process):
-<span class="ansi-green-intense-fg ansi-bold">    413</span>     dint, derr, dround_err, subint, dneval <span style="color: rgb(98,98,98)">=</span> parts
-<span class="ansi-green-intense-fg ansi-bold">    414</span>     neval <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> dneval
+[&#39;success condition satisfied&#39;] False
+Calibrated parameters:
+ v0=0.070 | kappa=0.697 | theta=0.034 | sigma=2.990 | rho=-0.889  | lambda_jump=0.562  | mu_J=0.166  | sigma_J=0.050
 
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/integrate/_quad_vec.py:472</span>, in <span class="ansi-cyan-fg">_subdivide_interval</span><span class="ansi-blue-fg">(args)</span>
-<span class="ansi-green-intense-fg ansi-bold">    470</span> s1, err1, round1 <span style="color: rgb(98,98,98)">=</span> _quadrature(a, c, f, norm_func)
-<span class="ansi-green-intense-fg ansi-bold">    471</span> dneval <span style="color: rgb(98,98,98)">=</span> _quadrature<span style="color: rgb(98,98,98)">.</span>num_eval
-<span class="ansi-green-fg">--&gt; 472</span> s2, err2, round2 <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_quadrature</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">c</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">b</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">norm_func</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    473</span> dneval <span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">=</span> _quadrature<span style="color: rgb(98,98,98)">.</span>num_eval
-<span class="ansi-green-intense-fg ansi-bold">    474</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> old_int <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/integrate/_quad_vec.py:626</span>, in <span class="ansi-cyan-fg">_quadrature_gk21</span><span class="ansi-blue-fg">(a, b, f, norm_func)</span>
-<span class="ansi-green-intense-fg ansi-bold">    603</span> <span style="color: rgb(95,135,135)"># 21-point weights</span>
-<span class="ansi-green-intense-fg ansi-bold">    604</span> v <span style="color: rgb(98,98,98)">=</span> (<span style="color: rgb(98,98,98)">0.011694638867371874278064396062192</span>,
-<span class="ansi-green-intense-fg ansi-bold">    605</span>      <span style="color: rgb(98,98,98)">0.032558162307964727478818972459390</span>,
-<span class="ansi-green-intense-fg ansi-bold">    606</span>      <span style="color: rgb(98,98,98)">0.054755896574351996031381300244580</span>,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">    623</span>      <span style="color: rgb(98,98,98)">0.032558162307964727478818972459390</span>,
-<span class="ansi-green-intense-fg ansi-bold">    624</span>      <span style="color: rgb(98,98,98)">0.011694638867371874278064396062192</span>)
-<span class="ansi-green-fg">--&gt; 626</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">_quadrature_gk</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">a</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">b</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">norm_func</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">w</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">v</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/.venv/lib/python3.10/site-packages/scipy/integrate/_quad_vec.py:527</span>, in <span class="ansi-cyan-fg">_quadrature_gk</span><span class="ansi-blue-fg">(a, b, f, norm_func, x, w, v)</span>
-<span class="ansi-green-intense-fg ansi-bold">    525</span> s_k_abs <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">0.0</span>
-<span class="ansi-green-intense-fg ansi-bold">    526</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> i <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> <span style="color: rgb(0,135,0)">range</span>(<span style="color: rgb(0,135,0)">len</span>(x)):
-<span class="ansi-green-fg">--&gt; 527</span>     ff <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">c</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">+</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">h</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">i</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    528</span>     fv[i] <span style="color: rgb(98,98,98)">=</span> ff
-<span class="ansi-green-intense-fg ansi-bold">    530</span>     vv <span style="color: rgb(98,98,98)">=</span> v[i]
-
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/bates.py:321</span>, in <span class="ansi-cyan-fg">Bates.carr_madan_price.&lt;locals&gt;.&lt;lambda&gt;</span><span class="ansi-blue-fg">(u)</span>
-<span class="ansi-green-intense-fg ansi-bold">    313</span> alpha <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">0.3</span>
-<span class="ansi-green-intense-fg ansi-bold">    315</span> price_hat <span style="color: rgb(98,98,98)">=</span> (
-<span class="ansi-green-intense-fg ansi-bold">    316</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>r <span style="color: rgb(98,98,98)">*</span> time_to_maturity)
-<span class="ansi-green-intense-fg ansi-bold">    317</span>     <span style="color: rgb(98,98,98)">/</span> (alpha<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">+</span> alpha <span style="color: rgb(98,98,98)">-</span> u<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">+</span> u <span style="color: rgb(98,98,98)">*</span> (<span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> alpha <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(98,98,98)">1</span>) <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j)
-<span class="ansi-green-intense-fg ansi-bold">    318</span>     <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>characteristic(j<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">2</span>, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs)(x, v, time_to_maturity, u <span style="color: rgb(98,98,98)">-</span> (alpha <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(98,98,98)">1</span>) <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j)
-<span class="ansi-green-intense-fg ansi-bold">    319</span> )
-<span class="ansi-green-fg">--&gt; 321</span> integrand <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span>u <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log(strike) <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j) <span style="color: rgb(98,98,98)">*</span> <span class="ansi-yellow-bg">price_hat</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">u</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    323</span> price <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>real(
-<span class="ansi-green-intense-fg ansi-bold">    324</span>     np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span>alpha <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log(strike)) <span style="color: rgb(98,98,98)">/</span> np<span style="color: rgb(98,98,98)">.</span>pi <span style="color: rgb(98,98,98)">*</span> quad_vec(f<span style="color: rgb(98,98,98)">=</span>integrand, a<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>, b<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1000</span>)[<span style="color: rgb(98,98,98)">0</span>]
-<span class="ansi-green-intense-fg ansi-bold">    325</span> )
-<span class="ansi-green-intense-fg ansi-bold">    327</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> error_boolean:
-
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/bates.py:318</span>, in <span class="ansi-cyan-fg">Bates.carr_madan_price.&lt;locals&gt;.&lt;lambda&gt;</span><span class="ansi-blue-fg">(u)</span>
-<span class="ansi-green-intense-fg ansi-bold">    312</span>     v <span style="color: rgb(98,98,98)">=</span> kwargs<span style="color: rgb(98,98,98)">.</span>get(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">vol_initial</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>vol_initial)  <span style="color: rgb(95,135,135)"># Initial variance</span>
-<span class="ansi-green-intense-fg ansi-bold">    313</span> alpha <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">0.3</span>
-<span class="ansi-green-intense-fg ansi-bold">    315</span> price_hat <span style="color: rgb(98,98,98)">=</span> (
-<span class="ansi-green-intense-fg ansi-bold">    316</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>r <span style="color: rgb(98,98,98)">*</span> time_to_maturity)
-<span class="ansi-green-intense-fg ansi-bold">    317</span>     <span style="color: rgb(98,98,98)">/</span> (alpha<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">+</span> alpha <span style="color: rgb(98,98,98)">-</span> u<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">+</span> u <span style="color: rgb(98,98,98)">*</span> (<span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> alpha <span style="color: rgb(98,98,98)">+</span> <span style="color: rgb(98,98,98)">1</span>) <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j)
-<span class="ansi-green-fg">--&gt; 318</span>     <span style="color: rgb(98,98,98)">*</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">characteristic</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">j</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">2</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">v</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">u</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">-</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">alpha</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">+</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1</span><span class="ansi-yellow-bg">j</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    319</span> )
-<span class="ansi-green-intense-fg ansi-bold">    321</span> integrand <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span>u <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log(strike) <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j) <span style="color: rgb(98,98,98)">*</span> price_hat(u)
-<span class="ansi-green-intense-fg ansi-bold">    323</span> price <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>real(
-<span class="ansi-green-intense-fg ansi-bold">    324</span>     np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">-</span>alpha <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log(strike)) <span style="color: rgb(98,98,98)">/</span> np<span style="color: rgb(98,98,98)">.</span>pi <span style="color: rgb(98,98,98)">*</span> quad_vec(f<span style="color: rgb(98,98,98)">=</span>integrand, a<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>, b<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1000</span>)[<span style="color: rgb(98,98,98)">0</span>]
-<span class="ansi-green-intense-fg ansi-bold">    325</span> )
-
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/bates.py:245</span>, in <span class="ansi-cyan-fg">Bates.characteristic.&lt;locals&gt;.&lt;lambda&gt;</span><span class="ansi-blue-fg">(x, v, time_to_maturity, u)</span>
-<span class="ansi-green-intense-fg ansi-bold">    241</span> component_jump <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u, tau: lambda_jump <span style="color: rgb(98,98,98)">*</span> tau <span style="color: rgb(98,98,98)">*</span> (np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> mu_J <span style="color: rgb(98,98,98)">-</span> <span style="color: rgb(98,98,98)">0.5</span> <span style="color: rgb(98,98,98)">*</span> sigma_J<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> u<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span>) <span style="color: rgb(98,98,98)">-</span> <span style="color: rgb(98,98,98)">1</span>)
-<span class="ansi-green-intense-fg ansi-bold">    242</span> component_jump <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u, tau: <span style="color: rgb(98,98,98)">-</span> lambda_jump <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> (np<span style="color: rgb(98,98,98)">.</span>exp(mu_J <span style="color: rgb(98,98,98)">+</span> sigma_J<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span><span style="color: rgb(98,98,98)">/</span><span style="color: rgb(98,98,98)">2</span>) <span style="color: rgb(98,98,98)">-</span> <span style="color: rgb(98,98,98)">1</span>) <span style="color: rgb(98,98,98)">+</span> lambda_jump <span style="color: rgb(98,98,98)">*</span> (np<span style="color: rgb(98,98,98)">.</span>exp(<span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> mu_J <span style="color: rgb(98,98,98)">-</span> u<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span><span style="color: rgb(98,98,98)">*</span>sigma_J<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">/</span> <span style="color: rgb(98,98,98)">2</span>) <span style="color: rgb(98,98,98)">-</span> <span style="color: rgb(98,98,98)">1</span>)
-<span class="ansi-green-intense-fg ansi-bold">    244</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> x, v, time_to_maturity, u: (
-<span class="ansi-green-fg">--&gt; 245</span>     np<span style="color: rgb(98,98,98)">.</span>exp(<span class="ansi-yellow-bg">Cj</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">time_to_maturity</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">u</span><span class="ansi-yellow-bg">)</span> <span style="color: rgb(98,98,98)">+</span> Dj(time_to_maturity, u) <span style="color: rgb(98,98,98)">*</span> v <span style="color: rgb(98,98,98)">+</span> u <span style="color: rgb(98,98,98)">*</span> x <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j) <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>exp(time_to_maturity<span style="color: rgb(98,98,98)">*</span>component_jump(u, time_to_maturity))
-<span class="ansi-green-intense-fg ansi-bold">    246</span> )
-
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/bates.py:236</span>, in <span class="ansi-cyan-fg">Bates.characteristic.&lt;locals&gt;.&lt;lambda&gt;</span><span class="ansi-blue-fg">(tau, u)</span>
-<span class="ansi-green-intense-fg ansi-bold">    232</span> dj <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: np<span style="color: rgb(98,98,98)">.</span>sqrt((rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">-</span> bj) <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">-</span> sigma<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> (<span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> uj <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">-</span> u<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span>))
-<span class="ansi-green-intense-fg ansi-bold">    233</span> gj <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: (rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">-</span> bj <span style="color: rgb(98,98,98)">-</span> dj(u)) <span style="color: rgb(98,98,98)">/</span> (rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">-</span> bj <span style="color: rgb(98,98,98)">+</span> dj(u))
-<span class="ansi-green-intense-fg ansi-bold">    235</span> Cj <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> tau, u: <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>r <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> tau <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">+</span> a <span style="color: rgb(98,98,98)">*</span> (
-<span class="ansi-green-fg">--&gt; 236</span>     (bj <span style="color: rgb(98,98,98)">-</span> rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">+</span> dj(u)) <span style="color: rgb(98,98,98)">*</span> tau <span style="color: rgb(98,98,98)">-</span> <span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log((<span style="color: rgb(98,98,98)">1</span> <span style="color: rgb(98,98,98)">-</span> gj(u) <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>exp(dj(u) <span style="color: rgb(98,98,98)">*</span> tau)) <span style="color: rgb(98,98,98)">/</span> (<span style="color: rgb(98,98,98)">1</span> <span style="color: rgb(98,98,98)">-</span> <span class="ansi-yellow-bg">gj</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">u</span><span class="ansi-yellow-bg">)</span>))
-<span class="ansi-green-intense-fg ansi-bold">    237</span> )
-<span class="ansi-green-intense-fg ansi-bold">    238</span> Dj <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> tau, u: (bj <span style="color: rgb(98,98,98)">-</span> rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">+</span> dj(u)) <span style="color: rgb(98,98,98)">/</span> sigma<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> (<span style="color: rgb(98,98,98)">1</span> <span style="color: rgb(98,98,98)">-</span> np<span style="color: rgb(98,98,98)">.</span>exp(dj(u) <span style="color: rgb(98,98,98)">*</span> tau)) <span style="color: rgb(98,98,98)">/</span> (<span style="color: rgb(98,98,98)">1</span> <span style="color: rgb(98,98,98)">-</span> gj(u) <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>exp(dj(u) <span style="color: rgb(98,98,98)">*</span> tau))
-<span class="ansi-green-intense-fg ansi-bold">    240</span> <span style="color: rgb(95,135,135)"># Jump component</span>
-
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/bates.py:233</span>, in <span class="ansi-cyan-fg">Bates.characteristic.&lt;locals&gt;.&lt;lambda&gt;</span><span class="ansi-blue-fg">(u)</span>
-<span class="ansi-green-intense-fg ansi-bold">    230</span> a <span style="color: rgb(98,98,98)">=</span> kappa <span style="color: rgb(98,98,98)">*</span> theta <span style="color: rgb(98,98,98)">/</span> sigma<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span>
-<span class="ansi-green-intense-fg ansi-bold">    232</span> dj <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: np<span style="color: rgb(98,98,98)">.</span>sqrt((rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">-</span> bj) <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">-</span> sigma<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> (<span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> uj <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">-</span> u<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span>))
-<span class="ansi-green-fg">--&gt; 233</span> gj <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: (rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">-</span> bj <span style="color: rgb(98,98,98)">-</span> dj(u)) <span style="color: rgb(98,98,98)">/</span> (rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">-</span> bj <span style="color: rgb(98,98,98)">+</span> <span class="ansi-yellow-bg">dj</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">u</span><span class="ansi-yellow-bg">)</span>)
-<span class="ansi-green-intense-fg ansi-bold">    235</span> Cj <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> tau, u: <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>r <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> tau <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">+</span> a <span style="color: rgb(98,98,98)">*</span> (
-<span class="ansi-green-intense-fg ansi-bold">    236</span>     (bj <span style="color: rgb(98,98,98)">-</span> rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">+</span> dj(u)) <span style="color: rgb(98,98,98)">*</span> tau <span style="color: rgb(98,98,98)">-</span> <span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log((<span style="color: rgb(98,98,98)">1</span> <span style="color: rgb(98,98,98)">-</span> gj(u) <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>exp(dj(u) <span style="color: rgb(98,98,98)">*</span> tau)) <span style="color: rgb(98,98,98)">/</span> (<span style="color: rgb(98,98,98)">1</span> <span style="color: rgb(98,98,98)">-</span> gj(u)))
-<span class="ansi-green-intense-fg ansi-bold">    237</span> )
-<span class="ansi-green-intense-fg ansi-bold">    238</span> Dj <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> tau, u: (bj <span style="color: rgb(98,98,98)">-</span> rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">+</span> dj(u)) <span style="color: rgb(98,98,98)">/</span> sigma<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> (<span style="color: rgb(98,98,98)">1</span> <span style="color: rgb(98,98,98)">-</span> np<span style="color: rgb(98,98,98)">.</span>exp(dj(u) <span style="color: rgb(98,98,98)">*</span> tau)) <span style="color: rgb(98,98,98)">/</span> (<span style="color: rgb(98,98,98)">1</span> <span style="color: rgb(98,98,98)">-</span> gj(u) <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>exp(dj(u) <span style="color: rgb(98,98,98)">*</span> tau))
-
-File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/models/bates.py:232</span>, in <span class="ansi-cyan-fg">Bates.characteristic.&lt;locals&gt;.&lt;lambda&gt;</span><span class="ansi-blue-fg">(u)</span>
-<span class="ansi-green-intense-fg ansi-bold">    229</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(98,98,98)">0</span>
-<span class="ansi-green-intense-fg ansi-bold">    230</span> a <span style="color: rgb(98,98,98)">=</span> kappa <span style="color: rgb(98,98,98)">*</span> theta <span style="color: rgb(98,98,98)">/</span> sigma<span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">2</span>
-<span class="ansi-green-fg">--&gt; 232</span> dj <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: <span class="ansi-yellow-bg">np</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">sqrt</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">rho</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">sigma</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">u</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1</span><span class="ansi-yellow-bg">j</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">-</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">bj</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">2</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">-</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">sigma</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">2</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">2</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">uj</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">u</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1</span><span class="ansi-yellow-bg">j</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">-</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">u</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">2</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    233</span> gj <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> u: (rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">-</span> bj <span style="color: rgb(98,98,98)">-</span> dj(u)) <span style="color: rgb(98,98,98)">/</span> (rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">-</span> bj <span style="color: rgb(98,98,98)">+</span> dj(u))
-<span class="ansi-green-intense-fg ansi-bold">    235</span> Cj <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">lambda</span> tau, u: <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>r <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> tau <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">+</span> a <span style="color: rgb(98,98,98)">*</span> (
-<span class="ansi-green-intense-fg ansi-bold">    236</span>     (bj <span style="color: rgb(98,98,98)">-</span> rho <span style="color: rgb(98,98,98)">*</span> sigma <span style="color: rgb(98,98,98)">*</span> u <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1</span>j <span style="color: rgb(98,98,98)">+</span> dj(u)) <span style="color: rgb(98,98,98)">*</span> tau <span style="color: rgb(98,98,98)">-</span> <span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log((<span style="color: rgb(98,98,98)">1</span> <span style="color: rgb(98,98,98)">-</span> gj(u) <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>exp(dj(u) <span style="color: rgb(98,98,98)">*</span> tau)) <span style="color: rgb(98,98,98)">/</span> (<span style="color: rgb(98,98,98)">1</span> <span style="color: rgb(98,98,98)">-</span> gj(u)))
-<span class="ansi-green-intense-fg ansi-bold">    237</span> )
-
-<span class="ansi-red-fg">KeyboardInterrupt</span>:
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/theo/Documents/packages/hestonpy/src/hestonpy/models/bates.py:271: RuntimeWarning: overflow encountered in exp
+  (bj - rho * sigma * u * 1j + dj(u)) * tau - 2 * np.log((1 - gj(u) * np.exp(dj(u) * tau)) / (1 - gj(u)))
+/home/theo/Documents/packages/hestonpy/src/hestonpy/models/bates.py:271: RuntimeWarning: invalid value encountered in scalar multiply
+  (bj - rho * sigma * u * 1j + dj(u)) * tau - 2 * np.log((1 - gj(u) * np.exp(dj(u) * tau)) / (1 - gj(u)))
+/home/theo/Documents/packages/hestonpy/src/hestonpy/models/bates.py:273: RuntimeWarning: overflow encountered in exp
+  Dj = lambda tau, u: (bj - rho * sigma * u * 1j + dj(u)) / sigma**2 * (1 - np.exp(dj(u) * tau)) / (1 - gj(u) * np.exp(dj(u) * tau))
+/home/theo/Documents/packages/hestonpy/src/hestonpy/models/bates.py:273: RuntimeWarning: invalid value encountered in scalar multiply
+  Dj = lambda tau, u: (bj - rho * sigma * u * 1j + dj(u)) / sigma**2 * (1 - np.exp(dj(u) * tau)) / (1 - gj(u) * np.exp(dj(u) * tau))
+/home/theo/Documents/packages/hestonpy/src/hestonpy/models/bates.py:273: RuntimeWarning: invalid value encountered in scalar divide
+  Dj = lambda tau, u: (bj - rho * sigma * u * 1j + dj(u)) / sigma**2 * (1 - np.exp(dj(u) * tau)) / (1 - gj(u) * np.exp(dj(u) * tau))
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_calibration_calibration_bates_5_2.png" src="../../_images/examples_calibration_calibration_bates_5_2.png" />
+<img alt="../../_images/examples_calibration_calibration_bates_5_4.png" src="../../_images/examples_calibration_calibration_bates_5_4.png" />
 </div>
 </div>
 </section>
