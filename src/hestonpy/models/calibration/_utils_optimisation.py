@@ -41,7 +41,7 @@ def _generate_difference_function(power:str, relative_errors:bool, weights:np.ar
     if power == 'mae':
         return lambda market_prices, model_prices : np.sum(weights * np.abs(difference(market_prices, model_prices)))
     elif power == 'rmse':
-        return lambda market_prices, model_prices : np.sum(weights * np.sqrt(difference(market_prices, model_prices)**2))
+        return lambda market_prices, model_prices : np.sqrt(np.sum(weights * difference(market_prices, model_prices)**2))
     elif power == 'mse':
         return lambda market_prices, model_prices : np.sum(weights * difference(market_prices, model_prices)**2)
     else: 
