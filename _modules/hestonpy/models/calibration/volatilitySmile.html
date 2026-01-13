@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>hestonpy.models.calibration.volatilitySmile &#8212; hestonpy v0.5.7 documentation</title>
+    <title>hestonpy.models.calibration.volatilitySmile &#8212; hestonpy v0.5.11 documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../../_static/documentation_options.js?v=2dea12e0"></script>
+    <script src="../../../../_static/documentation_options.js?v=feb023f7"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
@@ -116,8 +116,8 @@
       
     
     
-    <img src="../../../../_static/logo-light-no-bg.png" class="logo__image only-light" alt="hestonpy v0.5.7 documentation - Home"/>
-    <img src="../../../../_static/logo-light-no-bg.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.7 documentation - Home"/>
+    <img src="../../../../_static/logo-light-no-bg.png" class="logo__image only-light" alt="hestonpy v0.5.11 documentation - Home"/>
+    <img src="../../../../_static/logo-light-no-bg.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.11 documentation - Home"/>
   
   
 </a></div>
@@ -366,7 +366,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.blackScholes</span><span class="w"> </span><span class="kn">import</span> <span class="n">BlackScholes</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.calibration.svi</span><span class="w"> </span><span class="kn">import</span> <span class="n">StochasticVolatilityInspired</span> <span class="k">as</span> <span class="n">SVI</span>
 
-<span class="n">fontdict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;fontweight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">}</span>
+<span class="n">fontdict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;fontweight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">}</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span><span class="p">,</span> <span class="n">basinhopping</span><span class="p">,</span> <span class="n">NonlinearConstraint</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
@@ -520,11 +520,11 @@
 
         <span class="c1"># 3rd mask: bid-ask spread must be less than 10%</span>
         <span class="n">spread</span> <span class="o">=</span> <span class="p">(</span><span class="n">ask_ivs</span> <span class="o">-</span> <span class="n">bid_ivs</span><span class="p">)</span> <span class="o">/</span> <span class="n">mid_ivs</span>
-        <span class="n">mask3</span> <span class="o">=</span> <span class="p">(</span><span class="n">spread</span> <span class="o">&lt;=</span> <span class="mf">0.10</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ask_ivs</span> <span class="o">&lt;</span> <span class="mf">0.9</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mid_ivs</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">mask3</span> <span class="o">=</span> <span class="p">(</span><span class="n">spread</span> <span class="o">&lt;=</span> <span class="mf">0.30</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ask_ivs</span> <span class="o">&lt;</span> <span class="mf">0.9</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mid_ivs</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span>
 
         <span class="c1"># 4th mask: in- or out-of-the-money by more than 20% are excluded</span>
         <span class="n">forward</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">atm</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="p">)</span>
-        <span class="n">mask4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">0.20</span>
+        <span class="n">mask4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mf">0.30</span>
 
         <span class="n">masks</span> <span class="o">=</span> <span class="n">mask1</span> <span class="o">&amp;</span> <span class="n">mask2</span> <span class="o">&amp;</span> <span class="n">mask3</span> <span class="o">&amp;</span> <span class="n">mask4</span>
         <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="kc">None</span>
