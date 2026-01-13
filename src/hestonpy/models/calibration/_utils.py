@@ -11,7 +11,7 @@ def dichotomie(
         price_function,
         error: float = 10**(-6),
         vol_inf: float = 10**(-3),
-        vol_sup: float = 1
+        vol_sup: float = 3
     ):
     """
     price_function should be only a function of the volatility

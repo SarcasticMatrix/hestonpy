@@ -9,7 +9,7 @@
 project = 'hestonpy'
 copyright = '2025, Théophile Schmutz'
 author = 'Théophile Schmutz'
-release = 'v0.5.7'
+release = 'v0.5.11'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -26,7 +26,8 @@ extensions = [
 ]
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
+highlight_language = 'python'
+# pygments_style = 'sphinx'
 
 
 # -- Options for HTML output -------------------------------------------------

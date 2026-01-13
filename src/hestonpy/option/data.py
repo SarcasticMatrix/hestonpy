@@ -3,6 +3,9 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 from typing import Tuple, Optional, Literal
+  
+from curl_cffi import requests
+session = requests.Session(impersonate="chrome")
 
 def get_options_data(
         symbol: str = 'AAPL',
@@ -29,7 +32,7 @@ def get_options_data(
     """
 
     try:
-        ticker = yf.Ticker(symbol)
+        ticker = yf.Ticker(symbol, session=session)
         maturities = ticker.options
         today = datetime.today().date()
 

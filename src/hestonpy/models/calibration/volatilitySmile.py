@@ -153,7 +153,7 @@ class VolatilitySmile:
         # 2nd mask: mid-prices higher than 0.375
         mask2 = mid_prices >= 0.375
 
-        # 3rd mask: bid-ask spread must be less than 10%
+        # 3rd mask: bid-ask spread must be less than
         spread = (ask_ivs - bid_ivs) / mid_ivs
         mask3 = (spread <= 0.30) & (ask_ivs < 0.9) & (mid_ivs < 0.5)
 

@@ -37,13 +37,13 @@ def _generate_difference_function(power:str, relative_errors:bool, weights:np.ar
         difference = lambda market_prices, model_prices : market_prices - model_prices
     else:
         difference = lambda market_prices, model_prices : (market_prices - model_prices) / market_prices
-            
+
     if power == 'mae':
-        return lambda market_prices, model_prices : np.sum(weights * np.abs(difference(market_prices, model_prices)))
+        return lambda market_prices, model_prices : np.mean(weights * np.abs(difference(market_prices, model_prices)))
     elif power == 'rmse':
-        return lambda market_prices, model_prices : np.sqrt(np.sum(weights * difference(market_prices, model_prices)**2))
+        return lambda market_prices, model_prices : np.sqrt(np.mean(weights * difference(market_prices, model_prices)**2))
     elif power == 'mse':
-        return lambda market_prices, model_prices : np.sum(weights * difference(market_prices, model_prices)**2)
+        return lambda market_prices, model_prices : np.mean(weights * difference(market_prices, model_prices)**2)
     else: 
         raise ValueError("Invalid power. Choose either 'rmse', 'mae', or 'mse'.")
     
