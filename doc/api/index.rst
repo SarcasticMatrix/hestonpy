@@ -7,4 +7,5 @@ API reference
    :caption: Contents:
 
    ./models.rst
-   ./calibration.rst 
+   ./calibration.rst
+   ./option.rst
