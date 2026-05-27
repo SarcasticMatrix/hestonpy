@@ -22,6 +22,8 @@ ipykernel = "^7.2.0"
 [tool.poetry.group.dev.dependencies]
 myst-parser = "^4.0.1"
 sphinx-design = "^0.6.1"
+nbsphinx = "^0.9.8"
+pydata-sphinx-theme = "^0.18.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
