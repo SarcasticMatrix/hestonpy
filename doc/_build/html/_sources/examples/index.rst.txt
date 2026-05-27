@@ -9,4 +9,3 @@ Examples
     ./pricing/index.rst 
     ./calibration/index.rst
     ./hedging/index.rst
-    ./asset_allocations.rst

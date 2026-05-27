@@ -32,7 +32,7 @@
   .sphinx-codeautolink-a:hover{
     color: rgb(132, 0, 0);
   }
-  
+
   .supportbutton a {
     color: var(--pst-color-link);
   }
@@ -43,28 +43,63 @@
 
 /* -------------------- THEME OVERRIDES -------------------- */
 
+
+/* ── Conteneur principal ── */
+.bd-page-width {
+    max-width: 100%;
+    padding-left:  2%;
+    padding-right: 0%;
+    box-sizing: border-box;
+}
+
+.bd-container {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ── Sidebar gauche ── */
+.bd-sidebar-primary {
+    flex: 0 0 18%;
+    background-color: var(--pst-color-sidebar);
+}
+
+/* ── Contenu central ── */
+.bd-main {
+    flex: 1 1 auto;
+    background-color: var(--pst-color-background) !important;
+    min-width: 0;
+}
+
+/* ── Sidebar droite ── */
+.bd-sidebar-secondary {
+    flex: 0 0 30%;
+    background-color: var(--pst-color-sidebar);
+    font-size: 0.8rem;
+}
+
+.bd-main .bd-content {
+    justify-content: flex-start;
+    max-width: 95%;
+}
+
 html[data-theme="light"] {
     --pst-color-primary: #2c6089;
     --pst-color-secondary: rgb(238 144 64);
     --pst-color-plot-background: rgb(255, 255, 255);
-  }
-  
-  html[data-theme="dark"] {
+    --pst-color-background: #ffffff;
+    --pst-color-sidebar: #ffffff;
+}
+
+html[data-theme="dark"] {
     --pst-color-primary: #2c6089;
     --pst-color-secondary: rgb(238 144 64);
     --pst-color-plot-background: rgb(218, 219, 220);
-  }
-  
-  .bd-content {
-    flex-grow: 1;
-    max-width: 100%;  /* Override 60em default */
-  }
-  
-  /* Override for example gallery - remove border around card */
-  .bd-content div.sd-card.example-gallery {
-    border: none;
-  }
+}
 
+/* Override for example gallery - remove border around card */
+.bd-content div.sd-card.example-gallery {
+    border: none;
+}
 
   /* -------------------- HOMEPAGE -------------------- */
 
