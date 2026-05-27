@@ -13,5 +13,5 @@ from .models import (
     reverse_blackScholes,
     compute_smile,
 )
-from .option import Option, get_options_data, filter_data_for_maturity
+from .option import Option, OptionsBook, Position, get_options_data, filter_data_for_maturity
 from .portfolio import Portfolio, naive_strategy, time_varying_strategy, optimal_allocate_strategy, run_strategies
