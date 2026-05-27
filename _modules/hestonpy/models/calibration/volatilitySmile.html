@@ -537,7 +537,7 @@
         <span class="c1"># 2nd mask: mid-prices higher than 0.375</span>
         <span class="n">mask2</span> <span class="o">=</span> <span class="n">mid_prices</span> <span class="o">&gt;=</span> <span class="mf">0.375</span>
 
-        <span class="c1"># 3rd mask: bid-ask spread must be less than 10%</span>
+        <span class="c1"># 3rd mask: bid-ask spread must be less than</span>
         <span class="n">spread</span> <span class="o">=</span> <span class="p">(</span><span class="n">ask_ivs</span> <span class="o">-</span> <span class="n">bid_ivs</span><span class="p">)</span> <span class="o">/</span> <span class="n">mid_ivs</span>
         <span class="n">mask3</span> <span class="o">=</span> <span class="p">(</span><span class="n">spread</span> <span class="o">&lt;=</span> <span class="mf">0.30</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ask_ivs</span> <span class="o">&lt;</span> <span class="mf">0.9</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mid_ivs</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span>
 

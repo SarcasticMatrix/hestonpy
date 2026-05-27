@@ -426,11 +426,11 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.heston import Heston
-from hestonpy.models.calibration.volatilitySmile import VolatilitySmile
-import numpy as np
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.heston</span><span class="w"> </span><span class="kn">import</span> <span class="n">Heston</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.calibration.volatilitySmile</span><span class="w"> </span><span class="kn">import</span> <span class="n">VolatilitySmile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-r = 0.00
+<span class="n">r</span> <span class="o">=</span> <span class="mf">0.00</span>
 </pre></div>
 </div>
 </div>
@@ -439,22 +439,22 @@ r = 0.00
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>spot = 100
-time_to_maturity = 1
-true_params = {
-    &quot;vol_initial&quot;: 0.06,
-    &quot;kappa&quot;: 1.25,
-    &quot;theta&quot;: 0.06,
-    &quot;sigma&quot;: 0.6,
-    &quot;rho&quot;: -0.5,
-    &quot;drift_emm&quot;: 0.00,
-}
-vol = np.sqrt(0.04)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spot</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">time_to_maturity</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">true_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vol_initial&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="mf">1.25</span><span class="p">,</span>
+    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">,</span>
+    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;drift_emm&quot;</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">vol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.04</span><span class="p">)</span>
 
-heston = Heston(spot=spot, r=r, **true_params)
-price_function = heston.call_price
+<span class="n">heston</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">true_params</span><span class="p">)</span>
+<span class="n">price_function</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">call_price</span>
 
-strikes = np.linspace(70, 140, 10)
+<span class="n">strikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -464,16 +464,16 @@ strikes = np.linspace(70, 140, 10)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>market_prices = price_function(**true_params, strike=strikes, time_to_maturity=time_to_maturity, s=spot)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">market_prices</span> <span class="o">=</span> <span class="n">price_function</span><span class="p">(</span><span class="o">**</span><span class="n">true_params</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">spot</span><span class="p">)</span>
 
-volSmile = VolatilitySmile(
-    strikes=strikes,
-    time_to_maturity=time_to_maturity,
-    atm=spot,
-    market_prices=market_prices,
-    r=r
-)
-volSmile.plot()
+<span class="n">volSmile</span> <span class="o">=</span> <span class="n">VolatilitySmile</span><span class="p">(</span>
+    <span class="n">strikes</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span>
+    <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span>
+    <span class="n">atm</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span>
+    <span class="n">market_prices</span><span class="o">=</span><span class="n">market_prices</span><span class="p">,</span>
+    <span class="n">r</span><span class="o">=</span><span class="n">r</span>
+<span class="p">)</span>
+<span class="n">volSmile</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -490,15 +490,15 @@ volSmile.plot()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>calibrated_params = volSmile.calibration(
-    price_function=price_function,
-    initial_guess = [1.0, 0.03, 0.4, -0.5],
-    guess_correlation_sign=&#39;negative&#39;,
-    speed=&#39;local&#39;,
-)
-calibrated_heston = Heston(spot=spot, r=r, **calibrated_params)
-volSmile.plot(calibrated_prices=heston.call_price(strike=strikes, time_to_maturity=time_to_maturity))
-calibrated_params
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calibrated_params</span> <span class="o">=</span> <span class="n">volSmile</span><span class="o">.</span><span class="n">calibration</span><span class="p">(</span>
+    <span class="n">price_function</span><span class="o">=</span><span class="n">price_function</span><span class="p">,</span>
+    <span class="n">initial_guess</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+    <span class="n">guess_correlation_sign</span><span class="o">=</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span>
+    <span class="n">speed</span><span class="o">=</span><span class="s1">&#39;local&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">calibrated_heston</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">calibrated_params</span><span class="p">)</span>
+<span class="n">volSmile</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">calibrated_prices</span><span class="o">=</span><span class="n">heston</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">))</span>
+<span class="n">calibrated_params</span>
 </pre></div>
 </div>
 </div>
@@ -536,7 +536,7 @@ Calibrated parameters: v0=0.046 | kappa=0.985 | theta=0.085 | sigma=0.580 | rho=
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>true_params
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">true_params</span>
 </pre></div>
 </div>
 </div>
@@ -561,15 +561,15 @@ Calibrated parameters: v0=0.046 | kappa=0.985 | theta=0.085 | sigma=0.580 | rho=
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>calibrated_params = volSmile.calibration(
-    price_function=price_function,
-    initial_guess = [1.0, 0.03, 0.4, -0.5],
-    guess_correlation_sign=&#39;negative&#39;,
-    speed=&#39;global&#39;,
-)
-calibrated_heston = Heston(spot=spot, r=r, **calibrated_params)
-volSmile.plot(calibrated_prices=heston.call_price(strike=strikes, time_to_maturity=time_to_maturity))
-calibrated_params
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calibrated_params</span> <span class="o">=</span> <span class="n">volSmile</span><span class="o">.</span><span class="n">calibration</span><span class="p">(</span>
+    <span class="n">price_function</span><span class="o">=</span><span class="n">price_function</span><span class="p">,</span>
+    <span class="n">initial_guess</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+    <span class="n">guess_correlation_sign</span><span class="o">=</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span>
+    <span class="n">speed</span><span class="o">=</span><span class="s1">&#39;global&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">calibrated_heston</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">calibrated_params</span><span class="p">)</span>
+<span class="n">volSmile</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">calibrated_prices</span><span class="o">=</span><span class="n">heston</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">))</span>
+<span class="n">calibrated_params</span>
 </pre></div>
 </div>
 </div>
@@ -626,7 +626,7 @@ Calibrated parameters: v0=0.046 | kappa=0.985 | theta=0.085 | sigma=0.580 | rho=
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>true_params
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">true_params</span>
 </pre></div>
 </div>
 </div>
@@ -652,15 +652,15 @@ Calibrated parameters: v0=0.046 | kappa=0.985 | theta=0.085 | sigma=0.580 | rho=
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>market_prices = market_prices * (1 + np.random.normal(scale=0.01, size=len(market_prices)))  # a little of market noise
-volSmile = VolatilitySmile(
-    strikes=strikes,
-    time_to_maturity=time_to_maturity,
-    atm=spot,
-    market_prices=market_prices,
-    r=r
-)
-volSmile.plot()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">market_prices</span> <span class="o">=</span> <span class="n">market_prices</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">market_prices</span><span class="p">)))</span>  <span class="c1"># a little of market noise</span>
+<span class="n">volSmile</span> <span class="o">=</span> <span class="n">VolatilitySmile</span><span class="p">(</span>
+    <span class="n">strikes</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span>
+    <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span>
+    <span class="n">atm</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span>
+    <span class="n">market_prices</span><span class="o">=</span><span class="n">market_prices</span><span class="p">,</span>
+    <span class="n">r</span><span class="o">=</span><span class="n">r</span>
+<span class="p">)</span>
+<span class="n">volSmile</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -677,15 +677,15 @@ volSmile.plot()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>calibrated_params = volSmile.calibration(
-    price_function=price_function,
-    initial_guess = [1.0, 0.03, 0.4, -0.5],
-    guess_correlation_sign=&#39;negative&#39;,
-    speed=&#39;local&#39;,
-)
-calibrated_heston = Heston(spot=spot, r=r, **calibrated_params)
-volSmile.plot(calibrated_prices=heston.call_price(strike=strikes, time_to_maturity=time_to_maturity))
-calibrated_params
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calibrated_params</span> <span class="o">=</span> <span class="n">volSmile</span><span class="o">.</span><span class="n">calibration</span><span class="p">(</span>
+    <span class="n">price_function</span><span class="o">=</span><span class="n">price_function</span><span class="p">,</span>
+    <span class="n">initial_guess</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+    <span class="n">guess_correlation_sign</span><span class="o">=</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span>
+    <span class="n">speed</span><span class="o">=</span><span class="s1">&#39;local&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">calibrated_heston</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">calibrated_params</span><span class="p">)</span>
+<span class="n">volSmile</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">calibrated_prices</span><span class="o">=</span><span class="n">heston</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">))</span>
+<span class="n">calibrated_params</span>
 </pre></div>
 </div>
 </div>
@@ -726,15 +726,15 @@ Calibrated parameters: v0=0.047 | kappa=1.637 | theta=0.078 | sigma=0.813 | rho=
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>calibrated_params = volSmile.calibration(
-    price_function=price_function,
-    initial_guess = [1.0, 0.03, 0.4, -0.5],
-    guess_correlation_sign=&#39;negative&#39;,
-    speed=&#39;global&#39;,
-)
-calibrated_heston = Heston(spot=spot, r=r, **calibrated_params)
-volSmile.plot(calibrated_prices=heston.call_price(strike=strikes, time_to_maturity=time_to_maturity))
-calibrated_params
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calibrated_params</span> <span class="o">=</span> <span class="n">volSmile</span><span class="o">.</span><span class="n">calibration</span><span class="p">(</span>
+    <span class="n">price_function</span><span class="o">=</span><span class="n">price_function</span><span class="p">,</span>
+    <span class="n">initial_guess</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+    <span class="n">guess_correlation_sign</span><span class="o">=</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span>
+    <span class="n">speed</span><span class="o">=</span><span class="s1">&#39;global&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">calibrated_heston</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">calibrated_params</span><span class="p">)</span>
+<span class="n">volSmile</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">calibrated_prices</span><span class="o">=</span><span class="n">heston</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">))</span>
+<span class="n">calibrated_params</span>
 </pre></div>
 </div>
 </div>

@@ -423,11 +423,11 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.heston import Heston
-from hestonpy.models.bates import Bates
-from hestonpy.models.calibration.volatilitySmile import VolatilitySmile
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.heston</span><span class="w"> </span><span class="kn">import</span> <span class="n">Heston</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.bates</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bates</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.calibration.volatilitySmile</span><span class="w"> </span><span class="kn">import</span> <span class="n">VolatilitySmile</span>
 
-r = 0.00
+<span class="n">r</span> <span class="o">=</span> <span class="mf">0.00</span>
 </pre></div>
 </div>
 </div>
@@ -438,10 +438,10 @@ r = 0.00
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.option.data import get_options_data, filter_data_for_maturity
-symbol=&#39;^SPX&#39;
-all_market_data, spot, maturities = get_options_data(symbol=symbol)
-spot
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.option.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_options_data</span><span class="p">,</span> <span class="n">filter_data_for_maturity</span>
+<span class="n">symbol</span><span class="o">=</span><span class="s1">&#39;^SPX&#39;</span>
+<span class="n">all_market_data</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">maturities</span> <span class="o">=</span> <span class="n">get_options_data</span><span class="p">(</span><span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">spot</span>
 </pre></div>
 </div>
 </div>
@@ -459,7 +459,7 @@ np.float64(5396.52001953125)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>maturities
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">maturities</span>
 </pre></div>
 </div>
 </div>
@@ -524,9 +524,9 @@ np.float64(5396.52001953125)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>maturity = maturities[28]
-full_market_data = filter_data_for_maturity(all_market_data, maturity)
-full_market_data.head()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">maturity</span> <span class="o">=</span> <span class="n">maturities</span><span class="p">[</span><span class="mi">28</span><span class="p">]</span>
+<span class="n">full_market_data</span> <span class="o">=</span> <span class="n">filter_data_for_maturity</span><span class="p">(</span><span class="n">all_market_data</span><span class="p">,</span> <span class="n">maturity</span><span class="p">)</span>
+<span class="n">full_market_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -628,21 +628,21 @@ full_market_data.head()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>time_to_maturity = full_market_data[&#39;Time to Maturity&#39;].iloc[0]
-strikes = full_market_data[&#39;Strike&#39;].values
-bid_prices = full_market_data[&quot;Bid&quot;].values
-ask_prices = full_market_data[&#39;Ask&#39;].values
-market_ivs = full_market_data[&#39;Implied Volatility&#39;].values
-market_prices = full_market_data[&#39;Call Price&#39;].values
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_to_maturity</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s1">&#39;Time to Maturity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">strikes</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s1">&#39;Strike&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">bid_prices</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s2">&quot;Bid&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">ask_prices</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s1">&#39;Ask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">market_ivs</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s1">&#39;Implied Volatility&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">market_prices</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s1">&#39;Call Price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-marketVolatilitySmile = VolatilitySmile(
-    strikes=strikes,
-    time_to_maturity=time_to_maturity,
-    atm=spot,
-    market_ivs=market_ivs,
-    r=r
-)
-marketVolatilitySmile.plot(bid_prices=bid_prices, ask_prices=ask_prices)
+<span class="n">marketVolatilitySmile</span> <span class="o">=</span> <span class="n">VolatilitySmile</span><span class="p">(</span>
+    <span class="n">strikes</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span>
+    <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span>
+    <span class="n">atm</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span>
+    <span class="n">market_ivs</span><span class="o">=</span><span class="n">market_ivs</span><span class="p">,</span>
+    <span class="n">r</span><span class="o">=</span><span class="n">r</span>
+<span class="p">)</span>
+<span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bid_prices</span><span class="o">=</span><span class="n">bid_prices</span><span class="p">,</span> <span class="n">ask_prices</span><span class="o">=</span><span class="n">ask_prices</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -660,9 +660,9 @@ marketVolatilitySmile.plot(bid_prices=bid_prices, ask_prices=ask_prices)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>market_data = marketVolatilitySmile.filters(full_market_data)
-marketVolatilitySmile.plot()
-market_data.head()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">market_data</span> <span class="o">=</span> <span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">filters</span><span class="p">(</span><span class="n">full_market_data</span><span class="p">)</span>
+<span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">market_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -797,35 +797,35 @@ market_data.head()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>params = {
-    &quot;kappa&quot;: 1.25,
-    &quot;theta&quot;: 0.06,
-    &quot;sigma&quot;: 0.6,
-    &quot;rho&quot;: -0.8,
-}
-heston = Heston(spot=spot, vol_initial=0.06, r=r, drift_emm=0, **params)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="mf">1.25</span><span class="p">,</span>
+    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">,</span>
+    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.8</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">heston</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">vol_initial</span><span class="o">=</span><span class="mf">0.06</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">drift_emm</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
 
-initial_params = marketVolatilitySmile.calibration(
-    price_function=heston.call_price,
-    guess_correlation_sign=&#39;negative&#39;,
-    initial_guess=list(params.values()),
-    speed=&#39;local&#39;,
-)
+<span class="n">initial_params</span> <span class="o">=</span> <span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">calibration</span><span class="p">(</span>
+    <span class="n">price_function</span><span class="o">=</span><span class="n">heston</span><span class="o">.</span><span class="n">call_price</span><span class="p">,</span>
+    <span class="n">guess_correlation_sign</span><span class="o">=</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span>
+    <span class="n">initial_guess</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
+    <span class="n">speed</span><span class="o">=</span><span class="s1">&#39;local&#39;</span><span class="p">,</span>
+<span class="p">)</span>
 
-initial_guess = [initial_params[&#39;kappa&#39;], initial_params[&#39;theta&#39;], initial_params[&#39;sigma&#39;], initial_params[&#39;rho&#39;]]
-calibrated_params = marketVolatilitySmile.calibration(
-    price_function=heston.call_price,
-    guess_correlation_sign=&#39;negative&#39;,
-    initial_guess=initial_guess,
-    power=&#39;mse&#39;,
-    speed=&#39;global&#39;,
-)
+<span class="n">initial_guess</span> <span class="o">=</span> <span class="p">[</span><span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;kappa&#39;</span><span class="p">],</span> <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">],</span> <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">],</span> <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]]</span>
+<span class="n">calibrated_params</span> <span class="o">=</span> <span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">calibration</span><span class="p">(</span>
+    <span class="n">price_function</span><span class="o">=</span><span class="n">heston</span><span class="o">.</span><span class="n">call_price</span><span class="p">,</span>
+    <span class="n">guess_correlation_sign</span><span class="o">=</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span>
+    <span class="n">initial_guess</span><span class="o">=</span><span class="n">initial_guess</span><span class="p">,</span>
+    <span class="n">power</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span><span class="p">,</span>
+    <span class="n">speed</span><span class="o">=</span><span class="s1">&#39;global&#39;</span><span class="p">,</span>
+<span class="p">)</span>
 
-marketVolatilitySmile.plot(
-    calibrated_prices=heston.call_price(strike=marketVolatilitySmile.strikes, time_to_maturity=time_to_maturity, **calibrated_params),
-    maturity=maturity
-)
-calibrated_params
+<span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">calibrated_prices</span><span class="o">=</span><span class="n">heston</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="o">**</span><span class="n">calibrated_params</span><span class="p">),</span>
+    <span class="n">maturity</span><span class="o">=</span><span class="n">maturity</span>
+<span class="p">)</span>
+<span class="n">calibrated_params</span>
 </pre></div>
 </div>
 </div>
@@ -899,7 +899,7 @@ Calibrated parameters: v0=0.051 | kappa=0.582 | theta=0.182 | sigma=0.708 | rho=
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>calibrated_params
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calibrated_params</span>
 </pre></div>
 </div>
 </div>
@@ -921,41 +921,41 @@ Calibrated parameters: v0=0.051 | kappa=0.582 | theta=0.182 | sigma=0.708 | rho=
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>params = {
-    &quot;kappa&quot;: 1.25,
-    &quot;theta&quot;: 0.06,
-    &quot;sigma&quot;: 0.6,
-    &quot;rho&quot;: -0.5,
-    &quot;lambda_jump&quot;: 1.0,
-    &quot;mu_J&quot;: -0.1,
-    &#39;sigma_J&#39;: 0.3
-}
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="mf">1.25</span><span class="p">,</span>
+    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">,</span>
+    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;lambda_jump&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="s2">&quot;mu_J&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="s1">&#39;sigma_J&#39;</span><span class="p">:</span> <span class="mf">0.3</span>
+<span class="p">}</span>
 
-bates = Bates(spot=spot, vol_initial=0.06, r=r, drift_emm=0, **params)
+<span class="n">bates</span> <span class="o">=</span> <span class="n">Bates</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">vol_initial</span><span class="o">=</span><span class="mf">0.06</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">drift_emm</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
 
-initial_params = marketVolatilitySmile.calibration(
-    price_function=bates.call_price,
-    guess_correlation_sign=&#39;negative&#39;,
-    initial_guess=list(params.values()),
-    power=&#39;mse&#39;,
-    speed=&#39;local&#39;,
-)
+<span class="n">initial_params</span> <span class="o">=</span> <span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">calibration</span><span class="p">(</span>
+    <span class="n">price_function</span><span class="o">=</span><span class="n">bates</span><span class="o">.</span><span class="n">call_price</span><span class="p">,</span>
+    <span class="n">guess_correlation_sign</span><span class="o">=</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span>
+    <span class="n">initial_guess</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
+    <span class="n">power</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span><span class="p">,</span>
+    <span class="n">speed</span><span class="o">=</span><span class="s1">&#39;local&#39;</span><span class="p">,</span>
+<span class="p">)</span>
 
-initial_guess = [initial_params[&#39;kappa&#39;], initial_params[&#39;theta&#39;], initial_params[&#39;sigma&#39;], initial_params[&#39;rho&#39;],
-                 initial_params[&#39;lambda_jump&#39;], initial_params[&#39;mu_J&#39;], initial_params[&#39;sigma_J&#39;]]
-calibrated_params = marketVolatilitySmile.calibration(
-    price_function=bates.call_price,
-    guess_correlation_sign=&#39;negative&#39;,
-    initial_guess=initial_guess,
-    power=&#39;mse&#39;,
-    speed=&#39;global&#39;,
-)
+<span class="n">initial_guess</span> <span class="o">=</span> <span class="p">[</span><span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;kappa&#39;</span><span class="p">],</span> <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">],</span> <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">],</span> <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">],</span>
+                 <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;lambda_jump&#39;</span><span class="p">],</span> <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;mu_J&#39;</span><span class="p">],</span> <span class="n">initial_params</span><span class="p">[</span><span class="s1">&#39;sigma_J&#39;</span><span class="p">]]</span>
+<span class="n">calibrated_params</span> <span class="o">=</span> <span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">calibration</span><span class="p">(</span>
+    <span class="n">price_function</span><span class="o">=</span><span class="n">bates</span><span class="o">.</span><span class="n">call_price</span><span class="p">,</span>
+    <span class="n">guess_correlation_sign</span><span class="o">=</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span>
+    <span class="n">initial_guess</span><span class="o">=</span><span class="n">initial_guess</span><span class="p">,</span>
+    <span class="n">power</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span><span class="p">,</span>
+    <span class="n">speed</span><span class="o">=</span><span class="s1">&#39;global&#39;</span><span class="p">,</span>
+<span class="p">)</span>
 
-marketVolatilitySmile.plot(
-    calibrated_prices=bates.call_price(strike=marketVolatilitySmile.strikes, time_to_maturity=time_to_maturity, **calibrated_params),
-    maturity=maturity
-)
-calibrated_params
+<span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">calibrated_prices</span><span class="o">=</span><span class="n">bates</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="o">**</span><span class="n">calibrated_params</span><span class="p">),</span>
+    <span class="n">maturity</span><span class="o">=</span><span class="n">maturity</span>
+<span class="p">)</span>
+<span class="n">calibrated_params</span>
 </pre></div>
 </div>
 </div>
@@ -1026,53 +1026,53 @@ Calibrated parameters:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from datetime import datetime
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as font_manager
-font_legend = font_manager.FontProperties(
-    style=&#39;normal&#39;,
-    size=20,
-)
-fontdict = {
-    &quot;fontsize&quot;: 20,
-    # &quot;fontweight&quot;: &quot;bold&quot;
-}
-fontdict_suptitle = {
-    &#39;fontsize&#39;: 30,
-    &#39;fontweight&#39;: &#39;bold&#39;
-    }
-fontdict_title = {
-    &#39;fontsize&#39;: 30,
-    &#39;fontweight&#39;: &#39;bold&#39;
-    }
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.font_manager</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">font_manager</span>
+<span class="n">font_legend</span> <span class="o">=</span> <span class="n">font_manager</span><span class="o">.</span><span class="n">FontProperties</span><span class="p">(</span>
+    <span class="n">style</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+    <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">fontdict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="c1"># &quot;fontweight&quot;: &quot;bold&quot;</span>
+<span class="p">}</span>
+<span class="n">fontdict_suptitle</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="s1">&#39;fontweight&#39;</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span>
+    <span class="p">}</span>
+<span class="n">fontdict_title</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="s1">&#39;fontweight&#39;</span><span class="p">:</span> <span class="s1">&#39;bold&#39;</span>
+    <span class="p">}</span>
 
-calibrated_prices = bates.call_price(strike=marketVolatilitySmile.strikes, time_to_maturity=time_to_maturity, **calibrated_params)
-calibrated_ivs = marketVolatilitySmile.compute_smile(prices=calibrated_prices)
-ask_ivs = market_data[&#39;Ask ivs&#39;].values
-bid_ivs = market_data[&#39;Bid ivs&#39;].values
-forward = marketVolatilitySmile.atm * np.exp(marketVolatilitySmile.r * marketVolatilitySmile.time_to_maturity)
+<span class="n">calibrated_prices</span> <span class="o">=</span> <span class="n">bates</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="o">**</span><span class="n">calibrated_params</span><span class="p">)</span>
+<span class="n">calibrated_ivs</span> <span class="o">=</span> <span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">compute_smile</span><span class="p">(</span><span class="n">prices</span><span class="o">=</span><span class="n">calibrated_prices</span><span class="p">)</span>
+<span class="n">ask_ivs</span> <span class="o">=</span> <span class="n">market_data</span><span class="p">[</span><span class="s1">&#39;Ask ivs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">bid_ivs</span> <span class="o">=</span> <span class="n">market_data</span><span class="p">[</span><span class="s1">&#39;Bid ivs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">forward</span> <span class="o">=</span> <span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">atm</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="p">)</span>
 
-plt.figure(figsize=(15, 10))
-plt.axvline(1, linestyle=&quot;--&quot;, color=&quot;gray&quot;, label=&#39;ATM&#39;)
-plt.plot(marketVolatilitySmile.strikes / forward, calibrated_ivs, marker=&#39;+&#39;, color=&#39;#2c6089&#39;, linestyle=&quot;dotted&quot;, markersize=14, linewidth=2, label=&#39;calibrated&#39;)
-plt.scatter(marketVolatilitySmile.strikes / forward, marketVolatilitySmile.market_ivs, marker=&#39;o&#39;, color=&#39;red&#39;, s=20, label=&#39;market&#39;)
-plt.scatter(marketVolatilitySmile.strikes / forward, bid_ivs, marker=6, color=&#39;black&#39;, s=40, label=&#39;bid&#39;)
-plt.scatter(marketVolatilitySmile.strikes / forward, ask_ivs, marker=7, color=&#39;gray&#39;, s=40, label=&#39;ask&#39;)
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ATM&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span> <span class="n">calibrated_ivs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#2c6089&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;calibrated&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span> <span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">market_ivs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;market&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span> <span class="n">bid_ivs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;bid&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span> <span class="n">ask_ivs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ask&#39;</span><span class="p">)</span>
 
-plt.xlabel(&quot;Moneyness [%]&quot;, fontdict=fontdict)
-plt.ylabel(&quot;Implied Volatility [%]&quot;, fontdict=fontdict)
-plt.xlim((0.65, 1.35))
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Moneyness [%]&quot;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Implied Volatility [%]&quot;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="mf">0.65</span><span class="p">,</span> <span class="mf">1.35</span><span class="p">))</span>
 
-date = datetime.strptime(maturity, &#39;%Y-%m-%d&#39;).date().strftime(&quot;%d-%B-%y&quot;)
-title = f&quot;{symbol} Maturity {date}&quot;
-plt.suptitle(title, fontsize=35, fontweight=&#39;bold&#39;, color=&#39;#2c6089&#39;)
-plt.title(f&quot;in {marketVolatilitySmile.time_to_maturity * 252 / 5:.1f} weeks&quot;, color=&quot;grey&quot;, style=&#39;italic&#39;, fontsize=25)
+<span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">maturity</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%B-%y&quot;</span><span class="p">)</span>
+<span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2"> Maturity </span><span class="si">{</span><span class="n">date</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#2c6089&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;in </span><span class="si">{</span><span class="n">marketVolatilitySmile</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">252</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">5</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> weeks&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;italic&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
 
-plt.grid(visible=True, which=&quot;major&quot;, linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5, alpha=0.8)
-plt.legend(fontsize=15)
-plt.tight_layout()
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

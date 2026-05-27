@@ -423,11 +423,11 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.heston import Heston
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.heston</span><span class="w"> </span><span class="kn">import</span> <span class="n">Heston</span>
 
-import matplotlib.pyplot as plt
-import time
-import numpy as np
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 </pre></div>
 </div>
 </div>
@@ -439,19 +439,19 @@ import numpy as np
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>S0 = 100
-V0 = 0.06
-r = 0.05
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S0</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">V0</span> <span class="o">=</span> <span class="mf">0.06</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mf">0.05</span>
 
-params = {
-    &quot;kappa&quot;: 1,
-    &quot;theta&quot;: 0.06,
-    &quot;sigma&quot;: 0.3,
-    &quot;rho&quot;: -0.5,
-    &quot;drift_emm&quot;: 0.00,
-}
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;drift_emm&quot;</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span>
+<span class="p">}</span>
 
-heston = Heston(spot=S0, vol_initial=V0, r=r, **params)
+<span class="n">heston</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">S0</span><span class="p">,</span> <span class="n">vol_initial</span><span class="o">=</span><span class="n">V0</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -459,7 +459,7 @@ heston = Heston(spot=S0, vol_initial=V0, r=r, **params)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>heston.price_surface()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heston</span><span class="o">.</span><span class="n">price_surface</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -479,8 +479,8 @@ heston = Heston(spot=S0, vol_initial=V0, r=r, **params)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nbr_points = 100
-nbr_simulations = 10**3
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nbr_points</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">nbr_simulations</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">3</span>
 </pre></div>
 </div>
 </div>
@@ -489,14 +489,14 @@ nbr_simulations = 10**3
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>start_time = time.time()
-result = heston.monte_carlo_price(nbr_points=nbr_points, nbr_simulations=nbr_simulations, strike=100, time_to_maturity=1, scheme=&quot;euler&quot;)
-time_delta = round(time.time() - start_time,4)
-price_euler = round(result.price, 2)
-std_euler = round(result.std, 2)
-infinum_euler = round(result.infinum, 2)
-supremum_euler = round(result.supremum, 2)
-print(f&quot;Monte Carlo Euler scheme in {time_delta}s : price ${price_euler}, std {std_euler}, and Confidence interval [{infinum_euler},{supremum_euler}]\n&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">monte_carlo_price</span><span class="p">(</span><span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_points</span><span class="p">,</span> <span class="n">nbr_simulations</span><span class="o">=</span><span class="n">nbr_simulations</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;euler&quot;</span><span class="p">)</span>
+<span class="n">time_delta</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">price_euler</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">std_euler</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">std</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">infinum_euler</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">infinum</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">supremum_euler</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">supremum</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Monte Carlo Euler scheme in </span><span class="si">{</span><span class="n">time_delta</span><span class="si">}</span><span class="s2">s : price $</span><span class="si">{</span><span class="n">price_euler</span><span class="si">}</span><span class="s2">, std </span><span class="si">{</span><span class="n">std_euler</span><span class="si">}</span><span class="s2">, and Confidence interval [</span><span class="si">{</span><span class="n">infinum_euler</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">supremum_euler</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -515,14 +515,14 @@ Monte Carlo Euler scheme in 0.0445s : price $12.06, std 0.49, and Confidence int
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>start_time = time.time()
-result = heston.monte_carlo_price(nbr_points=nbr_points, nbr_simulations=nbr_simulations, strike=100, time_to_maturity=1, scheme=&quot;milstein&quot;)
-time_delta = round(time.time() - start_time,4)
-price_milstein = round(result.price, 2)
-std_milstein = round(result.std, 2)
-infinum_milstein = round(result.infinum, 2)
-supremum_milstein = round(result.supremum, 2)
-print(f&quot;Monte Carlo Milstein scheme in {time_delta}s : price ${price_milstein}, std {std_milstein}, and Confidence interval [{infinum_milstein},{supremum_milstein}]\n&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">monte_carlo_price</span><span class="p">(</span><span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_points</span><span class="p">,</span> <span class="n">nbr_simulations</span><span class="o">=</span><span class="n">nbr_simulations</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;milstein&quot;</span><span class="p">)</span>
+<span class="n">time_delta</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">price_milstein</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">std_milstein</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">std</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">infinum_milstein</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">infinum</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">supremum_milstein</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">supremum</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Monte Carlo Milstein scheme in </span><span class="si">{</span><span class="n">time_delta</span><span class="si">}</span><span class="s2">s : price $</span><span class="si">{</span><span class="n">price_milstein</span><span class="si">}</span><span class="s2">, std </span><span class="si">{</span><span class="n">std_milstein</span><span class="si">}</span><span class="s2">, and Confidence interval [</span><span class="si">{</span><span class="n">infinum_milstein</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">supremum_milstein</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -543,14 +543,14 @@ Monte Carlo Milstein scheme in 0.0577s : price $12.03, std 0.49, and Confidence 
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>start_time = time.time()
-price_FT, error_FT = heston.fourier_transform_price(strike=100, time_to_maturity=1, error_boolean=True)
-time_delta = round(time.time() - start_time,4)
-infinum = round(price_FT-error_FT, 3)
-supremum = round(price_FT+error_FT, 3)
-price_FT = round(price_FT, 3)
-error_FT = round(error_FT, 8)
-print(f&quot;Fourier Transform in {time_delta}s : price ${price_FT}, error ${error_FT} , and Confidence interval [{infinum},{supremum}]\n&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">price_FT</span><span class="p">,</span> <span class="n">error_FT</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">fourier_transform_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">error_boolean</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">time_delta</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">infinum</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">price_FT</span><span class="o">-</span><span class="n">error_FT</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">supremum</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">price_FT</span><span class="o">+</span><span class="n">error_FT</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">price_FT</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">price_FT</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">error_FT</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">error_FT</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fourier Transform in </span><span class="si">{</span><span class="n">time_delta</span><span class="si">}</span><span class="s2">s : price $</span><span class="si">{</span><span class="n">price_FT</span><span class="si">}</span><span class="s2">, error $</span><span class="si">{</span><span class="n">error_FT</span><span class="si">}</span><span class="s2"> , and Confidence interval [</span><span class="si">{</span><span class="n">infinum</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">supremum</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -570,14 +570,14 @@ Fourier Transform in 0.1561s : price $11.952, error $0.0 , and Confidence interv
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>start_time = time.time()
-price_CM, error_CM = heston.carr_madan_price(strike=100, time_to_maturity=1, error_boolean=True)
-time_delta = round(time.time() - start_time,4)
-infinum = round(price_CM-error_CM, 3)
-supremum = round(price_CM+error_CM, 3)
-price_CM = round(price_CM, 3)
-error_CM = round(error_CM, 14)
-print(f&quot;Carr-Madan in {time_delta}s : price ${price_CM}, error ${error_CM} , and Confidence interval [{infinum},{supremum}]\n&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">price_CM</span><span class="p">,</span> <span class="n">error_CM</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">carr_madan_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">error_boolean</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">time_delta</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">infinum</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">price_CM</span><span class="o">-</span><span class="n">error_CM</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">supremum</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">price_CM</span><span class="o">+</span><span class="n">error_CM</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">price_CM</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">price_CM</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">error_CM</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">error_CM</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Carr-Madan in </span><span class="si">{</span><span class="n">time_delta</span><span class="si">}</span><span class="s2">s : price $</span><span class="si">{</span><span class="n">price_CM</span><span class="si">}</span><span class="s2">, error $</span><span class="si">{</span><span class="n">error_CM</span><span class="si">}</span><span class="s2"> , and Confidence interval [</span><span class="si">{</span><span class="n">infinum</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">supremum</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -599,8 +599,8 @@ Carr-Madan in 0.0896s : price $11.952, error $1.447e-10 , and Confidence interva
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>scheme = &#39;milstein&#39;
-S, V = heston.plot_simulation(time_to_maturity=1, scheme=&quot;milstein&quot;, nbr_points=252)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scheme</span> <span class="o">=</span> <span class="s1">&#39;milstein&#39;</span>
+<span class="n">S</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">plot_simulation</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;milstein&quot;</span><span class="p">,</span> <span class="n">nbr_points</span><span class="o">=</span><span class="mi">252</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -619,15 +619,15 @@ S, V = heston.plot_simulation(time_to_maturity=1, scheme=&quot;milstein&quot;, n
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>psi1 = heston.characteristic(j=1)
-psi2 = heston.characteristic(j=2)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psi1</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">psi2</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-u = np.arange(start=-20, stop=20,step=0.01)
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 
-x = np.log(S0)
-v = V0
-strike = 100
-time_to_maturity = 1
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">S0</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">V0</span>
+<span class="n">strike</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">time_to_maturity</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -636,31 +636,31 @@ time_to_maturity = 1
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, axs = plt.subplots(1, 2, figsize=(10,5), sharey=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-# Plot real part of psi1 and psi2
-axs[0].set_title(r&#39;$\mathfrak{Re}(\psi_1)$ and $\mathfrak{Re}(\psi_2)$&#39;)
-axs[0].plot(u, np.abs(psi1(x, v, time_to_maturity, u)), label=r&#39;$|\psi_1|$&#39;, color=&#39;orange&#39;, linestyle=&#39;--&#39;)
-axs[0].plot(u, psi1(x, v, time_to_maturity, u).real, label=r&#39;$\psi_1$&#39;, color=&#39;orange&#39;)
-axs[0].plot(u, psi2(x, v, time_to_maturity, u).real, label=r&#39;$\psi_2$&#39;, color=&#39;blue&#39;)
-axs[0].grid(visible=True)
-axs[0].set_xlabel(r&#39;$u$&#39;)
-axs[0].set_ylabel(&#39;Real part&#39;)
-axs[0].legend()
+<span class="c1"># Plot real part of psi1 and psi2</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\mathfrak</span><span class="si">{Re}</span><span class="s1">(\psi_1)$ and $\mathfrak</span><span class="si">{Re}</span><span class="s1">(\psi_2)$&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$|\psi_1|$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_1$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_2$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$u$&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Real part&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-# Plot imaginary part of psi1 and psi2
-axs[1].set_title(r&#39;$\mathfrak{Im}(\psi_1)$ and $\mathfrak{Im}(\psi_2)$&#39;)
-axs[1].plot(u, np.abs(psi1(x, v, time_to_maturity, u)), label=r&#39;$|\psi_1|$&#39;, color=&#39;orange&#39;, linestyle=&#39;--&#39;)
-axs[1].plot(u, psi1(x, v, time_to_maturity, u).imag, label=r&#39;$\psi_1$&#39;, color=&#39;orange&#39;)
-axs[1].plot(u, psi2(x, v, time_to_maturity, u).imag, label=r&#39;$\psi_2$&#39;, color=&#39;blue&#39;)
-axs[1].grid(visible=True)
-axs[1].set_xlabel(r&#39;$u$&#39;)
-axs[1].set_ylabel(&#39;Imaginary part&#39;)
-axs[1].legend()
+<span class="c1"># Plot imaginary part of psi1 and psi2</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\mathfrak</span><span class="si">{Im}</span><span class="s1">(\psi_1)$ and $\mathfrak</span><span class="si">{Im}</span><span class="s1">(\psi_2)$&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$|\psi_1|$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_1$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_2$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$u$&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Imaginary part&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-plt.tight_layout()
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -676,18 +676,18 @@ plt.show()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig = plt.figure(figsize=(7,7))
-ax = fig.add_subplot(111, projection=&#39;3d&#39;)
-ax.plot(u, psi1(x, v, time_to_maturity, u).real, psi1(x, v, time_to_maturity, u).imag, label=r&#39;$\psi_1$&#39;, color=&#39;orange&#39;)
-ax.plot(u, psi2(x, v, time_to_maturity, u).real, psi2(x, v, time_to_maturity, u).imag, label=r&#39;$\psi_2$&#39;, color=&#39;blue&#39;)
-ax.set_xticks([-5*i for i in range(6)] + [5*i for i in range(6)])
-ax.set_yticks([-1, 0, 1])
-ax.set_zticks([-1, 0, 1])
-ax.set_xlabel(&#39;u&#39;)
-ax.set_ylabel(&#39;Real part&#39;)
-ax.set_zlabel(&#39;Imaginary part&#39;)
-plt.legend()
-plt.show()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_1$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\psi_2$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">5</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zticks</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;u&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Real part&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;Imaginary part&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -703,22 +703,22 @@ plt.show()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>psi1 = heston.characteristic(j=1)
-integrand1 = lambda u : np.real((np.exp(-u * np.log(strike) * 1j) * psi1(x, v, time_to_maturity, u))/(u*1j))
-psi2 = heston.characteristic(j=2)
-integrand2 = lambda u : np.real((np.exp(-u * np.log(strike) * 1j) * psi2(x, v, time_to_maturity, u))/(u*1j))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psi1</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">integrand1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">u</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="p">))</span>
+<span class="n">psi2</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">integrand2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strike</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">u</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="p">))</span>
 
-u = np.arange(start=0, stop=40,step=0.01)
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span><span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 
-plt.figure()
-plt.plot(u, integrand1(u) * u**2, label=&quot;Integrand 1&quot;)
-plt.plot(u, integrand2(u) * u**2, label=&quot;Integrand 2&quot;)
-plt.xlabel(r&#39;u&#39;)
-plt.ylabel(r&#39;Integrand $\times u^2$&#39;)
-plt.legend()
-plt.grid(visible=True)
-plt.title(r&#39;Existence of $Q_1$ and $Q_2$&#39;)
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">integrand1</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Integrand 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">integrand2</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">*</span> <span class="n">u</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Integrand 2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;u&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Integrand $\times u^2$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Existence of $Q_1$ and $Q_2$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

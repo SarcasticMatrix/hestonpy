@@ -423,11 +423,11 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.bates import Bates
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.bates</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bates</span>
 
-import matplotlib.pyplot as plt
-import time
-import numpy as np
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 </pre></div>
 </div>
 </div>
@@ -439,22 +439,22 @@ import numpy as np
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>S0 = 100
-V0 = 0.06
-r = 0.05
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S0</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">V0</span> <span class="o">=</span> <span class="mf">0.06</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mf">0.05</span>
 
-params = {
-    &quot;kappa&quot;: 1,
-    &quot;theta&quot;: 0.06,
-    &quot;sigma&quot;: 0.3,
-    &quot;rho&quot;: -0.5,
-    &#39;lambda_jump&#39;: 4.5,
-    &#39;mu_J&#39;: 0.00,
-    &#39;sigma_J&#39;: 0.05,
-    &quot;drift_emm&quot;: 0.00,
-}
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="s1">&#39;lambda_jump&#39;</span><span class="p">:</span> <span class="mf">4.5</span><span class="p">,</span>
+    <span class="s1">&#39;mu_J&#39;</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span>
+    <span class="s1">&#39;sigma_J&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>
+    <span class="s2">&quot;drift_emm&quot;</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span>
+<span class="p">}</span>
 
-bates = Bates(spot=S0, vol_initial=V0, r=r, **params)
+<span class="n">bates</span> <span class="o">=</span> <span class="n">Bates</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">S0</span><span class="p">,</span> <span class="n">vol_initial</span><span class="o">=</span><span class="n">V0</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -462,7 +462,7 @@ bates = Bates(spot=S0, vol_initial=V0, r=r, **params)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>bates.price_surface()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bates</span><span class="o">.</span><span class="n">price_surface</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -481,8 +481,8 @@ bates = Bates(spot=S0, vol_initial=V0, r=r, **params)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>nbr_points = 100
-nbr_simulations = 10**3
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nbr_points</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">nbr_simulations</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">3</span>
 </pre></div>
 </div>
 </div>
@@ -491,14 +491,14 @@ nbr_simulations = 10**3
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>start_time = time.time()
-result = bates.monte_carlo_price(nbr_points=nbr_points, nbr_simulations=nbr_simulations, strike=100, time_to_maturity=1, scheme=&quot;euler&quot;)
-time_delta = round(time.time() - start_time,4)
-price_euler = round(result.price, 2)
-std_euler = round(result.std, 2)
-infinum_euler = round(result.infinum, 2)
-supremum_euler = round(result.supremum, 2)
-print(f&quot;Monte Carlo Euler scheme in {time_delta}s : price ${price_euler}, std {std_euler}, and Confidence interval [{infinum_euler},{supremum_euler}]\n&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">bates</span><span class="o">.</span><span class="n">monte_carlo_price</span><span class="p">(</span><span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_points</span><span class="p">,</span> <span class="n">nbr_simulations</span><span class="o">=</span><span class="n">nbr_simulations</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;euler&quot;</span><span class="p">)</span>
+<span class="n">time_delta</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">price_euler</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">std_euler</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">std</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">infinum_euler</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">infinum</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">supremum_euler</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">supremum</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Monte Carlo Euler scheme in </span><span class="si">{</span><span class="n">time_delta</span><span class="si">}</span><span class="s2">s : price $</span><span class="si">{</span><span class="n">price_euler</span><span class="si">}</span><span class="s2">, std </span><span class="si">{</span><span class="n">std_euler</span><span class="si">}</span><span class="s2">, and Confidence interval [</span><span class="si">{</span><span class="n">infinum_euler</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">supremum_euler</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -517,14 +517,14 @@ Monte Carlo Euler scheme in 0.0637s : price $13.83, std 0.58, and Confidence int
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>start_time = time.time()
-result = bates.monte_carlo_price(nbr_points=nbr_points, nbr_simulations=nbr_simulations, strike=100, time_to_maturity=1, scheme=&quot;milstein&quot;)
-time_delta = round(time.time() - start_time,4)
-price_milstein = round(result.price, 2)
-std_milstein = round(result.std, 2)
-infinum_milstein = round(result.infinum, 2)
-supremum_milstein = round(result.supremum, 2)
-print(f&quot;Monte Carlo Milstein scheme in {time_delta}s : price ${price_milstein}, std {std_milstein}, and Confidence interval [{infinum_milstein},{supremum_milstein}]\n&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">bates</span><span class="o">.</span><span class="n">monte_carlo_price</span><span class="p">(</span><span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_points</span><span class="p">,</span> <span class="n">nbr_simulations</span><span class="o">=</span><span class="n">nbr_simulations</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;milstein&quot;</span><span class="p">)</span>
+<span class="n">time_delta</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">price_milstein</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">std_milstein</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">std</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">infinum_milstein</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">infinum</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">supremum_milstein</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">supremum</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Monte Carlo Milstein scheme in </span><span class="si">{</span><span class="n">time_delta</span><span class="si">}</span><span class="s2">s : price $</span><span class="si">{</span><span class="n">price_milstein</span><span class="si">}</span><span class="s2">, std </span><span class="si">{</span><span class="n">std_milstein</span><span class="si">}</span><span class="s2">, and Confidence interval [</span><span class="si">{</span><span class="n">infinum_milstein</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">supremum_milstein</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -545,14 +545,14 @@ Monte Carlo Milstein scheme in 0.0552s : price $13.17, std 0.57, and Confidence 
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>start_time = time.time()
-price_CM, error_CM = bates.carr_madan_price(strike=100, time_to_maturity=1, error_boolean=True)
-time_delta = round(time.time() - start_time,4)
-infinum = round(price_CM-error_CM, 3)
-supremum = round(price_CM+error_CM, 3)
-price_CM = round(price_CM, 3)
-error_CM = round(error_CM, 14)
-print(f&quot;Carr-Madan in {time_delta}s : price ${price_CM}, error ${error_CM} , and Confidence interval [{infinum},{supremum}]\n&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">price_CM</span><span class="p">,</span> <span class="n">error_CM</span> <span class="o">=</span> <span class="n">bates</span><span class="o">.</span><span class="n">carr_madan_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">error_boolean</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">time_delta</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">infinum</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">price_CM</span><span class="o">-</span><span class="n">error_CM</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">supremum</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">price_CM</span><span class="o">+</span><span class="n">error_CM</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">price_CM</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">price_CM</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">error_CM</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">error_CM</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Carr-Madan in </span><span class="si">{</span><span class="n">time_delta</span><span class="si">}</span><span class="s2">s : price $</span><span class="si">{</span><span class="n">price_CM</span><span class="si">}</span><span class="s2">, error $</span><span class="si">{</span><span class="n">error_CM</span><span class="si">}</span><span class="s2"> , and Confidence interval [</span><span class="si">{</span><span class="n">infinum</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">supremum</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -572,8 +572,8 @@ Carr-Madan in 0.1314s : price $12.779, error $1.4462e-10 , and Confidence interv
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>scheme = &#39;milstein&#39;
-_ = bates.plot_simulation(time_to_maturity=10, scheme=scheme, nbr_points=252*4)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scheme</span> <span class="o">=</span> <span class="s1">&#39;milstein&#39;</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">bates</span><span class="o">.</span><span class="n">plot_simulation</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">scheme</span><span class="p">,</span> <span class="n">nbr_points</span><span class="o">=</span><span class="mi">252</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

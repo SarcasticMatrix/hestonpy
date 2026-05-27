@@ -425,14 +425,14 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.heston import Heston
-from hestonpy.models.calibration.volatilitySmile import VolatilitySmile, fontdict
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.heston</span><span class="w"> </span><span class="kn">import</span> <span class="n">Heston</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.calibration.volatilitySmile</span><span class="w"> </span><span class="kn">import</span> <span class="n">VolatilitySmile</span><span class="p">,</span> <span class="n">fontdict</span>
 
-import numpy as np
-import pandas as pd
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.gridspec</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gridspec</span>
 </pre></div>
 </div>
 </div>
@@ -441,25 +441,25 @@ import matplotlib.gridspec as gridspec
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Paramètres initiaux du modèle Heston
-spot = 100            # Prix spot
-vol_initial = 0.02    # Variance initiale
-r = 0.00
-params = {
-    &quot;kappa&quot;: 1.25,
-    &quot;theta&quot;: 0.06,
-    &quot;drift_emm&quot;: 0.00,
-    &quot;sigma&quot;: 0.6,
-    &quot;rho&quot;: -0.8,
-}
-time_to_maturity = 1
-model = Heston(spot, vol_initial, r, **params)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Paramètres initiaux du modèle Heston</span>
+<span class="n">spot</span> <span class="o">=</span> <span class="mi">100</span>            <span class="c1"># Prix spot</span>
+<span class="n">vol_initial</span> <span class="o">=</span> <span class="mf">0.02</span>    <span class="c1"># Variance initiale</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mf">0.00</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="mf">1.25</span><span class="p">,</span>
+    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+    <span class="s2">&quot;drift_emm&quot;</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">,</span>
+    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.8</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">time_to_maturity</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">vol_initial</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
 
-strikes = np.arange(40, 200, 10)
-prices = model.call_price(strike=strikes, time_to_maturity=time_to_maturity)
+<span class="n">strikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">prices</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">)</span>
 
-smile = VolatilitySmile(strikes=strikes, time_to_maturity=1, atm=spot, market_prices=prices)
-smile.plot()
+<span class="n">smile</span> <span class="o">=</span> <span class="n">VolatilitySmile</span><span class="p">(</span><span class="n">strikes</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">atm</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">market_prices</span><span class="o">=</span><span class="n">prices</span><span class="p">)</span>
+<span class="n">smile</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -474,70 +474,70 @@ smile.plot()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Paramètres de base du modèle Heston
-base_params = {
-    &quot;vol_initial&quot;: 0.02,   # Variance initiale
-    &quot;kappa&quot;: 2.0,          # Vitesse de réversion
-    &quot;theta&quot;: 0.02,         # Variance à long terme
-    &quot;sigma&quot;: 0.5,          # Volatilité de la variance
-    &quot;rho&quot;: -0.5,           # Corrélation
-}
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Paramètres de base du modèle Heston</span>
+<span class="n">base_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vol_initial&quot;</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="c1"># Variance initiale</span>
+    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>          <span class="c1"># Vitesse de réversion</span>
+    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span>         <span class="c1"># Variance à long terme</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>          <span class="c1"># Volatilité de la variance</span>
+    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>           <span class="c1"># Corrélation</span>
+<span class="p">}</span>
 
-# Définition des paramètres à tester
-params_to_test = {
-    &quot;vol_initial&quot;: [0.01, 0.02, 0.03, 0.05, 0.06],
-    &quot;sigma&quot;: [0.1, 0.3, 0.5, 0.7, 0.8],
-    &quot;kappa&quot;: [1.0, 2.0, 3.0, 4.0, 5.0],
-    &quot;theta&quot;: [0.01, 0.03, 0.05, 0.07, 0.10],
-    &quot;rho&quot;: [-0.5, -0.15, 0, 0.15, 0.5],
-}
+<span class="c1"># Définition des paramètres à tester</span>
+<span class="n">params_to_test</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vol_initial&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.06</span><span class="p">],</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span>
+    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span>
+    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">],</span>
+    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+<span class="p">}</span>
 
-# Dictionnaire pour convertir les noms en LaTex
-latex_labels = {
-    &quot;vol_initial&quot;: r&quot;$v_0$&quot;,
-    &quot;sigma&quot;: r&quot;$\sigma$&quot;,
-    &quot;kappa&quot;: r&quot;$\kappa$&quot;,
-    &quot;theta&quot;: r&quot;$\theta$&quot;,
-    &quot;rho&quot;: r&quot;$\rho$&quot;,
-}
+<span class="c1"># Dictionnaire pour convertir les noms en LaTex</span>
+<span class="n">latex_labels</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vol_initial&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;$v_0$&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;$\sigma$&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;$\kappa$&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;$\theta$&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;$\rho$&quot;</span><span class="p">,</span>
+<span class="p">}</span>
 
-strikes = np.arange(40, 200, 5)
+<span class="n">strikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 
 
-fig = plt.figure(figsize=(17, 10))
-gs = gridspec.GridSpec(2, 3, figure=fig)
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
 
-axes = [fig.add_subplot(gs[0, i]) for i in range(3)]  # Première ligne
-axes.append(fig.add_subplot(gs[1, 0]))  # En bas à gauche
-axes.append(fig.add_subplot(gs[1, 1:]))  # Fusion des deux derniers
+<span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>  <span class="c1"># Première ligne</span>
+<span class="n">axes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>  <span class="c1"># En bas à gauche</span>
+<span class="n">axes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]))</span>  <span class="c1"># Fusion des deux derniers</span>
 
-# Fonction pour tracer les volatility smiles
-def plot_vol_smile(ax, param_name, param_values):
-    ax.axvline(spot, linestyle=&quot;--&quot;, color=&quot;gray&quot;, label=&quot;ATM Strike&quot;)
+<span class="c1"># Fonction pour tracer les volatility smiles</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_vol_smile</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param_values</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ATM Strike&quot;</span><span class="p">)</span>
 
-    for value in param_values:
-        params = base_params.copy()
-        params[param_name] = value
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">base_params</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">params</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
-        model = Heston(spot=spot, r=r, drift_emm=0, **params)
-        prices = model.call_price(strike=strikes, time_to_maturity=1)
-        smile = VolatilitySmile(strikes=strikes, atm=spot, market_prices=prices, time_to_maturity=1)
-        implied_vols = smile.compute_smile(prices)
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">drift_emm</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">prices</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">smile</span> <span class="o">=</span> <span class="n">VolatilitySmile</span><span class="p">(</span><span class="n">strikes</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span> <span class="n">atm</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">market_prices</span><span class="o">=</span><span class="n">prices</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">implied_vols</span> <span class="o">=</span> <span class="n">smile</span><span class="o">.</span><span class="n">compute_smile</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
 
-        ax.plot(strikes, implied_vols, label=f&#39;{latex_labels[param_name]} = {value}&#39;, marker=&#39;+&#39;, linestyle=&quot;dotted&quot;, markersize=4)
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">strikes</span><span class="p">,</span> <span class="n">implied_vols</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">latex_labels</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
-    ax.set_title(f&quot;Impact of {latex_labels[param_name]} on smile&quot;, fontdict=fontdict)
-    ax.set_xlabel(&quot;Strike&quot;)
-    ax.set_ylabel(&quot;Implied Volatility [%]&quot;, fontdict=fontdict)
-    ax.grid(visible=True, which=&quot;major&quot;, linestyle=&quot;--&quot;, dashes=(5, 10), color=&quot;gray&quot;, linewidth=0.5, alpha=0.8)
-    ax.legend()
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Impact of </span><span class="si">{</span><span class="n">latex_labels</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span><span class="si">}</span><span class="s2"> on smile&quot;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Strike&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Implied Volatility [%]&quot;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-# Tracer les courbes sur chaque subplot
-for i, (param_name, param_values) in enumerate(params_to_test.items()):
-    plot_vol_smile(axes[i], param_name, param_values)
+<span class="c1"># Tracer les courbes sur chaque subplot</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">param_values</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">params_to_test</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">plot_vol_smile</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param_values</span><span class="p">)</span>
 
-plt.tight_layout()
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

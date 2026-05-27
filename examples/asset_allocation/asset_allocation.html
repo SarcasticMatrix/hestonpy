@@ -394,12 +394,12 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from hestonpy.models.heston import Heston
-from hestonpy.portfolio.Portfolio import Portfolio
-from hestonpy.portfolio.strategies import naive_strategy, optimal_allocate_strategy, run_strategies
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.heston</span><span class="w"> </span><span class="kn">import</span> <span class="n">Heston</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.portfolio.Portfolio</span><span class="w"> </span><span class="kn">import</span> <span class="n">Portfolio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.portfolio.strategies</span><span class="w"> </span><span class="kn">import</span> <span class="n">naive_strategy</span><span class="p">,</span> <span class="n">optimal_allocate_strategy</span><span class="p">,</span> <span class="n">run_strategies</span>
 
-import matplotlib.pyplot as plt
-import numpy as np
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 </pre></div>
 </div>
 </div>
@@ -409,26 +409,26 @@ import numpy as np
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>spot = 100
-r = 0.05
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spot</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mf">0.05</span>
 
-params = {
-    &quot;vol_initial&quot;: 0.06,
-    &quot;kappa&quot;: 1.25,
-    &quot;theta&quot;: 0.06,
-    &quot;drift_emm&quot;: 0.00,
-    &quot;sigma&quot;: 0.6,
-    &quot;rho&quot;: -0.8,
-}
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vol_initial&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="mf">1.25</span><span class="p">,</span>
+    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+    <span class="s2">&quot;drift_emm&quot;</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">,</span>
+    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.8</span><span class="p">,</span>
+<span class="p">}</span>
 
-time_to_maturity = 1
-heston = Heston(spot=spot, r=r, **params)
-S, V, _ = heston.simulate(scheme=&#39;milstein&#39;, nbr_simulations=100, nbr_points=252)
+<span class="n">time_to_maturity</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">heston</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+<span class="n">S</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">heston</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;milstein&#39;</span><span class="p">,</span> <span class="n">nbr_simulations</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">nbr_points</span><span class="o">=</span><span class="mi">252</span><span class="p">)</span>
 
-time = np.linspace(start=0, stop=time_to_maturity, num=len(S))
-dt = time[1] - time[0]
+<span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">))</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-portfolio = Portfolio(r=r, dt=dt)
+<span class="n">portfolio</span> <span class="o">=</span> <span class="n">Portfolio</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -439,17 +439,17 @@ portfolio = Portfolio(r=r, dt=dt)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>allocation1 = naive_strategy(0.5, len(S))
-bank_account, stocks_account = portfolio.back_test(S=S, portfolio0=spot, allocation_strategy=allocation1)
-portfolio_value1 = bank_account + stocks_account
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">allocation1</span> <span class="o">=</span> <span class="n">naive_strategy</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">))</span>
+<span class="n">bank_account</span><span class="p">,</span> <span class="n">stocks_account</span> <span class="o">=</span> <span class="n">portfolio</span><span class="o">.</span><span class="n">back_test</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">portfolio0</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">allocation_strategy</span><span class="o">=</span><span class="n">allocation1</span><span class="p">)</span>
+<span class="n">portfolio_value1</span> <span class="o">=</span> <span class="n">bank_account</span> <span class="o">+</span> <span class="n">stocks_account</span>
 
-allocation2 = naive_strategy(0.7, len(S))
-bank_account, stocks_account = portfolio.back_test(S=S, portfolio0=spot, allocation_strategy=allocation2)
-portfolio_value2 = bank_account + stocks_account
+<span class="n">allocation2</span> <span class="o">=</span> <span class="n">naive_strategy</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">))</span>
+<span class="n">bank_account</span><span class="p">,</span> <span class="n">stocks_account</span> <span class="o">=</span> <span class="n">portfolio</span><span class="o">.</span><span class="n">back_test</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">portfolio0</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">allocation_strategy</span><span class="o">=</span><span class="n">allocation2</span><span class="p">)</span>
+<span class="n">portfolio_value2</span> <span class="o">=</span> <span class="n">bank_account</span> <span class="o">+</span> <span class="n">stocks_account</span>
 
-allocation3 = naive_strategy(1, len(S))
-bank_account, stocks_account = portfolio.back_test(S=S, portfolio0=spot, allocation_strategy=allocation3)
-portfolio_value3 = bank_account + stocks_account
+<span class="n">allocation3</span> <span class="o">=</span> <span class="n">naive_strategy</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">))</span>
+<span class="n">bank_account</span><span class="p">,</span> <span class="n">stocks_account</span> <span class="o">=</span> <span class="n">portfolio</span><span class="o">.</span><span class="n">back_test</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">portfolio0</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">allocation_strategy</span><span class="o">=</span><span class="n">allocation3</span><span class="p">)</span>
+<span class="n">portfolio_value3</span> <span class="o">=</span> <span class="n">bank_account</span> <span class="o">+</span> <span class="n">stocks_account</span>
 </pre></div>
 </div>
 </div>
@@ -460,10 +460,10 @@ portfolio_value3 = bank_account + stocks_account
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>p = 0.02
-optimal_allocation = optimal_allocate_strategy(heston=heston, p=p, time=time)
-bank_account, stocks_account = portfolio.back_test(S=S, portfolio0=spot, allocation_strategy=optimal_allocation)
-portfolio_value_optimal = bank_account + stocks_account
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.02</span>
+<span class="n">optimal_allocation</span> <span class="o">=</span> <span class="n">optimal_allocate_strategy</span><span class="p">(</span><span class="n">heston</span><span class="o">=</span><span class="n">heston</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">)</span>
+<span class="n">bank_account</span><span class="p">,</span> <span class="n">stocks_account</span> <span class="o">=</span> <span class="n">portfolio</span><span class="o">.</span><span class="n">back_test</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">portfolio0</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">allocation_strategy</span><span class="o">=</span><span class="n">optimal_allocation</span><span class="p">)</span>
+<span class="n">portfolio_value_optimal</span> <span class="o">=</span> <span class="n">bank_account</span> <span class="o">+</span> <span class="n">stocks_account</span>
 </pre></div>
 </div>
 </div>
@@ -506,8 +506,8 @@ File <span class="ansi-green-fg">~/Documents/packages/hestonpy/src/hestonpy/port
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>seeds = np.arange(1, 1000, 1) + np.random.randint(low=0, high=100000)
-run_strategies(seeds, portfolio0=spot)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seeds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+<span class="n">run_strategies</span><span class="p">(</span><span class="n">seeds</span><span class="p">,</span> <span class="n">portfolio0</span><span class="o">=</span><span class="n">spot</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -518,68 +518,68 @@ run_strategies(seeds, portfolio0=spot)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-ax1.plot(time, portfolio_value1, label=r&#39;$\pi_{50\%}$&#39;, color=&#39;blue&#39;, linewidth=1)
-ax1.plot(time, portfolio_value2, label=r&#39;$\pi_{75\%}$&#39;, color=&#39;green&#39;, linewidth=1)
-ax1.plot(time, portfolio_value3, label=r&#39;$\pi_{100\%}$&#39;, color=&#39;red&#39;, linewidth=1)
-ax1.plot(time, portfolio_value_optimal, label=r&#39;$\pi^\star$&#39;, color=&#39;purple&#39;, linewidth=1)
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">portfolio_value1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\pi_{50\%}$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">portfolio_value2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\pi_{75\%}$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">portfolio_value3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\pi_{100\%}$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">portfolio_value_optimal</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\pi^\star$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-ax1.plot(time, S, label=&#39;Stock&#39;, color=&#39;black&#39;, linewidth=1)
-ax1.set_ylabel(&#39;Value [currency unit]&#39;)
-ax1.set_title(&#39;Portfolio Value over Time&#39;)
-ax1.legend()
-ax1.grid(visible=True)
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Stock&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Value [currency unit]&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Portfolio Value over Time&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-# P&amp;L
-PnL1 = np.diff(portfolio_value1)
-PnL2 = np.diff(portfolio_value2)
-PnL3 = np.diff(portfolio_value3)
-PnL_opt = np.diff(portfolio_value_optimal)
+<span class="c1"># P&amp;L</span>
+<span class="n">PnL1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">portfolio_value1</span><span class="p">)</span>
+<span class="n">PnL2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">portfolio_value2</span><span class="p">)</span>
+<span class="n">PnL3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">portfolio_value3</span><span class="p">)</span>
+<span class="n">PnL_opt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">portfolio_value_optimal</span><span class="p">)</span>
 
-print(
-    &quot;Total variation of the strategies&quot;,
-    f&quot;\n PnL1: {round(np.mean(PnL1**2),2)}&quot;,
-    f&quot;\n PnL2: {round(np.mean(PnL2**2),2)}&quot;
-    f&quot;\n PnL3: {round(np.mean(PnL3**2),2)}&quot;
-    f&quot;\n PnL opt: {round(np.mean(PnL_opt**2),2)}&quot;
-)
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Total variation of the strategies&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> PnL1: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">PnL1</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> PnL2: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">PnL2</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> PnL3: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">PnL3</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> PnL opt: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">PnL_opt</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 
-ax2.plot(time[1:], PnL1, label=r&#39;$\pi_{50\%}$&#39;, color=&#39;blue&#39;, linewidth=0.7)
-ax2.plot(time[1:], PnL2, label=r&#39;$\pi_{75\%}$&#39;, color=&#39;green&#39;, linewidth=0.7)
-ax2.plot(time[1:], PnL3, label=r&#39;$\pi_{100\%}$&#39;, color=&#39;red&#39;, linewidth=0.7)
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">PnL1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\pi_{50\%}$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">PnL2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\pi_{75\%}$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">PnL3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\pi_{100\%}$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 
-ax2.plot(time[1:], PnL_opt, label=r&#39;$\pi^\star$&#39;, color=&#39;purple&#39;, linewidth=0.7)
-
-
-ax2.set_xlabel(&#39;Time&#39;)
-ax2.set_ylabel(r&#39;$PnL(t)$&#39;)
-ax2.set_title(r&#39;$PnL$&#39;)
-ax2.legend()
-ax2.grid(visible=True)
-
-plt.suptitle(&#39;Asset allocation under Heston&#39;)
-plt.tight_layout()
-plt.show()
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">PnL_opt</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\pi^\star$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 
 
-## Surface plot
-p = np.arange(start=0, stop=1, step=0.01)
-p = p[1:-1]
-time = np.arange(start=0, stop=1, step=0.01)
-p, tau = np.meshgrid(p, heston.T - time)
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$PnL(t)$&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$PnL$&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-Z = optimal_allocate_strategy(heston=heston, p=p, time=tau)
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Asset allocation under Heston&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection=&#39;3d&#39;)
-ax.plot_surface(tau, p, Z)
 
-ax.set_xlabel(&#39;p&#39;)
-ax.set_ylabel(r&#39;$\tau$&#39;)
-ax.set_zlabel(r&#39;$\%$ of portfolio in stock&#39;)
+<span class="c1">## Surface plot</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">p</span><span class="p">,</span> <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">heston</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">time</span><span class="p">)</span>
 
-plt.show()
+<span class="n">Z</span> <span class="o">=</span> <span class="n">optimal_allocate_strategy</span><span class="p">(</span><span class="n">heston</span><span class="o">=</span><span class="n">heston</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">tau</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\tau$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\%$ of portfolio in stock&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
