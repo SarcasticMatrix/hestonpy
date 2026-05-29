@@ -24,6 +24,11 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
 ]
+myst_enable_extensions = [
+    "dollarmath",   # enables $...$ and $$...$$ math in .md files
+    "amsmath",      # enables \begin{equation} etc.
+]
+
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 highlight_language = 'python'

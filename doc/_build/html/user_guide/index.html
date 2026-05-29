@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>User Guide &#8212; hestonpy v0.5.11 documentation</title>
+    <title>Explorations &#8212; hestonpy v0.5.11 documentation</title>
   
   
   
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/_static/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=af91de31" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=389cff9c" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
@@ -50,8 +50,8 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Examples" href="../examples/index.html" />
-    <link rel="prev" title="Option" href="../api/option.html" />
+    <link rel="next" title="Is the implied volatility surface arbitrage-free?" href="arbitrage_free.html" />
+    <link rel="prev" title="Hedging with Heston" href="../examples/hedging/hedging_heston.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -149,16 +149,16 @@
 </li>
 
 
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
-    User Guide
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../examples/index.html">
-    Examples
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Explorations
   </a>
 </li>
 
@@ -264,16 +264,16 @@
 </li>
 
 
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
-    User Guide
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../examples/index.html">
-    Examples
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Explorations
   </a>
 </li>
 
@@ -333,7 +333,10 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"></div>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="arbitrage_free.html">Is the implied volatility surface arbitrage-free?</a></li>
+</ul>
+</div>
 </nav></div>
     </div>
   
@@ -372,7 +375,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">User Guide</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Explorations</span></li>
   </ul>
 </nav>
 </div>
@@ -389,8 +392,31 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="user-guide">
-<h1>User Guide<a class="headerlink" href="#user-guide" title="Link to this heading">#</a></h1>
+  <section id="explorations">
+<h1>Explorations<a class="headerlink" href="#explorations" title="Link to this heading">#</a></h1>
+<p>A collection of mathematical notes exploring questions that naturally arise when using <code class="docutils literal notranslate"><span class="pre">hestonpy</span></code>.
+Each post mixes theory, intuition, and concrete code to dig into one specific question.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-1 sd-row-cols-lg-1 sd-g-4 sd-g-xs-4 sd-g-sm-4 sd-g-md-4 sd-g-lg-4 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Is the implied volatility surface arbitrage-free?</div>
+<p class="sd-card-text">We derive the conditions for a volatility surface to be free of <strong>butterfly</strong> and
+<strong>calendar spread</strong> arbitrage. Starting from the Durrleman condition, we show how
+SVI and SSVI parameterisations naturally handle — or violate — these constraints,
+and how to check them numerically with <code class="docutils literal notranslate"><span class="pre">hestonpy</span></code>.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><strong>Topics:</strong> SVI · SSVI · Durrleman condition · risk-neutral density</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="arbitrage_free.html"><span class="doc">Is the implied volatility surface arbitrage-free?</span></a></div>
+</div>
+</div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
 
@@ -404,20 +430,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../api/option.html"
+       href="../examples/hedging/hedging_heston.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Option</p>
+        <p class="prev-next-title">Hedging with Heston</p>
       </div>
     </a>
     <a class="right-next"
-       href="../examples/index.html"
+       href="arbitrage_free.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Examples</p>
+        <p class="prev-next-title">Is the implied volatility surface arbitrage-free?</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
