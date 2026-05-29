@@ -45,11 +45,11 @@ hestonpy: Calibration of stochastic volatility models
 
                 <div class="homepage-button-container">
                 <div class="homepage-button-container-row">
-                    <a href="./getting_started/index.html" class="homepage-button primary-button">User guide</a>
+                    <a href="./api/index.html" class="homepage-button primary-button">API Reference</a>
                     <a href="./examples/index.html" class="homepage-button secondary-button">Examples</a>
                 </div>
                 <div class="homepage-button-container-row">
-                    <a href="./api/index.html" class="homepage-button-link">See API Reference →</a>
+                    <a href="./user_guide/index.html" class="homepage-button-link">Explorations →</a>
                 </div>
                 </div>
             </div>  <!-- End Hero -->
@@ -92,5 +92,5 @@ Covered topics by the ``hestonpy`` package:
    :caption: Contents:
 
    ./api/index.rst
-   ./user_guide/index.rst
    ./examples/index.rst
+   ./user_guide/index.rst

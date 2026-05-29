@@ -1,0 +1,788 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Is the implied volatility surface arbitrage-free? &#8212; hestonpy v0.5.11 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=389cff9c" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="../_static/documentation_options.js?v=feb023f7"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/arbitrage_free';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Explorations" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo-light-no-bg.png" class="logo__image only-light" alt="hestonpy v0.5.11 documentation - Home"/>
+    <img src="../_static/logo-light-no-bg.png" class="logo__image only-dark pst-js-only" alt="hestonpy v0.5.11 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Explorations
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/SarcasticMatrix/hestonpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Explorations
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/SarcasticMatrix/hestonpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Is the implied volatility surface arbitrage-free?</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Explorations</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Is the implied volatility surface arbitrage-free?</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="is-the-implied-volatility-surface-arbitrage-free">
+<h1>Is the implied volatility surface arbitrage-free?<a class="headerlink" href="#is-the-implied-volatility-surface-arbitrage-free" title="Link to this heading">#</a></h1>
+<div class="seealso admonition">
+<p class="admonition-title">Topics</p>
+<p>SVI · SSVI · Durrleman condition · risk-neutral density · butterfly arbitrage · calendar spread</p>
+</div>
+<p>When we calibrate an implied volatility surface from market quotes, we get a smooth,
+good-looking surface. But does it <em>make sense</em> mathematically? Concretely: could a trader
+build a portfolio of vanilla options from this surface and lock in a <strong>guaranteed profit at
+zero cost</strong>? If yes, the surface is <em>not</em> arbitrage-free, it is internally inconsistent,
+regardless of how well it fits the data.</p>
+<p>This note works through two classical notions of arbitrage on a vol surface, derives the
+conditions for each, and shows how to check them on a surface calibrated with <code class="docutils literal notranslate"><span class="pre">hestonpy</span></code>.</p>
+<hr class="docutils" />
+<section id="setup-total-implied-variance">
+<h2>Setup: total implied variance<a class="headerlink" href="#setup-total-implied-variance" title="Link to this heading">#</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(F_T = S_0 e^{r T}\)</span> denote the forward price at maturity <span class="math notranslate nohighlight">\(T\)</span> and spot <span class="math notranslate nohighlight">\(S_0\)</span>, and let <span class="math notranslate nohighlight">\(k = \ln(K / F_T)\)</span> denote the log-moneyness. Instead of working with implied volatility <span class="math notranslate nohighlight">\(\sigma_{imp}(k,T)\)</span> directly,
+it is more convenient to work with the total implied variance:</p>
+<div class="math notranslate nohighlight">
+\[
+w(k, T) \;=\; T\sigma_{imp}(k, T)^2.
+\]</div>
+<p>This removes the trivial <span class="math notranslate nohighlight">\(\sqrt{T}\)</span> scaling and makes the arbitrage conditions cleaner.</p>
+</section>
+<hr class="docutils" />
+<section id="two-types-of-arbitrage">
+<h2>Two types of arbitrage<a class="headerlink" href="#two-types-of-arbitrage" title="Link to this heading">#</a></h2>
+<section id="calendar-spread-arbitrage">
+<h3>Calendar spread arbitrage<a class="headerlink" href="#calendar-spread-arbitrage" title="Link to this heading">#</a></h3>
+<p>A <strong>calendar spread</strong> is a position long one call at maturity <span class="math notranslate nohighlight">\(T_2\)</span> and short one call at
+maturity <span class="math notranslate nohighlight">\(T_1 &lt; T_2\)</span>, at the same strike. Under any risk-neutral measure, holding an option
+to <span class="math notranslate nohighlight">\(T_2\)</span> is worth at least as much as holding it to <span class="math notranslate nohighlight">\(T_1\)</span> (early exercise aside), so the
+forward calendar spread price must be non-negative.</p>
+<p>Translating this into the language of total variance, The total variance must be non-decreasing in maturity at every strike. Intuitively: more time means more uncertainty, so a wider distribution of terminal prices.
+Thus, one can show that a vol surface is free of calendar spread arbitrage if and only if, for every log-moneyness <span class="math notranslate nohighlight">\(k\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\partial_T\, w(k, T) \;\geq\; 0.
+\]</div>
+</section>
+<section id="butterfly-arbitrage-and-the-durrleman-condition">
+<h3>Butterfly arbitrage and the Durrleman condition<a class="headerlink" href="#butterfly-arbitrage-and-the-durrleman-condition" title="Link to this heading">#</a></h3>
+<p>A <strong>butterfly</strong> centered at strike <span class="math notranslate nohighlight">\(K_0\)</span> is long calls at <span class="math notranslate nohighlight">\(K_0 - \delta\)</span> and <span class="math notranslate nohighlight">\(K_0 + \delta\)</span>
+and short two calls at <span class="math notranslate nohighlight">\(K_0\)</span>. Its payoff is always non-negative (it’s a tent function), so
+its price must be non-negative too. A violation implies a negative risk-neutral density,
+the model assigns negative probability to some region of the spot, which is absurd.</p>
+<p>For a single maturity slice <span class="math notranslate nohighlight">\(w(\cdot) = w(\cdot, T)\)</span>, define Durrleman’s function:</p>
+<div class="math notranslate nohighlight">
+\[
+g(k) \;=\; \left(1 - \frac{k\,w'(k)}{2\,w(k)}\right)^2
+        \;-\; \frac{w'(k)^2}{4}\!\left(\frac{1}{w(k)} + \frac{1}{4}\right)
+        \;+\; \frac{w''(k)}{2},
+\]</div>
+<p>where primes denote derivatives with respect to <span class="math notranslate nohighlight">\(k\)</span>. One can show that the risk-neutral
+density of the log-moneyness <span class="math notranslate nohighlight">\(k\)</span> satisfies:</p>
+<div class="math notranslate nohighlight">
+\[
+p(k) \;=\; \frac{e^{-d_2(k)^2/2}}{\sqrt{2\pi\, w(k)}} \cdot g(k), \qquad
+d_2(k) = -\frac{k}{\sqrt{w(k)}} - \frac{\sqrt{w(k)}}{2}.
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\(e^{-d_2^2/2} / \sqrt{2\pi w} &gt; 0\)</span> always, the density is non-negative if and only
+if <span class="math notranslate nohighlight">\(g(k) \geq 0\)</span>. Therefore:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{No butterfly arbitrage} \iff g(k) \geq 0 \quad \forall\, k.
+\]</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="conditions-for-svi">
+<h2>Conditions for SVI<a class="headerlink" href="#conditions-for-svi" title="Link to this heading">#</a></h2>
+<p>The <strong>raw SVI</strong> parameterisation (Gatheral, 2004) reads:</p>
+<div class="math notranslate nohighlight">
+\[
+w^{SVI}(k) = a + b\!\left(\rho(k - m) + \sqrt{(k-m)^2 + \sigma^2}\right).
+\]</div>
+<p><code class="docutils literal notranslate"><span class="pre">hestonpy</span></code> calibrates this with the constraint <span class="math notranslate nohighlight">\(a + b\sigma\sqrt{1-\rho^2} \geq 0\)</span>, which
+ensures the minimum total variance is non-negative. But is this <em>sufficient</em> for no
+butterfly arbitrage?</p>
+<p>No, in general. The constraint is <strong>necessary</strong> (negative total variance immediately implies
+<span class="math notranslate nohighlight">\(g &lt; 0\)</span>) but not sufficient. The full butterfly-free characterisation for SVI requires
+checking <span class="math notranslate nohighlight">\(g(k) \geq 0\)</span> everywhere. However, in practice a well-calibrated SVI slice
+almost never violates it. The dangerous regime is when the wings are too steep
+(<span class="math notranslate nohighlight">\(b\)</span> large, <span class="math notranslate nohighlight">\(\sigma\)</span> small).</p>
+<div class="tip admonition">
+<p class="admonition-title">Necessary conditions for SVI (no butterfly)</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(b \geq 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(|\rho| &lt; 1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(a + b\sigma\sqrt{1-\rho^2} \geq 0\)</span></p></li>
+</ul>
+<p>These are enforced automatically by the <code class="docutils literal notranslate"><span class="pre">StochasticVolatilityInspired.calibration()</span></code> method.</p>
+</div>
+<section id="checking-the-durrleman-condition-numerically">
+<h3>Checking the Durrleman condition numerically<a class="headerlink" href="#checking-the-durrleman-condition-numerically" title="Link to this heading">#</a></h3>
+<p>For an SVI slice, <span class="math notranslate nohighlight">\(g(k)\)</span> can be evaluated analytically by computing <span class="math notranslate nohighlight">\(w'\)</span> and <span class="math notranslate nohighlight">\(w''\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+w'(k) = b\left(\rho + \frac{k - m}{\sqrt{(k-m)^2 + \sigma^2}}\right),
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+w''(k) = b \cdot \frac{\sigma^2}{\left((k-m)^2 + \sigma^2\right)^{3/2}}.
+\]</div>
+<p>Note that <span class="math notranslate nohighlight">\(w'' &gt; 0\)</span> always (SVI is convex in <span class="math notranslate nohighlight">\(k\)</span>), which is a good sign. We plug these
+into <span class="math notranslate nohighlight">\(g(k)\)</span> and check the sign over a grid of log-moneyness values.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.calibration.svi</span><span class="w"> </span><span class="kn">import</span> <span class="n">StochasticVolatilityInspired</span>
+
+<span class="c1"># --- Calibrate SVI on a single smile ---</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">svi</span> <span class="o">=</span> <span class="n">StochasticVolatilityInspired</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># (assume strikes, market_ivs, forward are available)</span>
+<span class="n">params</span><span class="p">,</span> <span class="n">model_ivs</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">calibration</span><span class="p">(</span><span class="n">strikes</span><span class="p">,</span> <span class="n">market_ivs</span><span class="p">,</span> <span class="n">forward</span><span class="p">)</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;rho&quot;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;sigma&quot;</span><span class="p">]</span>
+
+<span class="c1"># --- Durrleman condition on a fine grid ---</span>
+<span class="n">k_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="n">sqrt_term</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">k_grid</span> <span class="o">-</span> <span class="n">m</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">w</span>   <span class="o">=</span>  <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="n">rho</span> <span class="o">*</span> <span class="p">(</span><span class="n">k_grid</span> <span class="o">-</span> <span class="n">m</span><span class="p">)</span> <span class="o">+</span> <span class="n">sqrt_term</span><span class="p">)</span>
+<span class="n">w_p</span> <span class="o">=</span>  <span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="n">rho</span> <span class="o">+</span> <span class="p">(</span><span class="n">k_grid</span> <span class="o">-</span> <span class="n">m</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrt_term</span><span class="p">)</span>
+<span class="n">w_pp</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">sqrt_term</span><span class="o">**</span><span class="mi">3</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">k_grid</span> <span class="o">*</span> <span class="n">w_p</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">w</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> \
+    <span class="o">-</span> <span class="p">(</span><span class="n">w_p</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">w</span> <span class="o">+</span> <span class="mf">0.25</span><span class="p">)</span>   \
+    <span class="o">+</span> <span class="n">w_pp</span> <span class="o">/</span> <span class="mi">2</span>
+
+<span class="n">is_butterfly_free</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">g</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Butterfly-free: </span><span class="si">{</span><span class="n">is_butterfly_free</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Min g(k) = </span><span class="si">{</span><span class="n">g</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="conditions-for-ssvi">
+<h2>Conditions for SSVI<a class="headerlink" href="#conditions-for-ssvi" title="Link to this heading">#</a></h2>
+<p>The <strong>SSVI</strong> parameterisation (Gatheral &amp; Jacquier, 2014) writes the total variance surface as:</p>
+<div class="math notranslate nohighlight">
+\[
+w^{SSVI}(k, T) = \frac{\theta_T}{2}\!\left(
+    1 + \rho_T\,\varphi_T\,k
+    + \sqrt{(\varphi_T k + \rho_T)^2 + 1 - \rho_T^2}
+\right),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\theta_T = \sigma_{ATM}(T)^2 \cdot T\)</span> is the ATM total variance and <span class="math notranslate nohighlight">\(\varphi_T \geq 0\)</span>
+is the <em>wing</em> (curvature) parameter.</p>
+<p>The strength of SSVI is that Gatheral &amp; Jacquier derived <strong>analytical no-arbitrage conditions</strong>:</p>
+<div class="important admonition">
+<p class="admonition-title">No-arbitrage theorem for SSVI (Gatheral &amp; Jacquier, 2014)</p>
+<p><strong>No butterfly arbitrage</strong> iff, for every maturity <span class="math notranslate nohighlight">\(T\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\theta_T\,\varphi_T\,(1 + |\rho_T|) \leq 4.\]</div>
+<p><strong>No calendar spread arbitrage</strong> iff, for every pair of maturities <span class="math notranslate nohighlight">\(T_1 &lt; T_2\)</span> and every <span class="math notranslate nohighlight">\(k\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[w(k, T_1) \leq w(k, T_2).\]</div>
+<p>In practice, since <span class="math notranslate nohighlight">\(\theta_T = \sigma_{ATM}^2\cdot T\)</span> is set directly from market ATM vols,
+calendar-spread arbitrage reduces to checking that the total ATM variance
+<span class="math notranslate nohighlight">\(T \mapsto \theta_T\)</span> is non-decreasing — which the market almost always satisfies.</p>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">hestonpy</span></code>, the calibration of each slice already enforces <span class="math notranslate nohighlight">\(\varphi_T \leq 2/\theta_T\)</span>,
+which implies <span class="math notranslate nohighlight">\(\theta_T \varphi_T \leq 2\)</span>. Combined with <span class="math notranslate nohighlight">\((1 + |\rho|) \leq 2\)</span>, this gives
+<span class="math notranslate nohighlight">\(\theta_T \varphi_T (1 + |\rho_T|) \leq 4\)</span> — exactly the no-butterfly condition.</p>
+<div class="note admonition">
+<p class="admonition-title">Key insight</p>
+<p>The bound constraint <code class="docutils literal notranslate"><span class="pre">phi</span> <span class="pre">&lt;=</span> <span class="pre">2/theta_T</span></code> in the <code class="docutils literal notranslate"><span class="pre">calibrate_single_maturity</span></code> optimisation
+is not just a numerical trick — it is a direct encoding of the no-butterfly condition
+(up to the <span class="math notranslate nohighlight">\(\rho\)</span> factor, which is bounded by <span class="math notranslate nohighlight">\(2\)</span>).</p>
+</div>
+<section id="checking-analytically-with-hestonpy">
+<h3>Checking analytically with hestonpy<a class="headerlink" href="#checking-analytically-with-hestonpy" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.calibration.ssvi</span><span class="w"> </span><span class="kn">import</span> <span class="n">SurfaceStochasticVolatilityInspired</span>
+
+<span class="n">maturities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
+<span class="n">ssvi</span> <span class="o">=</span> <span class="n">SurfaceStochasticVolatilityInspired</span><span class="p">(</span><span class="n">maturities</span><span class="o">=</span><span class="n">maturities</span><span class="p">)</span>
+
+<span class="c1"># (assume strikes, iv_surface, forwards are available)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">ssvi</span><span class="o">.</span><span class="n">calibrate_surface</span><span class="p">(</span><span class="n">strikes</span><span class="p">,</span> <span class="n">iv_surface</span><span class="p">,</span> <span class="n">forwards</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maturity | theta   | phi     | rho     | theta*phi*(1+|rho|) | OK?&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="n">maturities</span><span class="p">:</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">ssvi</span><span class="o">.</span><span class="n">theta</span><span class="p">[</span><span class="n">T</span><span class="p">]</span>
+    <span class="n">rho</span>   <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">T</span><span class="p">][</span><span class="s2">&quot;rho&quot;</span><span class="p">]</span>
+    <span class="n">phi</span>   <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">T</span><span class="p">][</span><span class="s2">&quot;phi&quot;</span><span class="p">]</span>
+    <span class="n">cond</span>  <span class="o">=</span> <span class="n">theta</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">rho</span><span class="p">))</span>
+    <span class="n">ok</span>    <span class="o">=</span> <span class="s2">&quot;✓&quot;</span> <span class="k">if</span> <span class="n">cond</span> <span class="o">&lt;=</span> <span class="mi">4</span> <span class="k">else</span> <span class="s2">&quot;✗ ARBITRAGE&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  T=</span><span class="si">{</span><span class="n">T</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">  | </span><span class="si">{</span><span class="n">theta</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">phi</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">rho</span><span class="si">:</span><span class="s2">+.4f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">cond</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">              | </span><span class="si">{</span><span class="n">ok</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="calendar-spread-check">
+<h3>Calendar spread check<a class="headerlink" href="#calendar-spread-check" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check that total ATM variance is non-decreasing in T</span>
+<span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ssvi</span><span class="o">.</span><span class="n">theta</span><span class="p">[</span><span class="n">T</span><span class="p">]</span> <span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="n">maturities</span><span class="p">])</span>
+<span class="n">diffs</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">thetas</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">diffs</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ No calendar spread arbitrage (theta is non-decreasing)&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">bad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">diffs</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">bad</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✗ Calendar spread arbitrage between T=</span><span class="si">{</span><span class="n">maturities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> and T=</span><span class="si">{</span><span class="n">maturities</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="discussion">
+<h2>Discussion<a class="headerlink" href="#discussion" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p><strong>SVI</strong></p></th>
+<th class="head"><p><strong>SSVI</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Butterfly-free</p></td>
+<td><p>Check <span class="math notranslate nohighlight">\(g(k) \geq 0\)</span> numerically</p></td>
+<td><p>Analytical: <span class="math notranslate nohighlight">\(\theta\varphi(1+\vert\rho\vert)\leq 4\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Calendar-spread-free</p></td>
+<td><p>Must compare slices</p></td>
+<td><p><span class="math notranslate nohighlight">\(\theta_T\)</span> non-decreasing</p></td>
+</tr>
+<tr class="row-even"><td><p>Enforced in <code class="docutils literal notranslate"><span class="pre">hestonpy</span></code></p></td>
+<td><p>Necessary conditions only</p></td>
+<td><p>✓ via bound on <span class="math notranslate nohighlight">\(\varphi\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The practical takeaway: <strong>SSVI is strictly safer than slice-by-slice SVI</strong> for building a
+full surface, because its no-arbitrage conditions can be encoded as simple box constraints in
+the optimiser. SVI is more flexible on a single smile but offers no cross-maturity guarantee.</p>
+<p>For a production calibration pipeline, one should:</p>
+<ol class="arabic simple">
+<li><p>Use SSVI (or parametric SSVI with <span class="math notranslate nohighlight">\(\varphi(\theta) = \eta/\theta^\gamma\)</span>) for the full
+surface, with the bound <span class="math notranslate nohighlight">\(\varphi \leq 2/\theta\)</span>.</p></li>
+<li><p>After calibration, run a quick check: compute <span class="math notranslate nohighlight">\(g(k)\)</span> on a fine grid for each slice.</p></li>
+<li><p>Verify that <span class="math notranslate nohighlight">\(T \mapsto \theta_T\)</span> is non-decreasing.</p></li>
+</ol>
+<p>If any check fails, tighten the optimisation constraints or review the input data for
+outlier quotes.</p>
+</section>
+<hr class="docutils" />
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Gatheral, J. (2004). <em>A parsimonious arbitrage-free implied volatility parameterization
+with application to the valuation of volatility derivatives.</em> Presentation at Global
+Derivatives &amp; Risk Management, Madrid.</p></li>
+<li><p>Gatheral, J. &amp; Jacquier, A. (2014). <em>Arbitrage-free SVI volatility surfaces.</em>
+Quantitative Finance, 14(1), 59–71.</p></li>
+<li><p>Durrleman, V. (2005). <em>From implied to spot volatilities.</em> PhD thesis, Princeton University.</p></li>
+<li><p>Lee, R. (2004). <em>The moment formula for implied volatility at extreme strikes.</em>
+Mathematical Finance, 14(3), 469–480.</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Explorations</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-total-implied-variance">Setup: total implied variance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-types-of-arbitrage">Two types of arbitrage</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calendar-spread-arbitrage">Calendar spread arbitrage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#butterfly-arbitrage-and-the-durrleman-condition">Butterfly arbitrage and the Durrleman condition</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-for-svi">Conditions for SVI</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-the-durrleman-condition-numerically">Checking the Durrleman condition numerically</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-for-ssvi">Conditions for SSVI</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-analytically-with-hestonpy">Checking analytically with hestonpy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calendar-spread-check">Calendar spread check</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discussion">Discussion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/user_guide/arbitrage_free.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Théophile Schmutz.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.18.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
