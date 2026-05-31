@@ -43,15 +43,11 @@
 /* -------------------- THEME OVERRIDES -------------------- */
 
 /* ── Conteneur principal ── */
-.bd-page-width {
+.bd-container {
+    width: 100%;
     max-width: 100%;
     padding-left:  2%;
     padding-right: 0%;
-    box-sizing: border-box;
-}
-
-.bd-container {
-    width: 100%;
     box-sizing: border-box;
 }
 
