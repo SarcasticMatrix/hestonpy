@@ -196,6 +196,48 @@ is not just a numerical trick — it is a direct encoding of the no-butterfly co
 (up to the $\rho$ factor, which is bounded by $2$).
 ```
 
+### Joint calibration across the whole surface
+
+`calibrate_single_maturity` (and `calibrate_surface`, which just loops over it) still fits
+$\rho_T$ and $\varphi_T$ **independently for each maturity**. Nothing ties the slices
+together beyond each $\theta_T$ being read off the market — so calendar-spread arbitrage is
+only avoided if the input data happens to be well-behaved, not by construction.
+
+`SurfaceStochasticVolatilityInspired.calibrate_joint` (used by
+`VolatilitySurface.ssvi_smooth`) instead fits a **single** $\rho$ and a **single** wing
+function shared by every maturity, using Gatheral's power-law form:
+
+$$
+\varphi(\theta) = \frac{\eta}{\theta^{\gamma}(1+\theta)^{1-\gamma}}.
+$$
+
+The free parameters become $(\rho, \eta, \gamma)$ instead of $(\rho_T, \varphi_T)$ per
+maturity. To enforce the Gatheral–Jacquier sufficient condition
+$\eta(1+|\rho|) \leq 2$ (together with $\gamma \in (0, \tfrac12]$) **by construction**
+rather than as a post-hoc check, the optimiser is reparameterised over $(\rho, u, \gamma)$
+with $u \in (0, 1]$ and
+
+$$
+\eta = u \cdot \frac{2}{1+|\rho|},
+$$
+
+which turns the nonlinear constraint into a plain box constraint — trivially satisfiable by
+any bounded optimiser, whatever $u$ ends up being.
+
+```python
+from hestonpy.models.calibration.volatilitySurface import VolatilitySurface
+
+# surface = VolatilitySurface([smile_T1, smile_T2, smile_T3, ...])
+joint_params, calibrated_ivs = surface.ssvi_smooth()
+
+print(joint_params["rho"], joint_params["eta"], joint_params["gamma"])
+print("Sufficient no-arbitrage check:",
+      joint_params["eta"] * (1 + abs(joint_params["rho"])), "<= 2")
+```
+
+$\theta_T$ is still read directly off each maturity's ATM implied volatility, not fitted —
+only the wing *shape* is shared across $T$.
+
 ### Checking analytically with hestonpy
 
 ```python
@@ -250,13 +292,55 @@ the optimiser. SVI is more flexible on a single smile but offers no cross-maturi
 
 For a production calibration pipeline, one should:
 
-1. Use SSVI (or parametric SSVI with $\varphi(\theta) = \eta/\theta^\gamma$) for the full
-   surface, with the bound $\varphi \leq 2/\theta$.
+1. Use the jointly-calibrated SSVI (`VolatilitySurface.ssvi_smooth`, power-law
+   $\varphi(\theta) = \eta/(\theta^\gamma(1+\theta)^{1-\gamma})$) for the full surface —
+   see [Joint calibration across the whole surface](#joint-calibration-across-the-whole-surface)
+   above. `svi_smooth` remains available for a single, independently-fitted smile.
 2. After calibration, run a quick check: compute $g(k)$ on a fine grid for each slice.
 3. Verify that $T \mapsto \theta_T$ is non-decreasing.
 
 If any check fails, tighten the optimisation constraints or review the input data for
 outlier quotes.
+
+---
+
+## Recovering the risk-neutral density (Breeden-Litzenberger)
+
+A smoothed, arbitrage-free smile is not just an end in itself — it is also what makes it
+possible to recover the market's implied probability distribution of the underlying at
+maturity $T$. Breeden & Litzenberger (1978) show that the forward risk-neutral density is
+the second strike-derivative of the call price:
+
+$$
+f(K, T) = e^{rT}\, \frac{\partial^2 C}{\partial K^2}(K, T).
+$$
+
+Applying this directly to raw market quotes does not work: strikes are sparse and unevenly
+spaced, and quotes are noisy, so a numerical second derivative amplifies that noise into
+something unusable — and, per the discussion above, a curve with $g(k) < 0$ somewhere would
+even hand back a *negative* density there. The fix is the same one used throughout this
+note: differentiate a smoothed, arbitrage-checked price curve instead of the raw quotes.
+
+`hestonpy` builds that curve from a fine, uniformly-spaced strike grid (`VolatilitySmile.forward_density`),
+using either a per-slice SVI fit or — preferably, since it is what ties every maturity
+together — the surface's own joint SSVI fit:
+
+```python
+# Single maturity: uses raw SVI (its own independent fit) if no ssvi_params given
+density = smile.forward_density()
+print(density.total_mass, density.has_negative_density)
+density.plot()
+
+# Whole surface: uses the joint SSVI fit (see above), one density per maturity
+densities = surface.forward_densities()
+surface.plot_forward_density_heatmap()   # + median / mean / Q1-Q3 overlay
+```
+
+`ForwardDensity.total_mass` (should be close to 1) and `has_negative_density` are cheap
+sanity checks: a negative density is exactly the strike-space manifestation of the
+butterfly arbitrage discussed above ($g(k) < 0$), so seeing `has_negative_density = True`
+means the smoothing itself introduced an arbitrage the underlying SVI/SSVI fit should not
+have allowed.
 
 ---
 

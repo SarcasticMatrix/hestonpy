@@ -390,6 +390,10 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/calibration.html#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.calibrate_single_maturity">calibrate_single_maturity() (hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired method)</a>
+</li>
+      <li><a href="api/calibration.html#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.calibrate_surface">calibrate_surface() (hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired method)</a>
+</li>
       <li><a href="api/calibration.html#hestonpy.models.calibration.svi.StochasticVolatilityInspired.calibration">calibration() (hestonpy.models.calibration.svi.StochasticVolatilityInspired method)</a>
 
       <ul>
@@ -422,7 +426,11 @@
         <li><a href="api/models.html#hestonpy.models.heston.Heston.characteristic">(hestonpy.models.heston.Heston method)</a>
 </li>
       </ul></li>
+      <li><a href="api/calibration.html#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.compute_iv_surface">compute_iv_surface() (hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired method)</a>
+</li>
       <li><a href="api/calibration.html#hestonpy.models.calibration.volatilitySmile.VolatilitySmile.compute_smile">compute_smile() (hestonpy.models.calibration.volatilitySmile.VolatilitySmile method)</a>
+</li>
+      <li><a href="api/calibration.html#hestonpy.models.calibration.volatilitySurface.VolatilitySurface.compute_surface">compute_surface() (hestonpy.models.calibration.volatilitySurface.VolatilitySurface method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -521,7 +529,11 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/calibration.html#hestonpy.models.calibration.volatilitySmile.VolatilitySmile.plot">plot() (hestonpy.models.calibration.volatilitySmile.VolatilitySmile method)</a>
+
+      <ul>
+        <li><a href="api/calibration.html#hestonpy.models.calibration.volatilitySurface.VolatilitySurface.plot">(hestonpy.models.calibration.volatilitySurface.VolatilitySurface method)</a>
 </li>
+      </ul></li>
       <li><a href="api/models.html#hestonpy.models.bates.Bates.plot_simulation">plot_simulation() (hestonpy.models.bates.Bates method)</a>
 
       <ul>
@@ -530,10 +542,10 @@
         <li><a href="api/models.html#hestonpy.models.heston.Heston.plot_simulation">(hestonpy.models.heston.Heston method)</a>
 </li>
       </ul></li>
-      <li><a href="api/option.html#hestonpy.option.OptionsBook.OptionsBook.pnl">pnl() (hestonpy.option.OptionsBook.OptionsBook method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/option.html#hestonpy.option.OptionsBook.OptionsBook.pnl">pnl() (hestonpy.option.OptionsBook.OptionsBook method)</a>
+</li>
       <li><a href="api/option.html#hestonpy.option.OptionsBook.Position">Position (class in hestonpy.option.OptionsBook)</a>
 </li>
       <li><a href="api/option.html#hestonpy.option.OptionsBook.OptionsBook.price">price() (hestonpy.option.OptionsBook.OptionsBook method)</a>
@@ -582,6 +594,8 @@
         <li><a href="api/models.html#hestonpy.models.heston.Heston.simulate">(hestonpy.models.heston.Heston method)</a>
 </li>
       </ul></li>
+      <li><a href="api/calibration.html#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.ssvi_total_variance">ssvi_total_variance() (hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/calibration.html#hestonpy.models.calibration.svi.StochasticVolatilityInspired">StochasticVolatilityInspired (class in hestonpy.models.calibration.svi)</a>
@@ -589,6 +603,8 @@
       <li><a href="api/option.html#hestonpy.option.Option.Option.strike">strike (hestonpy.option.Option.Option attribute)</a>
 </li>
       <li><a href="api/option.html#hestonpy.option.OptionsBook.OptionsBook.summary">summary() (hestonpy.option.OptionsBook.OptionsBook method)</a>
+</li>
+      <li><a href="api/calibration.html#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired">SurfaceStochasticVolatilityInspired (class in hestonpy.models.calibration.ssvi)</a>
 </li>
       <li><a href="api/calibration.html#hestonpy.models.calibration.volatilitySmile.VolatilitySmile.svi_smooth">svi_smooth() (hestonpy.models.calibration.volatilitySmile.VolatilitySmile method)</a>
 </li>
@@ -616,11 +632,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/models.html#hestonpy.models.blackScholes.BlackScholes.vega">vega() (hestonpy.models.blackScholes.BlackScholes method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/models.html#hestonpy.models.blackScholes.BlackScholes.volatility_arbitrage">volatility_arbitrage() (hestonpy.models.blackScholes.BlackScholes method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/calibration.html#hestonpy.models.calibration.volatilitySmile.VolatilitySmile">VolatilitySmile (class in hestonpy.models.calibration.volatilitySmile)</a>
+</li>
+      <li><a href="api/calibration.html#hestonpy.models.calibration.volatilitySurface.VolatilitySurface">VolatilitySurface (class in hestonpy.models.calibration.volatilitySurface)</a>
 </li>
   </ul></td>
 </tr></table>

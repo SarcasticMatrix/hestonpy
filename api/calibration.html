@@ -400,7 +400,7 @@
                   
   <section id="calibration">
 <h1>Calibration<a class="headerlink" href="#calibration" title="Link to this heading">#</a></h1>
-<p>Calibration methods on implied volatility smile.</p>
+<p>Calibration methods on implied volatility smiles and surfaces.</p>
 <section id="volatilitysmile">
 <h2>VolatilitySmile<a class="headerlink" href="#volatilitysmile" title="Link to this heading">#</a></h2>
 <dl class="py class">
@@ -583,6 +583,38 @@ before plotting.</p>
 </dd></dl>
 
 </section>
+<section id="forwarddensity">
+<h2>ForwardDensity<a class="headerlink" href="#forwarddensity" title="Link to this heading">#</a></h2>
+</section>
+<section id="volatilitysurface">
+<h2>VolatilitySurface<a class="headerlink" href="#volatilitysurface" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="hestonpy.models.calibration.volatilitySurface.VolatilitySurface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hestonpy.models.calibration.volatilitySurface.</span></span><span class="sig-name descname"><span class="pre">VolatilitySurface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">smiles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hestonpy.models.calibration.volatilitySmile.VolatilitySmile" title="hestonpy.models.calibration.volatilitySmile.VolatilitySmile"><span class="pre">VolatilitySmile</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hestonpy/models/calibration/volatilitySurface.html#VolatilitySurface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.calibration.volatilitySurface.VolatilitySurface" title="Link to this definition">#</a></dt>
+<dd><p>Represents a volatility surface constructed from market prices or implied volatilities.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.calibration.volatilitySurface.VolatilitySurface.compute_surface">
+<span class="sig-name descname"><span class="pre">compute_surface</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hestonpy/models/calibration/volatilitySurface.html#VolatilitySurface.compute_surface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.calibration.volatilitySurface.VolatilitySurface.compute_surface" title="Link to this definition">#</a></dt>
+<dd><p>Computes implied volatilities from option prices using the Black-Scholes model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.calibration.volatilitySurface.VolatilitySurface.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'surface'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'heatmap'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'surface'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hestonpy/models/calibration/volatilitySurface.html#VolatilitySurface.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.calibration.volatilitySurface.VolatilitySurface.plot" title="Link to this definition">#</a></dt>
+<dd><p>Plots the volatility surface using cubic spline interpolation and marks actual market points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kind</strong> – ‘surface’ → 3D plot, ‘heatmap’ → 2D heatmap.</p></li>
+<li><p><strong>num_points</strong> – Number of points for interpolation grid.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="stochasticvolatilityinspired">
 <h2>StochasticVolatilityInspired<a class="headerlink" href="#stochasticvolatilityinspired" title="Link to this heading">#</a></h2>
 <dl class="py class">
@@ -641,6 +673,92 @@ between the model’s total implied variance and the market’s total implied va
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="surfacestochasticvolatilityinspired">
+<h2>SurfaceStochasticVolatilityInspired<a class="headerlink" href="#surfacestochasticvolatilityinspired" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hestonpy.models.calibration.ssvi.</span></span><span class="sig-name descname"><span class="pre">SurfaceStochasticVolatilityInspired</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maturities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hestonpy/models/calibration/ssvi.html#SurfaceStochasticVolatilityInspired"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired" title="Link to this definition">#</a></dt>
+<dd><p>Implements the SSVI (Surface Stochastic Volatility Inspired) parameterization.
+Calibrates the SSVI parameters (rho(T), phi(T)) for each maturity T of a vol surface.</p>
+<p>rho(T) = ATM total implied variance = market_iv_atm(T)^2 * T
+phi(T) is the curvature / ‘wing’ parameter.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.calibrate_single_maturity">
+<span class="sig-name descname"><span class="pre">calibrate_single_maturity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strikes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">market_ivs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.0,</span> <span class="pre">0.3]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hestonpy/models/calibration/ssvi.html#SurfaceStochasticVolatilityInspired.calibrate_single_maturity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.calibrate_single_maturity" title="Link to this definition">#</a></dt>
+<dd><p>Calibrates rho(T), phi(T) for a single maturity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strikes</strong> – strike array</p></li>
+<li><p><strong>market_ivs</strong> – implied volatilities for that maturity</p></li>
+<li><p><strong>forward</strong> – forward price F</p></li>
+<li><p><strong>T</strong> – maturity in years</p></li>
+<li><p><strong>x0</strong> – initial guess [rho, phi]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(rho, phi)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.calibrate_surface">
+<span class="sig-name descname"><span class="pre">calibrate_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strikes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iv_surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forwards</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hestonpy/models/calibration/ssvi.html#SurfaceStochasticVolatilityInspired.calibrate_surface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.calibrate_surface" title="Link to this definition">#</a></dt>
+<dd><p>Calibrate SSVI for all maturities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strikes</strong> – 1D array of strikes (same for all maturities)</p></li>
+<li><p><strong>iv_surface</strong> – 2D array iv_surface[T_index, strike_index]</p></li>
+<li><p><strong>forwards</strong> – 1D array forward prices F(T)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dictionary of calibrated parameters per maturity</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.compute_iv_surface">
+<span class="sig-name descname"><span class="pre">compute_iv_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strikes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forwards</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hestonpy/models/calibration/ssvi.html#SurfaceStochasticVolatilityInspired.compute_iv_surface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.compute_iv_surface" title="Link to this definition">#</a></dt>
+<dd><p>Generates the implied vol surface from calibrated SSVI params.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strikes</strong> – 1D array</p></li>
+<li><p><strong>forwards</strong> – 1D array forward for each maturity</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>2D array of implied volatilities</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.ssvi_total_variance">
+<span class="sig-name descname"><span class="pre">ssvi_total_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hestonpy/models/calibration/ssvi.html#SurfaceStochasticVolatilityInspired.ssvi_total_variance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.ssvi_total_variance" title="Link to this definition">#</a></dt>
+<dd><p>Computes total implied variance w(k,T) using the SSVI formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> – log-moneyness</p></li>
+<li><p><strong>theta</strong> – total ATM variance for maturity T</p></li>
+<li><p><strong>rho</strong> – correlation parameter (<a href="#id1"><span class="problematic" id="id2">|rho|</span></a> &lt; 1)</p></li>
+<li><p><strong>phi</strong> – wing parameter φ(T) &gt;= 0 and theta*phi &lt;= 2</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>total implied variance w(k,T)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -710,10 +828,29 @@ between the model’s total implied variance and the market’s total implied va
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forwarddensity">ForwardDensity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#volatilitysurface">VolatilitySurface</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.calibration.volatilitySurface.VolatilitySurface"><code class="docutils literal notranslate"><span class="pre">VolatilitySurface</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.calibration.volatilitySurface.VolatilitySurface.compute_surface"><code class="docutils literal notranslate"><span class="pre">VolatilitySurface.compute_surface()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.calibration.volatilitySurface.VolatilitySurface.plot"><code class="docutils literal notranslate"><span class="pre">VolatilitySurface.plot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stochasticvolatilityinspired">StochasticVolatilityInspired</a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.calibration.svi.StochasticVolatilityInspired"><code class="docutils literal notranslate"><span class="pre">StochasticVolatilityInspired</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.calibration.svi.StochasticVolatilityInspired.calibration"><code class="docutils literal notranslate"><span class="pre">StochasticVolatilityInspired.calibration()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.calibration.svi.StochasticVolatilityInspired.raw_formulation"><code class="docutils literal notranslate"><span class="pre">StochasticVolatilityInspired.raw_formulation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surfacestochasticvolatilityinspired">SurfaceStochasticVolatilityInspired</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired"><code class="docutils literal notranslate"><span class="pre">SurfaceStochasticVolatilityInspired</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.calibrate_single_maturity"><code class="docutils literal notranslate"><span class="pre">SurfaceStochasticVolatilityInspired.calibrate_single_maturity()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.calibrate_surface"><code class="docutils literal notranslate"><span class="pre">SurfaceStochasticVolatilityInspired.calibrate_surface()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.compute_iv_surface"><code class="docutils literal notranslate"><span class="pre">SurfaceStochasticVolatilityInspired.compute_iv_surface()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hestonpy.models.calibration.ssvi.SurfaceStochasticVolatilityInspired.ssvi_total_variance"><code class="docutils literal notranslate"><span class="pre">SurfaceStochasticVolatilityInspired.ssvi_total_variance()</span></code></a></li>
 </ul>
 </li>
 </ul>

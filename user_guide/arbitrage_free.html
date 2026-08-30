@@ -567,6 +567,43 @@ which implies <span class="math notranslate nohighlight">\(\theta_T \varphi_T \l
 is not just a numerical trick — it is a direct encoding of the no-butterfly condition
 (up to the <span class="math notranslate nohighlight">\(\rho\)</span> factor, which is bounded by <span class="math notranslate nohighlight">\(2\)</span>).</p>
 </div>
+<section id="joint-calibration-across-the-whole-surface">
+<h3>Joint calibration across the whole surface<a class="headerlink" href="#joint-calibration-across-the-whole-surface" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">calibrate_single_maturity</span></code> (and <code class="docutils literal notranslate"><span class="pre">calibrate_surface</span></code>, which just loops over it) still fits
+<span class="math notranslate nohighlight">\(\rho_T\)</span> and <span class="math notranslate nohighlight">\(\varphi_T\)</span> <strong>independently for each maturity</strong>. Nothing ties the slices
+together beyond each <span class="math notranslate nohighlight">\(\theta_T\)</span> being read off the market — so calendar-spread arbitrage is
+only avoided if the input data happens to be well-behaved, not by construction.</p>
+<p><code class="docutils literal notranslate"><span class="pre">SurfaceStochasticVolatilityInspired.calibrate_joint</span></code> (used by
+<code class="docutils literal notranslate"><span class="pre">VolatilitySurface.ssvi_smooth</span></code>) instead fits a <strong>single</strong> <span class="math notranslate nohighlight">\(\rho\)</span> and a <strong>single</strong> wing
+function shared by every maturity, using Gatheral’s power-law form:</p>
+<div class="math notranslate nohighlight">
+\[
+\varphi(\theta) = \frac{\eta}{\theta^{\gamma}(1+\theta)^{1-\gamma}}.
+\]</div>
+<p>The free parameters become <span class="math notranslate nohighlight">\((\rho, \eta, \gamma)\)</span> instead of <span class="math notranslate nohighlight">\((\rho_T, \varphi_T)\)</span> per
+maturity. To enforce the Gatheral–Jacquier sufficient condition
+<span class="math notranslate nohighlight">\(\eta(1+|\rho|) \leq 2\)</span> (together with <span class="math notranslate nohighlight">\(\gamma \in (0, \tfrac12]\)</span>) <strong>by construction</strong>
+rather than as a post-hoc check, the optimiser is reparameterised over <span class="math notranslate nohighlight">\((\rho, u, \gamma)\)</span>
+with <span class="math notranslate nohighlight">\(u \in (0, 1]\)</span> and</p>
+<div class="math notranslate nohighlight">
+\[
+\eta = u \cdot \frac{2}{1+|\rho|},
+\]</div>
+<p>which turns the nonlinear constraint into a plain box constraint — trivially satisfiable by
+any bounded optimiser, whatever <span class="math notranslate nohighlight">\(u\)</span> ends up being.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.calibration.volatilitySurface</span><span class="w"> </span><span class="kn">import</span> <span class="n">VolatilitySurface</span>
+
+<span class="c1"># surface = VolatilitySurface([smile_T1, smile_T2, smile_T3, ...])</span>
+<span class="n">joint_params</span><span class="p">,</span> <span class="n">calibrated_ivs</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">ssvi_smooth</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">joint_params</span><span class="p">[</span><span class="s2">"rho"</span><span class="p">],</span> <span class="n">joint_params</span><span class="p">[</span><span class="s2">"eta"</span><span class="p">],</span> <span class="n">joint_params</span><span class="p">[</span><span class="s2">"gamma"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Sufficient no-arbitrage check:"</span><span class="p">,</span>
+      <span class="n">joint_params</span><span class="p">[</span><span class="s2">"eta"</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">joint_params</span><span class="p">[</span><span class="s2">"rho"</span><span class="p">])),</span> <span class="s2">"&lt;= 2"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><span class="math notranslate nohighlight">\(\theta_T\)</span> is still read directly off each maturity’s ATM implied volatility, not fitted —
+only the wing <em>shape</em> is shared across <span class="math notranslate nohighlight">\(T\)</span>.</p>
+</section>
 <section id="checking-analytically-with-hestonpy">
 <h3>Checking analytically with hestonpy<a class="headerlink" href="#checking-analytically-with-hestonpy" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -637,13 +674,50 @@ full surface, because its no-arbitrage conditions can be encoded as simple box c
 the optimiser. SVI is more flexible on a single smile but offers no cross-maturity guarantee.</p>
 <p>For a production calibration pipeline, one should:</p>
 <ol class="arabic simple">
-<li><p>Use SSVI (or parametric SSVI with <span class="math notranslate nohighlight">\(\varphi(\theta) = \eta/\theta^\gamma\)</span>) for the full
-surface, with the bound <span class="math notranslate nohighlight">\(\varphi \leq 2/\theta\)</span>.</p></li>
+<li><p>Use the jointly-calibrated SSVI (<code class="docutils literal notranslate"><span class="pre">VolatilitySurface.ssvi_smooth</span></code>, power-law
+<span class="math notranslate nohighlight">\(\varphi(\theta) = \eta/(\theta^\gamma(1+\theta)^{1-\gamma})\)</span>) for the full surface —
+see <a class="reference internal" href="#joint-calibration-across-the-whole-surface"><span class="std std-ref">Joint calibration across the whole surface</span></a>
+above. <code class="docutils literal notranslate"><span class="pre">svi_smooth</span></code> remains available for a single, independently-fitted smile.</p></li>
 <li><p>After calibration, run a quick check: compute <span class="math notranslate nohighlight">\(g(k)\)</span> on a fine grid for each slice.</p></li>
 <li><p>Verify that <span class="math notranslate nohighlight">\(T \mapsto \theta_T\)</span> is non-decreasing.</p></li>
 </ol>
 <p>If any check fails, tighten the optimisation constraints or review the input data for
 outlier quotes.</p>
+</section>
+<hr class="docutils" />
+<section id="recovering-the-risk-neutral-density-breeden-litzenberger">
+<h2>Recovering the risk-neutral density (Breeden-Litzenberger)<a class="headerlink" href="#recovering-the-risk-neutral-density-breeden-litzenberger" title="Link to this heading">#</a></h2>
+<p>A smoothed, arbitrage-free smile is not just an end in itself — it is also what makes it
+possible to recover the market’s implied probability distribution of the underlying at
+maturity <span class="math notranslate nohighlight">\(T\)</span>. Breeden &amp; Litzenberger (1978) show that the forward risk-neutral density is
+the second strike-derivative of the call price:</p>
+<div class="math notranslate nohighlight">
+\[
+f(K, T) = e^{rT}\, \frac{\partial^2 C}{\partial K^2}(K, T).
+\]</div>
+<p>Applying this directly to raw market quotes does not work: strikes are sparse and unevenly
+spaced, and quotes are noisy, so a numerical second derivative amplifies that noise into
+something unusable — and, per the discussion above, a curve with <span class="math notranslate nohighlight">\(g(k) &lt; 0\)</span> somewhere would
+even hand back a <em>negative</em> density there. The fix is the same one used throughout this
+note: differentiate a smoothed, arbitrage-checked price curve instead of the raw quotes.</p>
+<p><code class="docutils literal notranslate"><span class="pre">hestonpy</span></code> builds that curve from a fine, uniformly-spaced strike grid (<code class="docutils literal notranslate"><span class="pre">VolatilitySmile.forward_density</span></code>),
+using either a per-slice SVI fit or — preferably, since it is what ties every maturity
+together — the surface’s own joint SSVI fit:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Single maturity: uses raw SVI (its own independent fit) if no ssvi_params given</span>
+<span class="n">density</span> <span class="o">=</span> <span class="n">smile</span><span class="o">.</span><span class="n">forward_density</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">density</span><span class="o">.</span><span class="n">total_mass</span><span class="p">,</span> <span class="n">density</span><span class="o">.</span><span class="n">has_negative_density</span><span class="p">)</span>
+<span class="n">density</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c1"># Whole surface: uses the joint SSVI fit (see above), one density per maturity</span>
+<span class="n">densities</span> <span class="o">=</span> <span class="n">surface</span><span class="o">.</span><span class="n">forward_densities</span><span class="p">()</span>
+<span class="n">surface</span><span class="o">.</span><span class="n">plot_forward_density_heatmap</span><span class="p">()</span>   <span class="c1"># + median / mean / Q1-Q3 overlay</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ForwardDensity.total_mass</span></code> (should be close to 1) and <code class="docutils literal notranslate"><span class="pre">has_negative_density</span></code> are cheap
+sanity checks: a negative density is exactly the strike-space manifestation of the
+butterfly arbitrage discussed above (<span class="math notranslate nohighlight">\(g(k) &lt; 0\)</span>), so seeing <code class="docutils literal notranslate"><span class="pre">has_negative_density</span> <span class="pre">=</span> <span class="pre">True</span></code>
+means the smoothing itself introduced an arbitrage the underlying SVI/SSVI fit should not
+have allowed.</p>
 </section>
 <hr class="docutils" />
 <section id="references">
@@ -710,11 +784,13 @@ Mathematical Finance, 14(3), 469–480.</p></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-for-ssvi">Conditions for SSVI</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-calibration-across-the-whole-surface">Joint calibration across the whole surface</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-analytically-with-hestonpy">Checking analytically with hestonpy</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calendar-spread-check">Calendar spread check</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discussion">Discussion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recovering-the-risk-neutral-density-breeden-litzenberger">Recovering the risk-neutral density (Breeden-Litzenberger)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
   </nav></div>
