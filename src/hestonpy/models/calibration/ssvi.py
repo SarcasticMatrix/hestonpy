@@ -29,7 +29,7 @@ class SurfaceStochasticVolatilityInspired:
 
         :param k: log-moneyness
         :param theta: total ATM variance for maturity T
-        :param rho: correlation parameter (|rho| < 1)
+        :param rho: correlation parameter (\|rho\| < 1)
         :param phi: wing parameter φ(T) >= 0 and theta*phi <= 2
 
         :returns: total implied variance w(k,T)
@@ -138,8 +138,8 @@ class SurfaceStochasticVolatilityInspired:
             volatility surfaces") show this range, together with the next point,
             is a *sufficient* condition for the whole surface to be free of both
             calendar-spread and butterfly arbitrage.
-          - u in (0, 1], with eta = u * 2 / (1 + |rho|), which guarantees
-            eta * (1 + |rho|) <= 2 for any u -- the other half of that sufficient
+          - u in (0, 1], with eta = u * 2 / (1 + \|rho\|), which guarantees
+            eta * (1 + \|rho\|) <= 2 for any u -- the other half of that sufficient
             condition. Reparameterizing this way turns what would otherwise be a
             nonlinear constraint into a plain box constraint on u, so it is
             enforced by construction rather than checked after the fact, and keeps
