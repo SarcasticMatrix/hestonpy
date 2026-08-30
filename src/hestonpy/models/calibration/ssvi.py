@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.optimize import minimize, Bounds
+from scipy.optimize import minimize, basinhopping, Bounds
 import warnings
 
 class SurfaceStochasticVolatilityInspired:
@@ -16,7 +16,8 @@ class SurfaceStochasticVolatilityInspired:
         :param maturities: Array of maturities in years.
         """
         self.maturities = maturities
-        self.params_surface = {}   # will contain {T: {"rho": ..., "phi": ...}}
+        self.params_surface = {}   # per-maturity fit: {T: {"rho": ..., "phi": ...}}
+        self.joint_params = {}     # joint fit: {"rho", "eta", "gamma", "phi": {T:...}, "theta": {T:...}}
         self.theta = {}            # theta(T) total variance ATM per maturity
 
     # ----------------------------------------------------------------------
@@ -67,17 +68,146 @@ class SurfaceStochasticVolatilityInspired:
             return np.sum((model - market_tiv)**2)
 
         # No arbitrage constraints
+        phi_upper = 2 / theta_T
         bounds = Bounds(
             [-0.999, 1e-6],       # rho, phi
-            [0.999, 2/theta_T]    # |rho|<1 , phi <= 2/theta(T)
+            [0.999, phi_upper]    # |rho|<1 , phi <= 2/theta(T)
         )
+
+        # A single local SLSQP run from x0 tends to get stuck immediately at x0
+        # (the rho/phi scales are very different, and phi's bound width varies a
+        # lot with theta(T)): basinhopping with a per-parameter step scale, mirroring
+        # StochasticVolatilityInspired.calibration's own use of basinhopping, avoids
+        # that degenerate local optimum.
+        step_scale = np.array([0.4, max(0.3, 0.2 * phi_upper)])
+
+        def take_step(x):
+            return x + np.random.normal(scale=step_scale, size=len(x))
+
+        minimizer_kwargs = {"method": "L-BFGS-B", "bounds": bounds}
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            result = minimize(cost, x0, method="SLSQP", bounds=bounds)
+            result = basinhopping(
+                cost,
+                x0=x0,
+                niter=200,
+                niter_success=30,
+                take_step=take_step,
+                minimizer_kwargs=minimizer_kwargs,
+            )
 
         rho_opt, phi_opt = result.x
         return rho_opt, phi_opt
+
+    # ----------------------------------------------------------------------
+    # Shared power-law wing function, for a joint fit across every maturity
+    # ----------------------------------------------------------------------
+    @staticmethod
+    def phi_power_law(theta, eta, gamma):
+        """
+        Gatheral's power-law parameterization of the SSVI wing function phi(theta):
+        phi(theta) = eta / (theta**gamma * (1+theta)**(1-gamma)).
+
+        Unlike calibrate_single_maturity's free phi(T) (one independent value per
+        maturity), this phi is a single function of theta shared by every maturity,
+        which is what ties the whole surface together in calibrate_joint.
+
+        :param theta: ATM total variance theta(T) (scalar or array).
+        :param eta: Overall scale of the wings.
+        :param gamma: Decay exponent, in (0, 1).
+
+        :returns: phi(theta)
+        """
+        return eta / (theta**gamma * (1 + theta)**(1 - gamma))
+
+    # ----------------------------------------------------------------------
+    # Joint calibration across every maturity at once
+    # ----------------------------------------------------------------------
+    def calibrate_joint(self, strikes_list, market_ivs_list, forwards, maturities, x0=[0.0, 0.5, 0.3], niter=300):
+        """
+        Jointly calibrates a single rho and a single power-law wing function
+        phi(theta; eta, gamma) across every maturity at once, instead of fitting
+        rho(T)/phi(T) independently per maturity as calibrate_single_maturity does.
+        theta(T) is still read directly off each maturity's own ATM implied
+        volatility, not fitted.
+
+        Free parameters are [rho, u, gamma], reparameterized so that:
+          - rho in (-1, 1): correlation, shared across every maturity.
+          - gamma in (0, 0.5]: Gatheral & Jacquier (2014, "Arbitrage-free SVI
+            volatility surfaces") show this range, together with the next point,
+            is a *sufficient* condition for the whole surface to be free of both
+            calendar-spread and butterfly arbitrage.
+          - u in (0, 1], with eta = u * 2 / (1 + |rho|), which guarantees
+            eta * (1 + |rho|) <= 2 for any u -- the other half of that sufficient
+            condition. Reparameterizing this way turns what would otherwise be a
+            nonlinear constraint into a plain box constraint on u, so it is
+            enforced by construction rather than checked after the fact, and keeps
+            the same bounded-optimizer approach that fixed
+            calibrate_single_maturity's SLSQP-stuck-at-x0 issue.
+
+        :param strikes_list: list of strike arrays, one per maturity (same order as maturities).
+        :param market_ivs_list: list of market implied vol arrays, one per maturity.
+        :param forwards: list/array of forward prices, one per maturity.
+        :param maturities: list/array of maturities in years, same order as the above.
+        :param x0: initial guess [rho, u, gamma].
+        :param niter: number of basinhopping iterations.
+
+        :returns: dict with the shared 'rho', 'eta', 'gamma', plus per-maturity
+            'theta' and 'phi' dictionaries (keyed by maturity).
+        :rtype: dict
+        """
+        maturities = list(maturities)
+        thetas, ks, market_tivs = {}, {}, {}
+
+        for strikes, market_ivs, forward, T in zip(strikes_list, market_ivs_list, forwards, maturities):
+            atm_iv = market_ivs[np.argmin(np.abs(strikes - forward))]
+            thetas[T] = atm_iv**2 * T
+            ks[T] = np.log(strikes / forward)
+            market_tivs[T] = market_ivs**2 * T
+
+        def cost(x):
+            rho, u, gamma = x
+            eta = u * 2 / (1 + abs(rho))
+            total = 0.0
+            for T in maturities:
+                phi_T = self.phi_power_law(thetas[T], eta, gamma)
+                model = self.ssvi_total_variance(ks[T], thetas[T], rho, phi_T)
+                total += np.sum((model - market_tivs[T])**2)
+            return total
+
+        bounds = Bounds([-0.999, 1e-3, 1e-3], [0.999, 1.0, 0.5])
+        step_scale = np.array([0.4, 0.3, 0.15])
+
+        def take_step(x):
+            return x + np.random.normal(scale=step_scale, size=len(x))
+
+        minimizer_kwargs = {"method": "L-BFGS-B", "bounds": bounds}
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            result = basinhopping(
+                cost,
+                x0=x0,
+                niter=niter,
+                niter_success=40,
+                take_step=take_step,
+                minimizer_kwargs=minimizer_kwargs,
+            )
+
+        rho_opt, u_opt, gamma_opt = result.x
+        eta_opt = u_opt * 2 / (1 + abs(rho_opt))
+
+        self.theta = thetas
+        phi_per_maturity = {T: self.phi_power_law(thetas[T], eta_opt, gamma_opt) for T in maturities}
+        self.joint_params = {
+            "rho": rho_opt,
+            "eta": eta_opt,
+            "gamma": gamma_opt,
+            "phi": phi_per_maturity,
+            "theta": thetas,
+        }
+        return self.joint_params
 
     # ----------------------------------------------------------------------
     # Calibrate entire surface

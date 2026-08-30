@@ -10,16 +10,75 @@ from hestonpy.models.calibration._utils_optimisation import (
 )
 from hestonpy.models.blackScholes import BlackScholes
 from hestonpy.models.calibration.svi import StochasticVolatilityInspired as SVI
+from hestonpy.models.calibration.ssvi import SurfaceStochasticVolatilityInspired as SSVI
 
 fontdict = {"fontsize": 20, "fontweight": "bold"}
 
 from scipy.optimize import minimize, basinhopping, NonlinearConstraint
+from dataclasses import dataclass
 from typing import Literal
 from datetime import datetime
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import warnings
+
+
+@dataclass
+class ForwardDensity:
+    """
+    Forward (T-maturity) risk-neutral density of the underlying, recovered via the
+    Breeden-Litzenberger formula f(K) = exp(r*T) * d^2C/dK^2, applied to a smoothed
+    (SVI-fitted) call price curve evaluated on a fine, uniformly-spaced strike grid.
+
+    Attributes:
+        strikes (np.ndarray): Uniformly-spaced strike grid the density is evaluated on
+            (the two grid endpoints are dropped, since the second derivative needs a
+            neighbour on each side).
+        density (np.ndarray): Risk-neutral density values at `strikes`.
+        forward (float): Forward price used to build the strike grid (atm * exp(r*T)).
+        time_to_maturity (float): Maturity in years.
+        total_mass (float): Numerical integral of the density over `strikes` (trapezoidal
+            rule). Should be close to 1; a value far from 1 signals a strike grid that's
+            too narrow or too coarse relative to the smile's tails.
+        has_negative_density (bool): True if some density values are negative, which
+            signals butterfly arbitrage in the underlying smoothed price curve.
+    """
+
+    strikes: np.ndarray
+    density: np.ndarray
+    forward: float
+    time_to_maturity: float
+    total_mass: float
+    has_negative_density: bool
+
+    def plot(self):
+        """
+        Plots the forward risk-neutral density against strike. Points where the
+        density is negative (butterfly arbitrage in the underlying smoothed price
+        curve) are highlighted in red.
+        """
+        plt.figure(figsize=(8, 5))
+        plt.plot(self.strikes, self.density, color="blue", linewidth=1.5, label="Risk-neutral density")
+        plt.fill_between(self.strikes, self.density, 0, color="blue", alpha=0.1)
+        plt.axvline(self.forward, linestyle="--", color="gray", label="Forward")
+
+        if self.has_negative_density:
+            mask = self.density < 0
+            plt.scatter(
+                self.strikes[mask], self.density[mask],
+                color="red", s=15, zorder=5, label="Negative density (arbitrage)",
+            )
+
+        plt.xlabel("Strike", fontdict=fontdict)
+        plt.ylabel("Density", fontdict=fontdict)
+        plt.title(
+            f"Forward risk-neutral density (T={self.time_to_maturity:.2f}y)\nmass={self.total_mass:.3f}",
+            fontdict=fontdict,
+        )
+        plt.grid(visible=True, which="major", linestyle="--", dashes=(5, 10), color="gray", linewidth=0.5, alpha=0.8)
+        plt.legend()
+        plt.show()
 
 
 class VolatilitySmile:
@@ -196,6 +255,90 @@ class VolatilitySmile:
         if select_svi_ivs:
             self.market_ivs = calibrated_ivs
         return calibrated_params, calibrated_ivs
+
+    def forward_density(
+        self,
+        num_points: int = 500,
+        strike_range: tuple[float, float] = None,
+        svi_params: dict = None,
+        ssvi_params: dict = None,
+    ) -> ForwardDensity:
+        """
+        Computes the forward risk-neutral density for this maturity via the
+        Breeden-Litzenberger formula: f(K) = exp(r*T) * d^2C/dK^2.
+
+        Raw market strikes are too sparse and noisy for a stable second derivative,
+        so the call price curve is instead built from a smooth fit of the smile,
+        evaluated on a fine, uniformly-spaced strike grid (uniform spacing in
+        strike, not log-moneyness, is required for the finite-difference second
+        derivative to be accurate). Two parameterizations are supported:
+
+        * ssvi_params={'rho', 'theta', 'phi'} (see ssvi.py): preferred when
+          available, typically coming from VolatilitySurface.ssvi_smooth's joint
+          fit — the wing function is then shared across the whole surface rather
+          than fitted on this smile in isolation.
+        * svi_params={'a', 'b', 'rho', 'm', 'sigma'} (raw SVI, see svi.py): used
+          when ssvi_params is not given. If svi_params is also None, it is
+          calibrated on the fly via svi_smooth() — this is the only option when a
+          VolatilitySmile is used standalone, without a surrounding
+          VolatilitySurface to provide a joint SSVI fit.
+
+        :param int num_points: Number of points in the strike grid. Default is 500.
+        :param tuple strike_range: (K_min, K_max) for the strike grid. If None,
+            defaults to the market strike range padded by one span on each side,
+            to capture enough of the tails for the integral to be close to 1.
+        :param dict svi_params: Pre-calibrated raw SVI parameters (a, b, rho, m, sigma).
+        :param dict ssvi_params: Pre-calibrated SSVI parameters (rho, theta, phi)
+            for this maturity. Takes precedence over svi_params if both are given.
+
+        :returns: The forward risk-neutral density for this maturity.
+        :rtype: ForwardDensity
+        """
+        forward = self.atm * np.exp(self.r * self.time_to_maturity)
+
+        if strike_range is None:
+            span = self.strikes.max() - self.strikes.min()
+            K_min = max(1e-6, self.strikes.min() - span)
+            K_max = self.strikes.max() + span
+        else:
+            K_min, K_max = strike_range
+
+        strikes_grid = np.linspace(K_min, K_max, num_points)
+        log_moneyness = np.log(strikes_grid / forward)
+
+        if ssvi_params is not None:
+            ssvi = SSVI(maturities=np.array([self.time_to_maturity]))
+            total_variance = ssvi.ssvi_total_variance(
+                log_moneyness, ssvi_params["theta"], ssvi_params["rho"], ssvi_params["phi"]
+            )
+        else:
+            if svi_params is None:
+                svi_params, _ = self.svi_smooth()
+            raw_svi = SVI(time_to_maturity=self.time_to_maturity)
+            total_variance = raw_svi.raw_formulation(log_moneyness, **svi_params)
+
+        ivs = np.sqrt(total_variance / self.time_to_maturity)
+
+        bs = BlackScholes(spot=self.atm, r=self.r, mu=self.r, volatility=0.02)
+        call_prices = bs.call_price(
+            strike=strikes_grid, volatility=ivs, time_to_maturity=self.time_to_maturity
+        )
+
+        dK = strikes_grid[1] - strikes_grid[0]
+        second_derivative = (call_prices[2:] - 2 * call_prices[1:-1] + call_prices[:-2]) / dK**2
+        density = np.exp(self.r * self.time_to_maturity) * second_derivative
+        density_strikes = strikes_grid[1:-1]
+
+        total_mass = np.trapezoid(density, density_strikes)
+
+        return ForwardDensity(
+            strikes=density_strikes,
+            density=density,
+            forward=forward,
+            time_to_maturity=self.time_to_maturity,
+            total_mass=total_mass,
+            has_negative_density=bool(np.any(density < 0)),
+        )
 
     def calibration(
         self,
@@ -460,3 +603,48 @@ class VolatilitySmile:
         )
         plt.legend()
         plt.show()
+
+
+if __name__ == "__main__":
+
+    from hestonpy.models.heston import Heston
+
+    # Synthetic market: call prices generated from a Heston model with known parameters
+    true_params = dict(
+        spot=100, vol_initial=0.04, r=0.02,
+        kappa=2.0, theta=0.05, drift_emm=0.0, sigma=0.4, rho=-0.6,
+    )
+    heston = Heston(**true_params)
+
+    strikes = np.array([80, 90, 100, 110, 120], dtype=float)
+    time_to_maturity = 0.5
+    market_prices = heston.call_price(strike=strikes, time_to_maturity=time_to_maturity)
+
+    smile = VolatilitySmile(
+        strikes=strikes,
+        time_to_maturity=time_to_maturity,
+        atm=100.0,
+        market_prices=market_prices,
+        r=0.02,
+    )
+    print(f"Market implied vols: {smile.market_ivs}\n")
+
+    # Smooth the smile with a raw SVI fit
+    svi_params, svi_ivs = smile.svi_smooth()
+    print(f"SVI parameters: {svi_params}\n")
+    smile.plot(calibrated_ivs=svi_ivs)
+
+    # Recover the forward risk-neutral density via Breeden-Litzenberger
+    density = smile.forward_density(svi_params=svi_params)
+    print(f"Density total mass: {density.total_mass:.4f} | negative density: {density.has_negative_density}\n")
+    density.plot()
+
+    # Calibrate a Heston model back from the smile
+    calibrated = smile.calibration(
+        price_function=heston.call_price,
+        initial_guess=[1.0, 0.03, 0.3, -0.3],
+        guess_correlation_sign="negative",
+        speed="local",
+    )
+    print(f"Calibrated Heston parameters: {calibrated}")
+    print(f"True parameters: {true_params}")
