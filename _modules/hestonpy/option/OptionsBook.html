@@ -26,8 +26,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -35,10 +35,10 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=8a048efd" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
     <script src="../../../_static/documentation_options.js?v=feb023f7"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
@@ -389,14 +389,14 @@
 <a class="viewcode-back" href="../../../api/option.html#hestonpy.option.OptionsBook.Position">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Position</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    A position in the options book: a contract, a signed quantity, and an optional entry price.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        option (Option): The option contract.</span>
 <span class="sd">        quantity (float): Signed quantity — positive = long, negative = short.</span>
 <span class="sd">        entry_price (float | None): Price at which the position was opened. Used for P&amp;L.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">option</span><span class="p">:</span> <span class="n">Option</span>
     <span class="n">quantity</span><span class="p">:</span> <span class="nb">float</span>
@@ -407,7 +407,7 @@
 <div class="viewcode-block" id="OptionsBook">
 <a class="viewcode-back" href="../../../api/option.html#hestonpy.option.OptionsBook.OptionsBook">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">OptionsBook</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Manages a book of European vanilla options on a single underlying.</span>
 
 <span class="sd">    Market context (spot, risk-free rate) is held at the book level and shared</span>
@@ -420,17 +420,17 @@
 <span class="sd">    Parameters:</span>
 <span class="sd">        spot (float): Current spot price of the underlying.</span>
 <span class="sd">        r (float): Risk-free interest rate (annualised).</span>
-<span class="sd">        underlying (str): Optional label for the underlying (e.g. &#39;AAPL&#39;).</span>
+<span class="sd">        underlying (str): Optional label for the underlying (e.g. 'AAPL').</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; book = OptionsBook(spot=100.0, r=0.05, underlying=&#39;SPX&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; book.add(&#39;call&#39;, strike=105.0, time_to_maturity=0.5, quantity=1)</span>
-<span class="sd">        &gt;&gt;&gt; book.add(&#39;put&#39;,  strike=95.0,  time_to_maturity=0.5, quantity=-2)</span>
+<span class="sd">        &gt;&gt;&gt; book = OptionsBook(spot=100.0, r=0.05, underlying='SPX')</span>
+<span class="sd">        &gt;&gt;&gt; book.add('call', strike=105.0, time_to_maturity=0.5, quantity=1)</span>
+<span class="sd">        &gt;&gt;&gt; book.add('put',  strike=95.0,  time_to_maturity=0.5, quantity=-2)</span>
 <span class="sd">        &gt;&gt;&gt; print(book)</span>
-<span class="sd">        &gt;&gt;&gt; print(book.summary(&#39;blackScholes&#39;, vol=0.2, params=[0.05]))</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; print(book.summary('blackScholes', vol=0.2, params=[0.05]))</span>
+<span class="sd">    """</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">underlying</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">underlying</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spot</span> <span class="o">=</span> <span class="n">spot</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">underlying</span> <span class="o">=</span> <span class="n">underlying</span>
@@ -444,22 +444,22 @@
 <a class="viewcode-back" href="../../../api/option.html#hestonpy.option.OptionsBook.OptionsBook.add">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">flag</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;call&#39;</span><span class="p">,</span> <span class="s1">&#39;put&#39;</span><span class="p">],</span>
+        <span class="n">flag</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">'call'</span><span class="p">,</span> <span class="s1">'put'</span><span class="p">],</span>
         <span class="n">strike</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">quantity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">entry_price</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Add a new position to the book.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            flag: &#39;call&#39; or &#39;put&#39;.</span>
+<span class="sd">            flag: 'call' or 'put'.</span>
 <span class="sd">            strike: Strike price.</span>
 <span class="sd">            time_to_maturity: Time to maturity in years.</span>
 <span class="sd">            quantity: Signed quantity (+N = long, -N = short).</span>
 <span class="sd">            entry_price: Optional entry price for P&amp;L tracking.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">option</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="n">flag</span><span class="o">=</span><span class="n">flag</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="n">strike</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Position</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="n">quantity</span><span class="p">,</span> <span class="n">entry_price</span><span class="o">=</span><span class="n">entry_price</span><span class="p">))</span></div>
 
@@ -467,14 +467,14 @@
 <div class="viewcode-block" id="OptionsBook.remove">
 <a class="viewcode-back" href="../../../api/option.html#hestonpy.option.OptionsBook.OptionsBook.remove">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove the position at the given index.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Remove the position at the given index."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">index</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="OptionsBook.update_spot">
 <a class="viewcode-back" href="../../../api/option.html#hestonpy.option.OptionsBook.OptionsBook.update_spot">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">update_spot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_spot</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the spot price (re-marks the book to the new level).&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Update the spot price (re-marks the book to the new level)."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spot</span> <span class="o">=</span> <span class="n">new_spot</span></div>
 
 
@@ -485,16 +485,16 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_price_option</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">option</span><span class="p">:</span> <span class="n">Option</span><span class="p">,</span>
-        <span class="n">flag_model</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;heston&#39;</span><span class="p">,</span> <span class="s1">&#39;blackScholes&#39;</span><span class="p">],</span>
+        <span class="n">flag_model</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">'heston'</span><span class="p">,</span> <span class="s1">'blackScholes'</span><span class="p">],</span>
         <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">params</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Price a single option using the chosen model.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            option: The Option contract to price.</span>
-<span class="sd">            flag_model: &#39;blackScholes&#39; or &#39;heston&#39;.</span>
+<span class="sd">            flag_model: 'blackScholes' or 'heston'.</span>
 <span class="sd">            vol: Volatility — sigma for BS, V0 for Heston.</span>
 <span class="sd">            params:</span>
 <span class="sd">                - BlackScholes: [mu]</span>
@@ -502,20 +502,20 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float: Option price.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">flag_model</span> <span class="o">==</span> <span class="s1">&#39;blackScholes&#39;</span><span class="p">:</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">flag_model</span> <span class="o">==</span> <span class="s1">'blackScholes'</span><span class="p">:</span>
             <span class="n">bs</span> <span class="o">=</span> <span class="n">BlackScholes</span><span class="p">(</span>
                 <span class="n">spot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spot</span><span class="p">,</span>
                 <span class="n">r</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">,</span>
                 <span class="n">mu</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                 <span class="n">volatility</span><span class="o">=</span><span class="n">vol</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">if</span> <span class="n">option</span><span class="o">.</span><span class="n">flag</span> <span class="o">==</span> <span class="s1">&#39;call&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">option</span><span class="o">.</span><span class="n">flag</span> <span class="o">==</span> <span class="s1">'call'</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">bs</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">strike</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">bs</span><span class="o">.</span><span class="n">put_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">strike</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="p">)</span>
 
-        <span class="k">elif</span> <span class="n">flag_model</span> <span class="o">==</span> <span class="s1">&#39;heston&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">flag_model</span> <span class="o">==</span> <span class="s1">'heston'</span><span class="p">:</span>
             <span class="n">heston</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span>
                 <span class="n">spot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spot</span><span class="p">,</span>
                 <span class="n">vol_initial</span><span class="o">=</span><span class="n">vol</span><span class="p">,</span>
@@ -530,14 +530,14 @@
                 <span class="n">strike</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">strike</span><span class="p">,</span>
                 <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">option</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">if</span> <span class="n">option</span><span class="o">.</span><span class="n">flag</span> <span class="o">==</span> <span class="s1">&#39;call&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">option</span><span class="o">.</span><span class="n">flag</span> <span class="o">==</span> <span class="s1">'call'</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">call_price</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># Put via put-call parity</span>
                 <span class="k">return</span> <span class="n">call_price</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span> <span class="o">+</span> <span class="n">option</span><span class="o">.</span><span class="n">strike</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">option</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown model &#39;</span><span class="si">{</span><span class="n">flag_model</span><span class="si">}</span><span class="s2">&#39;. Choose &#39;blackScholes&#39; or &#39;heston&#39;.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown model '</span><span class="si">{</span><span class="n">flag_model</span><span class="si">}</span><span class="s2">'. Choose 'blackScholes' or 'heston'."</span><span class="p">)</span>
 
     <span class="c1"># ──────────────────────────────────────────────────────────────</span>
     <span class="c1"># Book-level pricing &amp; P&amp;L</span>
@@ -547,16 +547,16 @@
 <a class="viewcode-back" href="../../../api/option.html#hestonpy.option.OptionsBook.OptionsBook.price">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">price</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">flag_model</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;heston&#39;</span><span class="p">,</span> <span class="s1">&#39;blackScholes&#39;</span><span class="p">],</span>
+        <span class="n">flag_model</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">'heston'</span><span class="p">,</span> <span class="s1">'blackScholes'</span><span class="p">],</span>
         <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">params</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Total mark-to-market value of the book.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float: Sum of (quantity × price) across all positions.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span>
             <span class="n">pos</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_price_option</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">option</span><span class="p">,</span> <span class="n">flag_model</span><span class="p">,</span> <span class="n">vol</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span>
@@ -567,18 +567,18 @@
 <a class="viewcode-back" href="../../../api/option.html#hestonpy.option.OptionsBook.OptionsBook.pnl">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">pnl</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">flag_model</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;heston&#39;</span><span class="p">,</span> <span class="s1">&#39;blackScholes&#39;</span><span class="p">],</span>
+        <span class="n">flag_model</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">'heston'</span><span class="p">,</span> <span class="s1">'blackScholes'</span><span class="p">],</span>
         <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">params</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Total P&amp;L of the book vs entry prices.</span>
 
 <span class="sd">        Positions without an entry_price are excluded from the calculation.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float: Sum of quantity × (current_price - entry_price).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">entry_price</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -594,7 +594,7 @@
 <div class="viewcode-block" id="OptionsBook.greeks">
 <a class="viewcode-back" href="../../../api/option.html#hestonpy.option.OptionsBook.OptionsBook.greeks">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">greeks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Aggregate Black-Scholes greeks of the book.</span>
 
 <span class="sd">        Delta, Gamma and Vega are computed analytically from the BS closed-form</span>
@@ -605,8 +605,8 @@
 <span class="sd">            vol: Implied volatility to use for greek computation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict with keys &#39;delta&#39;, &#39;gamma&#39;, &#39;vega&#39;.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">            dict with keys 'delta', 'gamma', 'vega'.</span>
+<span class="sd">        """</span>
         <span class="n">bs</span> <span class="o">=</span> <span class="n">BlackScholes</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spot</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">volatility</span><span class="o">=</span><span class="n">vol</span><span class="p">)</span>
 
         <span class="n">delta_total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
@@ -633,9 +633,9 @@
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s1">&#39;delta&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">delta_total</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-            <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">gamma_total</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-            <span class="s1">&#39;vega&#39;</span><span class="p">:</span>  <span class="nb">round</span><span class="p">(</span><span class="n">vega_total</span><span class="p">,</span>  <span class="mi">6</span><span class="p">),</span>
+            <span class="s1">'delta'</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">delta_total</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+            <span class="s1">'gamma'</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">gamma_total</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+            <span class="s1">'vega'</span><span class="p">:</span>  <span class="nb">round</span><span class="p">(</span><span class="n">vega_total</span><span class="p">,</span>  <span class="mi">6</span><span class="p">),</span>
         <span class="p">}</span></div>
 
 
@@ -647,20 +647,20 @@
 <a class="viewcode-back" href="../../../api/option.html#hestonpy.option.OptionsBook.OptionsBook.summary">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">flag_model</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;heston&#39;</span><span class="p">,</span> <span class="s1">&#39;blackScholes&#39;</span><span class="p">],</span>
+        <span class="n">flag_model</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">'heston'</span><span class="p">,</span> <span class="s1">'blackScholes'</span><span class="p">],</span>
         <span class="n">vol</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">params</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Returns a DataFrame with one row per position, plus a TOTAL row.</span>
 
 <span class="sd">        Columns: flag, strike, TTM, qty, price, MtM, PnL, delta, gamma, vega.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            flag_model: &#39;blackScholes&#39; or &#39;heston&#39;.</span>
+<span class="sd">            flag_model: 'blackScholes' or 'heston'.</span>
 <span class="sd">            vol: Volatility used for both pricing and greek computation.</span>
 <span class="sd">            params: Model parameters (see _price_option).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">bs</span> <span class="o">=</span> <span class="n">BlackScholes</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spot</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">volatility</span><span class="o">=</span><span class="n">vol</span><span class="p">)</span>
         <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -673,39 +673,39 @@
             <span class="n">pnl_pos</span>    <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="p">(</span><span class="n">unit_price</span> <span class="o">-</span> <span class="n">pos</span><span class="o">.</span><span class="n">entry_price</span><span class="p">)</span> <span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">entry_price</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
 
             <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                <span class="s1">&#39;flag&#39;</span><span class="p">:</span>   <span class="n">opt</span><span class="o">.</span><span class="n">flag</span><span class="p">,</span>
-                <span class="s1">&#39;strike&#39;</span><span class="p">:</span> <span class="n">opt</span><span class="o">.</span><span class="n">strike</span><span class="p">,</span>
-                <span class="s1">&#39;TTM&#39;</span><span class="p">:</span>    <span class="n">opt</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="p">,</span>
-                <span class="s1">&#39;qty&#39;</span><span class="p">:</span>    <span class="n">pos</span><span class="o">.</span><span class="n">quantity</span><span class="p">,</span>
-                <span class="s1">&#39;price&#39;</span><span class="p">:</span>  <span class="nb">round</span><span class="p">(</span><span class="n">unit_price</span><span class="p">,</span>                <span class="mi">4</span><span class="p">),</span>
-                <span class="s1">&#39;MtM&#39;</span><span class="p">:</span>    <span class="nb">round</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">unit_price</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
-                <span class="s1">&#39;PnL&#39;</span><span class="p">:</span>    <span class="nb">round</span><span class="p">(</span><span class="n">pnl_pos</span><span class="p">,</span>                   <span class="mi">4</span><span class="p">)</span> <span class="k">if</span> <span class="n">pnl_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;delta&#39;</span><span class="p">:</span>  <span class="nb">round</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">unit_delta</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-                <span class="s1">&#39;gamma&#39;</span><span class="p">:</span>  <span class="nb">round</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">unit_gamma</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-                <span class="s1">&#39;vega&#39;</span><span class="p">:</span>   <span class="nb">round</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">unit_vega</span><span class="p">,</span>  <span class="mi">6</span><span class="p">),</span>
+                <span class="s1">'flag'</span><span class="p">:</span>   <span class="n">opt</span><span class="o">.</span><span class="n">flag</span><span class="p">,</span>
+                <span class="s1">'strike'</span><span class="p">:</span> <span class="n">opt</span><span class="o">.</span><span class="n">strike</span><span class="p">,</span>
+                <span class="s1">'TTM'</span><span class="p">:</span>    <span class="n">opt</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="p">,</span>
+                <span class="s1">'qty'</span><span class="p">:</span>    <span class="n">pos</span><span class="o">.</span><span class="n">quantity</span><span class="p">,</span>
+                <span class="s1">'price'</span><span class="p">:</span>  <span class="nb">round</span><span class="p">(</span><span class="n">unit_price</span><span class="p">,</span>                <span class="mi">4</span><span class="p">),</span>
+                <span class="s1">'MtM'</span><span class="p">:</span>    <span class="nb">round</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">unit_price</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+                <span class="s1">'PnL'</span><span class="p">:</span>    <span class="nb">round</span><span class="p">(</span><span class="n">pnl_pos</span><span class="p">,</span>                   <span class="mi">4</span><span class="p">)</span> <span class="k">if</span> <span class="n">pnl_pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">'-'</span><span class="p">,</span>
+                <span class="s1">'delta'</span><span class="p">:</span>  <span class="nb">round</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">unit_delta</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                <span class="s1">'gamma'</span><span class="p">:</span>  <span class="nb">round</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">unit_gamma</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                <span class="s1">'vega'</span><span class="p">:</span>   <span class="nb">round</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">unit_vega</span><span class="p">,</span>  <span class="mi">6</span><span class="p">),</span>
             <span class="p">})</span>
 
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;#&#39;</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">'#'</span>
 
         <span class="c1"># TOTAL: only aggregate positions that have an entry price</span>
-        <span class="n">tracked</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;PnL&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;-&#39;</span><span class="p">]</span>
+        <span class="n">tracked</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'PnL'</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">'-'</span><span class="p">]</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">_sum</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">decimals</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">tracked</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">decimals</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">tracked</span><span class="o">.</span><span class="n">empty</span> <span class="k">else</span> <span class="s1">&#39;-&#39;</span>
+            <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">tracked</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">decimals</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">tracked</span><span class="o">.</span><span class="n">empty</span> <span class="k">else</span> <span class="s1">'-'</span>
 
         <span class="n">totals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span>
-            <span class="s1">&#39;flag&#39;</span><span class="p">:</span>   <span class="s1">&#39;&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;strike&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;TTM&#39;</span><span class="p">:</span>    <span class="s1">&#39;&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;qty&#39;</span><span class="p">:</span>    <span class="n">tracked</span><span class="p">[</span><span class="s1">&#39;qty&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>      <span class="k">if</span> <span class="ow">not</span> <span class="n">tracked</span><span class="o">.</span><span class="n">empty</span> <span class="k">else</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;price&#39;</span><span class="p">:</span>  <span class="s1">&#39;&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;MtM&#39;</span><span class="p">:</span>    <span class="n">_sum</span><span class="p">(</span><span class="s1">&#39;MtM&#39;</span><span class="p">,</span>   <span class="mi">4</span><span class="p">),</span>
-            <span class="s1">&#39;PnL&#39;</span><span class="p">:</span>    <span class="n">_sum</span><span class="p">(</span><span class="s1">&#39;PnL&#39;</span><span class="p">,</span>   <span class="mi">4</span><span class="p">),</span>
-            <span class="s1">&#39;delta&#39;</span><span class="p">:</span>  <span class="n">_sum</span><span class="p">(</span><span class="s1">&#39;delta&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-            <span class="s1">&#39;gamma&#39;</span><span class="p">:</span>  <span class="n">_sum</span><span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-            <span class="s1">&#39;vega&#39;</span><span class="p">:</span>   <span class="n">_sum</span><span class="p">(</span><span class="s1">&#39;vega&#39;</span><span class="p">,</span>  <span class="mi">6</span><span class="p">),</span>
-        <span class="p">},</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;TOTAL&#39;</span><span class="p">)</span>
+            <span class="s1">'flag'</span><span class="p">:</span>   <span class="s1">''</span><span class="p">,</span>
+            <span class="s1">'strike'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+            <span class="s1">'TTM'</span><span class="p">:</span>    <span class="s1">''</span><span class="p">,</span>
+            <span class="s1">'qty'</span><span class="p">:</span>    <span class="n">tracked</span><span class="p">[</span><span class="s1">'qty'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>      <span class="k">if</span> <span class="ow">not</span> <span class="n">tracked</span><span class="o">.</span><span class="n">empty</span> <span class="k">else</span> <span class="s1">'-'</span><span class="p">,</span>
+            <span class="s1">'price'</span><span class="p">:</span>  <span class="s1">''</span><span class="p">,</span>
+            <span class="s1">'MtM'</span><span class="p">:</span>    <span class="n">_sum</span><span class="p">(</span><span class="s1">'MtM'</span><span class="p">,</span>   <span class="mi">4</span><span class="p">),</span>
+            <span class="s1">'PnL'</span><span class="p">:</span>    <span class="n">_sum</span><span class="p">(</span><span class="s1">'PnL'</span><span class="p">,</span>   <span class="mi">4</span><span class="p">),</span>
+            <span class="s1">'delta'</span><span class="p">:</span>  <span class="n">_sum</span><span class="p">(</span><span class="s1">'delta'</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+            <span class="s1">'gamma'</span><span class="p">:</span>  <span class="n">_sum</span><span class="p">(</span><span class="s1">'gamma'</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+            <span class="s1">'vega'</span><span class="p">:</span>   <span class="n">_sum</span><span class="p">(</span><span class="s1">'vega'</span><span class="p">,</span>  <span class="mi">6</span><span class="p">),</span>
+        <span class="p">},</span> <span class="n">name</span><span class="o">=</span><span class="s1">'TOTAL'</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">totals</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">])</span></div>
 
@@ -719,62 +719,62 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">header</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">OptionsBook  underlying=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">underlying</span><span class="si">}</span><span class="s2">  spot=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">spot</span><span class="si">}</span><span class="s2">  r=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="si">}</span><span class="s2">  &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2"> position</span><span class="si">{</span><span class="s1">&#39;s&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">OptionsBook  underlying=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">underlying</span><span class="si">}</span><span class="s2">  spot=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">spot</span><span class="si">}</span><span class="s2">  r=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="si">}</span><span class="s2">  "</span>
+            <span class="sa">f</span><span class="s2">"(</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2"> position</span><span class="si">{</span><span class="s1">'s'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">''</span><span class="si">}</span><span class="s2">)"</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">header</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  (empty)&quot;</span>
+            <span class="k">return</span> <span class="n">header</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">  (empty)"</span>
 
         <span class="c1"># Pre-format every field so we can measure true widths</span>
-        <span class="n">indices</span>      <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]&quot;</span>                                             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span>   <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">)]</span>
-        <span class="n">qtys</span>         <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;+</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">quantity</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">quantity</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">quantity</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">]</span>
+        <span class="n">indices</span>      <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]"</span>                                             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span>   <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">)]</span>
+        <span class="n">qtys</span>         <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"+</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">quantity</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">quantity</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">quantity</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">]</span>
         <span class="n">types</span>        <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">flag</span>                                         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">]</span>
         <span class="n">strikes</span>      <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">strike</span><span class="p">)</span>                                  <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">]</span>
-        <span class="n">ttms</span>         <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">y&quot;</span>                   <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">]</span>
-        <span class="n">entry_prices</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">entry_price</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">entry_price</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;-&quot;</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">]</span>
+        <span class="n">ttms</span>         <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">y"</span>                   <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">]</span>
+        <span class="n">entry_prices</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">entry_price</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">entry_price</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">"-"</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_positions</span><span class="p">]</span>
 
         <span class="c1"># Column widths = max of header label vs any value</span>
-        <span class="n">w_idx</span>    <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;   &quot;</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">))</span>
-        <span class="n">w_qty</span>    <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;qty&quot;</span><span class="p">),</span>    <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">qtys</span><span class="p">))</span>
-        <span class="n">w_type</span>   <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>   <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">types</span><span class="p">))</span>
-        <span class="n">w_strike</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;strike&quot;</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strikes</span><span class="p">))</span>
-        <span class="n">w_ttm</span>    <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;TTM&quot;</span><span class="p">),</span>    <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ttms</span><span class="p">))</span>
-        <span class="n">w_entry</span>  <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;entry&quot;</span><span class="p">),</span>  <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">entry_prices</span><span class="p">))</span>
+        <span class="n">w_idx</span>    <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">"   "</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">))</span>
+        <span class="n">w_qty</span>    <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">"qty"</span><span class="p">),</span>    <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">qtys</span><span class="p">))</span>
+        <span class="n">w_type</span>   <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">"type"</span><span class="p">),</span>   <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">types</span><span class="p">))</span>
+        <span class="n">w_strike</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">"strike"</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strikes</span><span class="p">))</span>
+        <span class="n">w_ttm</span>    <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">"TTM"</span><span class="p">),</span>    <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ttms</span><span class="p">))</span>
+        <span class="n">w_entry</span>  <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="s2">"entry"</span><span class="p">),</span>  <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">entry_prices</span><span class="p">))</span>
 
-        <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;  &quot;</span>
+        <span class="n">sep</span> <span class="o">=</span> <span class="s2">"  "</span>
         <span class="n">header_row</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="s1">&#39;&#39;</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_idx</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;qty&#39;</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_qty</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;type&#39;</span><span class="si">:</span><span class="s2">&lt;</span><span class="si">{</span><span class="n">w_type</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;strike&#39;</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_strike</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;TTM&#39;</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_ttm</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;entry&#39;</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_entry</span><span class="si">}}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="s1">''</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_idx</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'qty'</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_qty</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'type'</span><span class="si">:</span><span class="s2">&lt;</span><span class="si">{</span><span class="n">w_type</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'strike'</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_strike</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'TTM'</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_ttm</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'entry'</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_entry</span><span class="si">}}</span><span class="s2">"</span>
         <span class="p">)</span>
-        <span class="n">divider</span> <span class="o">=</span> <span class="s2">&quot;  &quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">header_row</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">divider</span> <span class="o">=</span> <span class="s2">"  "</span> <span class="o">+</span> <span class="s2">"-"</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">header_row</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
 
-        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">header</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">header_row</span><span class="p">,</span> <span class="n">divider</span><span class="p">]</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">header</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="n">header_row</span><span class="p">,</span> <span class="n">divider</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">qty</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="n">strike</span><span class="p">,</span> <span class="n">ttm</span><span class="p">,</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">qtys</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">strikes</span><span class="p">,</span> <span class="n">ttms</span><span class="p">,</span> <span class="n">entry_prices</span><span class="p">):</span>
             <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">idx</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_idx</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">qty</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_qty</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">typ</span><span class="si">:</span><span class="s2">&lt;</span><span class="si">{</span><span class="n">w_type</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">strike</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_strike</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ttm</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_ttm</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">entry</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_entry</span><span class="si">}}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">idx</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_idx</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">"</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">qty</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_qty</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">"</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">typ</span><span class="si">:</span><span class="s2">&lt;</span><span class="si">{</span><span class="n">w_type</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">"</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">strike</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_strike</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">"</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">ttm</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_ttm</span><span class="si">}}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">"</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">entry</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">w_entry</span><span class="si">}}</span><span class="s2">"</span>
             <span class="p">)</span>
-        <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span></div>
 
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
 
     <span class="c1"># ── Création du book ─────────────────────────────────────────</span>
-    <span class="n">book</span> <span class="o">=</span> <span class="n">OptionsBook</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">underlying</span><span class="o">=</span><span class="s1">&#39;SPX&#39;</span><span class="p">)</span>
+    <span class="n">book</span> <span class="o">=</span> <span class="n">OptionsBook</span><span class="p">(</span><span class="n">spot</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">underlying</span><span class="o">=</span><span class="s1">'SPX'</span><span class="p">)</span>
 
     <span class="c1"># Long 1 call OTM, short 2 puts OTM (risk-reversal-like), long 1 call lointain</span>
-    <span class="n">book</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;call&#39;</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="mf">105.0</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">entry_price</span><span class="o">=</span><span class="mf">3.5</span><span class="p">)</span>
-    <span class="n">book</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;put&#39;</span><span class="p">,</span>  <span class="n">strike</span><span class="o">=</span><span class="mf">95.0</span><span class="p">,</span>  <span class="n">time_to_maturity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span> <span class="n">entry_price</span><span class="o">=</span><span class="mf">2.1</span><span class="p">)</span>
-    <span class="n">book</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;call&#39;</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="mf">110.0</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">book</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'call'</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="mf">105.0</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">entry_price</span><span class="o">=</span><span class="mf">3.5</span><span class="p">)</span>
+    <span class="n">book</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'put'</span><span class="p">,</span>  <span class="n">strike</span><span class="o">=</span><span class="mf">95.0</span><span class="p">,</span>  <span class="n">time_to_maturity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span> <span class="n">entry_price</span><span class="o">=</span><span class="mf">2.1</span><span class="p">)</span>
+    <span class="n">book</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'call'</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="mf">110.0</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="n">book</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">()</span>
@@ -783,12 +783,12 @@
     <span class="n">vol</span> <span class="o">=</span> <span class="mf">0.2</span>
     <span class="n">bs_params</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">]</span>   <span class="c1"># [mu]</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Black-Scholes ===&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MtM    : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">price</span><span class="p">(</span><span class="s1">&#39;blackScholes&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">=</span><span class="n">bs_params</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PnL    : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">pnl</span><span class="p">(</span><span class="w">  </span><span class="s1">&#39;blackScholes&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">=</span><span class="n">bs_params</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Greeks : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">greeks</span><span class="p">(</span><span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Black-Scholes ==="</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"MtM    : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">price</span><span class="p">(</span><span class="s1">'blackScholes'</span><span class="p">,</span><span class="w"> </span><span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">=</span><span class="n">bs_params</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"PnL    : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">pnl</span><span class="p">(</span><span class="w">  </span><span class="s1">'blackScholes'</span><span class="p">,</span><span class="w"> </span><span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">=</span><span class="n">bs_params</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Greeks : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">greeks</span><span class="p">(</span><span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">book</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="s1">&#39;blackScholes&#39;</span><span class="p">,</span> <span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">bs_params</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">book</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="s1">'blackScholes'</span><span class="p">,</span> <span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">bs_params</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
     <span class="nb">print</span><span class="p">()</span>
 
     <span class="c1"># ── Pricing &amp; P&amp;L sous Heston ─────────────────────────────────</span>
@@ -796,18 +796,18 @@
     <span class="n">heston_params</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">]</span>
     <span class="n">vol_initial</span>   <span class="o">=</span> <span class="mf">0.04</span>   <span class="c1"># V0 (variance initiale)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Heston ===&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MtM    : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">price</span><span class="p">(</span><span class="s1">&#39;heston&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">vol</span><span class="o">=</span><span class="n">vol_initial</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">=</span><span class="n">heston_params</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PnL    : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">pnl</span><span class="p">(</span><span class="w">  </span><span class="s1">&#39;heston&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">vol</span><span class="o">=</span><span class="n">vol_initial</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">=</span><span class="n">heston_params</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Heston ==="</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"MtM    : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">price</span><span class="p">(</span><span class="s1">'heston'</span><span class="p">,</span><span class="w"> </span><span class="n">vol</span><span class="o">=</span><span class="n">vol_initial</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">=</span><span class="n">heston_params</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"PnL    : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">pnl</span><span class="p">(</span><span class="w">  </span><span class="s1">'heston'</span><span class="p">,</span><span class="w"> </span><span class="n">vol</span><span class="o">=</span><span class="n">vol_initial</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">=</span><span class="n">heston_params</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">book</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="s1">&#39;heston&#39;</span><span class="p">,</span> <span class="n">vol</span><span class="o">=</span><span class="n">vol_initial</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">heston_params</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">book</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="s1">'heston'</span><span class="p">,</span> <span class="n">vol</span><span class="o">=</span><span class="n">vol_initial</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">heston_params</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
     <span class="nb">print</span><span class="p">()</span>
 
     <span class="c1"># ── Mise à jour du spot et re-pricing ────────────────────────</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Après un choc spot à 95 ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Après un choc spot à 95 ==="</span><span class="p">)</span>
     <span class="n">book</span><span class="o">.</span><span class="n">update_spot</span><span class="p">(</span><span class="mf">95.0</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MtM    : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">price</span><span class="p">(</span><span class="s1">&#39;blackScholes&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">=</span><span class="n">bs_params</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Greeks : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">greeks</span><span class="p">(</span><span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"MtM    : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">price</span><span class="p">(</span><span class="s1">'blackScholes'</span><span class="p">,</span><span class="w"> </span><span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">=</span><span class="n">bs_params</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Greeks : </span><span class="si">{</span><span class="n">book</span><span class="o">.</span><span class="n">greeks</span><span class="p">(</span><span class="n">vol</span><span class="o">=</span><span class="n">vol</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 
                 </article>
@@ -837,8 +837,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -872,7 +872,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.18.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
 </p></div>
       
     </div>

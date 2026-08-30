@@ -27,8 +27,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -36,10 +36,10 @@
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=8a048efd" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
     <script src="../_static/documentation_options.js?v=feb023f7"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
@@ -511,7 +511,7 @@ into <span class="math notranslate nohighlight">\(g(k)\)</span> and check the si
 
 <span class="c1"># (assume strikes, market_ivs, forward are available)</span>
 <span class="n">params</span><span class="p">,</span> <span class="n">model_ivs</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">calibration</span><span class="p">(</span><span class="n">strikes</span><span class="p">,</span> <span class="n">market_ivs</span><span class="p">,</span> <span class="n">forward</span><span class="p">)</span>
-<span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;rho&quot;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;sigma&quot;</span><span class="p">]</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">"a"</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">"b"</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">"rho"</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">"m"</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">"sigma"</span><span class="p">]</span>
 
 <span class="c1"># --- Durrleman condition on a fine grid ---</span>
 <span class="n">k_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
@@ -526,8 +526,8 @@ into <span class="math notranslate nohighlight">\(g(k)\)</span> and check the si
     <span class="o">+</span> <span class="n">w_pp</span> <span class="o">/</span> <span class="mi">2</span>
 
 <span class="n">is_butterfly_free</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">g</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Butterfly-free: </span><span class="si">{</span><span class="n">is_butterfly_free</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Min g(k) = </span><span class="si">{</span><span class="n">g</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Butterfly-free: </span><span class="si">{</span><span class="n">is_butterfly_free</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Min g(k) = </span><span class="si">{</span><span class="n">g</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -578,15 +578,15 @@ is not just a numerical trick — it is a direct encoding of the no-butterfly co
 <span class="c1"># (assume strikes, iv_surface, forwards are available)</span>
 <span class="n">params</span> <span class="o">=</span> <span class="n">ssvi</span><span class="o">.</span><span class="n">calibrate_surface</span><span class="p">(</span><span class="n">strikes</span><span class="p">,</span> <span class="n">iv_surface</span><span class="p">,</span> <span class="n">forwards</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maturity | theta   | phi     | rho     | theta*phi*(1+|rho|) | OK?&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Maturity | theta   | phi     | rho     | theta*phi*(1+|rho|) | OK?"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="n">maturities</span><span class="p">:</span>
     <span class="n">theta</span> <span class="o">=</span> <span class="n">ssvi</span><span class="o">.</span><span class="n">theta</span><span class="p">[</span><span class="n">T</span><span class="p">]</span>
-    <span class="n">rho</span>   <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">T</span><span class="p">][</span><span class="s2">&quot;rho&quot;</span><span class="p">]</span>
-    <span class="n">phi</span>   <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">T</span><span class="p">][</span><span class="s2">&quot;phi&quot;</span><span class="p">]</span>
+    <span class="n">rho</span>   <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">T</span><span class="p">][</span><span class="s2">"rho"</span><span class="p">]</span>
+    <span class="n">phi</span>   <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">T</span><span class="p">][</span><span class="s2">"phi"</span><span class="p">]</span>
     <span class="n">cond</span>  <span class="o">=</span> <span class="n">theta</span> <span class="o">*</span> <span class="n">phi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">rho</span><span class="p">))</span>
-    <span class="n">ok</span>    <span class="o">=</span> <span class="s2">&quot;✓&quot;</span> <span class="k">if</span> <span class="n">cond</span> <span class="o">&lt;=</span> <span class="mi">4</span> <span class="k">else</span> <span class="s2">&quot;✗ ARBITRAGE&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  T=</span><span class="si">{</span><span class="n">T</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">  | </span><span class="si">{</span><span class="n">theta</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">phi</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">rho</span><span class="si">:</span><span class="s2">+.4f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">cond</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">              | </span><span class="si">{</span><span class="n">ok</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ok</span>    <span class="o">=</span> <span class="s2">"✓"</span> <span class="k">if</span> <span class="n">cond</span> <span class="o">&lt;=</span> <span class="mi">4</span> <span class="k">else</span> <span class="s2">"✗ ARBITRAGE"</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  T=</span><span class="si">{</span><span class="n">T</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">  | </span><span class="si">{</span><span class="n">theta</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">phi</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">rho</span><span class="si">:</span><span class="s2">+.4f</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">cond</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">              | </span><span class="si">{</span><span class="n">ok</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -597,11 +597,11 @@ is not just a numerical trick — it is a direct encoding of the no-butterfly co
 <span class="n">diffs</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">thetas</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">diffs</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ No calendar spread arbitrage (theta is non-decreasing)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✓ No calendar spread arbitrage (theta is non-decreasing)"</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">bad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">diffs</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">bad</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✗ Calendar spread arbitrage between T=</span><span class="si">{</span><span class="n">maturities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> and T=</span><span class="si">{</span><span class="n">maturities</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✗ Calendar spread arbitrage between T=</span><span class="si">{</span><span class="n">maturities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> and T=</span><span class="si">{</span><span class="n">maturities</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -741,8 +741,8 @@ Mathematical Finance, 14(3), 469–480.</p></li>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -776,7 +776,7 @@ Mathematical Finance, 14(3), 469–480.</p></li>
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.18.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
 </p></div>
       
     </div>

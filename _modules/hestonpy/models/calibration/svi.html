@@ -26,8 +26,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
-<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+  <link href="../../../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -35,10 +35,10 @@
     <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=8a048efd" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../../../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
-<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
     <script src="../../../../_static/documentation_options.js?v=feb023f7"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
@@ -381,28 +381,28 @@
 <div class="viewcode-block" id="StochasticVolatilityInspired">
 <a class="viewcode-back" href="../../../../api/calibration.html#hestonpy.models.calibration.svi.StochasticVolatilityInspired">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">StochasticVolatilityInspired</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Implements the SVI (Stochastic Volatility Inspired) parameterization in its raw formulation,</span>
-<span class="sd">    as presented in Jim Gatheral&#39;s paper.</span>
+<span class="sd">    as presented in Jim Gatheral's paper.</span>
 
 <span class="sd">    This class allows for the calculation of the total implied volatility according to the SVI formulation</span>
 <span class="sd">    and performs calibration to market data.</span>
 
 <span class="sd">    :param float time_to_maturity: Time to maturity of the option in years.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">:</span><span class="nb">float</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Initializes the StochasticVolatilityInspired object.</span>
 
 <span class="sd">        :param float time_to_maturity: Time to maturity of the option in years.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">time_to_maturity</span> <span class="o">=</span> <span class="n">time_to_maturity</span>
 
 <div class="viewcode-block" id="StochasticVolatilityInspired.raw_formulation">
 <a class="viewcode-back" href="../../../../api/calibration.html#hestonpy.models.calibration.svi.StochasticVolatilityInspired.raw_formulation">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">raw_formulation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">rho</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span><span class="nb">float</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Computes the total implied variance according to the raw SVI formulation.</span>
 
 <span class="sd">        :param float k: Log-moneyness (log(strike / forward)).</span>
@@ -414,7 +414,7 @@
 
 <span class="sd">        :returns: Total implied variance associated with log-moneyness k.</span>
 <span class="sd">        :rtype: float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span> <span class="n">rho</span> <span class="o">*</span> <span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="n">m</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">k</span><span class="o">-</span><span class="n">m</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span></div>
 
     
@@ -426,31 +426,31 @@
             <span class="n">market_ivs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
             <span class="n">forward</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
             <span class="n">x0</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
-            <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;SLSQP&#39;</span>
+            <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'SLSQP'</span>
             <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Calibrates the SVI model to market implied volatilities by minimizing the squared error</span>
-<span class="sd">        between the model&#39;s total implied variance and the market&#39;s total implied variance.</span>
+<span class="sd">        between the model's total implied variance and the market's total implied variance.</span>
 
 <span class="sd">        :param np.array strikes: Array of option strike prices.</span>
 <span class="sd">        :param np.array market_ivs: Array of market implied volatilities.</span>
 <span class="sd">        :param float forward: Forward price of the underlying asset. Often np.exp(r * time_to_mat) * spot.</span>
 <span class="sd">        :param list x0: Initial values of the SVI parameters (a, b, rho, m, sigma, respectively). Default is [0.5, 0.5, 0.5, 0.5, 0.5].</span>
-<span class="sd">        :param str method: Optimization algorithm used. Default is &#39;SLSQP&#39;.</span>
+<span class="sd">        :param str method: Optimization algorithm used. Default is 'SLSQP'.</span>
 
 <span class="sd">        :returns: Tuple containing a dictionary of calibrated SVI parameters and an array of model implied volatilities after calibration.</span>
 <span class="sd">        :rtype: tuple (dict, np.array)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         
         <span class="n">market_total_implied_variance</span> <span class="o">=</span> <span class="n">market_ivs</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_maturity</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">cost_function</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>   
             <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">params</span>
             <span class="n">formulation_params</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="n">a</span><span class="p">,</span>
-                <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="n">b</span><span class="p">,</span>
-                <span class="s2">&quot;rho&quot;</span><span class="p">:</span><span class="n">rho</span><span class="p">,</span>
-                <span class="s2">&quot;m&quot;</span><span class="p">:</span><span class="n">m</span><span class="p">,</span>
-                <span class="s2">&quot;sigma&quot;</span><span class="p">:</span><span class="n">sigma</span>
+                <span class="s2">"a"</span><span class="p">:</span><span class="n">a</span><span class="p">,</span>
+                <span class="s2">"b"</span><span class="p">:</span><span class="n">b</span><span class="p">,</span>
+                <span class="s2">"rho"</span><span class="p">:</span><span class="n">rho</span><span class="p">,</span>
+                <span class="s2">"m"</span><span class="p">:</span><span class="n">m</span><span class="p">,</span>
+                <span class="s2">"sigma"</span><span class="p">:</span><span class="n">sigma</span>
             <span class="p">}</span>
 
             <span class="n">model_total_implied_variance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_formulation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strikes</span><span class="o">/</span><span class="n">forward</span><span class="p">),</span> <span class="o">**</span><span class="n">formulation_params</span><span class="p">)</span>
@@ -468,12 +468,12 @@
         <span class="c1"># Constraints</span>
         <span class="n">con</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">minimizer_kwargs</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="n">method</span><span class="p">,</span>
-                <span class="s2">&quot;bounds&quot;</span><span class="p">:</span> <span class="n">bounds</span><span class="p">,</span>
-                <span class="s2">&quot;constraints&quot;</span><span class="p">:</span> <span class="n">NonlinearConstraint</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+                <span class="s2">"method"</span><span class="p">:</span> <span class="n">method</span><span class="p">,</span>
+                <span class="s2">"bounds"</span><span class="p">:</span> <span class="n">bounds</span><span class="p">,</span>
+                <span class="s2">"constraints"</span><span class="p">:</span> <span class="n">NonlinearConstraint</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="n">lb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
         <span class="p">}</span>
         <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="p">(</span>
                 <span class="n">cost_function</span><span class="p">,</span> 
                 <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span>
@@ -485,11 +485,11 @@
         <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
 
         <span class="n">calibrated_params</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-                <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
-                <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+                <span class="s2">"a"</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="s2">"b"</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="s2">"rho"</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                <span class="s2">"m"</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                <span class="s2">"sigma"</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
         <span class="p">}</span>
         <span class="n">calibrated_ivs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_formulation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">strikes</span><span class="o">/</span><span class="n">forward</span><span class="p">),</span> <span class="o">**</span><span class="n">calibrated_params</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="p">)</span>
 
@@ -526,8 +526,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
-<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -561,7 +561,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.18.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
 </p></div>
       
     </div>

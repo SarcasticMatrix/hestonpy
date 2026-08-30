@@ -26,8 +26,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
-<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+  <link href="../../../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -35,10 +35,10 @@
     <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=8a048efd" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../../../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
-<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
     <script src="../../../../_static/documentation_options.js?v=feb023f7"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
@@ -385,7 +385,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.blackScholes</span><span class="w"> </span><span class="kn">import</span> <span class="n">BlackScholes</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hestonpy.models.calibration.svi</span><span class="w"> </span><span class="kn">import</span> <span class="n">StochasticVolatilityInspired</span> <span class="k">as</span> <span class="n">SVI</span>
 
-<span class="n">fontdict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;fontsize&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;fontweight&quot;</span><span class="p">:</span> <span class="s2">&quot;bold&quot;</span><span class="p">}</span>
+<span class="n">fontdict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"fontsize"</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">"fontweight"</span><span class="p">:</span> <span class="s2">"bold"</span><span class="p">}</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span><span class="p">,</span> <span class="n">basinhopping</span><span class="p">,</span> <span class="n">NonlinearConstraint</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
@@ -399,7 +399,7 @@
 <div class="viewcode-block" id="VolatilitySmile">
 <a class="viewcode-back" href="../../../../api/calibration.html#hestonpy.models.calibration.volatilitySmile.VolatilitySmile">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">VolatilitySmile</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Represents a volatility smile constructed from market prices or implied volatilities.</span>
 
 <span class="sd">    This class handles the conversion between option prices and implied volatilities using</span>
@@ -412,7 +412,7 @@
 <span class="sd">    :param np.array market_prices: Array of market option prices.</span>
 <span class="sd">    :param np.array market_ivs: Array of market implied volatilities.</span>
 <span class="sd">    :param float r: Risk-free interest rate.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -423,7 +423,7 @@
         <span class="n">market_ivs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">r</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Initializes the VolatilitySmile object.</span>
 
 <span class="sd">        :param np.array strikes: Array of option strike prices.</span>
@@ -432,10 +432,10 @@
 <span class="sd">        :param np.array market_prices: Array of market option prices.</span>
 <span class="sd">        :param np.array market_ivs: Array of market implied volatilities.</span>
 <span class="sd">        :param float r: Risk-free interest rate. Default is 0.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">market_prices</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">market_ivs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;At least one of market_prices or market_ivs must be provided.&quot;</span>
+                <span class="s2">"At least one of market_prices or market_ivs must be provided."</span>
             <span class="p">)</span>
 
         <span class="c1"># Grid variables</span>
@@ -458,14 +458,14 @@
 <div class="viewcode-block" id="VolatilitySmile.reverse_smile">
 <a class="viewcode-back" href="../../../../api/calibration.html#hestonpy.models.calibration.volatilitySmile.VolatilitySmile.reverse_smile">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">reverse_smile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ivs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Computes option prices from implied volatilities using the Black-Scholes model.</span>
 
 <span class="sd">        :param np.array ivs: Implied volatilities corresponding to the strikes. If None, uses self.market_ivs.</span>
 
 <span class="sd">        :returns: Option prices computed from the implied volatilities.</span>
 <span class="sd">        :rtype: np.array</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">ivs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">ivs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_ivs</span>
 
@@ -478,7 +478,7 @@
 <div class="viewcode-block" id="VolatilitySmile.compute_smile">
 <a class="viewcode-back" href="../../../../api/calibration.html#hestonpy.models.calibration.volatilitySmile.VolatilitySmile.compute_smile">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_smile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">strikes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Computes implied volatilities from option prices using the Black-Scholes model.</span>
 
 <span class="sd">        :param np.array prices: Option prices corresponding to the strikes. If None, uses self.market_prices.</span>
@@ -486,7 +486,7 @@
 
 <span class="sd">        :returns: Implied volatilities computed from the option prices.</span>
 <span class="sd">        :rtype: np.array</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">prices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">prices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_prices</span>
         <span class="k">if</span> <span class="n">strikes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -498,8 +498,8 @@
             <span class="n">strikes</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span>
             <span class="n">time_to_maturity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="p">,</span>
             <span class="n">bs</span><span class="o">=</span><span class="n">bs</span><span class="p">,</span>
-            <span class="n">flag_option</span><span class="o">=</span><span class="s2">&quot;call&quot;</span><span class="p">,</span>
-            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;dichotomie&quot;</span><span class="p">,</span>
+            <span class="n">flag_option</span><span class="o">=</span><span class="s2">"call"</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">"dichotomie"</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">smile</span></div>
 
@@ -507,24 +507,24 @@
 <div class="viewcode-block" id="VolatilitySmile.filters">
 <a class="viewcode-back" href="../../../../api/calibration.html#hestonpy.models.calibration.volatilitySmile.VolatilitySmile.filters">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">full_market_data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">select_mid_ivs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Filters market data based on volume, mid-price, bid-ask spread, and moneyness.</span>
 
-<span class="sd">        :param pd.DataFrame full_market_data: DataFrame containing market data with columns: &#39;Strike&#39;, &#39;Volume&#39;, &#39;Bid&#39;, &#39;Ask&#39;.</span>
+<span class="sd">        :param pd.DataFrame full_market_data: DataFrame containing market data with columns: 'Strike', 'Volume', 'Bid', 'Ask'.</span>
 <span class="sd">        :param bool select_mid_ivs: If True, selects mid implied volatilities. Default is True.</span>
 
-<span class="sd">        :returns: Filtered market data with additional columns: &#39;Mid ivs&#39;, &#39;Ask ivs&#39;, &#39;Bid ivs&#39;, &#39;Mid Price&#39;.</span>
+<span class="sd">        :returns: Filtered market data with additional columns: 'Mid ivs', 'Ask ivs', 'Bid ivs', 'Mid Price'.</span>
 <span class="sd">        :rtype: pd.DataFrame</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">strikes</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s2">&quot;Strike&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">volumes</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s2">&quot;Volume&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="sd">        """</span>
+        <span class="n">strikes</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s2">"Strike"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">volumes</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s2">"Volume"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
         <span class="c1"># Bid prices and implied vol</span>
-        <span class="n">bid_prices</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s2">&quot;Bid&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">bid_prices</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s2">"Bid"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
         <span class="n">bid_ivs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_smile</span><span class="p">(</span><span class="n">bid_prices</span><span class="p">,</span> <span class="n">strikes</span><span class="p">)</span>
 
         <span class="c1"># Ask prices and implied vol</span>
-        <span class="n">ask_prices</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s2">&quot;Ask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">ask_prices</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="p">[</span><span class="s2">"Ask"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
         <span class="n">ask_ivs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_smile</span><span class="p">(</span><span class="n">ask_prices</span><span class="p">,</span> <span class="n">strikes</span><span class="p">)</span>
 
         <span class="c1"># Mid prices and implied vol</span>
@@ -548,17 +548,17 @@
         <span class="n">masks</span> <span class="o">=</span> <span class="n">mask1</span> <span class="o">&amp;</span> <span class="n">mask2</span> <span class="o">&amp;</span> <span class="n">mask3</span> <span class="o">&amp;</span> <span class="n">mask4</span>
         <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">market_data</span> <span class="o">=</span> <span class="n">full_market_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">masks</span><span class="p">]</span>
-        <span class="n">market_data</span><span class="p">[</span><span class="s2">&quot;Mid ivs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mid_ivs</span><span class="p">[</span><span class="n">masks</span><span class="p">]</span>
-        <span class="n">market_data</span><span class="p">[</span><span class="s2">&quot;Ask ivs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ask_ivs</span><span class="p">[</span><span class="n">masks</span><span class="p">]</span>
-        <span class="n">market_data</span><span class="p">[</span><span class="s2">&quot;Bid ivs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bid_ivs</span><span class="p">[</span><span class="n">masks</span><span class="p">]</span>
-        <span class="n">market_data</span><span class="p">[</span><span class="s2">&quot;Mid Price&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mid_prices</span><span class="p">[</span><span class="n">masks</span><span class="p">]</span>
-        <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="s2">&quot;warn&quot;</span>
+        <span class="n">market_data</span><span class="p">[</span><span class="s2">"Mid ivs"</span><span class="p">]</span> <span class="o">=</span> <span class="n">mid_ivs</span><span class="p">[</span><span class="n">masks</span><span class="p">]</span>
+        <span class="n">market_data</span><span class="p">[</span><span class="s2">"Ask ivs"</span><span class="p">]</span> <span class="o">=</span> <span class="n">ask_ivs</span><span class="p">[</span><span class="n">masks</span><span class="p">]</span>
+        <span class="n">market_data</span><span class="p">[</span><span class="s2">"Bid ivs"</span><span class="p">]</span> <span class="o">=</span> <span class="n">bid_ivs</span><span class="p">[</span><span class="n">masks</span><span class="p">]</span>
+        <span class="n">market_data</span><span class="p">[</span><span class="s2">"Mid Price"</span><span class="p">]</span> <span class="o">=</span> <span class="n">mid_prices</span><span class="p">[</span><span class="n">masks</span><span class="p">]</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="s2">"warn"</span>
 
         <span class="k">if</span> <span class="n">select_mid_ivs</span><span class="p">:</span>
             <span class="c1"># Parameters</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">strikes</span> <span class="o">=</span> <span class="n">market_data</span><span class="p">[</span><span class="s2">&quot;Strike&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">market_ivs</span> <span class="o">=</span> <span class="n">market_data</span><span class="p">[</span><span class="s2">&quot;Mid ivs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">market_prices</span> <span class="o">=</span> <span class="n">market_data</span><span class="p">[</span><span class="s2">&quot;Mid Price&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">strikes</span> <span class="o">=</span> <span class="n">market_data</span><span class="p">[</span><span class="s2">"Strike"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">market_ivs</span> <span class="o">=</span> <span class="n">market_data</span><span class="p">[</span><span class="s2">"Mid ivs"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">market_prices</span> <span class="o">=</span> <span class="n">market_data</span><span class="p">[</span><span class="s2">"Mid Price"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
         <span class="k">return</span> <span class="n">market_data</span></div>
 
@@ -566,14 +566,14 @@
 <div class="viewcode-block" id="VolatilitySmile.svi_smooth">
 <a class="viewcode-back" href="../../../../api/calibration.html#hestonpy.models.calibration.volatilitySmile.VolatilitySmile.svi_smooth">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">svi_smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_svi_ivs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Smooths the volatility smile using a raw SVI model.</span>
 
 <span class="sd">        :param bool select_svi_ivs: If True, selects the calibrated SVI implied volatilities. Default is False.</span>
 
 <span class="sd">        :returns: Dictionary of calibrated SVI parameters and array of calibrated implied volatilities.</span>
 <span class="sd">        :rtype: Tuple[Dict[str, float], np.array]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="n">raw_svi</span> <span class="o">=</span> <span class="n">SVI</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="p">)</span>
         <span class="n">forward</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">atm</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_to_maturity</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
@@ -591,55 +591,55 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">price_function</span><span class="p">,</span>
         <span class="n">initial_guess</span><span class="p">,</span>
-        <span class="n">guess_correlation_sign</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;positive&quot;</span><span class="p">,</span> <span class="s2">&quot;negative&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
-        <span class="n">speed</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;local&quot;</span><span class="p">,</span> <span class="s2">&quot;global&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;local&quot;</span><span class="p">,</span>
-        <span class="n">power</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;rmse&quot;</span><span class="p">,</span> <span class="s2">&quot;mae&quot;</span><span class="p">,</span> <span class="s2">&quot;mse&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mse&quot;</span><span class="p">,</span>
-        <span class="n">method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span> <span class="s2">&quot;SLSQP&quot;</span><span class="p">,</span> <span class="s2">&quot;trust-constr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span>
+        <span class="n">guess_correlation_sign</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"positive"</span><span class="p">,</span> <span class="s2">"negative"</span><span class="p">,</span> <span class="s2">"unknown"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"unknown"</span><span class="p">,</span>
+        <span class="n">speed</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"local"</span><span class="p">,</span> <span class="s2">"global"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"local"</span><span class="p">,</span>
+        <span class="n">power</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"rmse"</span><span class="p">,</span> <span class="s2">"mae"</span><span class="p">,</span> <span class="s2">"mse"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"mse"</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"L-BFGS-B"</span><span class="p">,</span> <span class="s2">"SLSQP"</span><span class="p">,</span> <span class="s2">"trust-constr"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"L-BFGS-B"</span><span class="p">,</span>
         <span class="n">weights</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">relative_errors</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Calibrates a Heston model (parameters: kappa, theta, sigma, rho) or a Bates model (parameters: kappa, theta, sigma, rho, lambda_jump, mu_J, sigma_J) to fit the observed volatility smile.</span>
 <span class="sd">        </span>
 <span class="sd">        The initial variance is set to the closest ATM implied volatility from the data to reduce dimensionality.</span>
 
 <span class="sd">        Two calibration schemes are available:</span>
 
-<span class="sd">        * &#39;local&#39;: A fast but less robust method, sensitive to market noise.</span>
-<span class="sd">        * &#39;global&#39;: A more robust but slower method.</span>
+<span class="sd">        * 'local': A fast but less robust method, sensitive to market noise.</span>
+<span class="sd">        * 'global': A more robust but slower method.</span>
 
 <span class="sd">        The user can specify a prior belief about the sign of the correlation:</span>
 
-<span class="sd">        * &#39;positive&#39;: Constrains rho to [0,1].</span>
-<span class="sd">        * &#39;negative&#39;: Constrains rho to [-1,0].</span>
-<span class="sd">        * &#39;unknown&#39;: Allows rho to vary in [-1,1].</span>
+<span class="sd">        * 'positive': Constrains rho to [0,1].</span>
+<span class="sd">        * 'negative': Constrains rho to [-1,0].</span>
+<span class="sd">        * 'unknown': Allows rho to vary in [-1,1].</span>
 <span class="sd">        </span>
 <span class="sd">        If a correlation sign is provided, the function ensures the initial guess for rho has the correct sign.</span>
 
 <span class="sd">        :param callable price_function: Function to compute option prices under the Heston model or Bates model.</span>
 <span class="sd">        :param list initial_guess: Initial parameters, [kappa, theta, sigma, rho] for Heston models or [kappa, theta, sigma, rho, lambda_jump, mu_J, sigma_J] for Bates models.</span>
-<span class="sd">        :param str guess_correlation_sign: Assumption on the correlation sign (&#39;positive&#39;, &#39;negative&#39;, &#39;unknown&#39;).</span>
-<span class="sd">        :param str speed: Calibration method (&#39;local&#39; for fast, &#39;global&#39; for robust optimization).</span>
+<span class="sd">        :param str guess_correlation_sign: Assumption on the correlation sign ('positive', 'negative', 'unknown').</span>
+<span class="sd">        :param str speed: Calibration method ('local' for fast, 'global' for robust optimization).</span>
 <span class="sd">        :param np.array weights: Array of weights applied to each observation in the calibration. If None, uniform weights are used.</span>
-<span class="sd">        :param str power: Defines the loss function&#39;s exponentiation method (&#39;mse&#39;, &#39;mae&#39;, &#39;rmse&#39;).</span>
+<span class="sd">        :param str power: Defines the loss function's exponentiation method ('mse', 'mae', 'rmse').</span>
 <span class="sd">        :param bool relative_errors: If True, the calibration minimizes relative errors instead of absolute errors.</span>
-<span class="sd">        :param str method: Local optimization algorithm to use (&quot;L-BFGS-B&quot;, &quot;SLSQP&quot; or &quot;trust-constr&quot;).</span>
+<span class="sd">        :param str method: Local optimization algorithm to use ("L-BFGS-B", "SLSQP" or "trust-constr").</span>
 
 <span class="sd">        :returns: Dictionary containing the calibrated Heston parameters.</span>
 <span class="sd">        :rtype: dict</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">weights</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strikes</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_guess</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="n">model_type</span> <span class="o">=</span> <span class="s2">&quot;Heston&quot;</span>
+            <span class="n">model_type</span> <span class="o">=</span> <span class="s2">"Heston"</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_guess</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
-            <span class="n">model_type</span> <span class="o">=</span> <span class="s2">&quot;Bates&quot;</span>
+            <span class="n">model_type</span> <span class="o">=</span> <span class="s2">"Bates"</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Invalid number of parameters in initial_guess. Must corresponds to &#39;Heston&#39; or &#39;Bates&#39;.&quot;</span>
+                <span class="s2">"Invalid number of parameters in initial_guess. Must corresponds to 'Heston' or 'Bates'."</span>
             <span class="p">)</span>
 
         <span class="c1">########################################</span>
@@ -669,26 +669,26 @@
 
         <span class="n">bounds</span> <span class="o">=</span> <span class="n">_set_bounds</span><span class="p">(</span><span class="n">model_type</span><span class="p">,</span> <span class="n">guess_correlation_sign</span><span class="p">,</span> <span class="n">initial_guess</span><span class="p">)</span>
         <span class="n">minimizer_kwargs</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="n">method</span><span class="p">,</span>
-            <span class="s2">&quot;bounds&quot;</span><span class="p">:</span> <span class="n">bounds</span><span class="p">,</span>
-            <span class="s2">&quot;constraints&quot;</span><span class="p">:</span> <span class="n">NonlinearConstraint</span><span class="p">(</span><span class="n">_feller</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+            <span class="s2">"method"</span><span class="p">:</span> <span class="n">method</span><span class="p">,</span>
+            <span class="s2">"bounds"</span><span class="p">:</span> <span class="n">bounds</span><span class="p">,</span>
+            <span class="s2">"constraints"</span><span class="p">:</span> <span class="n">NonlinearConstraint</span><span class="p">(</span><span class="n">_feller</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
         <span class="p">}</span>
 
         <span class="c1">########################################</span>
         <span class="c1">#### Fast/local calibration scheme</span>
         <span class="c1">########################################</span>
-        <span class="k">if</span> <span class="n">speed</span> <span class="o">==</span> <span class="s2">&quot;local&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">speed</span> <span class="o">==</span> <span class="s2">"local"</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">cost_function</span><span class="p">,</span> <span class="n">initial_guess</span><span class="p">,</span> <span class="o">**</span><span class="n">minimizer_kwargs</span><span class="p">)</span>
 
         <span class="c1">########################################</span>
         <span class="c1">#### Global calibration scheme</span>
         <span class="c1">########################################</span>
-        <span class="k">elif</span> <span class="n">speed</span> <span class="o">==</span> <span class="s2">&quot;global&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">speed</span> <span class="o">==</span> <span class="s2">"global"</span><span class="p">:</span>
 
             <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="p">(</span>
                     <span class="n">cost_function</span><span class="p">,</span>
                     <span class="n">x0</span><span class="o">=</span><span class="n">initial_guess</span><span class="p">,</span>
@@ -702,7 +702,7 @@
                 <span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid speed. Choose either &#39;local&#39;, or &#39;global&#39;.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Invalid speed. Choose either 'local', or 'global'."</span><span class="p">)</span>
 
         <span class="n">calibrated_params</span> <span class="o">=</span> <span class="n">_get_calibrated_params</span><span class="p">(</span><span class="n">optmisation_result</span><span class="o">=</span><span class="n">result</span><span class="p">,</span> <span class="n">vol_initial</span><span class="o">=</span><span class="n">vol_initial</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="n">model_type</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">calibrated_params</span></div>
@@ -711,25 +711,25 @@
 <div class="viewcode-block" id="VolatilitySmile.evaluate_calibration">
 <a class="viewcode-back" href="../../../../api/calibration.html#hestonpy.models.calibration.volatilitySmile.VolatilitySmile.evaluate_calibration">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate_calibration</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">model_values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">metric_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> <span class="s2">&quot;iv&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;price&quot;</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">model_values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">metric_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"price"</span><span class="p">,</span> <span class="s2">"iv"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"price"</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Evaluates the quality of the calibration by calculating RMSE, MSE, and MAE</span>
 <span class="sd">        either on prices or implied volatilities (IVs).</span>
 
 <span class="sd">        :param np.array model_values: Values estimated by the model (prices or IVs).</span>
-<span class="sd">        :param str metric_type: &#39;price&#39; to compare prices, &#39;iv&#39; to compare IVs. Default is &#39;price&#39;.</span>
+<span class="sd">        :param str metric_type: 'price' to compare prices, 'iv' to compare IVs. Default is 'price'.</span>
 
 <span class="sd">        :returns: Dictionary containing the absolute and relative error metrics.</span>
 <span class="sd">        :rtype: Dict[str, float]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">metric_type</span> <span class="o">==</span> <span class="s2">&quot;price&quot;</span><span class="p">:</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">metric_type</span> <span class="o">==</span> <span class="s2">"price"</span><span class="p">:</span>
             <span class="n">actual_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_prices</span>
-        <span class="k">elif</span> <span class="n">metric_type</span> <span class="o">==</span> <span class="s2">&quot;iv&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">metric_type</span> <span class="o">==</span> <span class="s2">"iv"</span><span class="p">:</span>
             <span class="n">actual_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_ivs</span> <span class="o">*</span> <span class="mi">100</span>
             <span class="n">model_values</span> <span class="o">=</span> <span class="n">model_values</span> <span class="o">*</span> <span class="mi">100</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;metric_type must be either &#39;price&#39; or &#39;iv&#39;.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"metric_type must be either 'price' or 'iv'."</span><span class="p">)</span>
 
         <span class="c1"># Différences absolues et relatives</span>
         <span class="n">diff</span> <span class="o">=</span> <span class="n">actual_values</span> <span class="o">-</span> <span class="n">model_values</span>
@@ -745,12 +745,12 @@
         <span class="n">mae_pct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">diff_rel</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
 
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;MSE&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">mse</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-            <span class="s2">&quot;RMSE&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">rmse</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-            <span class="s2">&quot;MAE&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">mae</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-            <span class="s2">&quot;MSE_%&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">mse_pct</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-            <span class="s2">&quot;RMSE_%&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">rmse_pct</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-            <span class="s2">&quot;MAE_%&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">mae_pct</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s2">"MSE"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">mse</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s2">"RMSE"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">rmse</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s2">"MAE"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">mae</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s2">"MSE_%"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">mse_pct</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s2">"RMSE_%"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">rmse_pct</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s2">"MAE_%"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">mae_pct</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
         <span class="p">}</span></div>
 
 
@@ -766,7 +766,7 @@
         <span class="n">ask_ivs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">maturity</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Plots the volatility smile.</span>
 
 <span class="sd">        This function can either:</span>
@@ -782,8 +782,8 @@
 <span class="sd">        :param np.array bid_ivs: Bid implied volatilities. If provided, they will be plotted.</span>
 <span class="sd">        :param np.array ask_prices: Ask prices. If provided, they will be converted to IVs before plotting.</span>
 <span class="sd">        :param np.array ask_ivs: Ask implied volatilities. If provided, they will be plotted.</span>
-<span class="sd">        :param str maturity: Maturity date in the format &#39;YYYY-MM-DD&#39;. If provided, it will be used in the plot title.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        :param str maturity: Maturity date in the format 'YYYY-MM-DD'. If provided, it will be used in the plot title.</span>
+<span class="sd">        """</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">calibrated_ivs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">calibrated_prices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
             <span class="n">calibrated_ivs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_smile</span><span class="p">(</span><span class="n">prices</span><span class="o">=</span><span class="n">calibrated_prices</span><span class="p">)</span>
@@ -799,58 +799,58 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">market_ivs</span><span class="p">,</span>
-            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span>
-            <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
-            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">"data"</span><span class="p">,</span>
+            <span class="n">marker</span><span class="o">=</span><span class="s2">"o"</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">,</span>
             <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ATM Strike&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"ATM Strike"</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">calibrated_ivs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span>
                 <span class="n">calibrated_ivs</span><span class="p">,</span>
-                <span class="n">label</span><span class="o">=</span><span class="s2">&quot;calibred&quot;</span><span class="p">,</span>
-                <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>
-                <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="s2">"calibred"</span><span class="p">,</span>
+                <span class="n">marker</span><span class="o">=</span><span class="s2">"+"</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">,</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="s2">"dotted"</span><span class="p">,</span>
                 <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="n">bid_ivs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span>
                 <span class="n">bid_ivs</span><span class="p">,</span>
-                <span class="n">label</span><span class="o">=</span><span class="s2">&quot;bid&quot;</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="s2">"bid"</span><span class="p">,</span>
                 <span class="n">marker</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span>
                 <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="n">ask_ivs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">strikes</span> <span class="o">/</span> <span class="n">forward</span><span class="p">,</span>
                 <span class="n">ask_ivs</span><span class="p">,</span>
-                <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ask&quot;</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="s2">"ask"</span><span class="p">,</span>
                 <span class="n">marker</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span>
                 <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Moneyness [%]&quot;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Implied Volatility [%]&quot;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Moneyness [%]"</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Implied Volatility [%]"</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">maturity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">maturity</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%B-%y&quot;</span><span class="p">)</span>
-            <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">date</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">252</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">21</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mois&quot;</span>
+            <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">maturity</span><span class="p">,</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"</span><span class="si">%d</span><span class="s2">-%B-%y"</span><span class="p">)</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">date</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">252</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">21</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mois"</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Time to maturity: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">252</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">21</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mois&quot;</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"Time to maturity: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">time_to_maturity</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">252</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">21</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mois"</span>
 
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
             <span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span>
-            <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+            <span class="n">which</span><span class="o">=</span><span class="s2">"major"</span><span class="p">,</span>
+            <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span>
             <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span>
             <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
             <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
         <span class="p">)</span>
@@ -887,8 +887,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
-<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -922,7 +922,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.18.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
 </p></div>
       
     </div>

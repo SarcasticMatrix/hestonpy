@@ -26,8 +26,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -35,10 +35,10 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=8a048efd" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
     <script src="../../../_static/documentation_options.js?v=feb023f7"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
@@ -381,7 +381,7 @@
 <div class="viewcode-block" id="BlackScholes">
 <a class="viewcode-back" href="../../../api/models.html#hestonpy.models.blackScholes.BlackScholes">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">BlackScholes</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Black-Scholes model for option pricing.</span>
+<span class="w">    </span><span class="sd">"""Black-Scholes model for option pricing.</span>
 
 <span class="sd">    This class implements the Black-Scholes model for pricing European options.</span>
 <span class="sd">    It includes methods for simulating asset paths, calculating option prices,</span>
@@ -392,7 +392,7 @@
 <span class="sd">    :param float mu: The expected return of the underlying asset.</span>
 <span class="sd">    :param float volatility: The volatility of the underlying asset.</span>
 <span class="sd">    :param int seed: Seed for the random number generator.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">volatility</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span>
@@ -408,23 +408,23 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;euler&quot;</span><span class="p">,</span> <span class="s2">&quot;milstein&quot;</span><span class="p">],</span>
+        <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"euler"</span><span class="p">,</span> <span class="s2">"milstein"</span><span class="p">],</span>
         <span class="n">nbr_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
         <span class="n">nbr_simulations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
         <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Simulate asset price paths using the Black-Scholes model.</span>
+<span class="w">        </span><span class="sd">"""Simulate asset price paths using the Black-Scholes model.</span>
 
 <span class="sd">        This method simulates the price paths of the underlying asset using</span>
 <span class="sd">        either the Euler or Milstein discretization scheme.</span>
 
 <span class="sd">        :param float time_to_maturity: Time to maturity of the option in years.</span>
-<span class="sd">        :param str scheme: Discretization scheme to use (&quot;euler&quot; or &quot;milstein&quot;).</span>
+<span class="sd">        :param str scheme: Discretization scheme to use ("euler" or "milstein").</span>
 <span class="sd">        :param int nbr_points: Number of time points in each simulation.</span>
 <span class="sd">        :param int nbr_simulations: Number of simulations to run.</span>
 
 <span class="sd">        :returns: Simulated asset price paths.</span>
 <span class="sd">        :rtype: np.array</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
 
@@ -444,7 +444,7 @@
                 <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">volatility</span> <span class="o">*</span> <span class="n">S</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">Z</span>
             <span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;milstein&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">scheme</span> <span class="o">==</span> <span class="s2">"milstein"</span><span class="p">:</span>
                 <span class="n">S</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">volatility</span> <span class="o">*</span> <span class="n">S</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">Z</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">dt</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">nbr_simulations</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -457,32 +457,32 @@
 <a class="viewcode-back" href="../../../api/models.html#hestonpy.models.blackScholes.BlackScholes.plot_simulation">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">plot_simulation</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;euler&quot;</span><span class="p">,</span> <span class="s2">&quot;milstein&quot;</span><span class="p">],</span>
+        <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"euler"</span><span class="p">,</span> <span class="s2">"milstein"</span><span class="p">],</span>
         <span class="n">nbr_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
         <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot a simulated asset price path.</span>
+<span class="w">        </span><span class="sd">"""Plot a simulated asset price path.</span>
 
 <span class="sd">        This method plots a single simulated price path of the underlying asset.</span>
 
-<span class="sd">        :param str scheme: Discretization scheme to use (&quot;euler&quot; or &quot;milstein&quot;).</span>
+<span class="sd">        :param str scheme: Discretization scheme to use ("euler" or "milstein").</span>
 <span class="sd">        :param int nbr_points: Number of time points in the simulation.</span>
 <span class="sd">        :param float time_to_maturity: Time to maturity of the option in years.</span>
 
 <span class="sd">        :returns: Simulated asset price path.</span>
 <span class="sd">        :rtype: np.array</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         
         <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_points</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">scheme</span><span class="p">,</span> <span class="n">nbr_simulations</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Risky asset&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time to expiration&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Value [$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Risky asset"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Time to expiration"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Value [$]"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"major"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Black-Scholes Model Simulation with </span><span class="si">{</span><span class="n">scheme</span><span class="si">}</span><span class="s2"> scheme&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Black-Scholes Model Simulation with </span><span class="si">{</span><span class="n">scheme</span><span class="si">}</span><span class="s2"> scheme"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">S</span></div>
@@ -498,7 +498,7 @@
         <span class="n">r</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">volatility</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the price of a European call option.</span>
+<span class="w">        </span><span class="sd">"""Calculate the price of a European call option.</span>
 
 <span class="sd">        This method calculates the price of a European call option using the</span>
 <span class="sd">        Black-Scholes formula.</span>
@@ -511,7 +511,7 @@
 
 <span class="sd">        :returns: The price of the call option.</span>
 <span class="sd">        :rtype: float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="k">if</span> <span class="n">spot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">spot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
@@ -540,7 +540,7 @@
         <span class="n">r</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">volatility</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the price of a European put option.</span>
+<span class="w">        </span><span class="sd">"""Calculate the price of a European put option.</span>
 
 <span class="sd">        This method calculates the price of a European put option using the</span>
 <span class="sd">        Black-Scholes formula.</span>
@@ -553,7 +553,7 @@
 
 <span class="sd">        :returns: The price of the put option.</span>
 <span class="sd">        :rtype: float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">spot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">spot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
         <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -576,7 +576,7 @@
         <span class="n">r</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">volatility</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the Vega of a European option.</span>
+<span class="w">        </span><span class="sd">"""Calculate the Vega of a European option.</span>
 
 <span class="sd">        Vega measures the sensitivity of the option price to changes in volatility.</span>
 
@@ -588,7 +588,7 @@
 
 <span class="sd">        :returns: The Vega of the option.</span>
 <span class="sd">        :rtype: float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">spot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">spot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
         <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -608,26 +608,26 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">strike</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">flag_option</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;call&quot;</span><span class="p">,</span> <span class="s2">&quot;put&quot;</span><span class="p">],</span>
+        <span class="n">flag_option</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"call"</span><span class="p">,</span> <span class="s2">"put"</span><span class="p">],</span>
         <span class="n">spot</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">r</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">volatility</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the Delta of a European option.</span>
+<span class="w">        </span><span class="sd">"""Calculate the Delta of a European option.</span>
 
 <span class="sd">        Delta measures the sensitivity of the option price to changes in the</span>
-<span class="sd">        underlying asset&#39;s price.</span>
+<span class="sd">        underlying asset's price.</span>
 
 <span class="sd">        :param float strike: The strike price of the option.</span>
 <span class="sd">        :param float time_to_maturity: Time to maturity of the option in years.</span>
-<span class="sd">        :param str flag_option: Type of option (&quot;call&quot; or &quot;put&quot;).</span>
+<span class="sd">        :param str flag_option: Type of option ("call" or "put").</span>
 <span class="sd">        :param float spot: The current price of the underlying asset.</span>
 <span class="sd">        :param float r: The risk-free interest rate.</span>
 <span class="sd">        :param float volatility: The volatility of the underlying asset.</span>
 
 <span class="sd">        :returns: The Delta of the option.</span>
 <span class="sd">        :rtype: float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">spot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">spot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
         <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -639,7 +639,7 @@
             <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">spot</span> <span class="o">/</span> <span class="n">strike</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">volatility</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">time_to_maturity</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">volatility</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">time_to_maturity</span><span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">flag_option</span> <span class="o">==</span> <span class="s2">&quot;call&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">flag_option</span> <span class="o">==</span> <span class="s2">"call"</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span></div>
@@ -648,14 +648,14 @@
 
 <div class="viewcode-block" id="BlackScholes.delta_surface">
 <a class="viewcode-back" href="../../../api/models.html#hestonpy.models.blackScholes.BlackScholes.delta_surface">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">delta_surface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flag_option</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;call&quot;</span><span class="p">,</span> <span class="s2">&quot;put&quot;</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot the Delta surface of the option as a function of strike and time to maturity.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delta_surface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flag_option</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"call"</span><span class="p">,</span> <span class="s2">"put"</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">"""Plot the Delta surface of the option as a function of strike and time to maturity.</span>
 
 <span class="sd">        This method generates a 3D plot of the Delta for a range of strikes and</span>
 <span class="sd">        times to maturity.</span>
 
-<span class="sd">        :param str flag_option: Type of option (&quot;call&quot; or &quot;put&quot;).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        :param str flag_option: Type of option ("call" or "put").</span>
+<span class="sd">        """</span>
 
         <span class="n">Ks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
         <span class="n">Ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
@@ -667,13 +667,13 @@
         <span class="n">K_grid</span><span class="p">,</span> <span class="n">T_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">Ks</span><span class="p">,</span> <span class="n">Ts</span><span class="p">)</span>
 
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">K_grid</span><span class="p">,</span> <span class="n">T_grid</span><span class="p">,</span> <span class="n">deltas</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Strike&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Time to Maturity&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;Delta&quot;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Delta Surface for European options&quot;</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">"3d"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">K_grid</span><span class="p">,</span> <span class="n">T_grid</span><span class="p">,</span> <span class="n">deltas</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"royalblue"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"major"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Strike"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Time to Maturity"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">"Delta"</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Delta Surface for European options"</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
@@ -687,10 +687,10 @@
         <span class="n">r</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">volatility</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the Gamma of a European option.</span>
+<span class="w">        </span><span class="sd">"""Calculate the Gamma of a European option.</span>
 
 <span class="sd">        Gamma measures the rate of change of Delta with respect to the underlying</span>
-<span class="sd">        asset&#39;s price.</span>
+<span class="sd">        asset's price.</span>
 
 <span class="sd">        :param float strike: The strike price of the option.</span>
 <span class="sd">        :param float time_to_maturity: Time to maturity of the option in years.</span>
@@ -700,7 +700,7 @@
 
 <span class="sd">        :returns: The Gamma of the option.</span>
 <span class="sd">        :rtype: float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">spot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">spot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
         <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -718,10 +718,10 @@
 <div class="viewcode-block" id="BlackScholes.gamma_surface">
 <a class="viewcode-back" href="../../../api/models.html#hestonpy.models.blackScholes.BlackScholes.gamma_surface">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">gamma_surface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot the Gamma surface of the option as a function of strike and time to maturity.</span>
+<span class="w">        </span><span class="sd">"""Plot the Gamma surface of the option as a function of strike and time to maturity.</span>
 
 <span class="sd">        This method generates a 3D plot of the Gamma for a range of strikes and times to maturity.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="n">Ks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
         <span class="n">Ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
@@ -733,13 +733,13 @@
         <span class="n">K_grid</span><span class="p">,</span> <span class="n">T_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">Ks</span><span class="p">,</span> <span class="n">Ts</span><span class="p">)</span>
 
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">K_grid</span><span class="p">,</span> <span class="n">T_grid</span><span class="p">,</span> <span class="n">gammas</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Strike&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Time to Maturity&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;Gamma&quot;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Gamma Surface for European options&quot;</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">"3d"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">K_grid</span><span class="p">,</span> <span class="n">T_grid</span><span class="p">,</span> <span class="n">gammas</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"royalblue"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"major"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Strike"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Time to Maturity"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">"Gamma"</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Gamma Surface for European options"</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
@@ -749,18 +749,18 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">strike</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">flag_option</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;call&quot;</span><span class="p">,</span> <span class="s2">&quot;put&quot;</span><span class="p">],</span>
+        <span class="n">flag_option</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"call"</span><span class="p">,</span> <span class="s2">"put"</span><span class="p">],</span>
         <span class="n">hedging_volatility</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">pricing_volatility</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">nbr_hedges</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">252</span><span class="p">,</span>
         <span class="n">nbr_simulations</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Implement a delta hedging strategy for a European option.</span>
+<span class="w">        </span><span class="sd">"""Implement a delta hedging strategy for a European option.</span>
 
 <span class="sd">        This method simulates a delta hedging strategy using both a risky asset</span>
 <span class="sd">        (underlying asset) and a non-risky asset.</span>
 
-<span class="sd">        :param str flag_option: Type of option (&quot;call&quot; or &quot;put&quot;).</span>
+<span class="sd">        :param str flag_option: Type of option ("call" or "put").</span>
 <span class="sd">        :param float strike: The strike price of the option.</span>
 <span class="sd">        :param float hedging_volatility: The volatility used for hedging purposes.</span>
 <span class="sd">        :param float pricing_volatility: The volatility used for pricing the option.</span>
@@ -769,17 +769,17 @@
 
 <span class="sd">        :returns: A tuple containing the portfolio value and simulated asset prices.</span>
 <span class="sd">        :rtype: tuple</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">pricing_volatility</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">pricing_volatility</span> <span class="o">=</span> <span class="n">hedging_volatility</span>
 
         <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">nbr_hedges</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">dt</span> <span class="o">=</span> <span class="n">time_to_maturity</span> <span class="o">/</span> <span class="n">nbr_hedges</span>
 
-        <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;milstein&quot;</span><span class="p">,</span> <span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_hedges</span><span class="p">,</span> <span class="n">nbr_simulations</span><span class="o">=</span><span class="n">nbr_simulations</span><span class="p">)</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="s2">"milstein"</span><span class="p">,</span> <span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_hedges</span><span class="p">,</span> <span class="n">nbr_simulations</span><span class="o">=</span><span class="n">nbr_simulations</span><span class="p">)</span>
         <span class="n">portfolio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">flag_option</span> <span class="o">==</span> <span class="s2">&quot;call&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">flag_option</span> <span class="o">==</span> <span class="s2">"call"</span><span class="p">:</span>
             <span class="n">portfolio</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span>
                 <span class="n">strike</span><span class="o">=</span><span class="n">strike</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">spot</span><span class="o">=</span><span class="n">S</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">volatility</span><span class="o">=</span><span class="n">pricing_volatility</span>
             <span class="p">)</span>
@@ -822,13 +822,13 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">strike</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">flag_option</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;call&quot;</span><span class="p">],</span>
+        <span class="n">flag_option</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"call"</span><span class="p">],</span>
         <span class="n">hedging_volatility</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">pricing_volatility</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">nbr_hedges</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
         <span class="n">nbr_simulations</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Implement a volatility arbitrage strategy by buying an underpriced option</span>
+<span class="w">        </span><span class="sd">"""Implement a volatility arbitrage strategy by buying an underpriced option</span>
 <span class="sd">        and dynamically delta hedging it to expiry.</span>
 
 <span class="sd">        This function models a scenario where the implied volatility of an option </span>
@@ -837,7 +837,7 @@
 <span class="sd">        and dynamically delta hedging it. The delta for hedging is calculated using the trader’s forecasted </span>
 <span class="sd">        volatility, while the option price reflects the implied volatility.</span>
 
-<span class="sd">        :param str flag_option: Type of option (&quot;call&quot;).</span>
+<span class="sd">        :param str flag_option: Type of option ("call").</span>
 <span class="sd">        :param float strike: The strike price of the option.</span>
 <span class="sd">        :param float hedging_volatility: The volatility used for delta hedging.</span>
 <span class="sd">        :param float pricing_volatility: The implied volatility used for pricing.</span>
@@ -846,7 +846,7 @@
 
 <span class="sd">        :returns: A tuple containing the portfolio value and simulated asset prices.</span>
 <span class="sd">        :rtype: tuple</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="k">if</span> <span class="n">pricing_volatility</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">pricing_volatility</span> <span class="o">=</span> <span class="n">hedging_volatility</span>
@@ -854,7 +854,7 @@
         <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">nbr_hedges</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">dt</span> <span class="o">=</span> <span class="n">time_to_maturity</span> <span class="o">/</span> <span class="n">nbr_hedges</span>
 
-        <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;milstein&quot;</span><span class="p">,</span> <span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_hedges</span><span class="p">,</span> <span class="n">nbr_simulations</span><span class="o">=</span><span class="n">nbr_simulations</span><span class="p">)</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="s2">"milstein"</span><span class="p">,</span> <span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_hedges</span><span class="p">,</span> <span class="n">nbr_simulations</span><span class="o">=</span><span class="n">nbr_simulations</span><span class="p">)</span>
         <span class="n">portfolio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
         <span class="n">portfolio</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Arbitrage</span>
 
@@ -865,7 +865,7 @@
             <span class="n">volatility</span><span class="o">=</span><span class="n">hedging_volatility</span><span class="p">,</span>
             <span class="n">spot</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span>
             <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span> <span class="o">-</span> <span class="n">t</span><span class="p">,</span>
-            <span class="n">flag_option</span><span class="o">=</span><span class="s2">&quot;call&quot;</span><span class="p">,</span>
+            <span class="n">flag_option</span><span class="o">=</span><span class="s2">"call"</span><span class="p">,</span>
             <span class="n">strike</span><span class="o">=</span><span class="n">strike</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -920,8 +920,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -955,7 +955,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.18.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
 </p></div>
       
     </div>

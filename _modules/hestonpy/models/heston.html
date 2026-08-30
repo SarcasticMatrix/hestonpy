@@ -26,8 +26,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -35,10 +35,10 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=8a048efd" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
     <script src="../../../_static/documentation_options.js?v=feb023f7"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
@@ -385,7 +385,7 @@
 <div class="viewcode-block" id="Heston">
 <a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Heston</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Heston model for option pricing with stochastic volatility.</span>
 
 <span class="sd">    This class implements the Heston model for pricing European options with stochastic volatility.</span>
@@ -402,7 +402,7 @@
 <span class="sd">    :param float sigma: Volatility of the variance (vol of vol).</span>
 <span class="sd">    :param float rho: Correlation between the asset price and its variance.</span>
 <span class="sd">    :param int seed: Random seed for reproducibility.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">vol_initial</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">kappa</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">drift_emm</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">rho</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
 
@@ -427,24 +427,24 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;euler&quot;</span><span class="p">,</span> <span class="s2">&quot;milstein&quot;</span><span class="p">],</span>
+            <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"euler"</span><span class="p">,</span> <span class="s2">"milstein"</span><span class="p">],</span>
             <span class="n">nbr_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
             <span class="n">nbr_simulations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
         <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Simulate asset price and variance paths using the Heston model.</span>
 
 <span class="sd">        This method simulates the paths of the underlying asset price and its variance</span>
 <span class="sd">        using either the Euler or Milstein discretization scheme.</span>
 
 <span class="sd">        :param float time_to_maturity: Time to maturity of the option in years.</span>
-<span class="sd">        :param str scheme: Discretization scheme to use (&#39;euler&#39; or &#39;milstein&#39;).</span>
+<span class="sd">        :param str scheme: Discretization scheme to use ('euler' or 'milstein').</span>
 <span class="sd">        :param int nbr_points: Number of time points in each simulation.</span>
 <span class="sd">        :param int nbr_simulations: Number of simulations to run.</span>
 
 <span class="sd">        :returns: Simulated asset prices, variances, and count of null variances.</span>
 <span class="sd">        :rtype: tuple</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
 
@@ -488,7 +488,7 @@
                 <span class="o">*</span> <span class="n">dt</span>
                 <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">ZV</span>
             <span class="p">)</span>
-            <span class="k">if</span> <span class="n">scheme</span> <span class="o">==</span> <span class="s2">&quot;milstein&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">scheme</span> <span class="o">==</span> <span class="s2">"milstein"</span><span class="p">:</span>
                 <span class="n">S</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">V</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">S</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">ZS</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">dt</span><span class="p">)</span>
                 <span class="c1"># S[:, i] += 1/4 * S[:, i-1]**2 * (ZS**2 - dt)</span>
                 <span class="n">V</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">ZV</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">dt</span><span class="p">)</span>
@@ -505,22 +505,22 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">plot_simulation</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;euler&quot;</span><span class="p">,</span> <span class="s2">&quot;milstein&quot;</span><span class="p">],</span>
+        <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"euler"</span><span class="p">,</span> <span class="s2">"milstein"</span><span class="p">],</span>
         <span class="n">nbr_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Plot a single simulation of the asset price and variance paths.</span>
 
 <span class="sd">        This method simulates and plots the paths of the underlying asset price and its variance</span>
 <span class="sd">        using the specified discretization scheme.</span>
 
 <span class="sd">        :param float time_to_maturity: Time to maturity of the option in years.</span>
-<span class="sd">        :param str scheme: Discretization scheme to use (&#39;euler&#39; or &#39;milstein&#39;).</span>
+<span class="sd">        :param str scheme: Discretization scheme to use ('euler' or 'milstein').</span>
 <span class="sd">        :param int nbr_points: Number of time points in the simulation.</span>
 
 <span class="sd">        :returns: Simulated asset prices and variances.</span>
 <span class="sd">        :rtype: tuple</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
  
         <span class="n">S</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
             <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span> 
@@ -532,20 +532,20 @@
         <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 
         <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">S</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Risky asset&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">S</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Risky asset"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span>
         <span class="p">)</span>
-        <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Value [$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-        <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-        <span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Value [$]"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"major"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,)</span>
 
-        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">V</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Volatility&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,)</span>
-        <span class="n">ax2</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sqrt{\theta}$&quot;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,)</span>
-        <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-        <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Instantaneous volatility [%]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-        <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-        <span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span><span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="p">,</span> <span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">V</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">"Volatility"</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">"orange"</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$\sqrt{\theta}$"</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Time"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Instantaneous volatility [%]"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s2">"major"</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span><span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span><span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,)</span>
 
-        <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Heston Model Simulation with </span><span class="si">{</span><span class="n">scheme</span><span class="si">}</span><span class="s2"> scheme&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Heston Model Simulation with </span><span class="si">{</span><span class="n">scheme</span><span class="si">}</span><span class="s2"> scheme"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
@@ -558,24 +558,24 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">strike</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;euler&quot;</span><span class="p">,</span> <span class="s2">&quot;milstein&quot;</span><span class="p">],</span>
+        <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"euler"</span><span class="p">,</span> <span class="s2">"milstein"</span><span class="p">],</span>
         <span class="n">nbr_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
         <span class="n">nbr_simulations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Price a European option using Monte Carlo simulation.</span>
 
 <span class="sd">        This method prices a European option using Monte Carlo simulation with the Heston model.</span>
 
 <span class="sd">        :param float strike: Strike price of the option.</span>
 <span class="sd">        :param float time_to_maturity: Time to maturity of the option in years.</span>
-<span class="sd">        :param str scheme: Discretization scheme to use (&#39;euler&#39; or &#39;milstein&#39;).</span>
+<span class="sd">        :param str scheme: Discretization scheme to use ('euler' or 'milstein').</span>
 <span class="sd">        :param int nbr_points: Number of time points in each simulation.</span>
 <span class="sd">        :param int nbr_simulations: Number of simulations to run.</span>
 
 <span class="sd">        :returns: Option price and confidence interval.</span>
 <span class="sd">        :rtype: namedtuple</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         
         <span class="n">S</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">null_variance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
             <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturity</span><span class="p">,</span> 
@@ -584,7 +584,7 @@
             <span class="n">nbr_simulations</span><span class="o">=</span><span class="n">nbr_simulations</span>
         <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Variance has been null </span><span class="si">{</span><span class="n">null_variance</span><span class="si">}</span><span class="s2"> times over the </span><span class="si">{</span><span class="n">nbr_points</span><span class="o">*</span><span class="n">nbr_simulations</span><span class="si">}</span><span class="s2"> iterations (</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">null_variance</span><span class="o">/</span><span class="p">(</span><span class="n">nbr_points</span><span class="o">*</span><span class="n">nbr_simulations</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">%) &quot;</span>
+            <span class="sa">f</span><span class="s2">"Variance has been null </span><span class="si">{</span><span class="n">null_variance</span><span class="si">}</span><span class="s2"> times over the </span><span class="si">{</span><span class="n">nbr_points</span><span class="o">*</span><span class="n">nbr_simulations</span><span class="si">}</span><span class="s2"> iterations (</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">null_variance</span><span class="o">/</span><span class="p">(</span><span class="n">nbr_points</span><span class="o">*</span><span class="n">nbr_simulations</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">%) "</span>
         <span class="p">)</span>
 
         <span class="n">ST</span> <span class="o">=</span> <span class="n">S</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -596,7 +596,7 @@
         <span class="n">infimum</span> <span class="o">=</span> <span class="n">price</span> <span class="o">-</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">standard_deviation</span> <span class="o">/</span> <span class="n">nbr_simulations</span><span class="p">)</span>
         <span class="n">supremum</span> <span class="o">=</span> <span class="n">price</span> <span class="o">+</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">standard_deviation</span> <span class="o">/</span> <span class="n">nbr_simulations</span><span class="p">)</span>
 
-        <span class="n">Result</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Results&quot;</span><span class="p">,</span> <span class="s2">&quot;price std infinum supremum&quot;</span><span class="p">)</span>
+        <span class="n">Result</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">"Results"</span><span class="p">,</span> <span class="s2">"price std infinum supremum"</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Result</span><span class="p">(</span>
             <span class="n">price</span><span class="p">,</span> <span class="n">standard_deviation</span><span class="p">,</span> <span class="n">infimum</span><span class="p">,</span> <span class="n">supremum</span>
         <span class="p">)</span></div>
@@ -605,7 +605,7 @@
 <div class="viewcode-block" id="Heston.characteristic">
 <a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.characteristic">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">characteristic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Creates the characteristic function Psi_j(x, v, t; u) for a given (x, v, t).</span>
 
 <span class="sd">        This function returns the characteristic function based on the index provided.</span>
@@ -616,16 +616,16 @@
 <span class="sd">        :rtype: callable</span>
 
 <span class="sd">        :raises ValueError: If the index j is not 1 or 2.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
-        <span class="n">vol_initial</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;vol_initial&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span><span class="p">)</span>  <span class="c1"># Initial variance</span>
+        <span class="n">vol_initial</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"vol_initial"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span><span class="p">)</span>  <span class="c1"># Initial variance</span>
 
         <span class="c1"># Model parameters</span>
-        <span class="n">kappa</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;kappa&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span><span class="p">)</span>
-        <span class="n">theta</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;theta&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
-        <span class="n">sigma</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sigma&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">)</span>
-        <span class="n">rho</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rho&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">)</span>
-        <span class="n">drift_emm</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;drift_emm&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">drift_emm</span><span class="p">)</span>
+        <span class="n">kappa</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"kappa"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span><span class="p">)</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"theta"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"sigma"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">)</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"rho"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">)</span>
+        <span class="n">drift_emm</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"drift_emm"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">drift_emm</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">uj</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span>
@@ -634,7 +634,7 @@
             <span class="n">uj</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span>
             <span class="n">bj</span> <span class="o">=</span> <span class="n">kappa</span> <span class="o">+</span> <span class="n">drift_emm</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Argument j (int) must be 1 or 2&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Argument j (int) must be 1 or 2"</span><span class="p">)</span>
             <span class="k">return</span> <span class="mi">0</span>
         <span class="n">a</span> <span class="o">=</span> <span class="n">kappa</span> <span class="o">*</span> <span class="n">theta</span> <span class="o">/</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span>
 
@@ -673,7 +673,7 @@
             <span class="n">error_boolean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Price a European option using the Fourier transform method.</span>
 
 <span class="sd">        This method prices a European option using the Fourier transform method with the Heston model.</span>
@@ -686,13 +686,13 @@
 
 <span class="sd">        :returns: Option prices and errors (if error_boolean is True).</span>
 <span class="sd">        :rtype: float or tuple</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;vol_initial&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span><span class="p">)</span>  <span class="c1"># Initial variance</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"vol_initial"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span><span class="p">)</span>  <span class="c1"># Initial variance</span>
         
         <span class="n">psi1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">characteristic</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">integrand1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span>
@@ -729,7 +729,7 @@
             <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Price a European call option using the Carr-Madan method.</span>
 
 <span class="sd">        This method prices a European call option using the Carr-Madan Fourier pricing method.</span>
@@ -741,7 +741,7 @@
 
 <span class="sd">        :returns: Call option prices.</span>
 <span class="sd">        :rtype: float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         
         <span class="n">price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carr_madan_price</span><span class="p">(</span>
             <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> 
@@ -763,7 +763,7 @@
             <span class="n">s</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Calculate the delta of a European call option.</span>
 
 <span class="sd">        This method calculates the delta of a European call option using the Heston model.</span>
@@ -775,7 +775,7 @@
 
 <span class="sd">        :returns: Delta of the call option.</span>
 <span class="sd">        :rtype: float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
             
         <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
@@ -802,7 +802,7 @@
             <span class="n">s</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">v</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Calculate the vega of a European call option.</span>
 
 <span class="sd">        This method calculates the vega of a European call option using the Heston model.</span>
@@ -814,7 +814,7 @@
 
 <span class="sd">        :returns: Vega of the call option.</span>
 <span class="sd">        :rtype: float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>   
             <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
@@ -881,7 +881,7 @@
             <span class="n">error_boolean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Computes the price of a European call option using the Carr-Madan Fourier pricing method.</span>
 
 <span class="sd">        This method employs the Carr-Madan approach, leveraging the characteristic function to calculate</span>
@@ -895,13 +895,13 @@
 
 <span class="sd">        :returns: Option prices and errors (if error_boolean is True).</span>
 <span class="sd">        :rtype: float or tuple</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spot</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;vol_initial&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span><span class="p">)</span>  <span class="c1"># Initial variance</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"vol_initial"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span><span class="p">)</span>  <span class="c1"># Initial variance</span>
         <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span>
 
         <span class="n">price_hat</span> <span class="o">=</span> <span class="p">(</span>
@@ -928,13 +928,13 @@
 <div class="viewcode-block" id="Heston.price_surface">
 <a class="viewcode-back" href="../../../api/models.html#hestonpy.models.heston.Heston.price_surface">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">price_surface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Plot the call price surface as a function of strike and time to maturity.</span>
 
 <span class="sd">        This method generates a 3D plot of the call option prices for a range of strikes and maturities.</span>
 
 <span class="sd">        :returns: None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="n">Ks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
         <span class="n">Ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
@@ -943,13 +943,13 @@
         <span class="n">call_prices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">K_mesh</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">T_mesh</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spot</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vol_initial</span><span class="p">)</span>
 
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">K_mesh</span><span class="p">,</span> <span class="n">T_mesh</span><span class="p">,</span> <span class="n">call_prices</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Call price as a function of strike and time to maturity&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Strike ($K$)&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Time to maturity ($T$)&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;Price&quot;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">"3d"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">K_mesh</span><span class="p">,</span> <span class="n">T_mesh</span><span class="p">,</span> <span class="n">call_prices</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"royalblue"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Call price as a function of strike and time to maturity"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Strike ($K$)"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Time to maturity ($T$)"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">"Price"</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"major"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
@@ -964,7 +964,7 @@
         <span class="n">nbr_points</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">252</span><span class="p">,</span> 
         <span class="n">nbr_simulations</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">100</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Implement a delta-vega hedging strategy for a European option using the Heston model.</span>
 
 <span class="sd">        This function simulates the hedging process over the lifetime of the option by dynamically rebalancing a portfolio</span>
@@ -981,7 +981,7 @@
 
 <span class="sd">        :returns: Portfolio values, underlying asset prices, variances, and option prices.</span>
 <span class="sd">        :rtype: tuple</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="c1"># Simulation</span>
         <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="n">maturity</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">nbr_points</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -995,22 +995,22 @@
             <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">maturity</span><span class="p">,</span> 
             <span class="n">nbr_points</span><span class="o">=</span><span class="n">nbr_points</span><span class="p">,</span> 
             <span class="n">nbr_simulations</span><span class="o">=</span><span class="n">nbr_simulations</span><span class="p">,</span> 
-            <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;milstein&#39;</span>
+            <span class="n">scheme</span><span class="o">=</span><span class="s1">'milstein'</span>
         <span class="p">)</span>
         <span class="n">portfolio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
 
         <span class="c1"># Prices Calculation</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing option prices ...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Computing option prices ..."</span><span class="p">)</span>
         <span class="n">C</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strike</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturities</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">)</span>
         <span class="n">C_hedging</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_price</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strike_hedging</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturities_hedging</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">)</span>
 
         <span class="c1"># Vegas Calculation</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing vegas ...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Computing vegas ..."</span><span class="p">)</span>
         <span class="n">vega</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_vega</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strike</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturities</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">)</span>
         <span class="n">vega_hedging</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_vega</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strike_hedging</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturities_hedging</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">)</span>
 
         <span class="c1"># Deltas Calculation</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing deltas ...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Computing deltas ..."</span><span class="p">)</span>
         <span class="n">delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_delta</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strike</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturities</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">)</span>
         <span class="n">delta_hedging</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_delta</span><span class="p">(</span><span class="n">strike</span><span class="o">=</span><span class="n">strike_hedging</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="n">time_to_maturities_hedging</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">S</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">V</span><span class="p">)</span>
         
@@ -1073,8 +1073,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1108,7 +1108,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.18.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
 </p></div>
       
     </div>

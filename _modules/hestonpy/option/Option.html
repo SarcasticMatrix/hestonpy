@@ -26,8 +26,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -35,10 +35,10 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=8a048efd" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
     <script src="../../../_static/documentation_options.js?v=feb023f7"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
@@ -380,34 +380,34 @@
 <a class="viewcode-back" href="../../../api/option.html#hestonpy.option.Option.Option">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Option</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Represents a vanilla European option contract.</span>
 
 <span class="sd">    This is a pure contract specification — it carries no market data (spot, rate)</span>
 <span class="sd">    and no model. Those live in OptionsBook.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        flag (Literal[&#39;call&#39;, &#39;put&#39;]): Type of the option.</span>
+<span class="sd">        flag (Literal['call', 'put']): Type of the option.</span>
 <span class="sd">        strike (float): Strike price.</span>
 <span class="sd">        time_to_maturity (float): Time to maturity in years.</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; opt = Option(flag=&#39;call&#39;, strike=100.0, time_to_maturity=1.0)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        &gt;&gt;&gt; opt = Option(flag='call', strike=100.0, time_to_maturity=1.0)</span>
+<span class="sd">    """</span>
 
-    <span class="n">flag</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;call&#39;</span><span class="p">,</span> <span class="s1">&#39;put&#39;</span><span class="p">]</span>
+    <span class="n">flag</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">'call'</span><span class="p">,</span> <span class="s1">'put'</span><span class="p">]</span>
     <span class="n">strike</span><span class="p">:</span> <span class="nb">float</span>
     <span class="n">time_to_maturity</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># in years</span></div>
 
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
 
-    <span class="n">call</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="n">flag</span><span class="o">=</span><span class="s1">&#39;call&#39;</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="mf">105.0</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-    <span class="n">put</span>  <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="n">flag</span><span class="o">=</span><span class="s1">&#39;put&#39;</span><span class="p">,</span>  <span class="n">strike</span><span class="o">=</span><span class="mf">95.0</span><span class="p">,</span>  <span class="n">time_to_maturity</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">call</span> <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="n">flag</span><span class="o">=</span><span class="s1">'call'</span><span class="p">,</span> <span class="n">strike</span><span class="o">=</span><span class="mf">105.0</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">put</span>  <span class="o">=</span> <span class="n">Option</span><span class="p">(</span><span class="n">flag</span><span class="o">=</span><span class="s1">'put'</span><span class="p">,</span>  <span class="n">strike</span><span class="o">=</span><span class="mf">95.0</span><span class="p">,</span>  <span class="n">time_to_maturity</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">call</span><span class="p">)</span>   <span class="c1"># Option(flag=&#39;call&#39;, strike=105.0, time_to_maturity=0.5)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">put</span><span class="p">)</span>    <span class="c1"># Option(flag=&#39;put&#39;,  strike=95.0,  time_to_maturity=1.0)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">call</span><span class="p">)</span>   <span class="c1"># Option(flag='call', strike=105.0, time_to_maturity=0.5)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">put</span><span class="p">)</span>    <span class="c1"># Option(flag='put',  strike=95.0,  time_to_maturity=1.0)</span>
 </pre></div>
 
                 </article>
@@ -437,8 +437,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -472,7 +472,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.18.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
 </p></div>
       
     </div>

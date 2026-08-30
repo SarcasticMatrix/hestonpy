@@ -27,8 +27,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
@@ -37,10 +37,10 @@
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=8a048efd" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
     <script src="../../_static/documentation_options.js?v=feb023f7"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
@@ -446,11 +446,11 @@
 <span class="n">vol_initial</span> <span class="o">=</span> <span class="mf">0.02</span>    <span class="c1"># Variance initiale</span>
 <span class="n">r</span> <span class="o">=</span> <span class="mf">0.00</span>
 <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="mf">1.25</span><span class="p">,</span>
-    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
-    <span class="s2">&quot;drift_emm&quot;</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span>
-    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">,</span>
-    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="s2">"kappa"</span><span class="p">:</span> <span class="mf">1.25</span><span class="p">,</span>
+    <span class="s2">"theta"</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+    <span class="s2">"drift_emm"</span><span class="p">:</span> <span class="mf">0.00</span><span class="p">,</span>
+    <span class="s2">"sigma"</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">,</span>
+    <span class="s2">"rho"</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.8</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">time_to_maturity</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Heston</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">vol_initial</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
@@ -476,29 +476,29 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Paramètres de base du modèle Heston</span>
 <span class="n">base_params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;vol_initial&quot;</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="c1"># Variance initiale</span>
-    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>          <span class="c1"># Vitesse de réversion</span>
-    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span>         <span class="c1"># Variance à long terme</span>
-    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>          <span class="c1"># Volatilité de la variance</span>
-    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>           <span class="c1"># Corrélation</span>
+    <span class="s2">"vol_initial"</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="c1"># Variance initiale</span>
+    <span class="s2">"kappa"</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>          <span class="c1"># Vitesse de réversion</span>
+    <span class="s2">"theta"</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span>         <span class="c1"># Variance à long terme</span>
+    <span class="s2">"sigma"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>          <span class="c1"># Volatilité de la variance</span>
+    <span class="s2">"rho"</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>           <span class="c1"># Corrélation</span>
 <span class="p">}</span>
 
 <span class="c1"># Définition des paramètres à tester</span>
 <span class="n">params_to_test</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;vol_initial&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.06</span><span class="p">],</span>
-    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span>
-    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span>
-    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">],</span>
-    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+    <span class="s2">"vol_initial"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.06</span><span class="p">],</span>
+    <span class="s2">"sigma"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span>
+    <span class="s2">"kappa"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span>
+    <span class="s2">"theta"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">],</span>
+    <span class="s2">"rho"</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
 <span class="p">}</span>
 
 <span class="c1"># Dictionnaire pour convertir les noms en LaTex</span>
 <span class="n">latex_labels</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;vol_initial&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;$v_0$&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;$\sigma$&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;kappa&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;$\kappa$&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;theta&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;$\theta$&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;$\rho$&quot;</span><span class="p">,</span>
+    <span class="s2">"vol_initial"</span><span class="p">:</span> <span class="sa">r</span><span class="s2">"$v_0$"</span><span class="p">,</span>
+    <span class="s2">"sigma"</span><span class="p">:</span> <span class="sa">r</span><span class="s2">"$\sigma$"</span><span class="p">,</span>
+    <span class="s2">"kappa"</span><span class="p">:</span> <span class="sa">r</span><span class="s2">"$\kappa$"</span><span class="p">,</span>
+    <span class="s2">"theta"</span><span class="p">:</span> <span class="sa">r</span><span class="s2">"$\theta$"</span><span class="p">,</span>
+    <span class="s2">"rho"</span><span class="p">:</span> <span class="sa">r</span><span class="s2">"$\rho$"</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="n">strikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
@@ -513,7 +513,7 @@
 
 <span class="c1"># Fonction pour tracer les volatility smiles</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_vol_smile</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param_values</span><span class="p">):</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ATM Strike&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"ATM Strike"</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
         <span class="n">params</span> <span class="o">=</span> <span class="n">base_params</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -524,12 +524,12 @@
         <span class="n">smile</span> <span class="o">=</span> <span class="n">VolatilitySmile</span><span class="p">(</span><span class="n">strikes</span><span class="o">=</span><span class="n">strikes</span><span class="p">,</span> <span class="n">atm</span><span class="o">=</span><span class="n">spot</span><span class="p">,</span> <span class="n">market_prices</span><span class="o">=</span><span class="n">prices</span><span class="p">,</span> <span class="n">time_to_maturity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">implied_vols</span> <span class="o">=</span> <span class="n">smile</span><span class="o">.</span><span class="n">compute_smile</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
 
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">strikes</span><span class="p">,</span> <span class="n">implied_vols</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">latex_labels</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">strikes</span><span class="p">,</span> <span class="n">implied_vols</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">latex_labels</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'+'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"dotted"</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Impact of </span><span class="si">{</span><span class="n">latex_labels</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span><span class="si">}</span><span class="s2"> on smile&quot;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Strike&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Implied Volatility [%]&quot;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Impact of </span><span class="si">{</span><span class="n">latex_labels</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span><span class="si">}</span><span class="s2"> on smile"</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Strike"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Implied Volatility [%]"</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"major"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">dashes</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
 <span class="c1"># Tracer les courbes sur chaque subplot</span>
@@ -611,8 +611,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -646,7 +646,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.18.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
 </p></div>
       
     </div>
